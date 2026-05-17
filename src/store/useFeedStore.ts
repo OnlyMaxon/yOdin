@@ -10,6 +10,7 @@ interface FeedState {
   prependDiscussion: (discussion: Discussion) => void;
   setLoading: (v: boolean) => void;
   setHasMore: (v: boolean) => void;
+  incrementReplyCount: (discussionId: string) => void;
 }
 
 export const useFeedStore = create<FeedState>((set) => ({
@@ -23,4 +24,10 @@ export const useFeedStore = create<FeedState>((set) => ({
     set((state) => ({ discussions: [discussion, ...state.discussions] })),
   setLoading: (isLoading) => set({ isLoading }),
   setHasMore: (hasMore) => set({ hasMore }),
+  incrementReplyCount: (discussionId) =>
+    set((state) => ({
+      discussions: state.discussions.map((d) =>
+        d.id === discussionId ? { ...d, replyCount: d.replyCount + 1 } : d,
+      ),
+    })),
 }));

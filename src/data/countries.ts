@@ -1,0 +1,48 @@
+export interface Country {
+  code: string;
+  name: string;
+  flag: string;
+}
+
+export const COUNTRIES: Country[] = [
+  { code: 'AZ', name: 'Azerbaijan', flag: '🇦🇿' },
+  { code: 'RU', name: 'Russia', flag: '🇷🇺' },
+  { code: 'TR', name: 'Turkey', flag: '🇹🇷' },
+  { code: 'UA', name: 'Ukraine', flag: '🇺🇦' },
+  { code: 'GE', name: 'Georgia', flag: '🇬🇪' },
+  { code: 'AM', name: 'Armenia', flag: '🇦🇲' },
+  { code: 'KZ', name: 'Kazakhstan', flag: '🇰🇿' },
+  { code: 'UZ', name: 'Uzbekistan', flag: '🇺🇿' },
+  { code: 'DE', name: 'Germany', flag: '🇩🇪' },
+  { code: 'FR', name: 'France', flag: '🇫🇷' },
+  { code: 'GB', name: 'United Kingdom', flag: '🇬🇧' },
+  { code: 'US', name: 'United States', flag: '🇺🇸' },
+  { code: 'IT', name: 'Italy', flag: '🇮🇹' },
+  { code: 'ES', name: 'Spain', flag: '🇪🇸' },
+  { code: 'PL', name: 'Poland', flag: '🇵🇱' },
+  { code: 'NL', name: 'Netherlands', flag: '🇳🇱' },
+  { code: 'SE', name: 'Sweden', flag: '🇸🇪' },
+  { code: 'NO', name: 'Norway', flag: '🇳🇴' },
+  { code: 'CN', name: 'China', flag: '🇨🇳' },
+  { code: 'JP', name: 'Japan', flag: '🇯🇵' },
+  { code: 'KR', name: 'South Korea', flag: '🇰🇷' },
+  { code: 'IN', name: 'India', flag: '🇮🇳' },
+  { code: 'IR', name: 'Iran', flag: '🇮🇷' },
+  { code: 'IQ', name: 'Iraq', flag: '🇮🇶' },
+  { code: 'SA', name: 'Saudi Arabia', flag: '🇸🇦' },
+  { code: 'AE', name: 'UAE', flag: '🇦🇪' },
+  { code: 'IL', name: 'Israel', flag: '🇮🇱' },
+  { code: 'EG', name: 'Egypt', flag: '🇪🇬' },
+  { code: 'BR', name: 'Brazil', flag: '🇧🇷' },
+  { code: 'MX', name: 'Mexico', flag: '🇲🇽' },
+  { code: 'AR', name: 'Argentina', flag: '🇦🇷' },
+  { code: 'CA', name: 'Canada', flag: '🇨🇦' },
+  { code: 'AU', name: 'Australia', flag: '🇦🇺' },
+  { code: 'ZA', name: 'South Africa', flag: '🇿🇦' },
+  { code: 'NG', name: 'Nigeria', flag: '🇳🇬' },
+  { code: 'PK', name: 'Pakistan', flag: '🇵🇰' },
+  { code: 'BD', name: 'Bangladesh', flag: '🇧🇩' },
+  { code: 'RO', name: 'Romania', flag: '🇷🇴' },
+  { code: 'HU', name: 'Hungary', flag: '🇭🇺' },
+  { code: 'CZ', name: 'Czech Republic', flag: '🇨🇿' },
+];

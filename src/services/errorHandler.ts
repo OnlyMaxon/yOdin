@@ -4,8 +4,11 @@ const firebaseErrors: Record<string, string> = {
   'auth/weak-password': 'Password must be at least 6 characters.',
   'auth/user-not-found': 'No account found with this email.',
   'auth/wrong-password': 'Incorrect password.',
+  'auth/invalid-credential': 'Incorrect email or password.',
   'auth/too-many-requests': 'Too many attempts. Please try again later.',
   'auth/network-request-failed': 'No internet connection.',
+  'auth/user-disabled': 'This account has been disabled.',
+  'auth/already-initialized': 'Auth already initialized.',
 };
 
 export function getErrorMessage(error: unknown): string {

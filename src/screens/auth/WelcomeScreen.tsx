@@ -9,17 +9,27 @@ export default function WelcomeScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>yOdin</Text>
-      <Text style={styles.title}>{t('auth.welcome')}</Text>
-      <Text style={styles.subtitle}>{t('auth.subtitle')}</Text>
+      <View style={styles.content}>
+        <Text style={styles.logo}>yOdin</Text>
+        <Text style={styles.title}>{t('auth.welcome')}</Text>
+        <Text style={styles.subtitle}>{t('auth.subtitle')}</Text>
+      </View>
 
-      <TouchableOpacity style={styles.primaryBtn} onPress={() => navigation.navigate('Register')}>
-        <Text style={styles.primaryBtnText}>{t('auth.register')}</Text>
-      </TouchableOpacity>
+      <View style={styles.buttons}>
+        <TouchableOpacity
+          style={styles.primaryBtn}
+          onPress={() => navigation.navigate('Register', { mode: 'register' })}
+        >
+          <Text style={styles.primaryBtnText}>{t('auth.register')}</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={styles.secondaryBtn} onPress={() => navigation.navigate('Register')}>
-        <Text style={styles.secondaryBtnText}>{t('auth.login')}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.secondaryBtn}
+          onPress={() => navigation.navigate('Register', { mode: 'login' })}
+        >
+          <Text style={styles.secondaryBtnText}>{t('auth.login')}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -28,15 +38,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.primary,
+    paddingHorizontal: 32,
+    paddingBottom: 48,
+    justifyContent: 'space-between',
+  },
+  content: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 32,
   },
   logo: {
-    fontSize: 52,
+    fontSize: 56,
     fontWeight: Typography.fontWeightBold,
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: 12,
     letterSpacing: -1,
   },
   title: {
@@ -48,17 +63,15 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: Typography.fontSizeMD,
-    color: 'rgba(255,255,255,0.65)',
+    color: 'rgba(255,255,255,0.6)',
     textAlign: 'center',
-    marginBottom: 56,
   },
+  buttons: { gap: 12 },
   primaryBtn: {
-    width: '100%',
     backgroundColor: '#fff',
     borderRadius: 16,
     paddingVertical: 16,
     alignItems: 'center',
-    marginBottom: 12,
   },
   primaryBtnText: {
     color: Colors.primary,
@@ -66,7 +79,6 @@ const styles = StyleSheet.create({
     fontWeight: Typography.fontWeightSemiBold,
   },
   secondaryBtn: {
-    width: '100%',
     borderWidth: 1.5,
     borderColor: 'rgba(255,255,255,0.5)',
     borderRadius: 16,

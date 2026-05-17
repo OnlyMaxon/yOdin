@@ -1,16 +1,251 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  Animated,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+  Keyboard,
+} from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '../store/useAuthStore';
+import { useFeedStore } from '../store/useFeedStore';
+import { createDiscussion } from '../services/discussionService';
+import { getErrorMessage } from '../services/errorHandler';
 import { Colors } from '../theme/colors';
+import { Typography } from '../theme/typography';
 
-export default function NewDiscussionModal() {
+interface Props {
+  visible: boolean;
+  onClose: () => void;
+}
+
+export default function NewDiscussionModal({ visible, onClose }: Props) {
+  const { t } = useTranslation();
+  const { profile } = useAuthStore();
+  const { prependDiscussion } = useFeedStore();
+  const [question, setQuestion] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const slideAnim = useRef(new Animated.Value(600)).current;
+
+  useEffect(() => {
+    if (visible) {
+      setQuestion('');
+      setError('');
+      Animated.spring(slideAnim, {
+        toValue: 0,
+        useNativeDriver: true,
+        tension: 65,
+        friction: 11,
+      }).start();
+    } else {
+      Animated.timing(slideAnim, {
+        toValue: 600,
+        duration: 250,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [visible]);
+
+  async function handlePost() {
+    if (!question.trim()) { setError('Please write your question.'); return; }
+    if (!profile) return;
+    Keyboard.dismiss();
+    setLoading(true);
+    setError('');
+    try {
+      const id = await createDiscussion({
+        authorId: profile.uid,
+        authorName: `${profile.firstName} ${profile.lastName}`,
+        authorPhoto: profile.photoURL ?? '',
+        authorNationality: profile.nationality,
+        authorCountryCode: profile.countryCode,
+        question: question.trim(),
+        location: profile.location,
+      });
+      prependDiscussion({
+        id,
+        authorId: profile.uid,
+        authorName: `${profile.firstName} ${profile.lastName}`,
+        authorPhoto: profile.photoURL ?? '',
+        authorNationality: profile.nationality,
+        authorCountryCode: profile.countryCode,
+        question: question.trim(),
+        location: profile.location,
+        createdAt: Date.now() as any,
+        replyCount: 0,
+      });
+      onClose();
+    } catch (e) {
+      setError(getErrorMessage(e));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const initials = profile
+    ? `${profile.firstName?.charAt(0) ?? ''}${profile.lastName?.charAt(0) ?? ''}`
+    : '?';
+
+  const flag = profile?.countryCode
+    ? profile.countryCode.toUpperCase().split('').map((c: string) =>
+        String.fromCodePoint(c.charCodeAt(0) + 127397)).join('')
+    : '🌐';
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>New Discussion — coming soon</Text>
-    </View>
+    <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
+      <KeyboardAvoidingView
+        style={styles.overlay}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      >
+        <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={onClose} />
+
+        <Animated.View style={[styles.sheet, { transform: [{ translateY: slideAnim }] }]}>
+          <View style={styles.handle} />
+
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>New Discussion</Text>
+            <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
+              <Text style={styles.closeText}>✕</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.body}>
+            <View style={styles.authorCol}>
+              <View style={styles.avatar}>
+                <Text style={styles.avatarText}>{initials.toUpperCase()}</Text>
+              </View>
+              <Text style={styles.authorName} numberOfLines={1}>
+                {profile?.firstName}
+              </Text>
+              <Text style={styles.authorFlag}>{flag}</Text>
+            </View>
+
+            <View style={styles.inputCol}>
+              <TextInput
+                style={styles.input}
+                placeholder={t('newDiscussion.placeholder')}
+                placeholderTextColor={Colors.textSecondary}
+                value={question}
+                onChangeText={setQuestion}
+                multiline
+                maxLength={500}
+                autoFocus
+                textAlignVertical="top"
+              />
+              <Text style={styles.charCount}>{question.length}/500</Text>
+            </View>
+          </View>
+
+          {error ? <Text style={styles.error}>{error}</Text> : null}
+
+          <TouchableOpacity
+            style={[styles.postBtn, (!question.trim() || loading) && styles.postBtnDisabled]}
+            onPress={handlePost}
+            disabled={!question.trim() || loading}
+          >
+            {loading
+              ? <ActivityIndicator color="#fff" />
+              : <Text style={styles.postBtnText}>{t('newDiscussion.post')}</Text>
+            }
+          </TouchableOpacity>
+        </Animated.View>
+      </KeyboardAvoidingView>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background, alignItems: 'center', justifyContent: 'center' },
-  text: { color: Colors.textSecondary, fontSize: 16 },
+  overlay: { flex: 1, justifyContent: 'flex-end' },
+  backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.4)' },
+  sheet: {
+    backgroundColor: Colors.surface,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    paddingHorizontal: 20,
+    paddingBottom: 40,
+    paddingTop: 12,
+    minHeight: 320,
+  },
+  handle: {
+    width: 40,
+    height: 4,
+    backgroundColor: Colors.border,
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginBottom: 16,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  headerTitle: {
+    fontSize: Typography.fontSizeLG,
+    fontWeight: Typography.fontWeightBold,
+    color: Colors.textPrimary,
+  },
+  closeBtn: { padding: 4 },
+  closeText: { fontSize: 18, color: Colors.textSecondary },
+  body: { flexDirection: 'row', gap: 16, marginBottom: 12 },
+  authorCol: { alignItems: 'center', width: 64 },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: Colors.primaryLight,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 6,
+  },
+  avatarText: {
+    fontSize: Typography.fontSizeMD,
+    fontWeight: Typography.fontWeightBold,
+    color: Colors.primary,
+  },
+  authorName: {
+    fontSize: Typography.fontSizeXS,
+    fontWeight: Typography.fontWeightMedium,
+    color: Colors.textPrimary,
+    textAlign: 'center',
+  },
+  authorFlag: { fontSize: 18, marginTop: 4 },
+  inputCol: { flex: 1 },
+  input: {
+    fontSize: Typography.fontSizeMD,
+    color: Colors.textPrimary,
+    lineHeight: 22,
+    minHeight: 120,
+    textAlignVertical: 'top',
+  },
+  charCount: {
+    fontSize: Typography.fontSizeXS,
+    color: Colors.textSecondary,
+    textAlign: 'right',
+    marginTop: 4,
+  },
+  error: {
+    color: Colors.notification,
+    fontSize: Typography.fontSizeSM,
+    marginBottom: 12,
+  },
+  postBtn: {
+    backgroundColor: Colors.primary,
+    borderRadius: 16,
+    paddingVertical: 16,
+    alignItems: 'center',
+  },
+  postBtnDisabled: { opacity: 0.4 },
+  postBtnText: {
+    color: '#fff',
+    fontSize: Typography.fontSizeMD,
+    fontWeight: Typography.fontWeightSemiBold,
+  },
 });
