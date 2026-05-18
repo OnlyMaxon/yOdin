@@ -123,7 +123,7 @@ export default function RegisterScreen({ navigation, route }: any) {
           onPress={() => { setMode(mode === 'register' ? 'login' : 'register'); setError(''); }}
         >
           <Text style={styles.switchText}>
-            {mode === 'register' ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
+            {mode === 'register' ? t('auth.alreadyHaveAccount') : t('auth.noAccount')}
           </Text>
         </TouchableOpacity>
       </ScrollView>

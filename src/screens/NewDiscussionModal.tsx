@@ -11,6 +11,7 @@ import {
   Platform,
   ActivityIndicator,
   Keyboard,
+  Image,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
@@ -110,7 +111,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
           <View style={styles.handle} />
 
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>New Discussion</Text>
+            <Text style={styles.headerTitle}>{t('newDiscussion.title')}</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
               <Text style={styles.closeText}>✕</Text>
             </TouchableOpacity>
@@ -119,7 +120,11 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
           <View style={styles.body}>
             <View style={styles.authorCol}>
               <View style={styles.avatar}>
-                <Text style={styles.avatarText}>{initials.toUpperCase()}</Text>
+                {profile?.photoURL ? (
+                  <Image source={{ uri: profile.photoURL }} style={styles.avatarImage} />
+                ) : (
+                  <Text style={styles.avatarText}>{initials.toUpperCase()}</Text>
+                )}
               </View>
               <Text style={styles.authorName} numberOfLines={1}>
                 {profile?.firstName}
@@ -210,6 +215,7 @@ const styles = StyleSheet.create({
     fontWeight: Typography.fontWeightBold,
     color: Colors.primary,
   },
+  avatarImage: { width: 48, height: 48, borderRadius: 24 },
   authorName: {
     fontSize: Typography.fontSizeXS,
     fontWeight: Typography.fontWeightMedium,

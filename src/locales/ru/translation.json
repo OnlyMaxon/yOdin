@@ -11,26 +11,45 @@
     "nationality": "Ваша национальность",
     "location": "Ваше местоположение",
     "next": "Далее",
-    "finish": "Начать"
+    "finish": "Начать",
+    "alreadyHaveAccount": "Уже есть аккаунт? Войти",
+    "noAccount": "Нет аккаунта? Зарегистрироваться",
+    "onboardingTitle": "Последний шаг 👋",
+    "onboardingSubtitle": "Расскажи о себе, чтобы мы показали нужные дискуссии.",
+    "selectNationality": "Выберите национальность...",
+    "selectLocation": "Выберите страну...",
+    "selectNationalityTitle": "Выбор национальности",
+    "selectLocationTitle": "Выбор страны",
+    "search": "Поиск..."
   },
   "feed": {
     "title": "Лента",
     "empty": "Пока нет дискуссий. Будь первым!",
-    "replies": "{{count}} ответов"
+    "replies_one": "{{count}} ответ",
+    "replies_few": "{{count}} ответа",
+    "replies_other": "{{count}} ответов"
+  },
+  "discussion": {
+    "title": "Дискуссия",
+    "firstReply": "Будь первым кто ответит 💬",
+    "replyPlaceholder": "Написать ответ..."
+  },
+  "newDiscussion": {
+    "title": "Новая дискуссия",
+    "placeholder": "О чём думаешь?",
+    "post": "Опубликовать"
   },
   "notifications": {
     "title": "Уведомления",
     "empty": "Уведомлений пока нет",
     "replied": "ответил на вашу дискуссию"
   },
-  "newDiscussion": {
-    "placeholder": "О чём думаешь?",
-    "post": "Опубликовать"
-  },
   "profile": {
     "title": "Профиль",
     "myDiscussions": "Мои дискуссии",
     "saved": "Сохранённые",
+    "noDiscussions": "Дискуссий пока нет",
+    "noSaved": "Нет сохранённых дискуссий",
     "languages": "Языки",
     "addLanguage": "Добавить язык",
     "settings": "Настройки",
@@ -38,10 +57,18 @@
   },
   "settings": {
     "title": "Настройки",
+    "editProfile": "Редактировать профиль",
     "language": "Язык приложения",
     "theme": "Тема",
     "notifications": "Уведомления",
     "privacy": "Конфиденциальность",
     "about": "О yOdin"
+  },
+  "editProfile": {
+    "title": "Редактировать профиль",
+    "nationality": "Национальность",
+    "location": "Местоположение",
+    "save": "Сохранить",
+    "saving": "Сохранение..."
   }
 }

@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
+  Image,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
-import { fetchDiscussions } from '../services/discussionService';
+import { fetchDiscussions, saveDiscussion, unsaveDiscussion } from '../services/discussionService';
 import { Discussion } from '../types';
 import { Colors } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -19,7 +21,7 @@ import { Typography } from '../theme/typography';
 export default function FeedScreen({ navigation }: any) {
   const { t } = useTranslation();
   const { profile } = useAuthStore();
-  const { discussions, setDiscussions, appendDiscussions, setLoading, isLoading } = useFeedStore();
+  const { discussions, setDiscussions, appendDiscussions, setLoading, isLoading, toggleSaved } = useFeedStore();
   const [refreshing, setRefreshing] = useState(false);
   const [lastDoc, setLastDoc] = useState<any>(null);
   const [hasMore, setHasMore] = useState(true);
@@ -61,7 +63,20 @@ export default function FeedScreen({ navigation }: any) {
     setRefreshing(false);
   }
 
+  async function handleSave(item: Discussion) {
+    if (!profile?.uid) return;
+    const isSaved = item.savedBy?.includes(profile.uid) ?? false;
+    toggleSaved(item.id, profile.uid);
+    try {
+      if (isSaved) await unsaveDiscussion(profile.uid, item.id);
+      else await saveDiscussion(profile.uid, item.id);
+    } catch {
+      toggleSaved(item.id, profile.uid);
+    }
+  }
+
   function renderCard({ item }: { item: Discussion }) {
+    const isSaved = item.savedBy?.includes(profile?.uid ?? '') ?? false;
     return (
       <TouchableOpacity
         style={styles.card}
@@ -70,9 +85,13 @@ export default function FeedScreen({ navigation }: any) {
       >
         <View style={styles.cardHeader}>
           <View style={styles.avatar}>
-            <Text style={styles.avatarText}>
-              {item.authorName?.charAt(0).toUpperCase()}
-            </Text>
+            {item.authorPhoto ? (
+              <Image source={{ uri: item.authorPhoto }} style={styles.avatarImage} />
+            ) : (
+              <Text style={styles.avatarText}>
+                {item.authorName?.charAt(0).toUpperCase()}
+              </Text>
+            )}
           </View>
           <View style={styles.authorInfo}>
             <Text style={styles.authorName}>{item.authorName}</Text>
@@ -84,9 +103,18 @@ export default function FeedScreen({ navigation }: any) {
         <Text style={styles.question}>{item.question}</Text>
         <View style={styles.cardFooter}>
           <Text style={styles.replies}>
-            {item.replyCount} {item.replyCount === 1 ? 'reply' : 'replies'}
+            {t('feed.replies', { count: item.replyCount })}
           </Text>
-          <Text style={styles.time}>{formatTime(item.createdAt)}</Text>
+          <View style={styles.cardFooterRight}>
+            <Text style={styles.time}>{formatTime(item.createdAt)}</Text>
+            <TouchableOpacity onPress={() => handleSave(item)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+              <Ionicons
+                name={isSaved ? 'bookmark' : 'bookmark-outline'}
+                size={20}
+                color={isSaved ? Colors.primary : Colors.textSecondary}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -209,6 +237,7 @@ const styles = StyleSheet.create({
     fontWeight: Typography.fontWeightBold,
     color: Colors.primary,
   },
+  avatarImage: { width: 44, height: 44, borderRadius: 22 },
   authorInfo: { flex: 1 },
   authorName: {
     fontSize: Typography.fontSizeMD,
@@ -230,6 +259,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  cardFooterRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   replies: {
     fontSize: Typography.fontSizeSM,

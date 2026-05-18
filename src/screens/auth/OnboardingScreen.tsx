@@ -68,14 +68,14 @@ export default function OnboardingScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>One last step 👋</Text>
-      <Text style={styles.subtitle}>Tell us about yourself so we can show you the right discussions.</Text>
+      <Text style={styles.title}>{t('auth.onboardingTitle')}</Text>
+      <Text style={styles.subtitle}>{t('auth.onboardingSubtitle')}</Text>
 
       <Text style={styles.label}>{t('auth.nationality')}</Text>
       <TouchableOpacity style={styles.pickerBtn} onPress={() => openModal('nationality')}>
         {nationality
           ? <Text style={styles.pickerValue}>{nationality.flag}  {nationality.name}</Text>
-          : <Text style={styles.pickerPlaceholder}>Select nationality...</Text>
+          : <Text style={styles.pickerPlaceholder}>{t('auth.selectNationality')}</Text>
         }
       </TouchableOpacity>
 
@@ -83,7 +83,7 @@ export default function OnboardingScreen() {
       <TouchableOpacity style={styles.pickerBtn} onPress={() => openModal('location')}>
         {location
           ? <Text style={styles.pickerValue}>{location.flag}  {location.name}</Text>
-          : <Text style={styles.pickerPlaceholder}>Select your country...</Text>
+          : <Text style={styles.pickerPlaceholder}>{t('auth.selectLocation')}</Text>
         }
       </TouchableOpacity>
 
@@ -104,7 +104,7 @@ export default function OnboardingScreen() {
         <View style={styles.modal}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>
-              {modalType === 'nationality' ? 'Select Nationality' : 'Select Location'}
+              {modalType === 'nationality' ? t('auth.selectNationalityTitle') : t('auth.selectLocationTitle')}
             </Text>
             <TouchableOpacity onPress={() => setModalType(null)}>
               <Text style={styles.modalClose}>✕</Text>
@@ -112,7 +112,7 @@ export default function OnboardingScreen() {
           </View>
           <TextInput
             style={styles.search}
-            placeholder="Search..."
+            placeholder={t('auth.search')}
             placeholderTextColor={Colors.textSecondary}
             value={search}
             onChangeText={setSearch}

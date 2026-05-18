@@ -9,7 +9,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  Image,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import {
   collection,
   query,
@@ -22,17 +24,20 @@ import {
   updateDoc,
   increment,
 } from 'firebase/firestore';
+import { useTranslation } from 'react-i18next';
 import { db } from '../services/firebase';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
+import { saveDiscussion, unsaveDiscussion } from '../services/discussionService';
 import { Reply, Discussion } from '../types';
 import { Colors } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
 export default function DiscussionDetailScreen({ route, navigation }: any) {
   const { discussionId } = route.params;
+  const { t } = useTranslation();
   const { profile } = useAuthStore();
-  const { incrementReplyCount } = useFeedStore();
+  const { incrementReplyCount, toggleSaved } = useFeedStore();
   const [discussion, setDiscussion] = useState<Discussion | null>(null);
   const [replies, setReplies] = useState<Reply[]>([]);
   const [loading, setLoading] = useState(true);
@@ -110,6 +115,36 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     }
   }
 
+  const isSaved = discussion?.savedBy?.includes(profile?.uid ?? '') ?? false;
+
+  async function handleSave() {
+    if (!profile?.uid || !discussion) return;
+    const saved = discussion.savedBy?.includes(profile.uid) ?? false;
+    setDiscussion((prev) => {
+      if (!prev) return prev;
+      const savedBy = prev.savedBy ?? [];
+      return {
+        ...prev,
+        savedBy: saved ? savedBy.filter((id) => id !== profile.uid) : [...savedBy, profile.uid],
+      };
+    });
+    toggleSaved(discussion.id, profile.uid);
+    try {
+      if (saved) await unsaveDiscussion(profile.uid, discussion.id);
+      else await saveDiscussion(profile.uid, discussion.id);
+    } catch {
+      setDiscussion((prev) => {
+        if (!prev) return prev;
+        const savedBy = prev.savedBy ?? [];
+        return {
+          ...prev,
+          savedBy: saved ? [...savedBy, profile.uid] : savedBy.filter((id) => id !== profile.uid),
+        };
+      });
+      toggleSaved(discussion.id, profile.uid);
+    }
+  }
+
   const flag = (code: string) =>
     code?.toUpperCase().split('').map((c) =>
       String.fromCodePoint(c.charCodeAt(0) + 127397)).join('') ?? '🌐';
@@ -121,7 +156,11 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       <View style={[styles.replyRow, isMe && styles.replyRowMe]}>
         {!isMe && (
           <View style={styles.replyAvatar}>
-            <Text style={styles.replyAvatarText}>{initials}</Text>
+            {item.authorPhoto ? (
+              <Image source={{ uri: item.authorPhoto }} style={styles.replyAvatarImage} />
+            ) : (
+              <Text style={styles.replyAvatarText}>{initials}</Text>
+            )}
           </View>
         )}
         <View style={[styles.replyBubble, isMe && styles.replyBubbleMe]}>
@@ -134,9 +173,13 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         </View>
         {isMe && (
           <View style={[styles.replyAvatar, styles.replyAvatarMe]}>
-            <Text style={[styles.replyAvatarText, styles.replyAvatarTextMe]}>
-              {`${profile?.firstName?.charAt(0) ?? ''}${profile?.lastName?.charAt(0) ?? ''}`.toUpperCase()}
-            </Text>
+            {profile?.photoURL ? (
+              <Image source={{ uri: profile.photoURL }} style={styles.replyAvatarImage} />
+            ) : (
+              <Text style={[styles.replyAvatarText, styles.replyAvatarTextMe]}>
+                {`${profile?.firstName?.charAt(0) ?? ''}${profile?.lastName?.charAt(0) ?? ''}`.toUpperCase()}
+              </Text>
+            )}
           </View>
         )}
       </View>
@@ -153,7 +196,14 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backText}>←</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>Discussion</Text>
+        <Text style={styles.headerTitle} numberOfLines={1}>{t('discussion.title')}</Text>
+        <TouchableOpacity onPress={handleSave} style={styles.saveBtn}>
+          <Ionicons
+            name={isSaved ? 'bookmark' : 'bookmark-outline'}
+            size={22}
+            color={isSaved ? Colors.primary : Colors.textSecondary}
+          />
+        </TouchableOpacity>
       </View>
 
       {loading ? (
@@ -166,9 +216,13 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
             <View style={styles.questionBlock}>
               <View style={styles.questionAuthorRow}>
                 <View style={styles.qAvatar}>
-                  <Text style={styles.qAvatarText}>
-                    {discussion.authorName?.charAt(0).toUpperCase()}
-                  </Text>
+                  {discussion.authorPhoto ? (
+                    <Image source={{ uri: discussion.authorPhoto }} style={styles.qAvatarImage} />
+                  ) : (
+                    <Text style={styles.qAvatarText}>
+                      {discussion.authorName?.charAt(0).toUpperCase()}
+                    </Text>
+                  )}
                 </View>
                 <View>
                   <Text style={styles.qAuthorName}>{discussion.authorName}</Text>
@@ -189,7 +243,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
             contentContainerStyle={styles.repliesList}
             ListEmptyComponent={
               <View style={styles.emptyReplies}>
-                <Text style={styles.emptyText}>Be the first to reply 💬</Text>
+                <Text style={styles.emptyText}>{t('discussion.firstReply')}</Text>
               </View>
             }
           />
@@ -199,7 +253,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       <View style={styles.inputBar}>
         <TextInput
           style={styles.input}
-          placeholder="Write a reply..."
+          placeholder={t('discussion.replyPlaceholder')}
           placeholderTextColor={Colors.textSecondary}
           value={text}
           onChangeText={setText}
@@ -242,6 +296,7 @@ const styles = StyleSheet.create({
     color: Colors.textPrimary,
     flex: 1,
   },
+  saveBtn: { padding: 4 },
   center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   questionBlock: {
     backgroundColor: Colors.surface,
@@ -263,6 +318,8 @@ const styles = StyleSheet.create({
     fontWeight: Typography.fontWeightBold,
     color: Colors.primary,
   },
+  qAvatarImage: { width: 40, height: 40, borderRadius: 20 },
+  replyAvatarImage: { width: 32, height: 32, borderRadius: 16 },
   qAuthorName: {
     fontSize: Typography.fontSizeMD,
     fontWeight: Typography.fontWeightSemiBold,

@@ -11,26 +11,44 @@
     "nationality": "Your Nationality",
     "location": "Your Location",
     "next": "Next",
-    "finish": "Let's Go"
+    "finish": "Let's Go",
+    "alreadyHaveAccount": "Already have an account? Log in",
+    "noAccount": "Don't have an account? Sign up",
+    "onboardingTitle": "One last step 👋",
+    "onboardingSubtitle": "Tell us about yourself so we can show you the right discussions.",
+    "selectNationality": "Select nationality...",
+    "selectLocation": "Select your country...",
+    "selectNationalityTitle": "Select Nationality",
+    "selectLocationTitle": "Select Location",
+    "search": "Search..."
   },
   "feed": {
     "title": "Feed",
     "empty": "No discussions yet. Be the first!",
-    "replies": "{{count}} replies"
+    "replies_one": "{{count}} reply",
+    "replies_other": "{{count}} replies"
+  },
+  "discussion": {
+    "title": "Discussion",
+    "firstReply": "Be the first to reply 💬",
+    "replyPlaceholder": "Write a reply..."
+  },
+  "newDiscussion": {
+    "title": "New Discussion",
+    "placeholder": "What's on your mind?",
+    "post": "Post"
   },
   "notifications": {
     "title": "Notifications",
     "empty": "No notifications yet",
     "replied": "replied to your discussion"
   },
-  "newDiscussion": {
-    "placeholder": "What's on your mind?",
-    "post": "Post"
-  },
   "profile": {
     "title": "Profile",
     "myDiscussions": "My Discussions",
     "saved": "Saved",
+    "noDiscussions": "No discussions yet",
+    "noSaved": "No saved discussions",
     "languages": "Languages",
     "addLanguage": "Add Language",
     "settings": "Settings",
@@ -38,10 +56,18 @@
   },
   "settings": {
     "title": "Settings",
+    "editProfile": "Edit Profile",
     "language": "App Language",
     "theme": "Theme",
     "notifications": "Notifications",
     "privacy": "Privacy",
     "about": "About yOdin"
+  },
+  "editProfile": {
+    "title": "Edit Profile",
+    "nationality": "Nationality",
+    "location": "Location",
+    "save": "Save Changes",
+    "saving": "Saving..."
   }
 }

@@ -11,26 +11,44 @@
     "nationality": "Milliyyətiniz",
     "location": "Yeriniz",
     "next": "İrəli",
-    "finish": "Başlayaq"
+    "finish": "Başlayaq",
+    "alreadyHaveAccount": "Hesabınız var? Daxil olun",
+    "noAccount": "Hesabınız yoxdur? Qeydiyyatdan keçin",
+    "onboardingTitle": "Son addım 👋",
+    "onboardingSubtitle": "Özünüz haqqında məlumat verin ki, düzgün müzakirələri göstərək.",
+    "selectNationality": "Milliyyəti seçin...",
+    "selectLocation": "Ölkəni seçin...",
+    "selectNationalityTitle": "Milliyyət seçin",
+    "selectLocationTitle": "Ölkə seçin",
+    "search": "Axtar..."
   },
   "feed": {
     "title": "Lent",
     "empty": "Hələ müzakirə yoxdur. İlk ol!",
-    "replies": "{{count}} cavab"
+    "replies_one": "{{count}} cavab",
+    "replies_other": "{{count}} cavab"
+  },
+  "discussion": {
+    "title": "Müzakirə",
+    "firstReply": "Cavab verən ilk sən ol 💬",
+    "replyPlaceholder": "Cavab yaz..."
+  },
+  "newDiscussion": {
+    "title": "Yeni müzakirə",
+    "placeholder": "Nə düşünürsən?",
+    "post": "Paylaş"
   },
   "notifications": {
     "title": "Bildirişlər",
     "empty": "Hələ bildiriş yoxdur",
     "replied": "müzakirənizə cavab verdi"
   },
-  "newDiscussion": {
-    "placeholder": "Nə düşünürsən?",
-    "post": "Paylaş"
-  },
   "profile": {
     "title": "Profil",
     "myDiscussions": "Müzakirələrim",
     "saved": "Saxlanılanlar",
+    "noDiscussions": "Hələ müzakirə yoxdur",
+    "noSaved": "Saxlanılan müzakirə yoxdur",
     "languages": "Dillər",
     "addLanguage": "Dil əlavə et",
     "settings": "Parametrlər",
@@ -38,10 +56,18 @@
   },
   "settings": {
     "title": "Parametrlər",
+    "editProfile": "Profili redaktə et",
     "language": "Tətbiq dili",
     "theme": "Tema",
     "notifications": "Bildirişlər",
     "privacy": "Məxfilik",
     "about": "yOdin haqqında"
+  },
+  "editProfile": {
+    "title": "Profili redaktə et",
+    "nationality": "Milliyyət",
+    "location": "Yer",
+    "save": "Yadda saxla",
+    "saving": "Saxlanılır..."
   }
 }

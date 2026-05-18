@@ -11,6 +11,8 @@ interface FeedState {
   setLoading: (v: boolean) => void;
   setHasMore: (v: boolean) => void;
   incrementReplyCount: (discussionId: string) => void;
+  toggleSaved: (discussionId: string, userId: string) => void;
+  removeDiscussion: (discussionId: string) => void;
 }
 
 export const useFeedStore = create<FeedState>((set) => ({
@@ -29,5 +31,21 @@ export const useFeedStore = create<FeedState>((set) => ({
       discussions: state.discussions.map((d) =>
         d.id === discussionId ? { ...d, replyCount: d.replyCount + 1 } : d,
       ),
+    })),
+  toggleSaved: (discussionId, userId) =>
+    set((state) => ({
+      discussions: state.discussions.map((d) => {
+        if (d.id !== discussionId) return d;
+        const savedBy = d.savedBy ?? [];
+        const isSaved = savedBy.includes(userId);
+        return {
+          ...d,
+          savedBy: isSaved ? savedBy.filter((id) => id !== userId) : [...savedBy, userId],
+        };
+      }),
+    })),
+  removeDiscussion: (discussionId) =>
+    set((state) => ({
+      discussions: state.discussions.filter((d) => d.id !== discussionId),
     })),
 }));

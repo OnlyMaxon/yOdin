@@ -17,16 +17,21 @@ export default function RootNavigator() {
   const { profile, setProfile } = useAuthStore();
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (user: User | null) => {
-      if (!user) {
-        setAppState('auth');
-        return;
-      }
-      const p = await getUserProfile(user.uid);
-      setProfile(p);
-      setAppState(p?.nationality ? 'main' : 'onboarding');
+    let unsub: (() => void) | null = null;
+
+    auth.authStateReady().then(() => {
+      unsub = onAuthStateChanged(auth, async (user: User | null) => {
+        if (!user) {
+          setAppState('auth');
+          return;
+        }
+        const p = await getUserProfile(user.uid);
+        setProfile(p);
+        setAppState(p?.nationality ? 'main' : 'onboarding');
+      });
     });
-    return unsub;
+
+    return () => unsub?.();
   }, []);
 
   useEffect(() => {

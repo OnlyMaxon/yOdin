@@ -11,6 +11,7 @@ import {
   serverTimestamp,
   doc,
   updateDoc,
+  deleteDoc,
   arrayUnion,
   arrayRemove,
   increment,
@@ -81,4 +82,8 @@ export async function unsaveDiscussion(userId: string, discussionId: string): Pr
   await updateDoc(doc(db, 'discussions', discussionId), {
     savedBy: arrayRemove(userId),
   });
+}
+
+export async function deleteDiscussion(discussionId: string): Promise<void> {
+  await deleteDoc(doc(db, 'discussions', discussionId));
 }
