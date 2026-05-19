@@ -1,6 +1,6 @@
 export type AuthStackParamList = {
   Welcome: undefined;
-  Register: undefined;
+  Register: { mode: 'login' | 'register' };
   Onboarding: undefined;
 };
 

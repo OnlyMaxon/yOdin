@@ -68,7 +68,11 @@ export async function fetchUserDiscussions(uid: string): Promise<Discussion[]> {
 
 export async function fetchSavedDiscussions(uid: string): Promise<Discussion[]> {
   const snap = await getDocs(
-    query(collection(db, 'discussions'), where('savedBy', 'array-contains', uid)),
+    query(
+      collection(db, 'discussions'),
+      where('savedBy', 'array-contains', uid),
+      orderBy('createdAt', 'desc'),
+    ),
   );
   return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Discussion));
 }

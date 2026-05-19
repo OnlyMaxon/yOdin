@@ -62,6 +62,7 @@ export default function OnboardingScreen() {
       setProfile(fullProfile);
     } catch (e) {
       setError(getErrorMessage(e, t));
+    } finally {
       setLoading(false);
     }
   }

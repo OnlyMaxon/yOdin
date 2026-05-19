@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -58,11 +58,13 @@ export default function ProfileScreen() {
     }, [profile?.uid]),
   );
 
-  Animated.timing(menuAnim, {
-    toValue: menuVisible ? 0 : -SCREEN_WIDTH * 0.7,
-    duration: 280,
-    useNativeDriver: true,
-  }).start();
+  useEffect(() => {
+    Animated.timing(menuAnim, {
+      toValue: menuVisible ? 0 : -SCREEN_WIDTH * 0.7,
+      duration: 280,
+      useNativeDriver: true,
+    }).start();
+  }, [menuVisible]);
 
   async function loadDiscussions() {
     if (!profile?.uid) return;

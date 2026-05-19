@@ -40,6 +40,7 @@ export interface Reply {
 export interface AppNotification {
   id: string;
   type: 'reply';
+  toUserId: string;
   fromUserId: string;
   fromUserName: string;
   fromUserPhoto?: string;

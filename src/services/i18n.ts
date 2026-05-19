@@ -38,7 +38,7 @@ AsyncStorage.getItem(LANG_STORAGE_KEY).then((saved) => {
 
 export async function setAppLanguage(lang: AppLang) {
   await i18n.changeLanguage(lang);
-  AsyncStorage.setItem(LANG_STORAGE_KEY, lang);
+  await AsyncStorage.setItem(LANG_STORAGE_KEY, lang);
 }
 
 export default i18n;
