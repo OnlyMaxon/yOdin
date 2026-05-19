@@ -22,6 +22,7 @@ import { logoutUser, updateUserProfile } from '../services/authService';
 import { uploadAvatar } from '../services/storageService';
 import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDiscussions } from '../services/discussionService';
 import { setAppLanguage } from '../services/i18n';
+import type { AppLang } from '../services/i18n';
 import { useThemeStore, ThemePreference } from '../store/useThemeStore';
 import { useTheme } from '../hooks/useTheme';
 import { useAuthStore } from '../store/useAuthStore';
@@ -64,7 +65,7 @@ const LANGUAGES = [
 ] as const;
 
 export default function ProfileScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
   const preference = useThemeStore((s) => s.preference);
@@ -79,6 +80,7 @@ export default function ProfileScreen() {
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [photoError, setPhotoError] = useState('');
   const [langModal, setLangModal] = useState(false);
+  const [langSearch, setLangSearch] = useState('');
   const [themeModal, setThemeModal] = useState(false);
   const [privacyModal, setPrivacyModal] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
@@ -345,34 +347,40 @@ export default function ProfileScreen() {
       <Animated.View style={[styles.menu, { transform: [{ translateX: menuAnim }] }]}>
         <Text style={styles.menuTitle}>{t('settings.title')}</Text>
 
-        <TouchableOpacity style={styles.menuItem} onPress={openEditProfile}>
-          <Text style={styles.menuItemEmoji}>✏️</Text>
-          <Text style={styles.menuItemText}>{t('settings.editProfile')}</Text>
-        </TouchableOpacity>
+        <View style={styles.menuGroup}>
+          <TouchableOpacity style={styles.menuItem} onPress={openEditProfile}>
+            <Ionicons name="person-outline" size={20} color={colors.primary} />
+            <Text style={styles.menuItemText}>{t('settings.editProfile')}</Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={() => { setMenuVisible(false); setLangModal(true); }}>
-          <Text style={styles.menuItemEmoji}>🌐</Text>
-          <Text style={styles.menuItemText}>{t('settings.language')}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => { setMenuVisible(false); setLangModal(true); }}>
+            <Ionicons name="globe-outline" size={20} color={colors.primary} />
+            <Text style={styles.menuItemText}>{t('settings.language')}</Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={() => { setMenuVisible(false); setThemeModal(true); }}>
-          <Text style={styles.menuItemEmoji}>🌙</Text>
-          <Text style={styles.menuItemText}>{t('settings.theme')}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => { setMenuVisible(false); setThemeModal(true); }}>
+            <Ionicons name="contrast-outline" size={20} color={colors.primary} />
+            <Text style={styles.menuItemText}>{t('settings.theme')}</Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.menuItem} onPress={() => { setMenuVisible(false); setPrivacyModal(true); }}>
-          <Text style={styles.menuItemEmoji}>🔒</Text>
-          <Text style={styles.menuItemText}>{t('settings.privacy')}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={() => { setMenuVisible(false); setPrivacyModal(true); }}>
+            <Ionicons name="shield-checkmark-outline" size={20} color={colors.primary} />
+            <Text style={styles.menuItemText}>{t('settings.privacy')}</Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} />
+          </TouchableOpacity>
+        </View>
 
-        <View style={styles.menuDivider} />
-
-        <TouchableOpacity style={styles.menuItem} onPress={handleLogout}>
-          <Text style={styles.menuItemEmoji}>🚪</Text>
-          <Text style={[styles.menuItemText, { color: colors.notification }]}>
-            {t('profile.logout')}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.menuGroup}>
+          <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={handleLogout}>
+            <Ionicons name="log-out-outline" size={20} color={colors.notification} />
+            <Text style={[styles.menuItemText, { color: colors.notification }]}>
+              {t('profile.logout')}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </Animated.View>
 
       {/* Edit Profile */}
@@ -486,22 +494,46 @@ export default function ProfileScreen() {
       </Modal>
 
       {/* Language picker */}
-      <Modal visible={langModal} transparent animationType="fade" onRequestClose={() => setLangModal(false)}>
-        <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setLangModal(false)}>
-          <View style={styles.langSheet}>
-            <Text style={styles.langTitle}>{t('settings.language')}</Text>
-            {(LANGUAGES).map((lang) => (
-              <TouchableOpacity
-                key={lang.code}
-                style={styles.langItem}
-                onPress={() => { setAppLanguage(lang.code); setLangModal(false); }}
-              >
-                <Text style={styles.langFlag}>{lang.flag}</Text>
-                <Text style={styles.langLabel}>{lang.label}</Text>
-              </TouchableOpacity>
-            ))}
+      <Modal
+        visible={langModal}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => { setLangModal(false); setLangSearch(''); }}
+      >
+        <View style={styles.editSheet}>
+          <View style={styles.editHeader}>
+            <TouchableOpacity onPress={() => { setLangModal(false); setLangSearch(''); }}>
+              <Ionicons name="close" size={24} color={colors.textSecondary} />
+            </TouchableOpacity>
+            <Text style={styles.editTitle}>{t('settings.language')}</Text>
+            <View style={{ width: 24 }} />
           </View>
-        </TouchableOpacity>
+          <TextInput
+            style={styles.editSearch}
+            placeholder={t('auth.search')}
+            placeholderTextColor={colors.textSecondary}
+            value={langSearch}
+            onChangeText={setLangSearch}
+            autoCorrect={false}
+          />
+          <FlatList
+            data={LANGUAGES.filter((l) => l.label.toLowerCase().includes(langSearch.toLowerCase()))}
+            keyExtractor={(item) => item.code}
+            keyboardShouldPersistTaps="handled"
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={styles.countryItem}
+                onPress={() => { setAppLanguage(item.code as AppLang); setLangModal(false); setLangSearch(''); }}
+              >
+                <Text style={styles.countryFlag}>{item.flag}</Text>
+                <Text style={styles.countryName}>{item.label}</Text>
+                {i18n.language === item.code && (
+                  <Ionicons name="checkmark" size={20} color={colors.primary} style={{ marginLeft: 'auto' }} />
+                )}
+              </TouchableOpacity>
+            )}
+          />
+        </View>
       </Modal>
 
       {/* Theme picker */}
@@ -687,19 +719,34 @@ function makeStyles(c: ColorPalette) {
       elevation: 8,
     },
     menuTitle: {
-      fontSize: Typography.fontSizeXL,
+      fontSize: Typography.fontSizeLG,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
-      marginBottom: 32,
+      marginBottom: 20,
+    },
+    menuGroup: {
+      backgroundColor: c.background,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: c.border,
+      marginBottom: 12,
+      overflow: 'hidden',
     },
     menuItem: {
       flexDirection: 'row',
       alignItems: 'center',
-      paddingVertical: 16,
-      gap: 16,
+      paddingVertical: 14,
+      paddingHorizontal: 16,
+      gap: 14,
+      backgroundColor: c.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: c.border,
     },
-    menuItemEmoji: { fontSize: 20 },
+    menuItemLast: {
+      borderBottomWidth: 0,
+    },
     menuItemText: {
+      flex: 1,
       fontSize: Typography.fontSizeMD,
       color: c.textPrimary,
       fontWeight: Typography.fontWeightMedium,

@@ -48,7 +48,7 @@ export default function OnboardingScreen() {
 
   async function handleFinish() {
     if (!nationality || !location) {
-      setError('Please select both your nationality and location.');
+      setError(t('errors.selectNationalityAndLocation'));
       return;
     }
     const uid = auth.currentUser?.uid;
@@ -64,7 +64,8 @@ export default function OnboardingScreen() {
       const fullProfile = await getUserProfile(uid);
       setProfile(fullProfile);
     } catch (e) {
-      setError(getErrorMessage(e));
+      setError(getErrorMessage(e, t));
+    } finally {
       setLoading(false);
     }
   }
