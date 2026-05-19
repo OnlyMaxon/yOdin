@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "به yOdin خوش آمدید",
+    "subtitle": "در فرهنگ‌های مختلف ارتباط برقرار کنید",
+    "login": "ورود",
+    "register": "ایجاد حساب",
+    "email": "ایمیل",
+    "password": "رمز عبور",
+    "firstName": "نام",
+    "lastName": "نام خانوادگی",
+    "nationality": "ملیت شما",
+    "location": "موقعیت شما",
+    "next": "بعدی",
+    "finish": "بزن بریم",
+    "alreadyHaveAccount": "حساب دارید؟ وارد شوید",
+    "noAccount": "حساب ندارید؟ ثبت نام کنید",
+    "onboardingTitle": "آخرین مرحله 👋",
+    "onboardingSubtitle": "درباره خودتان بگویید تا بحث‌های مناسب را نشان دهیم.",
+    "selectNationality": "ملیت را انتخاب کنید...",
+    "selectLocation": "کشورتان را انتخاب کنید...",
+    "selectNationalityTitle": "انتخاب ملیت",
+    "selectLocationTitle": "انتخاب موقعیت",
+    "search": "جستجو..."
+  },
+  "feed": {
+    "title": "فید",
+    "empty": "هنوز بحثی نیست. اولین نفر باشید!",
+    "replies_one": "{{count}} پاسخ",
+    "replies_other": "{{count}} پاسخ"
+  },
+  "discussion": {
+    "title": "بحث",
+    "firstReply": "اولین نفری باشید که پاسخ می‌دهد 💬",
+    "replyPlaceholder": "پاسخ بنویسید..."
+  },
+  "newDiscussion": {
+    "title": "بحث جدید",
+    "placeholder": "چه فکری در سرتان است؟",
+    "post": "ارسال"
+  },
+  "notifications": {
+    "title": "اعلان‌ها",
+    "empty": "هنوز اعلانی نیست",
+    "replied": "به بحث شما پاسخ داد"
+  },
+  "profile": {
+    "title": "پروفایل",
+    "myDiscussions": "بحث‌های من",
+    "saved": "ذخیره‌شده",
+    "noDiscussions": "هنوز بحثی نیست",
+    "noSaved": "بحثی ذخیره نشده",
+    "languages": "زبان‌ها",
+    "addLanguage": "افزودن زبان",
+    "settings": "تنظیمات",
+    "logout": "خروج"
+  },
+  "settings": {
+    "title": "تنظیمات",
+    "editProfile": "ویرایش پروفایل",
+    "language": "زبان برنامه",
+    "theme": "پوسته",
+    "themeSystem": "سیستم",
+    "themeLight": "روشن",
+    "themeDark": "تاریک",
+    "notifications": "اعلان‌ها",
+    "privacy": "حریم خصوصی",
+    "about": "درباره yOdin"
+  },
+  "editProfile": {
+    "title": "ویرایش پروفایل",
+    "nationality": "ملیت",
+    "location": "موقعیت",
+    "save": "ذخیره تغییرات",
+    "saving": "در حال ذخیره..."
+  },
+  "deleteDiscussion": {
+    "title": "حذف بحث",
+    "message": "آیا مطمئن هستید که می‌خواهید این بحث را حذف کنید؟",
+    "cancel": "لغو",
+    "delete": "حذف"
+  },
+  "time": {
+    "justNow": "همین الان",
+    "minutesAgo": "{{count}} دقیقه پیش",
+    "hoursAgo": "{{count}} ساعت پیش",
+    "daysAgo": "{{count}} روز پیش"
+  },
+  "errors": {
+    "generic": "مشکلی پیش آمد. لطفاً دوباره تلاش کنید.",
+    "emailAlreadyInUse": "این ایمیل قبلاً ثبت شده.",
+    "invalidEmail": "آدرس ایمیل نامعتبر است.",
+    "weakPassword": "رمز عبور باید حداقل ۶ کاراکتر باشد.",
+    "userNotFound": "حسابی با این ایمیل یافت نشد.",
+    "wrongPassword": "ایمیل یا رمز عبور اشتباه است.",
+    "invalidCredential": "ایمیل یا رمز عبور اشتباه است.",
+    "tooManyRequests": "تلاش‌های زیادی انجام شده. لطفاً بعداً دوباره تلاش کنید.",
+    "networkRequestFailed": "اتصال اینترنت وجود ندارد.",
+    "userDisabled": "این حساب غیرفعال شده.",
+    "fillAllFields": "لطفاً همه فیلدها را پر کنید.",
+    "enterName": "لطفاً نام خود را وارد کنید.",
+    "selectNationalityAndLocation": "لطفاً ملیت و موقعیت خود را انتخاب کنید.",
+    "writeQuestion": "لطفاً سوال خود را بنویسید.",
+    "photoUploadFailed": "آپلود عکس ناموفق بود. لطفاً دوباره تلاش کنید."
+  }
+}

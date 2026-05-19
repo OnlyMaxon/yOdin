@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Welkom bij yOdin",
+    "subtitle": "Verbind je over culturen heen",
+    "login": "Inloggen",
+    "register": "Account aanmaken",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "nationality": "Jouw nationaliteit",
+    "location": "Jouw locatie",
+    "next": "Volgende",
+    "finish": "Aan de slag",
+    "alreadyHaveAccount": "Al een account? Inloggen",
+    "noAccount": "Geen account? Registreren",
+    "onboardingTitle": "Laatste stap 👋",
+    "onboardingSubtitle": "Vertel ons over jezelf zodat we je de juiste discussies kunnen tonen.",
+    "selectNationality": "Selecteer nationaliteit...",
+    "selectLocation": "Selecteer jouw land...",
+    "selectNationalityTitle": "Selecteer Nationaliteit",
+    "selectLocationTitle": "Selecteer Locatie",
+    "search": "Zoeken..."
+  },
+  "feed": {
+    "title": "Feed",
+    "empty": "Nog geen discussies. Wees de eerste!",
+    "replies_one": "{{count}} reactie",
+    "replies_other": "{{count}} reacties"
+  },
+  "discussion": {
+    "title": "Discussie",
+    "firstReply": "Wees de eerste om te reageren 💬",
+    "replyPlaceholder": "Schrijf een reactie..."
+  },
+  "newDiscussion": {
+    "title": "Nieuwe Discussie",
+    "placeholder": "Wat heb je op je gedachten?",
+    "post": "Plaatsen"
+  },
+  "notifications": {
+    "title": "Meldingen",
+    "empty": "Nog geen meldingen",
+    "replied": "heeft gereageerd op jouw discussie"
+  },
+  "profile": {
+    "title": "Profiel",
+    "myDiscussions": "Mijn Discussies",
+    "saved": "Opgeslagen",
+    "noDiscussions": "Nog geen discussies",
+    "noSaved": "Geen opgeslagen discussies",
+    "languages": "Talen",
+    "addLanguage": "Taal toevoegen",
+    "settings": "Instellingen",
+    "logout": "Uitloggen"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "editProfile": "Profiel bewerken",
+    "language": "App-taal",
+    "theme": "Thema",
+    "themeSystem": "Systeem",
+    "themeLight": "Licht",
+    "themeDark": "Donker",
+    "notifications": "Meldingen",
+    "privacy": "Privacy",
+    "about": "Over yOdin"
+  },
+  "editProfile": {
+    "title": "Profiel bewerken",
+    "nationality": "Nationaliteit",
+    "location": "Locatie",
+    "save": "Wijzigingen opslaan",
+    "saving": "Opslaan..."
+  },
+  "deleteDiscussion": {
+    "title": "Discussie verwijderen",
+    "message": "Weet je zeker dat je deze discussie wilt verwijderen?",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen"
+  },
+  "time": {
+    "justNow": "zojuist",
+    "minutesAgo": "{{count}} min geleden",
+    "hoursAgo": "{{count}} uur geleden",
+    "daysAgo": "{{count}} dagen geleden"
+  },
+  "errors": {
+    "generic": "Er is iets misgegaan. Probeer het opnieuw.",
+    "emailAlreadyInUse": "Dit e-mailadres is al geregistreerd.",
+    "invalidEmail": "Ongeldig e-mailadres.",
+    "weakPassword": "Wachtwoord moet minimaal 6 tekens bevatten.",
+    "userNotFound": "Geen account gevonden met dit e-mailadres.",
+    "wrongPassword": "Onjuist e-mailadres of wachtwoord.",
+    "invalidCredential": "Onjuist e-mailadres of wachtwoord.",
+    "tooManyRequests": "Te veel pogingen. Probeer het later opnieuw.",
+    "networkRequestFailed": "Geen internetverbinding.",
+    "userDisabled": "Dit account is uitgeschakeld.",
+    "fillAllFields": "Vul alle velden in.",
+    "enterName": "Voer je naam in.",
+    "selectNationalityAndLocation": "Selecteer je nationaliteit en locatie.",
+    "writeQuestion": "Schrijf je vraag.",
+    "photoUploadFailed": "Foto uploaden mislukt. Probeer het opnieuw."
+  }
+}

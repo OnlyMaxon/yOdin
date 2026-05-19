@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Bem-vindo ao yOdin",
+    "subtitle": "Conecte-se entre culturas",
+    "login": "Entrar",
+    "register": "Criar conta",
+    "email": "E-mail",
+    "password": "Senha",
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "nationality": "Sua nacionalidade",
+    "location": "Sua localização",
+    "next": "Próximo",
+    "finish": "Vamos lá",
+    "alreadyHaveAccount": "Já tem uma conta? Entrar",
+    "noAccount": "Não tem uma conta? Cadastre-se",
+    "onboardingTitle": "Último passo 👋",
+    "onboardingSubtitle": "Conte-nos sobre você para mostrar as discussões certas.",
+    "selectNationality": "Selecione a nacionalidade...",
+    "selectLocation": "Selecione seu país...",
+    "selectNationalityTitle": "Selecionar Nacionalidade",
+    "selectLocationTitle": "Selecionar Localização",
+    "search": "Buscar..."
+  },
+  "feed": {
+    "title": "Feed",
+    "empty": "Nenhuma discussão ainda. Seja o primeiro!",
+    "replies_one": "{{count}} resposta",
+    "replies_other": "{{count}} respostas"
+  },
+  "discussion": {
+    "title": "Discussão",
+    "firstReply": "Seja o primeiro a responder 💬",
+    "replyPlaceholder": "Escreva uma resposta..."
+  },
+  "newDiscussion": {
+    "title": "Nova Discussão",
+    "placeholder": "O que está pensando?",
+    "post": "Publicar"
+  },
+  "notifications": {
+    "title": "Notificações",
+    "empty": "Nenhuma notificação ainda",
+    "replied": "respondeu à sua discussão"
+  },
+  "profile": {
+    "title": "Perfil",
+    "myDiscussions": "Minhas Discussões",
+    "saved": "Salvos",
+    "noDiscussions": "Nenhuma discussão ainda",
+    "noSaved": "Nenhuma discussão salva",
+    "languages": "Idiomas",
+    "addLanguage": "Adicionar idioma",
+    "settings": "Configurações",
+    "logout": "Sair"
+  },
+  "settings": {
+    "title": "Configurações",
+    "editProfile": "Editar Perfil",
+    "language": "Idioma do app",
+    "theme": "Tema",
+    "themeSystem": "Sistema",
+    "themeLight": "Claro",
+    "themeDark": "Escuro",
+    "notifications": "Notificações",
+    "privacy": "Privacidade",
+    "about": "Sobre o yOdin"
+  },
+  "editProfile": {
+    "title": "Editar Perfil",
+    "nationality": "Nacionalidade",
+    "location": "Localização",
+    "save": "Salvar alterações",
+    "saving": "Salvando..."
+  },
+  "deleteDiscussion": {
+    "title": "Excluir Discussão",
+    "message": "Tem certeza que deseja excluir esta discussão?",
+    "cancel": "Cancelar",
+    "delete": "Excluir"
+  },
+  "time": {
+    "justNow": "agora mesmo",
+    "minutesAgo": "há {{count}} min",
+    "hoursAgo": "há {{count}} h",
+    "daysAgo": "há {{count}} d"
+  },
+  "errors": {
+    "generic": "Algo deu errado. Por favor tente novamente.",
+    "emailAlreadyInUse": "Este e-mail já está registrado.",
+    "invalidEmail": "Endereço de e-mail inválido.",
+    "weakPassword": "A senha deve ter pelo menos 6 caracteres.",
+    "userNotFound": "Nenhuma conta encontrada com este e-mail.",
+    "wrongPassword": "E-mail ou senha incorretos.",
+    "invalidCredential": "E-mail ou senha incorretos.",
+    "tooManyRequests": "Muitas tentativas. Por favor tente mais tarde.",
+    "networkRequestFailed": "Sem conexão com a internet.",
+    "userDisabled": "Esta conta foi desativada.",
+    "fillAllFields": "Por favor preencha todos os campos.",
+    "enterName": "Por favor insira seu nome.",
+    "selectNationalityAndLocation": "Por favor selecione sua nacionalidade e localização.",
+    "writeQuestion": "Por favor escreva sua pergunta.",
+    "photoUploadFailed": "Falha ao enviar foto. Por favor tente novamente."
+  }
+}

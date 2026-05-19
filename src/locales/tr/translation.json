@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "yOdin'e Hoş Geldiniz",
+    "subtitle": "Kültürler arası bağlantı",
+    "login": "Giriş Yap",
+    "register": "Hesap Oluştur",
+    "email": "E-posta",
+    "password": "Şifre",
+    "firstName": "Ad",
+    "lastName": "Soyad",
+    "nationality": "Milliyetiniz",
+    "location": "Konumunuz",
+    "next": "İleri",
+    "finish": "Hadi Başlayalım",
+    "alreadyHaveAccount": "Zaten hesabınız var mı? Giriş yapın",
+    "noAccount": "Hesabınız yok mu? Kaydolun",
+    "onboardingTitle": "Son bir adım 👋",
+    "onboardingSubtitle": "Doğru tartışmaları gösterebilmemiz için kendinizden bahsedin.",
+    "selectNationality": "Milliyet seçin...",
+    "selectLocation": "Ülkenizi seçin...",
+    "selectNationalityTitle": "Milliyet Seçin",
+    "selectLocationTitle": "Konum Seçin",
+    "search": "Ara..."
+  },
+  "feed": {
+    "title": "Akış",
+    "empty": "Henüz tartışma yok. İlk siz olun!",
+    "replies_one": "{{count}} yanıt",
+    "replies_other": "{{count}} yanıt"
+  },
+  "discussion": {
+    "title": "Tartışma",
+    "firstReply": "İlk yanıtı siz verin 💬",
+    "replyPlaceholder": "Yanıt yazın..."
+  },
+  "newDiscussion": {
+    "title": "Yeni Tartışma",
+    "placeholder": "Aklınızda ne var?",
+    "post": "Paylaş"
+  },
+  "notifications": {
+    "title": "Bildirimler",
+    "empty": "Henüz bildirim yok",
+    "replied": "tartışmanıza yanıt verdi"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Tartışmalarım",
+    "saved": "Kaydedilenler",
+    "noDiscussions": "Henüz tartışma yok",
+    "noSaved": "Kaydedilen tartışma yok",
+    "languages": "Diller",
+    "addLanguage": "Dil ekle",
+    "settings": "Ayarlar",
+    "logout": "Çıkış Yap"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "editProfile": "Profili Düzenle",
+    "language": "Uygulama Dili",
+    "theme": "Tema",
+    "themeSystem": "Sistem",
+    "themeLight": "Açık",
+    "themeDark": "Koyu",
+    "notifications": "Bildirimler",
+    "privacy": "Gizlilik",
+    "about": "yOdin Hakkında"
+  },
+  "editProfile": {
+    "title": "Profili Düzenle",
+    "nationality": "Milliyet",
+    "location": "Konum",
+    "save": "Değişiklikleri Kaydet",
+    "saving": "Kaydediliyor..."
+  },
+  "deleteDiscussion": {
+    "title": "Tartışmayı Sil",
+    "message": "Bu tartışmayı silmek istediğinizden emin misiniz?",
+    "cancel": "İptal",
+    "delete": "Sil"
+  },
+  "time": {
+    "justNow": "şimdi",
+    "minutesAgo": "{{count}} dk önce",
+    "hoursAgo": "{{count}} sa önce",
+    "daysAgo": "{{count}} gün önce"
+  },
+  "errors": {
+    "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    "emailAlreadyInUse": "Bu e-posta zaten kayıtlı.",
+    "invalidEmail": "Geçersiz e-posta adresi.",
+    "weakPassword": "Şifre en az 6 karakter olmalıdır.",
+    "userNotFound": "Bu e-postayla hesap bulunamadı.",
+    "wrongPassword": "Yanlış e-posta veya şifre.",
+    "invalidCredential": "Yanlış e-posta veya şifre.",
+    "tooManyRequests": "Çok fazla deneme. Lütfen daha sonra tekrar deneyin.",
+    "networkRequestFailed": "İnternet bağlantısı yok.",
+    "userDisabled": "Bu hesap devre dışı bırakıldı.",
+    "fillAllFields": "Lütfen tüm alanları doldurun.",
+    "enterName": "Lütfen adınızı girin.",
+    "selectNationalityAndLocation": "Lütfen milliyetinizi ve konumunuzu seçin.",
+    "writeQuestion": "Lütfen sorunuzu yazın.",
+    "photoUploadFailed": "Fotoğraf yüklenemedi. Lütfen tekrar deneyin."
+  }
+}

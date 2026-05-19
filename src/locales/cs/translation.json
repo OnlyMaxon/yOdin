@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Vítejte v yOdin",
+    "subtitle": "Spojte se napříč kulturami",
+    "login": "Přihlásit se",
+    "register": "Vytvořit účet",
+    "email": "E-mail",
+    "password": "Heslo",
+    "firstName": "Jméno",
+    "lastName": "Příjmení",
+    "nationality": "Vaše národnost",
+    "location": "Vaše poloha",
+    "next": "Další",
+    "finish": "Pojďme na to",
+    "alreadyHaveAccount": "Máte účet? Přihlaste se",
+    "noAccount": "Nemáte účet? Zaregistrujte se",
+    "onboardingTitle": "Poslední krok 👋",
+    "onboardingSubtitle": "Řekněte nám o sobě, abychom vám mohli ukázat správné diskuse.",
+    "selectNationality": "Vyberte národnost...",
+    "selectLocation": "Vyberte zemi...",
+    "selectNationalityTitle": "Vyberte národnost",
+    "selectLocationTitle": "Vyberte polohu",
+    "search": "Hledat..."
+  },
+  "feed": {
+    "title": "Přehled",
+    "empty": "Zatím žádné diskuse. Buďte první!",
+    "replies_one": "{{count}} odpověď",
+    "replies_other": "{{count}} odpovědí"
+  },
+  "discussion": {
+    "title": "Diskuse",
+    "firstReply": "Buďte první, kdo odpoví 💬",
+    "replyPlaceholder": "Napište odpověď..."
+  },
+  "newDiscussion": {
+    "title": "Nová diskuse",
+    "placeholder": "Na co myslíte?",
+    "post": "Zveřejnit"
+  },
+  "notifications": {
+    "title": "Oznámení",
+    "empty": "Zatím žádná oznámení",
+    "replied": "odpověděl na vaši diskusi"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Moje diskuse",
+    "saved": "Uložené",
+    "noDiscussions": "Zatím žádné diskuse",
+    "noSaved": "Žádné uložené diskuse",
+    "languages": "Jazyky",
+    "addLanguage": "Přidat jazyk",
+    "settings": "Nastavení",
+    "logout": "Odhlásit se"
+  },
+  "settings": {
+    "title": "Nastavení",
+    "editProfile": "Upravit profil",
+    "language": "Jazyk aplikace",
+    "theme": "Motiv",
+    "themeSystem": "Systém",
+    "themeLight": "Světlý",
+    "themeDark": "Tmavý",
+    "notifications": "Oznámení",
+    "privacy": "Soukromí",
+    "about": "O yOdin"
+  },
+  "editProfile": {
+    "title": "Upravit profil",
+    "nationality": "Národnost",
+    "location": "Poloha",
+    "save": "Uložit změny",
+    "saving": "Ukládání..."
+  },
+  "deleteDiscussion": {
+    "title": "Smazat diskusi",
+    "message": "Opravdu chcete smazat tuto diskusi?",
+    "cancel": "Zrušit",
+    "delete": "Smazat"
+  },
+  "time": {
+    "justNow": "právě teď",
+    "minutesAgo": "před {{count}} min",
+    "hoursAgo": "před {{count}} hod",
+    "daysAgo": "před {{count}} dny"
+  },
+  "errors": {
+    "generic": "Něco se pokazilo. Zkuste to prosím znovu.",
+    "emailAlreadyInUse": "Tento e-mail je již zaregistrován.",
+    "invalidEmail": "Neplatná e-mailová adresa.",
+    "weakPassword": "Heslo musí mít alespoň 6 znaků.",
+    "userNotFound": "Žádný účet s tímto e-mailem nebyl nalezen.",
+    "wrongPassword": "Nesprávný e-mail nebo heslo.",
+    "invalidCredential": "Nesprávný e-mail nebo heslo.",
+    "tooManyRequests": "Příliš mnoho pokusů. Zkuste to prosím později.",
+    "networkRequestFailed": "Žádné připojení k internetu.",
+    "userDisabled": "Tento účet byl deaktivován.",
+    "fillAllFields": "Prosím vyplňte všechna pole.",
+    "enterName": "Prosím zadejte své jméno.",
+    "selectNationalityAndLocation": "Prosím vyberte svou národnost a polohu.",
+    "writeQuestion": "Prosím napište svou otázku.",
+    "photoUploadFailed": "Nahrávání fotografie se nezdařilo. Zkuste to prosím znovu."
+  }
+}

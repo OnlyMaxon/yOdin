@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Witaj w yOdin",
+    "subtitle": "Łącz się ponad kulturami",
+    "login": "Zaloguj się",
+    "register": "Utwórz konto",
+    "email": "E-mail",
+    "password": "Hasło",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "nationality": "Twoja narodowość",
+    "location": "Twoja lokalizacja",
+    "next": "Dalej",
+    "finish": "Zaczynamy",
+    "alreadyHaveAccount": "Masz już konto? Zaloguj się",
+    "noAccount": "Nie masz konta? Zarejestruj się",
+    "onboardingTitle": "Ostatni krok 👋",
+    "onboardingSubtitle": "Powiedz nam o sobie, abyśmy mogli pokazać Ci odpowiednie dyskusje.",
+    "selectNationality": "Wybierz narodowość...",
+    "selectLocation": "Wybierz kraj...",
+    "selectNationalityTitle": "Wybierz narodowość",
+    "selectLocationTitle": "Wybierz lokalizację",
+    "search": "Szukaj..."
+  },
+  "feed": {
+    "title": "Feed",
+    "empty": "Brak dyskusji. Bądź pierwszy!",
+    "replies_one": "{{count}} odpowiedź",
+    "replies_other": "{{count}} odpowiedzi"
+  },
+  "discussion": {
+    "title": "Dyskusja",
+    "firstReply": "Bądź pierwszym, który odpowie 💬",
+    "replyPlaceholder": "Napisz odpowiedź..."
+  },
+  "newDiscussion": {
+    "title": "Nowa dyskusja",
+    "placeholder": "Co masz na myśli?",
+    "post": "Opublikuj"
+  },
+  "notifications": {
+    "title": "Powiadomienia",
+    "empty": "Brak powiadomień",
+    "replied": "odpowiedział na Twoją dyskusję"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Moje dyskusje",
+    "saved": "Zapisane",
+    "noDiscussions": "Brak dyskusji",
+    "noSaved": "Brak zapisanych dyskusji",
+    "languages": "Języki",
+    "addLanguage": "Dodaj język",
+    "settings": "Ustawienia",
+    "logout": "Wyloguj się"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "editProfile": "Edytuj profil",
+    "language": "Język aplikacji",
+    "theme": "Motyw",
+    "themeSystem": "System",
+    "themeLight": "Jasny",
+    "themeDark": "Ciemny",
+    "notifications": "Powiadomienia",
+    "privacy": "Prywatność",
+    "about": "O yOdin"
+  },
+  "editProfile": {
+    "title": "Edytuj profil",
+    "nationality": "Narodowość",
+    "location": "Lokalizacja",
+    "save": "Zapisz zmiany",
+    "saving": "Zapisywanie..."
+  },
+  "deleteDiscussion": {
+    "title": "Usuń dyskusję",
+    "message": "Czy na pewno chcesz usunąć tę dyskusję?",
+    "cancel": "Anuluj",
+    "delete": "Usuń"
+  },
+  "time": {
+    "justNow": "przed chwilą",
+    "minutesAgo": "{{count}} min temu",
+    "hoursAgo": "{{count}} godz. temu",
+    "daysAgo": "{{count}} dni temu"
+  },
+  "errors": {
+    "generic": "Coś poszło nie tak. Spróbuj ponownie.",
+    "emailAlreadyInUse": "Ten e-mail jest już zarejestrowany.",
+    "invalidEmail": "Nieprawidłowy adres e-mail.",
+    "weakPassword": "Hasło musi mieć co najmniej 6 znaków.",
+    "userNotFound": "Nie znaleziono konta z tym e-mailem.",
+    "wrongPassword": "Nieprawidłowy e-mail lub hasło.",
+    "invalidCredential": "Nieprawidłowy e-mail lub hasło.",
+    "tooManyRequests": "Zbyt wiele prób. Spróbuj ponownie później.",
+    "networkRequestFailed": "Brak połączenia z internetem.",
+    "userDisabled": "To konto zostało wyłączone.",
+    "fillAllFields": "Wypełnij wszystkie pola.",
+    "enterName": "Podaj swoje imię.",
+    "selectNationalityAndLocation": "Wybierz swoją narodowość i lokalizację.",
+    "writeQuestion": "Napisz swoje pytanie.",
+    "photoUploadFailed": "Nie udało się przesłać zdjęcia. Spróbuj ponownie."
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "yOdinへようこそ",
+    "subtitle": "文化を超えてつながろう",
+    "login": "ログイン",
+    "register": "アカウント作成",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "firstName": "名",
+    "lastName": "姓",
+    "nationality": "国籍",
+    "location": "現在地",
+    "next": "次へ",
+    "finish": "始めよう",
+    "alreadyHaveAccount": "アカウントをお持ちですか？ログイン",
+    "noAccount": "アカウントがありませんか？登録する",
+    "onboardingTitle": "最後のステップ 👋",
+    "onboardingSubtitle": "適切なディスカッションを表示するために、自己紹介をしてください。",
+    "selectNationality": "国籍を選択...",
+    "selectLocation": "国を選択...",
+    "selectNationalityTitle": "国籍を選択",
+    "selectLocationTitle": "場所を選択",
+    "search": "検索..."
+  },
+  "feed": {
+    "title": "フィード",
+    "empty": "まだディスカッションはありません。最初の投稿をしよう！",
+    "replies_one": "{{count}} 件の返信",
+    "replies_other": "{{count}} 件の返信"
+  },
+  "discussion": {
+    "title": "ディスカッション",
+    "firstReply": "最初に返信しよう 💬",
+    "replyPlaceholder": "返信を書く..."
+  },
+  "newDiscussion": {
+    "title": "新しいディスカッション",
+    "placeholder": "何を考えていますか？",
+    "post": "投稿"
+  },
+  "notifications": {
+    "title": "通知",
+    "empty": "まだ通知はありません",
+    "replied": "があなたのディスカッションに返信しました"
+  },
+  "profile": {
+    "title": "プロフィール",
+    "myDiscussions": "マイディスカッション",
+    "saved": "保存済み",
+    "noDiscussions": "まだディスカッションはありません",
+    "noSaved": "保存されたディスカッションはありません",
+    "languages": "言語",
+    "addLanguage": "言語を追加",
+    "settings": "設定",
+    "logout": "ログアウト"
+  },
+  "settings": {
+    "title": "設定",
+    "editProfile": "プロフィールを編集",
+    "language": "アプリの言語",
+    "theme": "テーマ",
+    "themeSystem": "システム",
+    "themeLight": "ライト",
+    "themeDark": "ダーク",
+    "notifications": "通知",
+    "privacy": "プライバシー",
+    "about": "yOdinについて"
+  },
+  "editProfile": {
+    "title": "プロフィールを編集",
+    "nationality": "国籍",
+    "location": "場所",
+    "save": "変更を保存",
+    "saving": "保存中..."
+  },
+  "deleteDiscussion": {
+    "title": "ディスカッションを削除",
+    "message": "このディスカッションを削除してもよろしいですか？",
+    "cancel": "キャンセル",
+    "delete": "削除"
+  },
+  "time": {
+    "justNow": "たった今",
+    "minutesAgo": "{{count}}分前",
+    "hoursAgo": "{{count}}時間前",
+    "daysAgo": "{{count}}日前"
+  },
+  "errors": {
+    "generic": "エラーが発生しました。もう一度お試しください。",
+    "emailAlreadyInUse": "このメールアドレスはすでに登録されています。",
+    "invalidEmail": "無効なメールアドレスです。",
+    "weakPassword": "パスワードは6文字以上である必要があります。",
+    "userNotFound": "このメールアドレスのアカウントが見つかりません。",
+    "wrongPassword": "メールアドレスまたはパスワードが正しくありません。",
+    "invalidCredential": "メールアドレスまたはパスワードが正しくありません。",
+    "tooManyRequests": "試行回数が多すぎます。後でもう一度お試しください。",
+    "networkRequestFailed": "インターネット接続がありません。",
+    "userDisabled": "このアカウントは無効化されています。",
+    "fillAllFields": "すべてのフィールドを入力してください。",
+    "enterName": "名前を入力してください。",
+    "selectNationalityAndLocation": "国籍と場所を選択してください。",
+    "writeQuestion": "質問を書いてください。",
+    "photoUploadFailed": "写真のアップロードに失敗しました。もう一度お試しください。"
+  }
+}

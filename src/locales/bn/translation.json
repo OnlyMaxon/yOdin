@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "yOdin-এ স্বাগতম",
+    "subtitle": "সংস্কৃতির সেতুবন্ধন করুন",
+    "login": "লগ ইন",
+    "register": "অ্যাকাউন্ট তৈরি করুন",
+    "email": "ইমেইল",
+    "password": "পাসওয়ার্ড",
+    "firstName": "প্রথম নাম",
+    "lastName": "শেষ নাম",
+    "nationality": "আপনার জাতীয়তা",
+    "location": "আপনার অবস্থান",
+    "next": "পরবর্তী",
+    "finish": "চলুন শুরু করি",
+    "alreadyHaveAccount": "ইতিমধ্যে অ্যাকাউন্ট আছে? লগ ইন করুন",
+    "noAccount": "অ্যাকাউন্ট নেই? সাইন আপ করুন",
+    "onboardingTitle": "শেষ ধাপ 👋",
+    "onboardingSubtitle": "সঠিক আলোচনা দেখাতে আমাদের আপনার সম্পর্কে বলুন।",
+    "selectNationality": "জাতীয়তা নির্বাচন করুন...",
+    "selectLocation": "আপনার দেশ নির্বাচন করুন...",
+    "selectNationalityTitle": "জাতীয়তা নির্বাচন করুন",
+    "selectLocationTitle": "অবস্থান নির্বাচন করুন",
+    "search": "অনুসন্ধান..."
+  },
+  "feed": {
+    "title": "ফিড",
+    "empty": "এখনও কোনো আলোচনা নেই। প্রথম হোন!",
+    "replies_one": "{{count}}টি উত্তর",
+    "replies_other": "{{count}}টি উত্তর"
+  },
+  "discussion": {
+    "title": "আলোচনা",
+    "firstReply": "প্রথম উত্তর দিন 💬",
+    "replyPlaceholder": "উত্তর লিখুন..."
+  },
+  "newDiscussion": {
+    "title": "নতুন আলোচনা",
+    "placeholder": "আপনি কী ভাবছেন?",
+    "post": "পোস্ট করুন"
+  },
+  "notifications": {
+    "title": "বিজ্ঞপ্তি",
+    "empty": "এখনও কোনো বিজ্ঞপ্তি নেই",
+    "replied": "আপনার আলোচনায় উত্তর দিয়েছেন"
+  },
+  "profile": {
+    "title": "প্রোফাইল",
+    "myDiscussions": "আমার আলোচনা",
+    "saved": "সংরক্ষিত",
+    "noDiscussions": "এখনও কোনো আলোচনা নেই",
+    "noSaved": "কোনো সংরক্ষিত আলোচনা নেই",
+    "languages": "ভাষা",
+    "addLanguage": "ভাষা যোগ করুন",
+    "settings": "সেটিংস",
+    "logout": "লগ আউট"
+  },
+  "settings": {
+    "title": "সেটিংস",
+    "editProfile": "প্রোফাইল সম্পাদনা",
+    "language": "অ্যাপ ভাষা",
+    "theme": "থিম",
+    "themeSystem": "সিস্টেম",
+    "themeLight": "হালকা",
+    "themeDark": "অন্ধকার",
+    "notifications": "বিজ্ঞপ্তি",
+    "privacy": "গোপনীয়তা",
+    "about": "yOdin সম্পর্কে"
+  },
+  "editProfile": {
+    "title": "প্রোফাইল সম্পাদনা",
+    "nationality": "জাতীয়তা",
+    "location": "অবস্থান",
+    "save": "পরিবর্তন সংরক্ষণ করুন",
+    "saving": "সংরক্ষণ হচ্ছে..."
+  },
+  "deleteDiscussion": {
+    "title": "আলোচনা মুছুন",
+    "message": "আপনি কি এই আলোচনা মুছতে চান?",
+    "cancel": "বাতিল",
+    "delete": "মুছুন"
+  },
+  "time": {
+    "justNow": "এইমাত্র",
+    "minutesAgo": "{{count}} মিনিট আগে",
+    "hoursAgo": "{{count}} ঘণ্টা আগে",
+    "daysAgo": "{{count}} দিন আগে"
+  },
+  "errors": {
+    "generic": "কিছু একটা ভুল হয়েছে। আবার চেষ্টা করুন।",
+    "emailAlreadyInUse": "এই ইমেইলটি ইতিমধ্যে নিবন্ধিত।",
+    "invalidEmail": "অবৈধ ইমেইল ঠিকানা।",
+    "weakPassword": "পাসওয়ার্ড কমপক্ষে ৬ অক্ষর হতে হবে।",
+    "userNotFound": "এই ইমেইলে কোনো অ্যাকাউন্ট পাওয়া যায়নি।",
+    "wrongPassword": "ভুল ইমেইল বা পাসওয়ার্ড।",
+    "invalidCredential": "ভুল ইমেইল বা পাসওয়ার্ড।",
+    "tooManyRequests": "অনেক বেশি চেষ্টা। পরে আবার চেষ্টা করুন।",
+    "networkRequestFailed": "ইন্টারনেট সংযোগ নেই।",
+    "userDisabled": "এই অ্যাকাউন্টটি নিষ্ক্রিয় করা হয়েছে।",
+    "fillAllFields": "সমস্ত ক্ষেত্র পূরণ করুন।",
+    "enterName": "আপনার নাম লিখুন।",
+    "selectNationalityAndLocation": "আপনার জাতীয়তা এবং অবস্থান উভয়ই নির্বাচন করুন।",
+    "writeQuestion": "আপনার প্রশ্ন লিখুন।",
+    "photoUploadFailed": "ছবি আপলোড ব্যর্থ। আবার চেষ্টা করুন।"
+  }
+}

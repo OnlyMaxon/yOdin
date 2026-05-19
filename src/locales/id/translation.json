@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Selamat datang di yOdin",
+    "subtitle": "Terhubung lintas budaya",
+    "login": "Masuk",
+    "register": "Buat Akun",
+    "email": "Email",
+    "password": "Kata sandi",
+    "firstName": "Nama depan",
+    "lastName": "Nama belakang",
+    "nationality": "Kebangsaan Anda",
+    "location": "Lokasi Anda",
+    "next": "Berikutnya",
+    "finish": "Ayo Mulai",
+    "alreadyHaveAccount": "Sudah punya akun? Masuk",
+    "noAccount": "Belum punya akun? Daftar",
+    "onboardingTitle": "Satu langkah lagi 👋",
+    "onboardingSubtitle": "Ceritakan tentang diri Anda agar kami bisa menampilkan diskusi yang tepat.",
+    "selectNationality": "Pilih kebangsaan...",
+    "selectLocation": "Pilih negara Anda...",
+    "selectNationalityTitle": "Pilih Kebangsaan",
+    "selectLocationTitle": "Pilih Lokasi",
+    "search": "Cari..."
+  },
+  "feed": {
+    "title": "Beranda",
+    "empty": "Belum ada diskusi. Jadilah yang pertama!",
+    "replies_one": "{{count}} balasan",
+    "replies_other": "{{count}} balasan"
+  },
+  "discussion": {
+    "title": "Diskusi",
+    "firstReply": "Jadilah yang pertama membalas 💬",
+    "replyPlaceholder": "Tulis balasan..."
+  },
+  "newDiscussion": {
+    "title": "Diskusi Baru",
+    "placeholder": "Apa yang ada di pikiran Anda?",
+    "post": "Posting"
+  },
+  "notifications": {
+    "title": "Notifikasi",
+    "empty": "Belum ada notifikasi",
+    "replied": "membalas diskusi Anda"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Diskusi Saya",
+    "saved": "Disimpan",
+    "noDiscussions": "Belum ada diskusi",
+    "noSaved": "Tidak ada diskusi tersimpan",
+    "languages": "Bahasa",
+    "addLanguage": "Tambah bahasa",
+    "settings": "Pengaturan",
+    "logout": "Keluar"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "editProfile": "Edit Profil",
+    "language": "Bahasa Aplikasi",
+    "theme": "Tema",
+    "themeSystem": "Sistem",
+    "themeLight": "Terang",
+    "themeDark": "Gelap",
+    "notifications": "Notifikasi",
+    "privacy": "Privasi",
+    "about": "Tentang yOdin"
+  },
+  "editProfile": {
+    "title": "Edit Profil",
+    "nationality": "Kebangsaan",
+    "location": "Lokasi",
+    "save": "Simpan Perubahan",
+    "saving": "Menyimpan..."
+  },
+  "deleteDiscussion": {
+    "title": "Hapus Diskusi",
+    "message": "Apakah Anda yakin ingin menghapus diskusi ini?",
+    "cancel": "Batal",
+    "delete": "Hapus"
+  },
+  "time": {
+    "justNow": "baru saja",
+    "minutesAgo": "{{count}} mnt lalu",
+    "hoursAgo": "{{count}} jam lalu",
+    "daysAgo": "{{count}} hari lalu"
+  },
+  "errors": {
+    "generic": "Terjadi kesalahan. Silakan coba lagi.",
+    "emailAlreadyInUse": "Email ini sudah terdaftar.",
+    "invalidEmail": "Alamat email tidak valid.",
+    "weakPassword": "Kata sandi harus minimal 6 karakter.",
+    "userNotFound": "Tidak ada akun dengan email ini.",
+    "wrongPassword": "Email atau kata sandi salah.",
+    "invalidCredential": "Email atau kata sandi salah.",
+    "tooManyRequests": "Terlalu banyak percobaan. Silakan coba lagi nanti.",
+    "networkRequestFailed": "Tidak ada koneksi internet.",
+    "userDisabled": "Akun ini telah dinonaktifkan.",
+    "fillAllFields": "Harap isi semua kolom.",
+    "enterName": "Harap masukkan nama Anda.",
+    "selectNationalityAndLocation": "Harap pilih kebangsaan dan lokasi Anda.",
+    "writeQuestion": "Harap tulis pertanyaan Anda.",
+    "photoUploadFailed": "Gagal mengunggah foto. Silakan coba lagi."
+  }
+}

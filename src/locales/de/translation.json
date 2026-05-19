@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Willkommen bei yOdin",
+    "subtitle": "Verbinde dich über Kulturen hinweg",
+    "login": "Anmelden",
+    "register": "Konto erstellen",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "nationality": "Deine Nationalität",
+    "location": "Dein Standort",
+    "next": "Weiter",
+    "finish": "Los geht's",
+    "alreadyHaveAccount": "Schon ein Konto? Anmelden",
+    "noAccount": "Noch kein Konto? Registrieren",
+    "onboardingTitle": "Letzter Schritt 👋",
+    "onboardingSubtitle": "Erzähl uns von dir, damit wir dir die richtigen Diskussionen zeigen.",
+    "selectNationality": "Nationalität wählen...",
+    "selectLocation": "Land wählen...",
+    "selectNationalityTitle": "Nationalität wählen",
+    "selectLocationTitle": "Standort wählen",
+    "search": "Suchen..."
+  },
+  "feed": {
+    "title": "Feed",
+    "empty": "Noch keine Diskussionen. Sei der Erste!",
+    "replies_one": "{{count}} Antwort",
+    "replies_other": "{{count}} Antworten"
+  },
+  "discussion": {
+    "title": "Diskussion",
+    "firstReply": "Sei der Erste, der antwortet 💬",
+    "replyPlaceholder": "Antwort schreiben..."
+  },
+  "newDiscussion": {
+    "title": "Neue Diskussion",
+    "placeholder": "Was denkst du?",
+    "post": "Posten"
+  },
+  "notifications": {
+    "title": "Benachrichtigungen",
+    "empty": "Noch keine Benachrichtigungen",
+    "replied": "hat auf deine Diskussion geantwortet"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Meine Diskussionen",
+    "saved": "Gespeichert",
+    "noDiscussions": "Noch keine Diskussionen",
+    "noSaved": "Keine gespeicherten Diskussionen",
+    "languages": "Sprachen",
+    "addLanguage": "Sprache hinzufügen",
+    "settings": "Einstellungen",
+    "logout": "Abmelden"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "editProfile": "Profil bearbeiten",
+    "language": "App-Sprache",
+    "theme": "Design",
+    "themeSystem": "System",
+    "themeLight": "Hell",
+    "themeDark": "Dunkel",
+    "notifications": "Benachrichtigungen",
+    "privacy": "Datenschutz",
+    "about": "Über yOdin"
+  },
+  "editProfile": {
+    "title": "Profil bearbeiten",
+    "nationality": "Nationalität",
+    "location": "Standort",
+    "save": "Änderungen speichern",
+    "saving": "Wird gespeichert..."
+  },
+  "deleteDiscussion": {
+    "title": "Diskussion löschen",
+    "message": "Bist du sicher, dass du diese Diskussion löschen möchtest?",
+    "cancel": "Abbrechen",
+    "delete": "Löschen"
+  },
+  "time": {
+    "justNow": "gerade eben",
+    "minutesAgo": "vor {{count}} Min.",
+    "hoursAgo": "vor {{count}} Std.",
+    "daysAgo": "vor {{count}} T."
+  },
+  "errors": {
+    "generic": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    "emailAlreadyInUse": "Diese E-Mail ist bereits registriert.",
+    "invalidEmail": "Ungültige E-Mail-Adresse.",
+    "weakPassword": "Das Passwort muss mindestens 6 Zeichen lang sein.",
+    "userNotFound": "Kein Konto mit dieser E-Mail gefunden.",
+    "wrongPassword": "Falsche E-Mail oder falsches Passwort.",
+    "invalidCredential": "Falsche E-Mail oder falsches Passwort.",
+    "tooManyRequests": "Zu viele Versuche. Bitte versuche es später.",
+    "networkRequestFailed": "Keine Internetverbindung.",
+    "userDisabled": "Dieses Konto wurde deaktiviert.",
+    "fillAllFields": "Bitte fülle alle Felder aus.",
+    "enterName": "Bitte gib deinen Namen ein.",
+    "selectNationalityAndLocation": "Bitte wähle deine Nationalität und deinen Standort.",
+    "writeQuestion": "Bitte schreibe deine Frage.",
+    "photoUploadFailed": "Foto-Upload fehlgeschlagen. Bitte versuche es erneut."
+  }
+}

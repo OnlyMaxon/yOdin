@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "ברוך הבא ל-yOdin",
+    "subtitle": "התחבר בין תרבויות",
+    "login": "התחבר",
+    "register": "צור חשבון",
+    "email": "אימייל",
+    "password": "סיסמה",
+    "firstName": "שם פרטי",
+    "lastName": "שם משפחה",
+    "nationality": "הלאום שלך",
+    "location": "המיקום שלך",
+    "next": "הבא",
+    "finish": "בואו נתחיל",
+    "alreadyHaveAccount": "כבר יש לך חשבון? התחבר",
+    "noAccount": "אין לך חשבון? הירשם",
+    "onboardingTitle": "צעד אחרון 👋",
+    "onboardingSubtitle": "ספר לנו על עצמך כדי שנוכל להציג לך את הדיונים הנכונים.",
+    "selectNationality": "בחר לאום...",
+    "selectLocation": "בחר את המדינה שלך...",
+    "selectNationalityTitle": "בחר לאום",
+    "selectLocationTitle": "בחר מיקום",
+    "search": "חיפוש..."
+  },
+  "feed": {
+    "title": "פיד",
+    "empty": "עדיין אין דיונים. היה הראשון!",
+    "replies_one": "תגובה {{count}}",
+    "replies_other": "{{count}} תגובות"
+  },
+  "discussion": {
+    "title": "דיון",
+    "firstReply": "היה הראשון להגיב 💬",
+    "replyPlaceholder": "כתוב תגובה..."
+  },
+  "newDiscussion": {
+    "title": "דיון חדש",
+    "placeholder": "על מה אתה חושב?",
+    "post": "פרסם"
+  },
+  "notifications": {
+    "title": "התראות",
+    "empty": "עדיין אין התראות",
+    "replied": "הגיב לדיון שלך"
+  },
+  "profile": {
+    "title": "פרופיל",
+    "myDiscussions": "הדיונים שלי",
+    "saved": "שמורים",
+    "noDiscussions": "עדיין אין דיונים",
+    "noSaved": "אין דיונים שמורים",
+    "languages": "שפות",
+    "addLanguage": "הוסף שפה",
+    "settings": "הגדרות",
+    "logout": "התנתק"
+  },
+  "settings": {
+    "title": "הגדרות",
+    "editProfile": "ערוך פרופיל",
+    "language": "שפת האפליקציה",
+    "theme": "ערכת נושא",
+    "themeSystem": "מערכת",
+    "themeLight": "בהיר",
+    "themeDark": "כהה",
+    "notifications": "התראות",
+    "privacy": "פרטיות",
+    "about": "אודות yOdin"
+  },
+  "editProfile": {
+    "title": "ערוך פרופיל",
+    "nationality": "לאום",
+    "location": "מיקום",
+    "save": "שמור שינויים",
+    "saving": "שומר..."
+  },
+  "deleteDiscussion": {
+    "title": "מחק דיון",
+    "message": "האם אתה בטוח שברצונך למחוק דיון זה?",
+    "cancel": "ביטול",
+    "delete": "מחק"
+  },
+  "time": {
+    "justNow": "עכשיו",
+    "minutesAgo": "לפני {{count}} דק'",
+    "hoursAgo": "לפני {{count}} שעות",
+    "daysAgo": "לפני {{count}} ימים"
+  },
+  "errors": {
+    "generic": "משהו השתבש. אנא נסה שוב.",
+    "emailAlreadyInUse": "האימייל הזה כבר רשום.",
+    "invalidEmail": "כתובת אימייל לא חוקית.",
+    "weakPassword": "הסיסמה חייבת להיות לפחות 6 תווים.",
+    "userNotFound": "לא נמצא חשבון עם האימייל הזה.",
+    "wrongPassword": "אימייל או סיסמה שגויים.",
+    "invalidCredential": "אימייל או סיסמה שגויים.",
+    "tooManyRequests": "יותר מדי ניסיונות. אנא נסה שוב מאוחר יותר.",
+    "networkRequestFailed": "אין חיבור לאינטרנט.",
+    "userDisabled": "חשבון זה הושבת.",
+    "fillAllFields": "אנא מלא את כל השדות.",
+    "enterName": "אנא הכנס את שמך.",
+    "selectNationalityAndLocation": "אנא בחר את הלאום והמיקום שלך.",
+    "writeQuestion": "אנא כתוב את שאלתך.",
+    "photoUploadFailed": "העלאת התמונה נכשלה. אנא נסה שוב."
+  }
+}

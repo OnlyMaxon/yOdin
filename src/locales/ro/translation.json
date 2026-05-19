@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Bun venit la yOdin",
+    "subtitle": "Conectează-te între culturi",
+    "login": "Autentificare",
+    "register": "Creează cont",
+    "email": "E-mail",
+    "password": "Parolă",
+    "firstName": "Prenume",
+    "lastName": "Nume",
+    "nationality": "Naționalitatea ta",
+    "location": "Locația ta",
+    "next": "Următorul",
+    "finish": "Să începem",
+    "alreadyHaveAccount": "Ai deja un cont? Autentifică-te",
+    "noAccount": "Nu ai cont? Înregistrează-te",
+    "onboardingTitle": "Ultimul pas 👋",
+    "onboardingSubtitle": "Spune-ne despre tine ca să îți arătăm discuțiile potrivite.",
+    "selectNationality": "Selectează naționalitatea...",
+    "selectLocation": "Selectează țara...",
+    "selectNationalityTitle": "Selectează Naționalitatea",
+    "selectLocationTitle": "Selectează Locația",
+    "search": "Caută..."
+  },
+  "feed": {
+    "title": "Flux",
+    "empty": "Nicio discuție încă. Fii primul!",
+    "replies_one": "{{count}} răspuns",
+    "replies_other": "{{count}} răspunsuri"
+  },
+  "discussion": {
+    "title": "Discuție",
+    "firstReply": "Fii primul care răspunde 💬",
+    "replyPlaceholder": "Scrie un răspuns..."
+  },
+  "newDiscussion": {
+    "title": "Discuție Nouă",
+    "placeholder": "La ce te gândești?",
+    "post": "Publică"
+  },
+  "notifications": {
+    "title": "Notificări",
+    "empty": "Nicio notificare încă",
+    "replied": "a răspuns la discuția ta"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Discuțiile mele",
+    "saved": "Salvate",
+    "noDiscussions": "Nicio discuție încă",
+    "noSaved": "Nicio discuție salvată",
+    "languages": "Limbi",
+    "addLanguage": "Adaugă limbă",
+    "settings": "Setări",
+    "logout": "Deconectare"
+  },
+  "settings": {
+    "title": "Setări",
+    "editProfile": "Editează profilul",
+    "language": "Limba aplicației",
+    "theme": "Temă",
+    "themeSystem": "Sistem",
+    "themeLight": "Deschis",
+    "themeDark": "Întunecat",
+    "notifications": "Notificări",
+    "privacy": "Confidențialitate",
+    "about": "Despre yOdin"
+  },
+  "editProfile": {
+    "title": "Editează profilul",
+    "nationality": "Naționalitate",
+    "location": "Locație",
+    "save": "Salvează modificările",
+    "saving": "Se salvează..."
+  },
+  "deleteDiscussion": {
+    "title": "Șterge discuția",
+    "message": "Ești sigur că vrei să ștergi această discuție?",
+    "cancel": "Anulează",
+    "delete": "Șterge"
+  },
+  "time": {
+    "justNow": "chiar acum",
+    "minutesAgo": "acum {{count}} min",
+    "hoursAgo": "acum {{count}} ore",
+    "daysAgo": "acum {{count}} zile"
+  },
+  "errors": {
+    "generic": "Ceva a mers greșit. Te rugăm să încerci din nou.",
+    "emailAlreadyInUse": "Acest e-mail este deja înregistrat.",
+    "invalidEmail": "Adresă de e-mail invalidă.",
+    "weakPassword": "Parola trebuie să aibă cel puțin 6 caractere.",
+    "userNotFound": "Niciun cont găsit cu acest e-mail.",
+    "wrongPassword": "E-mail sau parolă incorectă.",
+    "invalidCredential": "E-mail sau parolă incorectă.",
+    "tooManyRequests": "Prea multe încercări. Te rugăm să încerci mai târziu.",
+    "networkRequestFailed": "Fără conexiune la internet.",
+    "userDisabled": "Acest cont a fost dezactivat.",
+    "fillAllFields": "Te rugăm să completezi toate câmpurile.",
+    "enterName": "Te rugăm să introduci numele tău.",
+    "selectNationalityAndLocation": "Te rugăm să selectezi naționalitatea și locația.",
+    "writeQuestion": "Te rugăm să scrii întrebarea ta.",
+    "photoUploadFailed": "Încărcarea fotografiei a eșuat. Te rugăm să încerci din nou."
+  }
+}

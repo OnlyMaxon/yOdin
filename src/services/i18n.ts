@@ -6,8 +6,36 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import en from '../locales/en/translation.json';
 import ru from '../locales/ru/translation.json';
 import az from '../locales/az/translation.json';
+import zh from '../locales/zh/translation.json';
+import es from '../locales/es/translation.json';
+import ar from '../locales/ar/translation.json';
+import hi from '../locales/hi/translation.json';
+import pt from '../locales/pt/translation.json';
+import fr from '../locales/fr/translation.json';
+import de from '../locales/de/translation.json';
+import tr from '../locales/tr/translation.json';
+import ja from '../locales/ja/translation.json';
+import ko from '../locales/ko/translation.json';
+import it from '../locales/it/translation.json';
+import pl from '../locales/pl/translation.json';
+import uk from '../locales/uk/translation.json';
+import id from '../locales/id/translation.json';
+import nl from '../locales/nl/translation.json';
+import vi from '../locales/vi/translation.json';
+import fa from '../locales/fa/translation.json';
+import ro from '../locales/ro/translation.json';
+import cs from '../locales/cs/translation.json';
+import sv from '../locales/sv/translation.json';
+import he from '../locales/he/translation.json';
+import th from '../locales/th/translation.json';
+import ms from '../locales/ms/translation.json';
+import bn from '../locales/bn/translation.json';
 
-export const SUPPORTED_LANGS = ['en', 'ru', 'az'] as const;
+export const SUPPORTED_LANGS = [
+  'en', 'ru', 'az', 'zh', 'es', 'ar', 'hi', 'pt', 'fr', 'de',
+  'tr', 'ja', 'ko', 'it', 'pl', 'uk', 'id', 'nl', 'vi', 'fa',
+  'ro', 'cs', 'sv', 'he', 'th', 'ms', 'bn',
+] as const;
 export type AppLang = typeof SUPPORTED_LANGS[number];
 export const LANG_STORAGE_KEY = 'app_language';
 
@@ -19,6 +47,30 @@ i18n.use(initReactI18next).init({
     en: { translation: en },
     ru: { translation: ru },
     az: { translation: az },
+    zh: { translation: zh },
+    es: { translation: es },
+    ar: { translation: ar },
+    hi: { translation: hi },
+    pt: { translation: pt },
+    fr: { translation: fr },
+    de: { translation: de },
+    tr: { translation: tr },
+    ja: { translation: ja },
+    ko: { translation: ko },
+    it: { translation: it },
+    pl: { translation: pl },
+    uk: { translation: uk },
+    id: { translation: id },
+    nl: { translation: nl },
+    vi: { translation: vi },
+    fa: { translation: fa },
+    ro: { translation: ro },
+    cs: { translation: cs },
+    sv: { translation: sv },
+    he: { translation: he },
+    th: { translation: th },
+    ms: { translation: ms },
+    bn: { translation: bn },
   },
   lng: defaultLng,
   fallbackLng: 'en',
@@ -29,7 +81,6 @@ i18n.use(initReactI18next).init({
   },
 });
 
-// Apply persisted language on startup
 AsyncStorage.getItem(LANG_STORAGE_KEY).then((saved) => {
   if (saved && SUPPORTED_LANGS.includes(saved as AppLang)) {
     i18n.changeLanguage(saved);

@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Selamat datang ke yOdin",
+    "subtitle": "Berhubung merentas budaya",
+    "login": "Log Masuk",
+    "register": "Buat Akaun",
+    "email": "E-mel",
+    "password": "Kata laluan",
+    "firstName": "Nama pertama",
+    "lastName": "Nama akhir",
+    "nationality": "Kewarganegaraan anda",
+    "location": "Lokasi anda",
+    "next": "Seterusnya",
+    "finish": "Jom Mula",
+    "alreadyHaveAccount": "Sudah ada akaun? Log masuk",
+    "noAccount": "Tiada akaun? Daftar",
+    "onboardingTitle": "Satu langkah lagi 👋",
+    "onboardingSubtitle": "Ceritakan tentang diri anda supaya kami boleh tunjukkan perbincangan yang sesuai.",
+    "selectNationality": "Pilih kewarganegaraan...",
+    "selectLocation": "Pilih negara anda...",
+    "selectNationalityTitle": "Pilih Kewarganegaraan",
+    "selectLocationTitle": "Pilih Lokasi",
+    "search": "Cari..."
+  },
+  "feed": {
+    "title": "Suapan",
+    "empty": "Tiada perbincangan lagi. Jadilah yang pertama!",
+    "replies_one": "{{count}} balasan",
+    "replies_other": "{{count}} balasan"
+  },
+  "discussion": {
+    "title": "Perbincangan",
+    "firstReply": "Jadilah yang pertama membalas 💬",
+    "replyPlaceholder": "Tulis balasan..."
+  },
+  "newDiscussion": {
+    "title": "Perbincangan Baru",
+    "placeholder": "Apa yang ada di fikiran anda?",
+    "post": "Hantar"
+  },
+  "notifications": {
+    "title": "Pemberitahuan",
+    "empty": "Tiada pemberitahuan lagi",
+    "replied": "membalas perbincangan anda"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Perbincangan Saya",
+    "saved": "Disimpan",
+    "noDiscussions": "Tiada perbincangan lagi",
+    "noSaved": "Tiada perbincangan tersimpan",
+    "languages": "Bahasa",
+    "addLanguage": "Tambah bahasa",
+    "settings": "Tetapan",
+    "logout": "Log Keluar"
+  },
+  "settings": {
+    "title": "Tetapan",
+    "editProfile": "Edit Profil",
+    "language": "Bahasa Apl",
+    "theme": "Tema",
+    "themeSystem": "Sistem",
+    "themeLight": "Terang",
+    "themeDark": "Gelap",
+    "notifications": "Pemberitahuan",
+    "privacy": "Privasi",
+    "about": "Tentang yOdin"
+  },
+  "editProfile": {
+    "title": "Edit Profil",
+    "nationality": "Kewarganegaraan",
+    "location": "Lokasi",
+    "save": "Simpan Perubahan",
+    "saving": "Menyimpan..."
+  },
+  "deleteDiscussion": {
+    "title": "Padam Perbincangan",
+    "message": "Adakah anda pasti mahu memadam perbincangan ini?",
+    "cancel": "Batal",
+    "delete": "Padam"
+  },
+  "time": {
+    "justNow": "baru sahaja",
+    "minutesAgo": "{{count}} min lalu",
+    "hoursAgo": "{{count}} jam lalu",
+    "daysAgo": "{{count}} hari lalu"
+  },
+  "errors": {
+    "generic": "Sesuatu telah berlaku. Sila cuba lagi.",
+    "emailAlreadyInUse": "E-mel ini sudah didaftarkan.",
+    "invalidEmail": "Alamat e-mel tidak sah.",
+    "weakPassword": "Kata laluan mesti sekurang-kurangnya 6 aksara.",
+    "userNotFound": "Tiada akaun dijumpai dengan e-mel ini.",
+    "wrongPassword": "E-mel atau kata laluan salah.",
+    "invalidCredential": "E-mel atau kata laluan salah.",
+    "tooManyRequests": "Terlalu banyak percubaan. Sila cuba lagi kemudian.",
+    "networkRequestFailed": "Tiada sambungan internet.",
+    "userDisabled": "Akaun ini telah dinyahaktifkan.",
+    "fillAllFields": "Sila isi semua medan.",
+    "enterName": "Sila masukkan nama anda.",
+    "selectNationalityAndLocation": "Sila pilih kewarganegaraan dan lokasi anda.",
+    "writeQuestion": "Sila tulis soalan anda.",
+    "photoUploadFailed": "Gagal memuat naik foto. Sila cuba lagi."
+  }
+}

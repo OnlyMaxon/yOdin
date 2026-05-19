@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "ยินดีต้อนรับสู่ yOdin",
+    "subtitle": "เชื่อมต่อข้ามวัฒนธรรม",
+    "login": "เข้าสู่ระบบ",
+    "register": "สร้างบัญชี",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "firstName": "ชื่อ",
+    "lastName": "นามสกุล",
+    "nationality": "สัญชาติของคุณ",
+    "location": "ที่อยู่ของคุณ",
+    "next": "ถัดไป",
+    "finish": "เริ่มเลย",
+    "alreadyHaveAccount": "มีบัญชีอยู่แล้ว? เข้าสู่ระบบ",
+    "noAccount": "ยังไม่มีบัญชี? สมัครสมาชิก",
+    "onboardingTitle": "ขั้นตอนสุดท้าย 👋",
+    "onboardingSubtitle": "บอกเราเกี่ยวกับตัวคุณ เพื่อที่เราจะได้แสดงการสนทนาที่เหมาะสม",
+    "selectNationality": "เลือกสัญชาติ...",
+    "selectLocation": "เลือกประเทศของคุณ...",
+    "selectNationalityTitle": "เลือกสัญชาติ",
+    "selectLocationTitle": "เลือกที่อยู่",
+    "search": "ค้นหา..."
+  },
+  "feed": {
+    "title": "ฟีด",
+    "empty": "ยังไม่มีการสนทนา เป็นคนแรก!",
+    "replies_one": "{{count}} การตอบกลับ",
+    "replies_other": "{{count}} การตอบกลับ"
+  },
+  "discussion": {
+    "title": "การสนทนา",
+    "firstReply": "เป็นคนแรกที่ตอบกลับ 💬",
+    "replyPlaceholder": "เขียนการตอบกลับ..."
+  },
+  "newDiscussion": {
+    "title": "การสนทนาใหม่",
+    "placeholder": "คุณกำลังคิดอะไรอยู่?",
+    "post": "โพสต์"
+  },
+  "notifications": {
+    "title": "การแจ้งเตือน",
+    "empty": "ยังไม่มีการแจ้งเตือน",
+    "replied": "ตอบกลับการสนทนาของคุณ"
+  },
+  "profile": {
+    "title": "โปรไฟล์",
+    "myDiscussions": "การสนทนาของฉัน",
+    "saved": "บันทึกแล้ว",
+    "noDiscussions": "ยังไม่มีการสนทนา",
+    "noSaved": "ไม่มีการสนทนาที่บันทึก",
+    "languages": "ภาษา",
+    "addLanguage": "เพิ่มภาษา",
+    "settings": "การตั้งค่า",
+    "logout": "ออกจากระบบ"
+  },
+  "settings": {
+    "title": "การตั้งค่า",
+    "editProfile": "แก้ไขโปรไฟล์",
+    "language": "ภาษาแอป",
+    "theme": "ธีม",
+    "themeSystem": "ระบบ",
+    "themeLight": "สว่าง",
+    "themeDark": "มืด",
+    "notifications": "การแจ้งเตือน",
+    "privacy": "ความเป็นส่วนตัว",
+    "about": "เกี่ยวกับ yOdin"
+  },
+  "editProfile": {
+    "title": "แก้ไขโปรไฟล์",
+    "nationality": "สัญชาติ",
+    "location": "ที่อยู่",
+    "save": "บันทึกการเปลี่ยนแปลง",
+    "saving": "กำลังบันทึก..."
+  },
+  "deleteDiscussion": {
+    "title": "ลบการสนทนา",
+    "message": "คุณแน่ใจหรือไม่ว่าต้องการลบการสนทนานี้?",
+    "cancel": "ยกเลิก",
+    "delete": "ลบ"
+  },
+  "time": {
+    "justNow": "เมื่อกี้",
+    "minutesAgo": "{{count}} นาทีที่แล้ว",
+    "hoursAgo": "{{count}} ชั่วโมงที่แล้ว",
+    "daysAgo": "{{count}} วันที่แล้ว"
+  },
+  "errors": {
+    "generic": "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
+    "emailAlreadyInUse": "อีเมลนี้ถูกลงทะเบียนแล้ว",
+    "invalidEmail": "ที่อยู่อีเมลไม่ถูกต้อง",
+    "weakPassword": "รหัสผ่านต้องมีอย่างน้อย 6 ตัวอักษร",
+    "userNotFound": "ไม่พบบัญชีที่ใช้อีเมลนี้",
+    "wrongPassword": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+    "invalidCredential": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+    "tooManyRequests": "พยายามมากเกินไป กรุณาลองอีกครั้งในภายหลัง",
+    "networkRequestFailed": "ไม่มีการเชื่อมต่ออินเทอร์เน็ต",
+    "userDisabled": "บัญชีนี้ถูกปิดการใช้งาน",
+    "fillAllFields": "กรุณากรอกข้อมูลในทุกช่อง",
+    "enterName": "กรุณากรอกชื่อของคุณ",
+    "selectNationalityAndLocation": "กรุณาเลือกสัญชาติและที่อยู่ของคุณ",
+    "writeQuestion": "กรุณาเขียนคำถามของคุณ",
+    "photoUploadFailed": "อัปโหลดรูปภาพล้มเหลว กรุณาลองอีกครั้ง"
+  }
+}

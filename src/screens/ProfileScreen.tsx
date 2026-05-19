@@ -21,7 +21,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { logoutUser, updateUserProfile } from '../services/authService';
 import { uploadAvatar } from '../services/storageService';
 import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDiscussions } from '../services/discussionService';
-import { setAppLanguage, AppLang } from '../services/i18n';
+import { setAppLanguage } from '../services/i18n';
 import { useThemeStore, ThemePreference } from '../store/useThemeStore';
 import { useTheme } from '../hooks/useTheme';
 import { useAuthStore } from '../store/useAuthStore';
@@ -32,6 +32,36 @@ import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
+
+const LANGUAGES = [
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
+  { code: 'az', label: 'Azərbaycan', flag: '🇦🇿' },
+  { code: 'zh', label: '中文', flag: '🇨🇳' },
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'ar', label: 'العربية', flag: '🇸🇦' },
+  { code: 'hi', label: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'pt', label: 'Português', flag: '🇧🇷' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'de', label: 'Deutsch', flag: '🇩🇪' },
+  { code: 'tr', label: 'Türkçe', flag: '🇹🇷' },
+  { code: 'ja', label: '日本語', flag: '🇯🇵' },
+  { code: 'ko', label: '한국어', flag: '🇰🇷' },
+  { code: 'it', label: 'Italiano', flag: '🇮🇹' },
+  { code: 'pl', label: 'Polski', flag: '🇵🇱' },
+  { code: 'uk', label: 'Українська', flag: '🇺🇦' },
+  { code: 'id', label: 'Indonesia', flag: '🇮🇩' },
+  { code: 'nl', label: 'Nederlands', flag: '🇳🇱' },
+  { code: 'vi', label: 'Tiếng Việt', flag: '🇻🇳' },
+  { code: 'fa', label: 'فارسی', flag: '🇮🇷' },
+  { code: 'ro', label: 'Română', flag: '🇷🇴' },
+  { code: 'cs', label: 'Čeština', flag: '🇨🇿' },
+  { code: 'sv', label: 'Svenska', flag: '🇸🇪' },
+  { code: 'he', label: 'עברית', flag: '🇮🇱' },
+  { code: 'th', label: 'ภาษาไทย', flag: '🇹🇭' },
+  { code: 'ms', label: 'Melayu', flag: '🇲🇾' },
+  { code: 'bn', label: 'বাংলা', flag: '🇧🇩' },
+] as const;
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
@@ -460,11 +490,7 @@ export default function ProfileScreen() {
         <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setLangModal(false)}>
           <View style={styles.langSheet}>
             <Text style={styles.langTitle}>{t('settings.language')}</Text>
-            {([
-              { code: 'en', label: 'English', flag: '🇬🇧' },
-              { code: 'ru', label: 'Русский', flag: '🇷🇺' },
-              { code: 'az', label: 'Azərbaycan', flag: '🇦🇿' },
-            ] as { code: AppLang; label: string; flag: string }[]).map((lang) => (
+            {(LANGUAGES).map((lang) => (
               <TouchableOpacity
                 key={lang.code}
                 style={styles.langItem}

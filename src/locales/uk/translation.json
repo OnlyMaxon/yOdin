@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Ласкаво просимо до yOdin",
+    "subtitle": "Зв'язуйтесь між культурами",
+    "login": "Увійти",
+    "register": "Створити акаунт",
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище",
+    "nationality": "Ваша національність",
+    "location": "Ваше місцезнаходження",
+    "next": "Далі",
+    "finish": "Почнемо",
+    "alreadyHaveAccount": "Вже є акаунт? Увійти",
+    "noAccount": "Немає акаунту? Зареєструватися",
+    "onboardingTitle": "Останній крок 👋",
+    "onboardingSubtitle": "Розкажіть про себе, щоб ми показали вам правильні обговорення.",
+    "selectNationality": "Оберіть національність...",
+    "selectLocation": "Оберіть країну...",
+    "selectNationalityTitle": "Оберіть національність",
+    "selectLocationTitle": "Оберіть місцезнаходження",
+    "search": "Пошук..."
+  },
+  "feed": {
+    "title": "Стрічка",
+    "empty": "Ще немає обговорень. Будьте першим!",
+    "replies_one": "{{count}} відповідь",
+    "replies_other": "{{count}} відповідей"
+  },
+  "discussion": {
+    "title": "Обговорення",
+    "firstReply": "Будьте першим, хто відповість 💬",
+    "replyPlaceholder": "Напишіть відповідь..."
+  },
+  "newDiscussion": {
+    "title": "Нове обговорення",
+    "placeholder": "Що у вас на думці?",
+    "post": "Опублікувати"
+  },
+  "notifications": {
+    "title": "Сповіщення",
+    "empty": "Ще немає сповіщень",
+    "replied": "відповів на ваше обговорення"
+  },
+  "profile": {
+    "title": "Профіль",
+    "myDiscussions": "Мої обговорення",
+    "saved": "Збережені",
+    "noDiscussions": "Ще немає обговорень",
+    "noSaved": "Немає збережених обговорень",
+    "languages": "Мови",
+    "addLanguage": "Додати мову",
+    "settings": "Налаштування",
+    "logout": "Вийти"
+  },
+  "settings": {
+    "title": "Налаштування",
+    "editProfile": "Редагувати профіль",
+    "language": "Мова додатку",
+    "theme": "Тема",
+    "themeSystem": "Системна",
+    "themeLight": "Світла",
+    "themeDark": "Темна",
+    "notifications": "Сповіщення",
+    "privacy": "Конфіденційність",
+    "about": "Про yOdin"
+  },
+  "editProfile": {
+    "title": "Редагувати профіль",
+    "nationality": "Національність",
+    "location": "Місцезнаходження",
+    "save": "Зберегти зміни",
+    "saving": "Збереження..."
+  },
+  "deleteDiscussion": {
+    "title": "Видалити обговорення",
+    "message": "Ви впевнені, що хочете видалити це обговорення?",
+    "cancel": "Скасувати",
+    "delete": "Видалити"
+  },
+  "time": {
+    "justNow": "щойно",
+    "minutesAgo": "{{count}} хв тому",
+    "hoursAgo": "{{count}} год тому",
+    "daysAgo": "{{count}} д тому"
+  },
+  "errors": {
+    "generic": "Щось пішло не так. Будь ласка, спробуйте ще раз.",
+    "emailAlreadyInUse": "Ця електронна пошта вже зареєстрована.",
+    "invalidEmail": "Недійсна адреса електронної пошти.",
+    "weakPassword": "Пароль повинен містити щонайменше 6 символів.",
+    "userNotFound": "Акаунт з цією поштою не знайдено.",
+    "wrongPassword": "Неправильна електронна пошта або пароль.",
+    "invalidCredential": "Неправильна електронна пошта або пароль.",
+    "tooManyRequests": "Забагато спроб. Спробуйте пізніше.",
+    "networkRequestFailed": "Немає підключення до Інтернету.",
+    "userDisabled": "Цей акаунт було вимкнено.",
+    "fillAllFields": "Будь ласка, заповніть всі поля.",
+    "enterName": "Будь ласка, введіть ваше ім'я.",
+    "selectNationalityAndLocation": "Будь ласка, оберіть вашу національність і місцезнаходження.",
+    "writeQuestion": "Будь ласка, напишіть ваше запитання.",
+    "photoUploadFailed": "Не вдалося завантажити фото. Спробуйте ще раз."
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "مرحباً بك في yOdin",
+    "subtitle": "تواصل عبر الثقافات",
+    "login": "تسجيل الدخول",
+    "register": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "nationality": "جنسيتك",
+    "location": "موقعك",
+    "next": "التالي",
+    "finish": "هيا نبدأ",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟ سجّل دخولك",
+    "noAccount": "ليس لديك حساب؟ سجّل الآن",
+    "onboardingTitle": "خطوة أخيرة 👋",
+    "onboardingSubtitle": "أخبرنا عن نفسك لنعرض لك النقاشات المناسبة.",
+    "selectNationality": "اختر الجنسية...",
+    "selectLocation": "اختر بلدك...",
+    "selectNationalityTitle": "اختر الجنسية",
+    "selectLocationTitle": "اختر الموقع",
+    "search": "بحث..."
+  },
+  "feed": {
+    "title": "الرئيسية",
+    "empty": "لا توجد نقاشات بعد. كن الأول!",
+    "replies_one": "{{count}} رد",
+    "replies_other": "{{count}} ردود"
+  },
+  "discussion": {
+    "title": "نقاش",
+    "firstReply": "كن أول من يرد 💬",
+    "replyPlaceholder": "اكتب ردًا..."
+  },
+  "newDiscussion": {
+    "title": "نقاش جديد",
+    "placeholder": "ما الذي يدور في ذهنك؟",
+    "post": "نشر"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "empty": "لا توجد إشعارات بعد",
+    "replied": "ردّ على نقاشك"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "myDiscussions": "نقاشاتي",
+    "saved": "المحفوظات",
+    "noDiscussions": "لا توجد نقاشات بعد",
+    "noSaved": "لا توجد نقاشات محفوظة",
+    "languages": "اللغات",
+    "addLanguage": "إضافة لغة",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "editProfile": "تعديل الملف الشخصي",
+    "language": "لغة التطبيق",
+    "theme": "المظهر",
+    "themeSystem": "تلقائي",
+    "themeLight": "فاتح",
+    "themeDark": "داكن",
+    "notifications": "الإشعارات",
+    "privacy": "الخصوصية",
+    "about": "حول yOdin"
+  },
+  "editProfile": {
+    "title": "تعديل الملف الشخصي",
+    "nationality": "الجنسية",
+    "location": "الموقع",
+    "save": "حفظ التغييرات",
+    "saving": "جارٍ الحفظ..."
+  },
+  "deleteDiscussion": {
+    "title": "حذف النقاش",
+    "message": "هل أنت متأكد أنك تريد حذف هذا النقاش؟",
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  },
+  "time": {
+    "justNow": "الآن",
+    "minutesAgo": "منذ {{count}} د",
+    "hoursAgo": "منذ {{count}} س",
+    "daysAgo": "منذ {{count}} ي"
+  },
+  "errors": {
+    "generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "emailAlreadyInUse": "هذا البريد الإلكتروني مسجّل بالفعل.",
+    "invalidEmail": "عنوان البريد الإلكتروني غير صالح.",
+    "weakPassword": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
+    "userNotFound": "لم يُعثر على حساب بهذا البريد الإلكتروني.",
+    "wrongPassword": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+    "invalidCredential": "البريد الإلكتروني أو كلمة المرور غير صحيحة.",
+    "tooManyRequests": "محاولات كثيرة جداً. يرجى المحاولة لاحقاً.",
+    "networkRequestFailed": "لا يوجد اتصال بالإنترنت.",
+    "userDisabled": "تم تعطيل هذا الحساب.",
+    "fillAllFields": "يرجى ملء جميع الحقول.",
+    "enterName": "يرجى إدخال اسمك.",
+    "selectNationalityAndLocation": "يرجى تحديد جنسيتك وموقعك.",
+    "writeQuestion": "يرجى كتابة سؤالك.",
+    "photoUploadFailed": "فشل رفع الصورة. يرجى المحاولة مرة أخرى."
+  }
+}

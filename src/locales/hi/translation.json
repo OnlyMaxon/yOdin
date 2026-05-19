@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "yOdin में आपका स्वागत है",
+    "subtitle": "संस्कृतियों के पार जुड़ें",
+    "login": "लॉग इन करें",
+    "register": "खाता बनाएं",
+    "email": "ईमेल",
+    "password": "पासवर्ड",
+    "firstName": "पहला नाम",
+    "lastName": "अंतिम नाम",
+    "nationality": "आपकी राष्ट्रीयता",
+    "location": "आपका स्थान",
+    "next": "अगला",
+    "finish": "चलो शुरू करें",
+    "alreadyHaveAccount": "पहले से खाता है? लॉग इन करें",
+    "noAccount": "खाता नहीं है? साइन अप करें",
+    "onboardingTitle": "एक आखिरी कदम 👋",
+    "onboardingSubtitle": "हमें अपने बारे में बताएं ताकि हम आपको सही चर्चाएं दिखा सकें।",
+    "selectNationality": "राष्ट्रीयता चुनें...",
+    "selectLocation": "अपना देश चुनें...",
+    "selectNationalityTitle": "राष्ट्रीयता चुनें",
+    "selectLocationTitle": "स्थान चुनें",
+    "search": "खोजें..."
+  },
+  "feed": {
+    "title": "फ़ीड",
+    "empty": "अभी कोई चर्चा नहीं। पहले बनें!",
+    "replies_one": "{{count}} जवाब",
+    "replies_other": "{{count}} जवाब"
+  },
+  "discussion": {
+    "title": "चर्चा",
+    "firstReply": "पहले जवाब दें 💬",
+    "replyPlaceholder": "जवाब लिखें..."
+  },
+  "newDiscussion": {
+    "title": "नई चर्चा",
+    "placeholder": "आप क्या सोच रहे हैं?",
+    "post": "पोस्ट करें"
+  },
+  "notifications": {
+    "title": "सूचनाएं",
+    "empty": "अभी कोई सूचना नहीं",
+    "replied": "ने आपकी चर्चा का जवाब दिया"
+  },
+  "profile": {
+    "title": "प्रोफ़ाइल",
+    "myDiscussions": "मेरी चर्चाएं",
+    "saved": "सहेजा गया",
+    "noDiscussions": "अभी कोई चर्चा नहीं",
+    "noSaved": "कोई सहेजी गई चर्चा नहीं",
+    "languages": "भाषाएं",
+    "addLanguage": "भाषा जोड़ें",
+    "settings": "सेटिंग्स",
+    "logout": "लॉग आउट"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "editProfile": "प्रोफ़ाइल संपादित करें",
+    "language": "ऐप भाषा",
+    "theme": "थीम",
+    "themeSystem": "सिस्टम",
+    "themeLight": "लाइट",
+    "themeDark": "डार्क",
+    "notifications": "सूचनाएं",
+    "privacy": "गोपनीयता",
+    "about": "yOdin के बारे में"
+  },
+  "editProfile": {
+    "title": "प्रोफ़ाइल संपादित करें",
+    "nationality": "राष्ट्रीयता",
+    "location": "स्थान",
+    "save": "परिवर्तन सहेजें",
+    "saving": "सहेजा जा रहा है..."
+  },
+  "deleteDiscussion": {
+    "title": "चर्चा हटाएं",
+    "message": "क्या आप वाकई इस चर्चा को हटाना चाहते हैं?",
+    "cancel": "रद्द करें",
+    "delete": "हटाएं"
+  },
+  "time": {
+    "justNow": "अभी",
+    "minutesAgo": "{{count}} मिनट पहले",
+    "hoursAgo": "{{count}} घंटे पहले",
+    "daysAgo": "{{count}} दिन पहले"
+  },
+  "errors": {
+    "generic": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
+    "emailAlreadyInUse": "यह ईमेल पहले से पंजीकृत है।",
+    "invalidEmail": "अमान्य ईमेल पता।",
+    "weakPassword": "पासवर्ड कम से कम 6 अक्षर का होना चाहिए।",
+    "userNotFound": "इस ईमेल से कोई खाता नहीं मिला।",
+    "wrongPassword": "गलत ईमेल या पासवर्ड।",
+    "invalidCredential": "गलत ईमेल या पासवर्ड।",
+    "tooManyRequests": "बहुत अधिक प्रयास। कृपया बाद में पुनः प्रयास करें।",
+    "networkRequestFailed": "इंटरनेट कनेक्शन नहीं है।",
+    "userDisabled": "यह खाता अक्षम कर दिया गया है।",
+    "fillAllFields": "कृपया सभी फ़ील्ड भरें।",
+    "enterName": "कृपया अपना नाम दर्ज करें।",
+    "selectNationalityAndLocation": "कृपया अपनी राष्ट्रीयता और स्थान दोनों चुनें।",
+    "writeQuestion": "कृपया अपना प्रश्न लिखें।",
+    "photoUploadFailed": "फ़ोटो अपलोड विफल। कृपया पुनः प्रयास करें।"
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Välkommen till yOdin",
+    "subtitle": "Koppla samman kulturer",
+    "login": "Logga in",
+    "register": "Skapa konto",
+    "email": "E-post",
+    "password": "Lösenord",
+    "firstName": "Förnamn",
+    "lastName": "Efternamn",
+    "nationality": "Din nationalitet",
+    "location": "Din plats",
+    "next": "Nästa",
+    "finish": "Sätt igång",
+    "alreadyHaveAccount": "Har du redan ett konto? Logga in",
+    "noAccount": "Inget konto? Registrera dig",
+    "onboardingTitle": "Sista steget 👋",
+    "onboardingSubtitle": "Berätta om dig själv så att vi kan visa rätt diskussioner.",
+    "selectNationality": "Välj nationalitet...",
+    "selectLocation": "Välj ditt land...",
+    "selectNationalityTitle": "Välj nationalitet",
+    "selectLocationTitle": "Välj plats",
+    "search": "Sök..."
+  },
+  "feed": {
+    "title": "Flöde",
+    "empty": "Inga diskussioner än. Var den första!",
+    "replies_one": "{{count}} svar",
+    "replies_other": "{{count}} svar"
+  },
+  "discussion": {
+    "title": "Diskussion",
+    "firstReply": "Var den första att svara 💬",
+    "replyPlaceholder": "Skriv ett svar..."
+  },
+  "newDiscussion": {
+    "title": "Ny diskussion",
+    "placeholder": "Vad tänker du på?",
+    "post": "Publicera"
+  },
+  "notifications": {
+    "title": "Aviseringar",
+    "empty": "Inga aviseringar än",
+    "replied": "svarade på din diskussion"
+  },
+  "profile": {
+    "title": "Profil",
+    "myDiscussions": "Mina diskussioner",
+    "saved": "Sparade",
+    "noDiscussions": "Inga diskussioner än",
+    "noSaved": "Inga sparade diskussioner",
+    "languages": "Språk",
+    "addLanguage": "Lägg till språk",
+    "settings": "Inställningar",
+    "logout": "Logga ut"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "editProfile": "Redigera profil",
+    "language": "Appspråk",
+    "theme": "Tema",
+    "themeSystem": "System",
+    "themeLight": "Ljust",
+    "themeDark": "Mörkt",
+    "notifications": "Aviseringar",
+    "privacy": "Integritet",
+    "about": "Om yOdin"
+  },
+  "editProfile": {
+    "title": "Redigera profil",
+    "nationality": "Nationalitet",
+    "location": "Plats",
+    "save": "Spara ändringar",
+    "saving": "Sparar..."
+  },
+  "deleteDiscussion": {
+    "title": "Ta bort diskussion",
+    "message": "Är du säker på att du vill ta bort den här diskussionen?",
+    "cancel": "Avbryt",
+    "delete": "Ta bort"
+  },
+  "time": {
+    "justNow": "precis nu",
+    "minutesAgo": "för {{count}} min sedan",
+    "hoursAgo": "för {{count}} tim sedan",
+    "daysAgo": "för {{count}} dagar sedan"
+  },
+  "errors": {
+    "generic": "Något gick fel. Försök igen.",
+    "emailAlreadyInUse": "Den här e-postadressen är redan registrerad.",
+    "invalidEmail": "Ogiltig e-postadress.",
+    "weakPassword": "Lösenordet måste ha minst 6 tecken.",
+    "userNotFound": "Inget konto hittades med den e-postadressen.",
+    "wrongPassword": "Fel e-post eller lösenord.",
+    "invalidCredential": "Fel e-post eller lösenord.",
+    "tooManyRequests": "För många försök. Försök igen senare.",
+    "networkRequestFailed": "Ingen internetanslutning.",
+    "userDisabled": "Det här kontot har inaktiverats.",
+    "fillAllFields": "Fyll i alla fält.",
+    "enterName": "Ange ditt namn.",
+    "selectNationalityAndLocation": "Välj din nationalitet och plats.",
+    "writeQuestion": "Skriv din fråga.",
+    "photoUploadFailed": "Det gick inte att ladda upp bilden. Försök igen."
+  }
+}

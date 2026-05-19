@@ -1,0 +1,105 @@
+{
+  "auth": {
+    "welcome": "Chào mừng đến với yOdin",
+    "subtitle": "Kết nối qua các nền văn hóa",
+    "login": "Đăng nhập",
+    "register": "Tạo tài khoản",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "nationality": "Quốc tịch của bạn",
+    "location": "Vị trí của bạn",
+    "next": "Tiếp theo",
+    "finish": "Bắt đầu thôi",
+    "alreadyHaveAccount": "Đã có tài khoản? Đăng nhập",
+    "noAccount": "Chưa có tài khoản? Đăng ký",
+    "onboardingTitle": "Một bước cuối cùng 👋",
+    "onboardingSubtitle": "Hãy cho chúng tôi biết về bạn để hiển thị các cuộc thảo luận phù hợp.",
+    "selectNationality": "Chọn quốc tịch...",
+    "selectLocation": "Chọn quốc gia của bạn...",
+    "selectNationalityTitle": "Chọn quốc tịch",
+    "selectLocationTitle": "Chọn vị trí",
+    "search": "Tìm kiếm..."
+  },
+  "feed": {
+    "title": "Bảng tin",
+    "empty": "Chưa có cuộc thảo luận nào. Hãy là người đầu tiên!",
+    "replies_one": "{{count}} trả lời",
+    "replies_other": "{{count}} trả lời"
+  },
+  "discussion": {
+    "title": "Thảo luận",
+    "firstReply": "Hãy là người đầu tiên trả lời 💬",
+    "replyPlaceholder": "Viết câu trả lời..."
+  },
+  "newDiscussion": {
+    "title": "Thảo luận mới",
+    "placeholder": "Bạn đang nghĩ gì?",
+    "post": "Đăng"
+  },
+  "notifications": {
+    "title": "Thông báo",
+    "empty": "Chưa có thông báo nào",
+    "replied": "đã trả lời cuộc thảo luận của bạn"
+  },
+  "profile": {
+    "title": "Hồ sơ",
+    "myDiscussions": "Thảo luận của tôi",
+    "saved": "Đã lưu",
+    "noDiscussions": "Chưa có cuộc thảo luận nào",
+    "noSaved": "Không có cuộc thảo luận đã lưu",
+    "languages": "Ngôn ngữ",
+    "addLanguage": "Thêm ngôn ngữ",
+    "settings": "Cài đặt",
+    "logout": "Đăng xuất"
+  },
+  "settings": {
+    "title": "Cài đặt",
+    "editProfile": "Chỉnh sửa hồ sơ",
+    "language": "Ngôn ngữ ứng dụng",
+    "theme": "Giao diện",
+    "themeSystem": "Hệ thống",
+    "themeLight": "Sáng",
+    "themeDark": "Tối",
+    "notifications": "Thông báo",
+    "privacy": "Quyền riêng tư",
+    "about": "Về yOdin"
+  },
+  "editProfile": {
+    "title": "Chỉnh sửa hồ sơ",
+    "nationality": "Quốc tịch",
+    "location": "Vị trí",
+    "save": "Lưu thay đổi",
+    "saving": "Đang lưu..."
+  },
+  "deleteDiscussion": {
+    "title": "Xóa thảo luận",
+    "message": "Bạn có chắc muốn xóa cuộc thảo luận này không?",
+    "cancel": "Hủy",
+    "delete": "Xóa"
+  },
+  "time": {
+    "justNow": "vừa xong",
+    "minutesAgo": "{{count}} phút trước",
+    "hoursAgo": "{{count}} giờ trước",
+    "daysAgo": "{{count}} ngày trước"
+  },
+  "errors": {
+    "generic": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "emailAlreadyInUse": "Email này đã được đăng ký.",
+    "invalidEmail": "Địa chỉ email không hợp lệ.",
+    "weakPassword": "Mật khẩu phải có ít nhất 6 ký tự.",
+    "userNotFound": "Không tìm thấy tài khoản với email này.",
+    "wrongPassword": "Email hoặc mật khẩu không đúng.",
+    "invalidCredential": "Email hoặc mật khẩu không đúng.",
+    "tooManyRequests": "Quá nhiều lần thử. Vui lòng thử lại sau.",
+    "networkRequestFailed": "Không có kết nối internet.",
+    "userDisabled": "Tài khoản này đã bị vô hiệu hóa.",
+    "fillAllFields": "Vui lòng điền vào tất cả các trường.",
+    "enterName": "Vui lòng nhập tên của bạn.",
+    "selectNationalityAndLocation": "Vui lòng chọn quốc tịch và vị trí của bạn.",
+    "writeQuestion": "Vui lòng viết câu hỏi của bạn.",
+    "photoUploadFailed": "Tải ảnh lên thất bại. Vui lòng thử lại."
+  }
+}
