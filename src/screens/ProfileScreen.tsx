@@ -234,10 +234,10 @@ export default function ProfileScreen() {
 
   const data = tab === 'mine' ? myDiscussions : savedDiscussions;
 
-  const themeOptions: { value: ThemePreference; label: string; icon: string }[] = [
-    { value: 'system', label: t('settings.themeSystem'), icon: '📱' },
-    { value: 'light', label: t('settings.themeLight'), icon: '☀️' },
-    { value: 'dark', label: t('settings.themeDark'), icon: '🌙' },
+  const themeOptions: { value: ThemePreference; label: string; icon: React.ComponentProps<typeof Ionicons>['name'] }[] = [
+    { value: 'system', label: t('settings.themeSystem'), icon: 'phone-portrait-outline' },
+    { value: 'light', label: t('settings.themeLight'), icon: 'sunny-outline' },
+    { value: 'dark', label: t('settings.themeDark'), icon: 'moon-outline' },
   ];
 
   function renderDiscussion({ item }: { item: Discussion }) {
@@ -547,7 +547,7 @@ export default function ProfileScreen() {
                 style={styles.langItem}
                 onPress={() => { setPreference(opt.value); setThemeModal(false); }}
               >
-                <Text style={styles.langFlag}>{opt.icon}</Text>
+                <Ionicons name={opt.icon} size={22} color={colors.primary} />
                 <Text style={styles.langLabel}>{opt.label}</Text>
                 {preference === opt.value && (
                   <Ionicons name="checkmark" size={20} color={colors.primary} style={{ marginLeft: 'auto' }} />
