@@ -18,6 +18,7 @@ import { fetchDiscussions, saveDiscussion, unsaveDiscussion, PAGE_SIZE } from '.
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
 import { Discussion } from '../types';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -25,7 +26,8 @@ import { Typography } from '../theme/typography';
 export default function FeedScreen({ navigation }: any) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const styles = makeStyles(colors);
+  const insets = useSafeAreaInsets();
+  const styles = makeStyles(colors, insets.top);
   const { profile } = useAuthStore();
   const { discussions, setDiscussions, appendDiscussions, setLoading, isLoading, setHasMore, hasMore, toggleSaved } = useFeedStore();
   const unreadCount = useNotificationStore((s) => s.unreadCount);
@@ -195,12 +197,12 @@ export default function FeedScreen({ navigation }: any) {
 }
 
 
-function makeStyles(c: ColorPalette) {
+function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background },
     header: {
       paddingHorizontal: 20,
-      paddingTop: 56,
+      paddingTop: topInset + 12,
       paddingBottom: 16,
       backgroundColor: c.surface,
       borderBottomWidth: 1,

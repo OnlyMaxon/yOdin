@@ -64,6 +64,9 @@
     "themeDark": "Qaranlıq",
     "notifications": "Bildirişlər",
     "privacy": "Məxfilik",
+    "privacyText": "yOdin yalnız sizin təqdim etdiyiniz məlumatları toplayır: adınız, milliyyətiniz, yeriniz və profil şəkliniz. Bu məlumatlar yalnız lentinizi fərdiləşdirmək və müzakirələrdə şəxsiyyətinizi göstərmək üçün istifadə olunur.\\\\n\\\\nMəlumatlarınız Firebase-də etibarlı şəkildə saxlanılır və heç vaxt üçüncü tərəflərə satılmır və ya paylaşılmır.\\\\n\\\\nİstənilən vaxt dəstəklə əlaqə saxlayaraq hesabınızı və bütün əlaqəli məlumatları silə bilərsiniz.",
+    "restartTitle": "Yenidən başlatmaq lazımdır",
+    "restartMessage": "Yeni düzülüş istiqamətini tətbiq etmək üçün tətbiqi bağlayıb yenidən açın.",
     "about": "yOdin haqqında"
   },
   "editProfile": {

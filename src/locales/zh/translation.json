@@ -64,6 +64,9 @@
     "themeDark": "深色",
     "notifications": "通知",
     "privacy": "隐私",
+    "privacyText": "yOdin 仅收集您提供的数据：您的姓名、国籍、位置和头像。这些信息仅用于个性化您的动态并在讨论中展示您的身份。\\\\n\\\\n您的数据安全存储在 Firebase 中，绝不会出售给第三方或与其共享。\\\\n\\\\n您可以随时联系客服删除您的账户及所有相关数据。",
+    "restartTitle": "需要重启",
+    "restartMessage": "请关闭并重新打开应用以应用新的布局方向。",
     "about": "关于 yOdin"
   },
   "editProfile": {

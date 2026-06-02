@@ -1,8 +1,8 @@
-import i18n from './src/services/i18n';
+import i18n, { initLanguage } from './src/services/i18n';
 import { enableScreens } from 'react-native-screens';
 enableScreens();
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -40,9 +40,13 @@ function AppContent() {
 }
 
 export default function App() {
+  const [ready, setReady] = useState(false);
+
   useEffect(() => {
-    initTheme();
+    Promise.all([initTheme(), initLanguage()]).then(() => setReady(true));
   }, []);
+
+  if (!ready) return null;
 
   return (
     <I18nextProvider i18n={i18n}>

@@ -64,6 +64,9 @@
     "themeDark": "Tối",
     "notifications": "Thông báo",
     "privacy": "Quyền riêng tư",
+    "privacyText": "yOdin chỉ thu thập dữ liệu bạn cung cấp: tên, quốc tịch, vị trí và ảnh đại diện của bạn. Thông tin này chỉ được sử dụng để cá nhân hóa nguồn cấp dữ liệu và hiển thị danh tính của bạn trong các cuộc thảo luận.\\\\n\\\\nDữ liệu của bạn được lưu trữ an toàn trong Firebase và không bao giờ được bán hoặc chia sẻ với bên thứ ba.\\\\n\\\\nBạn có thể xóa tài khoản và tất cả dữ liệu liên quan bất kỳ lúc nào bằng cách liên hệ với bộ phận hỗ trợ.",
+    "restartTitle": "Cần khởi động lại",
+    "restartMessage": "Đóng và mở lại ứng dụng để áp dụng hướng bố cục mới.",
     "about": "Về yOdin"
   },
   "editProfile": {

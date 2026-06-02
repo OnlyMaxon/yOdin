@@ -6,6 +6,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -14,6 +15,7 @@ import { useNotificationStore } from '../store/useNotificationStore';
 import { fetchNotifications, markNotificationsRead } from '../services/notificationService';
 import { AppNotification } from '../types';
 import { formatTime } from '../utils/formatTime';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -21,7 +23,8 @@ import { Typography } from '../theme/typography';
 export default function NotificationsScreen({ navigation }: any) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const styles = makeStyles(colors);
+  const insets = useSafeAreaInsets();
+  const styles = makeStyles(colors, insets.top);
   const { profile } = useAuthStore();
   const { notifications, setNotifications, markAllRead } = useNotificationStore();
   const [loading, setLoading] = useState(true);
@@ -62,7 +65,11 @@ export default function NotificationsScreen({ navigation }: any) {
         activeOpacity={0.75}
       >
         <View style={styles.avatar}>
-          <Text style={styles.avatarText}>{initials}</Text>
+          {item.fromUserPhoto ? (
+            <Image source={{ uri: item.fromUserPhoto }} style={styles.avatarImage} />
+          ) : (
+            <Text style={styles.avatarText}>{initials}</Text>
+          )}
         </View>
         <View style={styles.content}>
           <Text style={styles.text}>
@@ -112,12 +119,12 @@ export default function NotificationsScreen({ navigation }: any) {
 }
 
 
-function makeStyles(c: ColorPalette) {
+function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background },
     header: {
       paddingHorizontal: 20,
-      paddingTop: 56,
+      paddingTop: topInset + 12,
       paddingBottom: 16,
       backgroundColor: c.surface,
       borderBottomWidth: 1,
@@ -160,6 +167,7 @@ function makeStyles(c: ColorPalette) {
       fontWeight: Typography.fontWeightBold,
       color: c.primary,
     },
+    avatarImage: { width: 44, height: 44, borderRadius: 22 },
     content: { flex: 1 },
     text: { fontSize: Typography.fontSizeMD, color: c.textPrimary, marginBottom: 4 },
     bold: { fontWeight: Typography.fontWeightSemiBold },

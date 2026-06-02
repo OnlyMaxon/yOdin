@@ -64,6 +64,9 @@
     "themeDark": "Dunkel",
     "notifications": "Benachrichtigungen",
     "privacy": "Datenschutz",
+    "privacyText": "yOdin erfasst nur die Daten, die Sie angeben: Ihren Namen, Ihre Nationalität, Ihren Standort und Ihr Profilfoto. Diese Informationen werden ausschließlich dazu verwendet, Ihren Feed zu personalisieren und Ihre Identität in Diskussionen anzuzeigen.\\\\n\\\\nIhre Daten werden sicher in Firebase gespeichert und niemals an Dritte verkauft oder weitergegeben.\\\\n\\\\nSie können Ihr Konto und alle zugehörigen Daten jederzeit durch Kontaktaufnahme mit dem Support löschen.",
+    "restartTitle": "Neustart erforderlich",
+    "restartMessage": "Schließen und öffnen Sie die App erneut, um die neue Layoutrichtung anzuwenden.",
     "about": "Über yOdin"
   },
   "editProfile": {

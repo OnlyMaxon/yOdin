@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import * as Localization from 'expo-localization';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { I18nManager } from 'react-native';
 import en from '../locales/en/translation.json';
 import ru from '../locales/ru/translation.json';
 import az from '../locales/az/translation.json';
@@ -30,6 +30,8 @@ import he from '../locales/he/translation.json';
 import th from '../locales/th/translation.json';
 import ms from '../locales/ms/translation.json';
 import bn from '../locales/bn/translation.json';
+
+const RTL_LANGS: readonly string[] = ['ar', 'he', 'fa'];
 
 export const SUPPORTED_LANGS = [
   'en', 'ru', 'az', 'zh', 'es', 'ar', 'hi', 'pt', 'fr', 'de',
@@ -81,15 +83,27 @@ i18n.use(initReactI18next).init({
   },
 });
 
-AsyncStorage.getItem(LANG_STORAGE_KEY).then((saved) => {
+export async function initLanguage(): Promise<void> {
+  const saved = await AsyncStorage.getItem(LANG_STORAGE_KEY);
+  const activeLang = (saved && SUPPORTED_LANGS.includes(saved as AppLang))
+    ? (saved as AppLang)
+    : (i18n.language as AppLang);
   if (saved && SUPPORTED_LANGS.includes(saved as AppLang)) {
-    i18n.changeLanguage(saved);
+    await i18n.changeLanguage(activeLang);
   }
-});
+  const isRTL = RTL_LANGS.includes(activeLang);
+  I18nManager.allowRTL(isRTL);
+  I18nManager.forceRTL(isRTL);
+}
 
-export async function setAppLanguage(lang: AppLang) {
+export async function setAppLanguage(lang: AppLang): Promise<boolean> {
+  const wasRTL = I18nManager.isRTL;
+  const willBeRTL = RTL_LANGS.includes(lang);
   await i18n.changeLanguage(lang);
   await AsyncStorage.setItem(LANG_STORAGE_KEY, lang);
+  I18nManager.allowRTL(willBeRTL);
+  I18nManager.forceRTL(willBeRTL);
+  return wasRTL !== willBeRTL;
 }
 
 export default i18n;

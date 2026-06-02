@@ -24,6 +24,7 @@ import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDis
 import { setAppLanguage } from '../services/i18n';
 import type { AppLang } from '../services/i18n';
 import { useThemeStore, ThemePreference } from '../store/useThemeStore';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
@@ -68,7 +69,8 @@ const LANGUAGES = [
 export default function ProfileScreen({ navigation }: any) {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
-  const styles = makeStyles(colors);
+  const insets = useSafeAreaInsets();
+  const styles = makeStyles(colors, insets.top);
   const preference = useThemeStore((s) => s.preference);
   const setPreference = useThemeStore((s) => s.setPreference);
   const { profile, setProfile, reset } = useAuthStore();
@@ -539,7 +541,14 @@ export default function ProfileScreen({ navigation }: any) {
             renderItem={({ item }) => (
               <TouchableOpacity
                 style={styles.countryItem}
-                onPress={() => { setAppLanguage(item.code as AppLang); setLangModal(false); setLangSearch(''); }}
+                onPress={async () => {
+                const restartRequired = await setAppLanguage(item.code as AppLang);
+                setLangModal(false);
+                setLangSearch('');
+                if (restartRequired) {
+                  Alert.alert(t('settings.restartTitle'), t('settings.restartMessage'));
+                }
+              }}
               >
                 <Text style={styles.countryFlag}>{item.flag}</Text>
                 <Text style={styles.countryName}>{item.label}</Text>
@@ -584,11 +593,7 @@ export default function ProfileScreen({ navigation }: any) {
             </TouchableOpacity>
           </View>
           <ScrollView contentContainerStyle={styles.privacyBody}>
-            <Text style={styles.privacyText}>
-              yOdin collects only the data you provide: your name, nationality, location, and profile photo. This information is used solely to personalise your feed and show your identity in discussions.{'\n\n'}
-              Your data is stored securely in Firebase and is never sold or shared with third parties.{'\n\n'}
-              You can delete your account and all associated data at any time by contacting support.
-            </Text>
+            <Text style={styles.privacyText}>{t('settings.privacyText')}</Text>
           </ScrollView>
         </View>
       </Modal>
@@ -596,12 +601,12 @@ export default function ProfileScreen({ navigation }: any) {
   );
 }
 
-function makeStyles(c: ColorPalette) {
+function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background },
     header: {
       paddingHorizontal: 20,
-      paddingTop: 56,
+      paddingTop: topInset + 12,
       paddingBottom: 20,
       backgroundColor: c.surface,
       borderBottomWidth: 1,

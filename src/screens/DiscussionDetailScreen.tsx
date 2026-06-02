@@ -25,15 +25,17 @@ import {
 import { createNotification } from '../services/notificationService';
 import { Reply, Discussion } from '../types';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
 export default function DiscussionDetailScreen({ route, navigation }: any) {
-  const { discussionId } = route.params;
+  const { discussionId, question: questionParam } = route.params;
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const styles = makeStyles(colors);
+  const insets = useSafeAreaInsets();
+  const styles = makeStyles(colors, insets.top);
   const { profile } = useAuthStore();
   const { incrementReplyCount, toggleSaved } = useFeedStore();
   const [discussion, setDiscussion] = useState<Discussion | null>(null);
@@ -192,9 +194,14 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       </View>
 
       {loading ? (
-        <View style={styles.center}>
-          <ActivityIndicator color={colors.primary} size="large" />
-        </View>
+        <>
+          <View style={styles.questionBlock}>
+            <Text style={styles.questionText}>{questionParam}</Text>
+          </View>
+          <View style={styles.center}>
+            <ActivityIndicator color={colors.primary} size="large" />
+          </View>
+        </>
       ) : error ? (
         <View style={styles.center}>
           <Text style={{ color: colors.notification, textAlign: 'center', padding: 24 }}>{error}</Text>
@@ -264,14 +271,14 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   );
 }
 
-function makeStyles(c: ColorPalette) {
+function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background },
     header: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: 16,
-      paddingTop: 56,
+      paddingTop: topInset + 12,
       paddingBottom: 12,
       backgroundColor: c.surface,
       borderBottomWidth: 1,

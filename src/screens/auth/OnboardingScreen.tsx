@@ -15,6 +15,7 @@ import { updateUserProfile, getUserProfile } from '../../services/authService';
 import { getErrorMessage } from '../../services/errorHandler';
 import { useAuthStore } from '../../store/useAuthStore';
 import { COUNTRIES, Country } from '../../data/countries';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../hooks/useTheme';
 import { ColorPalette } from '../../theme/colors';
 import { Typography } from '../../theme/typography';
@@ -22,7 +23,8 @@ import { Typography } from '../../theme/typography';
 export default function OnboardingScreen() {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const styles = makeStyles(colors);
+  const insets = useSafeAreaInsets();
+  const styles = makeStyles(colors, insets.top);
   const { setProfile } = useAuthStore();
   const [nationality, setNationality] = useState<Country | null>(null);
   const [location, setLocation] = useState<Country | null>(null);
@@ -138,13 +140,13 @@ export default function OnboardingScreen() {
   );
 }
 
-function makeStyles(c: ColorPalette) {
+function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: c.background,
       paddingHorizontal: 24,
-      paddingTop: 80,
+      paddingTop: topInset + 24,
     },
     title: {
       fontSize: Typography.fontSizeXXL,

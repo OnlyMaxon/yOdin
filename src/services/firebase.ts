@@ -1,8 +1,6 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
-import { initializeAuth, getAuth } from 'firebase/auth';
-// @ts-ignore — getReactNativePersistence exists in the RN bundle, not in Node types
-import { getReactNativePersistence } from '@firebase/auth';
-import { createAsyncStorage } from '@react-native-async-storage/async-storage';
+import { initializeAuth, getAuth, getReactNativePersistence } from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
@@ -22,7 +20,7 @@ const app = isNew ? initializeApp(firebaseConfig) : getApp();
 // getAuth on fast-refresh (app already exists, auth already initialized).
 export const auth = isNew
   ? initializeAuth(app, {
-      persistence: getReactNativePersistence(createAsyncStorage('firebase-auth')),
+      persistence: getReactNativePersistence(AsyncStorage),
     })
   : getAuth(app);
 

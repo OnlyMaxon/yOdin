@@ -64,6 +64,9 @@
     "themeDark": "Mörkt",
     "notifications": "Aviseringar",
     "privacy": "Integritet",
+    "privacyText": "yOdin samlar bara in data som du tillhandahåller: ditt namn, nationalitet, plats och profilfoto. Denna information används enbart för att anpassa ditt flöde och visa din identitet i diskussioner.\\\\n\\\\nDina uppgifter lagras säkert i Firebase och säljs eller delas aldrig med tredje part.\\\\n\\\\nDu kan när som helst radera ditt konto och alla tillhörande data genom att kontakta supporten.",
+    "restartTitle": "Omstart krävs",
+    "restartMessage": "Stäng och öppna appen igen för att tillämpa den nya layoutriktningen.",
     "about": "Om yOdin"
   },
   "editProfile": {

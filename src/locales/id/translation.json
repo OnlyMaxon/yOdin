@@ -64,6 +64,9 @@
     "themeDark": "Gelap",
     "notifications": "Notifikasi",
     "privacy": "Privasi",
+    "privacyText": "yOdin hanya mengumpulkan data yang Anda berikan: nama, kebangsaan, lokasi, dan foto profil Anda. Informasi ini digunakan semata-mata untuk mempersonalisasi feed Anda dan menampilkan identitas Anda dalam diskusi.\\\\n\\\\nData Anda disimpan dengan aman di Firebase dan tidak pernah dijual atau dibagikan kepada pihak ketiga.\\\\n\\\\nAnda dapat menghapus akun dan semua data terkait kapan saja dengan menghubungi dukungan.",
+    "restartTitle": "Perlu restart",
+    "restartMessage": "Tutup dan buka kembali aplikasi untuk menerapkan arah tata letak baru.",
     "about": "Tentang yOdin"
   },
   "editProfile": {

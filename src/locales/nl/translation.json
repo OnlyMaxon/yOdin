@@ -64,6 +64,9 @@
     "themeDark": "Donker",
     "notifications": "Meldingen",
     "privacy": "Privacy",
+    "privacyText": "yOdin verzamelt alleen de gegevens die u verstrekt: uw naam, nationaliteit, locatie en profielfoto. Deze informatie wordt uitsluitend gebruikt om uw feed te personaliseren en uw identiteit in discussies te tonen.\\\\n\\\\nUw gegevens worden veilig opgeslagen in Firebase en worden nooit verkocht of gedeeld met derden.\\\\n\\\\nU kunt uw account en alle bijbehorende gegevens op elk moment verwijderen door contact op te nemen met de ondersteuning.",
+    "restartTitle": "Herstart vereist",
+    "restartMessage": "Sluit de app en open hem opnieuw om de nieuwe lay-outrichting toe te passen.",
     "about": "Over yOdin"
   },
   "editProfile": {

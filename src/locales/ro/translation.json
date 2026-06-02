@@ -65,6 +65,9 @@
     "themeDark": "Întunecat",
     "notifications": "Notificări",
     "privacy": "Confidențialitate",
+    "privacyText": "yOdin colectează doar datele pe care le furnizezi: numele, naționalitatea, locația și fotografia de profil. Aceste informații sunt utilizate exclusiv pentru a-ți personaliza fluxul și a-ți afișa identitatea în discuții.\\\\n\\\\nDatele tale sunt stocate în siguranță în Firebase și nu sunt niciodată vândute sau partajate cu terți.\\\\n\\\\nPoți șterge contul și toate datele asociate în orice moment contactând echipa de suport.",
+    "restartTitle": "Repornire necesară",
+    "restartMessage": "Închideți și redeschideți aplicația pentru a aplica noua direcție a aspectului.",
     "about": "Despre yOdin"
   },
   "editProfile": {
