@@ -20,7 +20,9 @@
     "selectLocation": "Оберіть країну...",
     "selectNationalityTitle": "Оберіть національність",
     "selectLocationTitle": "Оберіть місцезнаходження",
-    "search": "Пошук..."
+    "search": "Пошук...",
+    "signInWithMicrosoft": "Увійти через Microsoft",
+    "or": "або"
   },
   "feed": {
     "title": "Стрічка",

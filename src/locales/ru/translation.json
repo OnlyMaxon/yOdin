@@ -20,7 +20,9 @@
     "selectLocation": "Выберите страну...",
     "selectNationalityTitle": "Выбор национальности",
     "selectLocationTitle": "Выбор страны",
-    "search": "Поиск..."
+    "search": "Поиск...",
+    "signInWithMicrosoft": "Войти через Microsoft",
+    "or": "или"
   },
   "feed": {
     "title": "Лента",

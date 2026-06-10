@@ -20,7 +20,9 @@
     "selectLocation": "בחר את המדינה שלך...",
     "selectNationalityTitle": "בחר לאום",
     "selectLocationTitle": "בחר מיקום",
-    "search": "חיפוש..."
+    "search": "חיפוש...",
+    "signInWithMicrosoft": "כניסה עם Microsoft",
+    "or": "או"
   },
   "feed": {
     "title": "פיד",

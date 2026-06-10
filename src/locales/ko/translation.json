@@ -20,7 +20,9 @@
     "selectLocation": "국가 선택...",
     "selectNationalityTitle": "국적 선택",
     "selectLocationTitle": "위치 선택",
-    "search": "검색..."
+    "search": "검색...",
+    "signInWithMicrosoft": "Microsoft로 로그인",
+    "or": "또는"
   },
   "feed": {
     "title": "피드",

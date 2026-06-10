@@ -20,7 +20,9 @@
     "selectLocation": "Selecteer jouw land...",
     "selectNationalityTitle": "Selecteer Nationaliteit",
     "selectLocationTitle": "Selecteer Locatie",
-    "search": "Zoeken..."
+    "search": "Zoeken...",
+    "signInWithMicrosoft": "Aanmelden met Microsoft",
+    "or": "of"
   },
   "feed": {
     "title": "Feed",

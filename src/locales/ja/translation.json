@@ -20,7 +20,9 @@
     "selectLocation": "国を選択...",
     "selectNationalityTitle": "国籍を選択",
     "selectLocationTitle": "場所を選択",
-    "search": "検索..."
+    "search": "検索...",
+    "signInWithMicrosoft": "Microsoft でサインイン",
+    "or": "または"
   },
   "feed": {
     "title": "フィード",

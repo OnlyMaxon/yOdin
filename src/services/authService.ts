@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  User as FirebaseUser,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from './firebase';
@@ -45,4 +46,27 @@ export async function getUserProfile(uid: string): Promise<User | null> {
 
 export async function updateUserProfile(uid: string, data: Partial<User>): Promise<void> {
   await setDoc(doc(db, 'users', uid), data, { merge: true });
+}
+
+export async function ensureMicrosoftProfile(user: FirebaseUser): Promise<void> {
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  if (snap.exists()) return;
+
+  const displayName = user.displayName ?? '';
+  const spaceIdx = displayName.indexOf(' ');
+  const firstName = spaceIdx > 0 ? displayName.slice(0, spaceIdx) : displayName;
+  const lastName = spaceIdx > 0 ? displayName.slice(spaceIdx + 1) : '';
+
+  await setDoc(doc(db, 'users', user.uid), {
+    uid: user.uid,
+    email: user.email ?? '',
+    firstName,
+    lastName,
+    nationality: '',
+    countryCode: '',
+    location: '',
+    photoURL: user.photoURL ?? '',
+    languages: [],
+    createdAt: Date.now(),
+  });
 }

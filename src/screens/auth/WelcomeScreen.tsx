@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '../../hooks/useTheme';
+import { useMicrosoftAuth } from '../../hooks/useMicrosoftAuth';
 import { ColorPalette } from '../../theme/colors';
 import { Typography } from '../../theme/typography';
 
@@ -9,6 +11,12 @@ export default function WelcomeScreen({ navigation }: any) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
+  const { promptAsync, disabled, loading, error, clearError } = useMicrosoftAuth();
+
+  React.useEffect(() => {
+    if (!error) return;
+    Alert.alert(t('errors.generic'), error, [{ text: 'OK', onPress: clearError }]);
+  }, [error]);
 
   return (
     <View style={styles.container}>
@@ -32,12 +40,34 @@ export default function WelcomeScreen({ navigation }: any) {
         >
           <Text style={styles.secondaryBtnText}>{t('auth.login')}</Text>
         </TouchableOpacity>
+
+        <View style={styles.dividerRow}>
+          <View style={styles.dividerLine} />
+          <Text style={styles.dividerText}>{t('auth.or')}</Text>
+          <View style={styles.dividerLine} />
+        </View>
+
+        <TouchableOpacity
+          style={[styles.microsoftBtn, (disabled || loading) && styles.microsoftBtnDisabled]}
+          onPress={() => promptAsync()}
+          disabled={disabled || loading}
+          activeOpacity={0.85}
+        >
+          {loading ? (
+            <ActivityIndicator color="#5E5E5E" size="small" />
+          ) : (
+            <>
+              <MaterialCommunityIcons name="microsoft" size={20} color="#5E5E5E" style={styles.microsoftIcon} />
+              <Text style={styles.microsoftBtnText}>{t('auth.signInWithMicrosoft')}</Text>
+            </>
+          )}
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-function makeStyles(c: ColorPalette) {
+function makeStyles(_c: ColorPalette) {
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -93,6 +123,36 @@ function makeStyles(c: ColorPalette) {
       color: '#fff',
       fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightMedium,
+    },
+    dividerRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: 4,
+    },
+    dividerLine: {
+      flex: 1,
+      height: 1,
+      backgroundColor: 'rgba(255,255,255,0.3)',
+    },
+    dividerText: {
+      color: 'rgba(255,255,255,0.6)',
+      fontSize: Typography.fontSizeSM,
+      marginHorizontal: 12,
+    },
+    microsoftBtn: {
+      backgroundColor: '#fff',
+      borderRadius: 16,
+      paddingVertical: 14,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    microsoftBtnDisabled: { opacity: 0.6 },
+    microsoftIcon: { marginRight: 10 },
+    microsoftBtnText: {
+      color: '#5E5E5E',
+      fontSize: Typography.fontSizeMD,
+      fontWeight: Typography.fontWeightSemiBold,
     },
   });
 }

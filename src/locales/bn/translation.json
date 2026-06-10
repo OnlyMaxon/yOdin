@@ -20,7 +20,9 @@
     "selectLocation": "আপনার দেশ নির্বাচন করুন...",
     "selectNationalityTitle": "জাতীয়তা নির্বাচন করুন",
     "selectLocationTitle": "অবস্থান নির্বাচন করুন",
-    "search": "অনুসন্ধান..."
+    "search": "অনুসন্ধান...",
+    "signInWithMicrosoft": "Microsoft দিয়ে সাইন ইন করুন",
+    "or": "বা"
   },
   "feed": {
     "title": "ফিড",

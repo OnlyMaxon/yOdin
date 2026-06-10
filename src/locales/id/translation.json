@@ -20,7 +20,9 @@
     "selectLocation": "Pilih negara Anda...",
     "selectNationalityTitle": "Pilih Kebangsaan",
     "selectLocationTitle": "Pilih Lokasi",
-    "search": "Cari..."
+    "search": "Cari...",
+    "signInWithMicrosoft": "Masuk dengan Microsoft",
+    "or": "atau"
   },
   "feed": {
     "title": "Beranda",

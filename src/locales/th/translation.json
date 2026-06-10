@@ -20,7 +20,9 @@
     "selectLocation": "เลือกประเทศของคุณ...",
     "selectNationalityTitle": "เลือกสัญชาติ",
     "selectLocationTitle": "เลือกที่อยู่",
-    "search": "ค้นหา..."
+    "search": "ค้นหา...",
+    "signInWithMicrosoft": "เข้าสู่ระบบด้วย Microsoft",
+    "or": "หรือ"
   },
   "feed": {
     "title": "ฟีด",

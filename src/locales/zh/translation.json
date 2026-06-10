@@ -20,7 +20,9 @@
     "selectLocation": "选择您的国家...",
     "selectNationalityTitle": "选择国籍",
     "selectLocationTitle": "选择位置",
-    "search": "搜索..."
+    "search": "搜索...",
+    "signInWithMicrosoft": "使用 Microsoft 登录",
+    "or": "或"
   },
   "feed": {
     "title": "动态",

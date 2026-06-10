@@ -20,7 +20,9 @@
     "selectLocation": "اختر بلدك...",
     "selectNationalityTitle": "اختر الجنسية",
     "selectLocationTitle": "اختر الموقع",
-    "search": "بحث..."
+    "search": "بحث...",
+    "signInWithMicrosoft": "تسجيل الدخول بـ Microsoft",
+    "or": "أو"
   },
   "feed": {
     "title": "الرئيسية",

@@ -20,7 +20,9 @@
     "selectLocation": "Selectează țara...",
     "selectNationalityTitle": "Selectează Naționalitatea",
     "selectLocationTitle": "Selectează Locația",
-    "search": "Caută..."
+    "search": "Caută...",
+    "signInWithMicrosoft": "Conectează-te cu Microsoft",
+    "or": "sau"
   },
   "feed": {
     "title": "Flux",

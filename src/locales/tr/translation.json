@@ -20,7 +20,9 @@
     "selectLocation": "Ülkenizi seçin...",
     "selectNationalityTitle": "Milliyet Seçin",
     "selectLocationTitle": "Konum Seçin",
-    "search": "Ara..."
+    "search": "Ara...",
+    "signInWithMicrosoft": "Microsoft ile giriş yap",
+    "or": "veya"
   },
   "feed": {
     "title": "Akış",

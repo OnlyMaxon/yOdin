@@ -20,7 +20,9 @@
     "selectLocation": "Ölkəni seçin...",
     "selectNationalityTitle": "Milliyyət seçin",
     "selectLocationTitle": "Ölkə seçin",
-    "search": "Axtar..."
+    "search": "Axtar...",
+    "signInWithMicrosoft": "Microsoft ilə daxil ol",
+    "or": "və ya"
   },
   "feed": {
     "title": "Lent",

@@ -20,7 +20,9 @@
     "selectLocation": "Pilih negara anda...",
     "selectNationalityTitle": "Pilih Kewarganegaraan",
     "selectLocationTitle": "Pilih Lokasi",
-    "search": "Cari..."
+    "search": "Cari...",
+    "signInWithMicrosoft": "Log masuk dengan Microsoft",
+    "or": "atau"
   },
   "feed": {
     "title": "Suapan",

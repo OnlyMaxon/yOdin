@@ -20,7 +20,9 @@
     "selectLocation": "Välj ditt land...",
     "selectNationalityTitle": "Välj nationalitet",
     "selectLocationTitle": "Välj plats",
-    "search": "Sök..."
+    "search": "Sök...",
+    "signInWithMicrosoft": "Logga in med Microsoft",
+    "or": "eller"
   },
   "feed": {
     "title": "Flöde",

@@ -20,7 +20,9 @@
     "selectLocation": "अपना देश चुनें...",
     "selectNationalityTitle": "राष्ट्रीयता चुनें",
     "selectLocationTitle": "स्थान चुनें",
-    "search": "खोजें..."
+    "search": "खोजें...",
+    "signInWithMicrosoft": "Microsoft से साइन इन करें",
+    "or": "या"
   },
   "feed": {
     "title": "फ़ीड",

@@ -20,7 +20,9 @@
     "selectLocation": "Chọn quốc gia của bạn...",
     "selectNationalityTitle": "Chọn quốc tịch",
     "selectLocationTitle": "Chọn vị trí",
-    "search": "Tìm kiếm..."
+    "search": "Tìm kiếm...",
+    "signInWithMicrosoft": "Đăng nhập bằng Microsoft",
+    "or": "hoặc"
   },
   "feed": {
     "title": "Bảng tin",

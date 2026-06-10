@@ -20,7 +20,9 @@
     "selectLocation": "Vyberte zemi...",
     "selectNationalityTitle": "Vyberte národnost",
     "selectLocationTitle": "Vyberte polohu",
-    "search": "Hledat..."
+    "search": "Hledat...",
+    "signInWithMicrosoft": "Přihlásit se přes Microsoft",
+    "or": "nebo"
   },
   "feed": {
     "title": "Přehled",

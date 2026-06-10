@@ -20,7 +20,9 @@
     "selectLocation": "Seleziona il tuo paese...",
     "selectNationalityTitle": "Seleziona Nazionalità",
     "selectLocationTitle": "Seleziona Posizione",
-    "search": "Cerca..."
+    "search": "Cerca...",
+    "signInWithMicrosoft": "Accedi con Microsoft",
+    "or": "o"
   },
   "feed": {
     "title": "Feed",

@@ -20,7 +20,9 @@
     "selectLocation": "کشورتان را انتخاب کنید...",
     "selectNationalityTitle": "انتخاب ملیت",
     "selectLocationTitle": "انتخاب موقعیت",
-    "search": "جستجو..."
+    "search": "جستجو...",
+    "signInWithMicrosoft": "ورود با Microsoft",
+    "or": "یا"
   },
   "feed": {
     "title": "فید",
