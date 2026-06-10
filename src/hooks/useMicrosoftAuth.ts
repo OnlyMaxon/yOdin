@@ -60,13 +60,9 @@ export function useMicrosoftAuth() {
           discovery,
         );
 
-        if (!tokenResult.idToken) {
-          throw new Error('Microsoft did not return an id_token. Check Azure app scopes include openid.');
-        }
-
         const provider = new OAuthProvider('microsoft.com');
         const credential = provider.credential({
-          idToken: tokenResult.idToken,
+          accessToken: tokenResult.accessToken,
         });
         const result = await signInWithCredential(auth, credential);
         await ensureMicrosoftProfile(result.user);
