@@ -30,12 +30,15 @@
     "replies_two": "ردّان",
     "replies_few": "{{count}} ردود",
     "replies_many": "{{count}} ردًا",
-    "replies_other": "{{count}} ردود"
+    "replies_other": "{{count}} ردود",
+    "emptyPosts": "لا توجد منشورات بعد. كن أول من ينشر!"
   },
   "discussion": {
     "title": "نقاش",
     "firstReply": "كن أول من يرد 💬",
-    "replyPlaceholder": "اكتب ردًا..."
+    "replyPlaceholder": "اكتب ردًا...",
+    "acceptedAnswer": "الإجابة المقبولة",
+    "markHelped": "هذه الإجابة ساعدتني"
   },
   "newDiscussion": {
     "title": "نقاش جديد",
@@ -45,7 +48,8 @@
   "notifications": {
     "title": "الإشعارات",
     "empty": "لا توجد إشعارات بعد",
-    "replied": "ردّ على نقاشك"
+    "replied": "ردّ على نقاشك",
+    "accepted": "قبل إجابتك"
   },
   "profile": {
     "title": "الملف الشخصي",
@@ -107,6 +111,35 @@
     "enterName": "يرجى إدخال اسمك.",
     "selectNationalityAndLocation": "يرجى تحديد جنسيتك وموقعك.",
     "writeQuestion": "يرجى كتابة سؤالك.",
-    "photoUploadFailed": "فشل رفع الصورة. يرجى المحاولة مرة أخرى."
+    "photoUploadFailed": "فشل رفع الصورة. يرجى المحاولة مرة أخرى.",
+    "fillTitleAndDescription": "يرجى ملء الموضوع والوصف."
+  },
+  "categories": {
+    "all": "الكل",
+    "news": "أخبار",
+    "events": "فعاليات",
+    "places": "يستحق الزيارة"
+  },
+  "newPost": {
+    "title": "منشور جديد",
+    "topicPlaceholder": "الموضوع",
+    "descriptionPlaceholder": "الوصف",
+    "category": "الفئة",
+    "addPhoto": "إضافة صورة",
+    "post": "نشر"
+  },
+  "forum": {
+    "title": "المنتدى",
+    "empty": "لا توجد أسئلة بعد. اطرح أول سؤال!",
+    "answered": "تمت الإجابة",
+    "ask": "اطرح سؤالاً"
+  },
+  "rank": {
+    "novice": "مبتدئ",
+    "helper": "مساعد",
+    "expert": "خبير",
+    "master": "محترف",
+    "guru": "جورو",
+    "points": "النقاط: {{count}}"
   }
 }

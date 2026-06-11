@@ -26,12 +26,15 @@
     "title": "ฟีด",
     "empty": "ยังไม่มีการสนทนา เป็นคนแรก!",
     "replies_one": "{{count}} การตอบกลับ",
-    "replies_other": "{{count}} การตอบกลับ"
+    "replies_other": "{{count}} การตอบกลับ",
+    "emptyPosts": "ยังไม่มีโพสต์ มาเป็นคนแรกกัน!"
   },
   "discussion": {
     "title": "การสนทนา",
     "firstReply": "เป็นคนแรกที่ตอบกลับ 💬",
-    "replyPlaceholder": "เขียนการตอบกลับ..."
+    "replyPlaceholder": "เขียนการตอบกลับ...",
+    "acceptedAnswer": "คำตอบที่ได้รับการยอมรับ",
+    "markHelped": "คำตอบนี้ช่วยได้"
   },
   "newDiscussion": {
     "title": "การสนทนาใหม่",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "การแจ้งเตือน",
     "empty": "ยังไม่มีการแจ้งเตือน",
-    "replied": "ตอบกลับการสนทนาของคุณ"
+    "replied": "ตอบกลับการสนทนาของคุณ",
+    "accepted": "ยอมรับคำตอบของคุณ"
   },
   "profile": {
     "title": "โปรไฟล์",
@@ -103,6 +107,35 @@
     "enterName": "กรุณากรอกชื่อของคุณ",
     "selectNationalityAndLocation": "กรุณาเลือกสัญชาติและที่อยู่ของคุณ",
     "writeQuestion": "กรุณาเขียนคำถามของคุณ",
-    "photoUploadFailed": "อัปโหลดรูปภาพล้มเหลว กรุณาลองอีกครั้ง"
+    "photoUploadFailed": "อัปโหลดรูปภาพล้มเหลว กรุณาลองอีกครั้ง",
+    "fillTitleAndDescription": "กรุณากรอกหัวข้อและคำอธิบาย"
+  },
+  "categories": {
+    "all": "ทั้งหมด",
+    "news": "ข่าว",
+    "events": "กิจกรรม",
+    "places": "น่าไปเยือน"
+  },
+  "newPost": {
+    "title": "โพสต์ใหม่",
+    "topicPlaceholder": "หัวข้อ",
+    "descriptionPlaceholder": "คำอธิบาย",
+    "category": "หมวดหมู่",
+    "addPhoto": "เพิ่มรูปภาพ",
+    "post": "เผยแพร่"
+  },
+  "forum": {
+    "title": "ฟอรัม",
+    "empty": "ยังไม่มีคำถาม มาถามเป็นคนแรกกัน!",
+    "answered": "ตอบแล้ว",
+    "ask": "ถามคำถาม"
+  },
+  "rank": {
+    "novice": "มือใหม่",
+    "helper": "ผู้ช่วย",
+    "expert": "ผู้เชี่ยวชาญ",
+    "master": "ปรมาจารย์",
+    "guru": "กูรู",
+    "points": "คะแนน: {{count}}"
   }
 }

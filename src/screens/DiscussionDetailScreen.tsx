@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,8 @@ import {
   addReply,
   saveDiscussion,
   unsaveDiscussion,
+  voteReply,
+  acceptReply,
 } from '../services/discussionService';
 import { createNotification } from '../services/notificationService';
 import { Reply, Discussion } from '../types';
@@ -37,13 +39,14 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top);
   const { profile } = useAuthStore();
-  const { incrementReplyCount, toggleSaved } = useFeedStore();
+  const { incrementReplyCount, toggleSaved, setAcceptedReply } = useFeedStore();
   const [discussion, setDiscussion] = useState<Discussion | null>(null);
   const [replies, setReplies] = useState<Reply[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
+  const [accepting, setAccepting] = useState(false);
   const listRef = useRef<FlatList>(null);
 
   useEffect(() => {
@@ -65,6 +68,18 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     }
   }
 
+  // Accepted answer is pinned to the top of the list
+  const sortedReplies = useMemo(() => {
+    const acceptedId = discussion?.acceptedReplyId;
+    if (!acceptedId) return replies;
+    const accepted = replies.find((r) => r.id === acceptedId);
+    if (!accepted) return replies;
+    return [accepted, ...replies.filter((r) => r.id !== acceptedId)];
+  }, [replies, discussion?.acceptedReplyId]);
+
+  const isAnswered = !!discussion?.acceptedReplyId;
+  const isQuestionAuthor = discussion?.authorId === profile?.uid;
+
   async function sendReply() {
     if (!text.trim() || !profile || !discussion) return;
     setSending(true);
@@ -77,6 +92,8 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         authorNationality: profile.nationality,
         authorCountryCode: profile.countryCode,
         text: text.trim(),
+        likes: [],
+        dislikes: [],
       };
 
       const replyId = await addReply(discussionId, replyData);
@@ -101,6 +118,58 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 100);
     } finally {
       setSending(false);
+    }
+  }
+
+  async function handleVote(reply: Reply, vote: 'like' | 'dislike') {
+    if (!profile?.uid || reply.authorId === profile.uid) return;
+    const uid = profile.uid;
+    const liked = reply.likes?.includes(uid) ?? false;
+    const disliked = reply.dislikes?.includes(uid) ?? false;
+
+    function applyVote(r: Reply): Reply {
+      let likes = (r.likes ?? []).filter((id) => id !== uid);
+      let dislikes = (r.dislikes ?? []).filter((id) => id !== uid);
+      if (vote === 'like' && !liked) likes = [...likes, uid];
+      if (vote === 'dislike' && !disliked) dislikes = [...dislikes, uid];
+      return { ...r, likes, dislikes };
+    }
+
+    const prevReplies = replies;
+    setReplies((prev) => prev.map((r) => (r.id === reply.id ? applyVote(r) : r)));
+    try {
+      await voteReply(discussionId, reply.id, uid, vote, { liked, disliked });
+    } catch {
+      setReplies(prevReplies);
+    }
+  }
+
+  async function handleAccept(reply: Reply) {
+    if (!profile || !discussion || accepting || discussion.acceptedReplyId) return;
+    setAccepting(true);
+    const prevDiscussion = discussion;
+    setDiscussion({ ...discussion, acceptedReplyId: reply.id });
+    try {
+      await acceptReply(discussionId, reply.id, reply.authorId);
+      setAcceptedReply(discussionId, reply.id);
+      if (reply.authorId !== profile.uid) {
+        await createNotification(
+          {
+            toUserId: reply.authorId,
+            fromUserId: profile.uid,
+            fromUserName: `${profile.firstName} ${profile.lastName}`,
+            fromUserPhoto: profile.photoURL ?? '',
+            discussionId,
+            discussionQuestion: discussion.question,
+          },
+          'accepted',
+        );
+      }
+      setTimeout(() => listRef.current?.scrollToOffset({ offset: 0, animated: true }), 100);
+    } catch {
+      setDiscussion(prevDiscussion);
+    } finally {
+      setAccepting(false);
     }
   }
 
@@ -138,37 +207,95 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
 
   function renderReply({ item }: { item: Reply }) {
     const isMe = item.authorId === profile?.uid;
+    const isAccepted = item.id === discussion?.acceptedReplyId;
     const initials = item.authorName?.split(' ').map((w) => w[0]).join('').toUpperCase() ?? '?';
+    const liked = item.likes?.includes(profile?.uid ?? '') ?? false;
+    const disliked = item.dislikes?.includes(profile?.uid ?? '') ?? false;
+    const likeCount = item.likes?.length ?? 0;
+    const dislikeCount = item.dislikes?.length ?? 0;
+    const canAccept = isQuestionAuthor && !isAnswered && !isMe;
+
     return (
-      <View style={[styles.replyRow, isMe && styles.replyRowMe]}>
-        {!isMe && (
-          <View style={styles.replyAvatar}>
-            {item.authorPhoto ? (
-              <Image source={{ uri: item.authorPhoto }} style={styles.replyAvatarImage} />
-            ) : (
-              <Text style={styles.replyAvatarText}>{initials}</Text>
-            )}
+      <View style={[styles.replyWrap, isAccepted && styles.replyWrapAccepted]}>
+        {isAccepted && (
+          <View style={styles.acceptedHeader}>
+            <Ionicons name="checkmark-circle" size={16} color={colors.success} />
+            <Text style={styles.acceptedHeaderText}>{t('discussion.acceptedAnswer')}</Text>
           </View>
         )}
-        <View style={[styles.replyBubble, isMe && styles.replyBubbleMe]}>
+        <View style={[styles.replyRow, isMe && styles.replyRowMe]}>
           {!isMe && (
-            <Text style={styles.replyAuthor}>
-              {item.authorName}  {flag(item.authorCountryCode)}
-            </Text>
+            <View style={styles.replyAvatar}>
+              {item.authorPhoto ? (
+                <Image source={{ uri: item.authorPhoto }} style={styles.replyAvatarImage} />
+              ) : (
+                <Text style={styles.replyAvatarText}>{initials}</Text>
+              )}
+            </View>
           )}
-          <Text style={[styles.replyText, isMe && styles.replyTextMe]}>{item.text}</Text>
-        </View>
-        {isMe && (
-          <View style={[styles.replyAvatar, styles.replyAvatarMe]}>
-            {profile?.photoURL ? (
-              <Image source={{ uri: profile.photoURL }} style={styles.replyAvatarImage} />
-            ) : (
-              <Text style={[styles.replyAvatarText, styles.replyAvatarTextMe]}>
-                {`${profile?.firstName?.charAt(0) ?? ''}${profile?.lastName?.charAt(0) ?? ''}`.toUpperCase()}
+          <View style={[styles.replyBubble, isMe && styles.replyBubbleMe, isAccepted && styles.replyBubbleAccepted]}>
+            {!isMe && (
+              <Text style={styles.replyAuthor}>
+                {item.authorName}  {flag(item.authorCountryCode)}
               </Text>
             )}
+            <Text style={[styles.replyText, isMe && !isAccepted && styles.replyTextMe]}>{item.text}</Text>
           </View>
-        )}
+          {isMe && (
+            <View style={[styles.replyAvatar, styles.replyAvatarMe]}>
+              {profile?.photoURL ? (
+                <Image source={{ uri: profile.photoURL }} style={styles.replyAvatarImage} />
+              ) : (
+                <Text style={[styles.replyAvatarText, styles.replyAvatarTextMe]}>
+                  {`${profile?.firstName?.charAt(0) ?? ''}${profile?.lastName?.charAt(0) ?? ''}`.toUpperCase()}
+                </Text>
+              )}
+            </View>
+          )}
+        </View>
+
+        <View style={[styles.replyActions, isMe && styles.replyActionsMe]}>
+          <TouchableOpacity
+            style={styles.voteBtn}
+            onPress={() => handleVote(item, 'like')}
+            disabled={isMe}
+            hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+          >
+            <Ionicons
+              name={liked ? 'thumbs-up' : 'thumbs-up-outline'}
+              size={16}
+              color={liked ? colors.primary : colors.textSecondary}
+            />
+            {likeCount > 0 && (
+              <Text style={[styles.voteCount, liked && { color: colors.primary }]}>{likeCount}</Text>
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.voteBtn}
+            onPress={() => handleVote(item, 'dislike')}
+            disabled={isMe}
+            hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+          >
+            <Ionicons
+              name={disliked ? 'thumbs-down' : 'thumbs-down-outline'}
+              size={16}
+              color={disliked ? colors.notification : colors.textSecondary}
+            />
+            {dislikeCount > 0 && (
+              <Text style={[styles.voteCount, disliked && { color: colors.notification }]}>{dislikeCount}</Text>
+            )}
+          </TouchableOpacity>
+          {canAccept && (
+            <TouchableOpacity
+              style={styles.acceptBtn}
+              onPress={() => handleAccept(item)}
+              disabled={accepting}
+            >
+              <Ionicons name="checkmark-circle-outline" size={15} color={colors.success} />
+              <Text style={styles.acceptBtnText}>{t('discussion.markHelped')}</Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
     );
   }
@@ -209,7 +336,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       ) : (
         <>
           {discussion && (
-            <View style={styles.questionBlock}>
+            <View style={[styles.questionBlock, isAnswered && styles.questionBlockAnswered]}>
               <View style={styles.questionAuthorRow}>
                 <View style={styles.qAvatar}>
                   {discussion.authorPhoto ? (
@@ -220,12 +347,18 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
                     </Text>
                   )}
                 </View>
-                <View>
+                <View style={{ flex: 1 }}>
                   <Text style={styles.qAuthorName}>{discussion.authorName}</Text>
                   <Text style={styles.qAuthorMeta}>
                     {flag(discussion.authorCountryCode)}  {discussion.authorNationality}
                   </Text>
                 </View>
+                {isAnswered && (
+                  <View style={styles.answeredBadge}>
+                    <Ionicons name="checkmark-circle" size={14} color="#fff" />
+                    <Text style={styles.answeredBadgeText}>{t('forum.answered')}</Text>
+                  </View>
+                )}
               </View>
               <Text style={styles.questionText}>{discussion.question}</Text>
             </View>
@@ -233,7 +366,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
 
           <FlatList
             ref={listRef}
-            data={replies}
+            data={sortedReplies}
             keyExtractor={(item) => item.id}
             renderItem={renderReply}
             contentContainerStyle={styles.repliesList}
@@ -301,6 +434,11 @@ function makeStyles(c: ColorPalette, topInset: number) {
       borderBottomWidth: 1,
       borderBottomColor: c.border,
     },
+    questionBlockAnswered: {
+      backgroundColor: c.success + '18',
+      borderBottomColor: c.success,
+      borderBottomWidth: 1.5,
+    },
     questionAuthorRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
     qAvatar: {
       width: 40,
@@ -323,15 +461,48 @@ function makeStyles(c: ColorPalette, topInset: number) {
       color: c.textPrimary,
     },
     qAuthorMeta: { fontSize: Typography.fontSizeSM, color: c.textSecondary },
+    answeredBadge: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      backgroundColor: c.success,
+      paddingHorizontal: 8,
+      paddingVertical: 4,
+      borderRadius: 10,
+    },
+    answeredBadgeText: {
+      color: '#fff',
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+    },
     questionText: {
       fontSize: Typography.fontSizeLG,
       color: c.textPrimary,
       lineHeight: 26,
       fontWeight: Typography.fontWeightMedium,
     },
-    repliesList: { padding: 16, gap: 12, flexGrow: 1 },
+    repliesList: { padding: 16, gap: 16, flexGrow: 1 },
     emptyReplies: { alignItems: 'center', paddingTop: 40 },
     emptyText: { fontSize: Typography.fontSizeMD, color: c.textSecondary },
+    replyWrap: {},
+    replyWrapAccepted: {
+      backgroundColor: c.success + '14',
+      borderWidth: 1.5,
+      borderColor: c.success,
+      borderRadius: 16,
+      padding: 10,
+    },
+    acceptedHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      marginBottom: 8,
+    },
+    acceptedHeaderText: {
+      fontSize: Typography.fontSizeSM,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.success,
+    },
     replyRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 8 },
     replyRowMe: { justifyContent: 'flex-end' },
     replyAvatar: {
@@ -364,6 +535,11 @@ function makeStyles(c: ColorPalette, topInset: number) {
       borderBottomRightRadius: 4,
       borderWidth: 0,
     },
+    replyBubbleAccepted: {
+      backgroundColor: c.surface,
+      borderWidth: 1,
+      borderColor: c.success,
+    },
     replyAuthor: {
       fontSize: Typography.fontSizeXS,
       fontWeight: Typography.fontWeightSemiBold,
@@ -372,6 +548,43 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     replyText: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 20 },
     replyTextMe: { color: '#fff' },
+    replyActions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 16,
+      marginTop: 6,
+      marginLeft: 44,
+    },
+    replyActionsMe: {
+      justifyContent: 'flex-end',
+      marginLeft: 0,
+      marginRight: 44,
+    },
+    voteBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+    },
+    voteCount: {
+      fontSize: Typography.fontSizeXS,
+      color: c.textSecondary,
+      fontWeight: Typography.fontWeightMedium,
+    },
+    acceptBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: c.success,
+    },
+    acceptBtnText: {
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.success,
+    },
     inputBar: {
       flexDirection: 'row',
       alignItems: 'flex-end',

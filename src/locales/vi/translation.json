@@ -26,12 +26,15 @@
     "title": "Bảng tin",
     "empty": "Chưa có cuộc thảo luận nào. Hãy là người đầu tiên!",
     "replies_one": "{{count}} trả lời",
-    "replies_other": "{{count}} trả lời"
+    "replies_other": "{{count}} trả lời",
+    "emptyPosts": "Chưa có bài viết nào. Hãy là người đầu tiên!"
   },
   "discussion": {
     "title": "Thảo luận",
     "firstReply": "Hãy là người đầu tiên trả lời 💬",
-    "replyPlaceholder": "Viết câu trả lời..."
+    "replyPlaceholder": "Viết câu trả lời...",
+    "acceptedAnswer": "Câu trả lời được chấp nhận",
+    "markHelped": "Hữu ích"
   },
   "newDiscussion": {
     "title": "Thảo luận mới",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Thông báo",
     "empty": "Chưa có thông báo nào",
-    "replied": "đã trả lời cuộc thảo luận của bạn"
+    "replied": "đã trả lời cuộc thảo luận của bạn",
+    "accepted": "đã chấp nhận câu trả lời của bạn"
   },
   "profile": {
     "title": "Hồ sơ",
@@ -103,6 +107,35 @@
     "enterName": "Vui lòng nhập tên của bạn.",
     "selectNationalityAndLocation": "Vui lòng chọn quốc tịch và vị trí của bạn.",
     "writeQuestion": "Vui lòng viết câu hỏi của bạn.",
-    "photoUploadFailed": "Tải ảnh lên thất bại. Vui lòng thử lại."
+    "photoUploadFailed": "Tải ảnh lên thất bại. Vui lòng thử lại.",
+    "fillTitleAndDescription": "Vui lòng điền chủ đề và mô tả."
+  },
+  "categories": {
+    "all": "Tất cả",
+    "news": "Tin tức",
+    "events": "Sự kiện",
+    "places": "Đáng ghé thăm"
+  },
+  "newPost": {
+    "title": "Bài viết mới",
+    "topicPlaceholder": "Chủ đề",
+    "descriptionPlaceholder": "Mô tả",
+    "category": "Danh mục",
+    "addPhoto": "Thêm ảnh",
+    "post": "Đăng"
+  },
+  "forum": {
+    "title": "Diễn đàn",
+    "empty": "Chưa có câu hỏi nào. Hãy đặt câu hỏi đầu tiên!",
+    "answered": "Đã trả lời",
+    "ask": "Đặt câu hỏi"
+  },
+  "rank": {
+    "novice": "Người mới",
+    "helper": "Người trợ giúp",
+    "expert": "Chuyên gia",
+    "master": "Bậc thầy",
+    "guru": "Guru",
+    "points": "Điểm: {{count}}"
   }
 }

@@ -28,12 +28,15 @@
     "replies_one": "{{count}} odpowiedź",
     "replies_few": "{{count}} odpowiedzi",
     "replies_many": "{{count}} odpowiedzi",
-    "replies_other": "{{count}} odpowiedzi"
+    "replies_other": "{{count}} odpowiedzi",
+    "emptyPosts": "Brak postów. Bądź pierwszy!"
   },
   "discussion": {
     "title": "Dyskusja",
     "firstReply": "Bądź pierwszym, który odpowie 💬",
-    "replyPlaceholder": "Napisz odpowiedź..."
+    "replyPlaceholder": "Napisz odpowiedź...",
+    "acceptedAnswer": "Zaakceptowana odpowiedź",
+    "markHelped": "To pomogło"
   },
   "newDiscussion": {
     "title": "Nowa dyskusja",
@@ -43,7 +46,8 @@
   "notifications": {
     "title": "Powiadomienia",
     "empty": "Brak powiadomień",
-    "replied": "odpowiedział na Twoją dyskusję"
+    "replied": "odpowiedział na Twoją dyskusję",
+    "accepted": "zaakceptował(a) twoją odpowiedź"
   },
   "profile": {
     "title": "Profil",
@@ -105,6 +109,35 @@
     "enterName": "Podaj swoje imię.",
     "selectNationalityAndLocation": "Wybierz swoją narodowość i lokalizację.",
     "writeQuestion": "Napisz swoje pytanie.",
-    "photoUploadFailed": "Nie udało się przesłać zdjęcia. Spróbuj ponownie."
+    "photoUploadFailed": "Nie udało się przesłać zdjęcia. Spróbuj ponownie.",
+    "fillTitleAndDescription": "Wypełnij temat i opis."
+  },
+  "categories": {
+    "all": "Wszystko",
+    "news": "Aktualności",
+    "events": "Wydarzenia",
+    "places": "Warto odwiedzić"
+  },
+  "newPost": {
+    "title": "Nowy post",
+    "topicPlaceholder": "Temat",
+    "descriptionPlaceholder": "Opis",
+    "category": "Kategoria",
+    "addPhoto": "Dodaj zdjęcie",
+    "post": "Opublikuj"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Brak pytań. Zadaj pierwsze!",
+    "answered": "Odpowiedziano",
+    "ask": "Zadaj pytanie"
+  },
+  "rank": {
+    "novice": "Nowicjusz",
+    "helper": "Pomocnik",
+    "expert": "Ekspert",
+    "master": "Mistrz",
+    "guru": "Guru",
+    "points": "Punkty: {{count}}"
   }
 }

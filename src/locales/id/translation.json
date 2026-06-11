@@ -26,12 +26,15 @@
     "title": "Beranda",
     "empty": "Belum ada diskusi. Jadilah yang pertama!",
     "replies_one": "{{count}} balasan",
-    "replies_other": "{{count}} balasan"
+    "replies_other": "{{count}} balasan",
+    "emptyPosts": "Belum ada postingan. Jadilah yang pertama!"
   },
   "discussion": {
     "title": "Diskusi",
     "firstReply": "Jadilah yang pertama membalas 💬",
-    "replyPlaceholder": "Tulis balasan..."
+    "replyPlaceholder": "Tulis balasan...",
+    "acceptedAnswer": "Jawaban diterima",
+    "markHelped": "Ini membantu"
   },
   "newDiscussion": {
     "title": "Diskusi Baru",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Notifikasi",
     "empty": "Belum ada notifikasi",
-    "replied": "membalas diskusi Anda"
+    "replied": "membalas diskusi Anda",
+    "accepted": "menerima jawaban Anda"
   },
   "profile": {
     "title": "Profil",
@@ -103,6 +107,35 @@
     "enterName": "Harap masukkan nama Anda.",
     "selectNationalityAndLocation": "Harap pilih kebangsaan dan lokasi Anda.",
     "writeQuestion": "Harap tulis pertanyaan Anda.",
-    "photoUploadFailed": "Gagal mengunggah foto. Silakan coba lagi."
+    "photoUploadFailed": "Gagal mengunggah foto. Silakan coba lagi.",
+    "fillTitleAndDescription": "Harap isi topik dan deskripsi."
+  },
+  "categories": {
+    "all": "Semua",
+    "news": "Berita",
+    "events": "Acara",
+    "places": "Layak dikunjungi"
+  },
+  "newPost": {
+    "title": "Postingan Baru",
+    "topicPlaceholder": "Topik",
+    "descriptionPlaceholder": "Deskripsi",
+    "category": "Kategori",
+    "addPhoto": "Tambah Foto",
+    "post": "Terbitkan"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Belum ada pertanyaan. Ajukan yang pertama!",
+    "answered": "Terjawab",
+    "ask": "Ajukan Pertanyaan"
+  },
+  "rank": {
+    "novice": "Pemula",
+    "helper": "Penolong",
+    "expert": "Ahli",
+    "master": "Master",
+    "guru": "Guru",
+    "points": "Poin: {{count}}"
   }
 }

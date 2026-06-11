@@ -27,12 +27,15 @@
     "empty": "Ще немає обговорень. Будьте першим!",
     "replies_one": "{{count}} відповідь",
     "replies_few": "{{count}} відповіді",
-    "replies_other": "{{count}} відповідей"
+    "replies_other": "{{count}} відповідей",
+    "emptyPosts": "Поки немає дописів. Будьте першим!"
   },
   "discussion": {
     "title": "Обговорення",
     "firstReply": "Будьте першим, хто відповість 💬",
-    "replyPlaceholder": "Напишіть відповідь..."
+    "replyPlaceholder": "Напишіть відповідь...",
+    "acceptedAnswer": "Прийнята відповідь",
+    "markHelped": "Відповідь допомогла"
   },
   "newDiscussion": {
     "title": "Нове обговорення",
@@ -42,7 +45,8 @@
   "notifications": {
     "title": "Сповіщення",
     "empty": "Ще немає сповіщень",
-    "replied": "відповів на ваше обговорення"
+    "replied": "відповів на ваше обговорення",
+    "accepted": "прийняв(ла) вашу відповідь"
   },
   "profile": {
     "title": "Профіль",
@@ -104,6 +108,35 @@
     "enterName": "Будь ласка, введіть ваше ім'я.",
     "selectNationalityAndLocation": "Будь ласка, оберіть вашу національність і місцезнаходження.",
     "writeQuestion": "Будь ласка, напишіть ваше запитання.",
-    "photoUploadFailed": "Не вдалося завантажити фото. Спробуйте ще раз."
+    "photoUploadFailed": "Не вдалося завантажити фото. Спробуйте ще раз.",
+    "fillTitleAndDescription": "Заповніть тему та опис."
+  },
+  "categories": {
+    "all": "Все",
+    "news": "Новини",
+    "events": "Заходи",
+    "places": "Варто відвідати"
+  },
+  "newPost": {
+    "title": "Новий допис",
+    "topicPlaceholder": "Тема",
+    "descriptionPlaceholder": "Опис",
+    "category": "Категорія",
+    "addPhoto": "Додати фото",
+    "post": "Опублікувати"
+  },
+  "forum": {
+    "title": "Форум",
+    "empty": "Поки немає запитань. Поставте перше!",
+    "answered": "Відповідь є",
+    "ask": "Поставити запитання"
+  },
+  "rank": {
+    "novice": "Новачок",
+    "helper": "Помічник",
+    "expert": "Знавець",
+    "master": "Майстер",
+    "guru": "Гуру",
+    "points": "Бали: {{count}}"
   }
 }

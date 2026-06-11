@@ -26,12 +26,15 @@
     "title": "피드",
     "empty": "아직 토론이 없습니다. 첫 번째가 되세요!",
     "replies_one": "{{count}}개 답글",
-    "replies_other": "{{count}}개 답글"
+    "replies_other": "{{count}}개 답글",
+    "emptyPosts": "아직 게시물이 없습니다. 첫 게시물을 올려보세요!"
   },
   "discussion": {
     "title": "토론",
     "firstReply": "첫 번째로 답글을 달아보세요 💬",
-    "replyPlaceholder": "답글 작성..."
+    "replyPlaceholder": "답글 작성...",
+    "acceptedAnswer": "채택된 답변",
+    "markHelped": "도움이 됐어요"
   },
   "newDiscussion": {
     "title": "새 토론",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "알림",
     "empty": "아직 알림이 없습니다",
-    "replied": "님이 내 토론에 답글을 달았습니다"
+    "replied": "님이 내 토론에 답글을 달았습니다",
+    "accepted": "님이 회원님의 답변을 채택했습니다"
   },
   "profile": {
     "title": "프로필",
@@ -103,6 +107,35 @@
     "enterName": "이름을 입력해 주세요.",
     "selectNationalityAndLocation": "국적과 위치를 모두 선택해 주세요.",
     "writeQuestion": "질문을 작성해 주세요.",
-    "photoUploadFailed": "사진 업로드에 실패했습니다. 다시 시도해 주세요."
+    "photoUploadFailed": "사진 업로드에 실패했습니다. 다시 시도해 주세요.",
+    "fillTitleAndDescription": "주제와 설명을 입력해 주세요."
+  },
+  "categories": {
+    "all": "전체",
+    "news": "뉴스",
+    "events": "이벤트",
+    "places": "가볼 만한 곳"
+  },
+  "newPost": {
+    "title": "새 게시물",
+    "topicPlaceholder": "주제",
+    "descriptionPlaceholder": "설명",
+    "category": "카테고리",
+    "addPhoto": "사진 추가",
+    "post": "게시"
+  },
+  "forum": {
+    "title": "포럼",
+    "empty": "아직 질문이 없습니다. 첫 질문을 해보세요!",
+    "answered": "답변 완료",
+    "ask": "질문하기"
+  },
+  "rank": {
+    "novice": "새내기",
+    "helper": "도우미",
+    "expert": "전문가",
+    "master": "마스터",
+    "guru": "구루",
+    "points": "포인트: {{count}}"
   }
 }

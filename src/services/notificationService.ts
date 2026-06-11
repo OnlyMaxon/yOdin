@@ -23,17 +23,20 @@ export async function fetchNotifications(uid: string): Promise<AppNotification[]
   return snap.docs.map((d) => ({ id: d.id, ...d.data() } as AppNotification));
 }
 
-export async function createNotification(data: {
-  toUserId: string;
-  fromUserId: string;
-  fromUserName: string;
-  fromUserPhoto: string;
-  discussionId: string;
-  discussionQuestion: string;
-}): Promise<void> {
+export async function createNotification(
+  data: {
+    toUserId: string;
+    fromUserId: string;
+    fromUserName: string;
+    fromUserPhoto: string;
+    discussionId: string;
+    discussionQuestion: string;
+  },
+  type: 'reply' | 'accepted' = 'reply',
+): Promise<void> {
   await addDoc(collection(db, 'notifications'), {
     ...data,
-    type: 'reply',
+    type,
     createdAt: serverTimestamp(),
     read: false,
   });

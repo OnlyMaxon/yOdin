@@ -85,6 +85,8 @@ export async function addReply(
 ): Promise<string> {
   const ref = await addDoc(collection(db, 'discussions', discussionId, 'replies'), {
     ...data,
+    likes: [],
+    dislikes: [],
     createdAt: serverTimestamp(),
   });
   await updateDoc(doc(db, 'discussions', discussionId), {
@@ -113,6 +115,36 @@ export async function unsaveDiscussion(userId: string, discussionId: string): Pr
   await updateDoc(doc(db, 'discussions', discussionId), {
     savedBy: arrayRemove(userId),
   });
+}
+
+export async function voteReply(
+  discussionId: string,
+  replyId: string,
+  userId: string,
+  vote: 'like' | 'dislike',
+  current: { liked: boolean; disliked: boolean },
+): Promise<void> {
+  const replyRef = doc(db, 'discussions', discussionId, 'replies', replyId);
+  const update: Record<string, unknown> = {};
+  if (vote === 'like') {
+    update.likes = current.liked ? arrayRemove(userId) : arrayUnion(userId);
+    if (current.disliked) update.dislikes = arrayRemove(userId);
+  } else {
+    update.dislikes = current.disliked ? arrayRemove(userId) : arrayUnion(userId);
+    if (current.liked) update.likes = arrayRemove(userId);
+  }
+  await updateDoc(replyRef, update);
+}
+
+export async function acceptReply(
+  discussionId: string,
+  replyId: string,
+  replyAuthorId: string,
+): Promise<void> {
+  const batch = writeBatch(db);
+  batch.update(doc(db, 'discussions', discussionId), { acceptedReplyId: replyId });
+  batch.update(doc(db, 'users', replyAuthorId), { points: increment(1) });
+  await batch.commit();
 }
 
 export async function deleteDiscussion(discussionId: string): Promise<void> {

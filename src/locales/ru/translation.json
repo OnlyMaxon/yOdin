@@ -27,12 +27,15 @@
     "empty": "Пока нет дискуссий. Будь первым!",
     "replies_one": "{{count}} ответ",
     "replies_few": "{{count}} ответа",
-    "replies_other": "{{count}} ответов"
+    "replies_other": "{{count}} ответов",
+    "emptyPosts": "Пока нет постов. Будьте первым!"
   },
   "discussion": {
     "title": "Дискуссия",
     "firstReply": "Будь первым кто ответит 💬",
-    "replyPlaceholder": "Написать ответ..."
+    "replyPlaceholder": "Написать ответ...",
+    "acceptedAnswer": "Принятый ответ",
+    "markHelped": "Ответ помог"
   },
   "newDiscussion": {
     "title": "Новая дискуссия",
@@ -42,7 +45,8 @@
   "notifications": {
     "title": "Уведомления",
     "empty": "Уведомлений пока нет",
-    "replied": "ответил на вашу дискуссию"
+    "replied": "ответил на вашу дискуссию",
+    "accepted": "принял(а) ваш ответ"
   },
   "profile": {
     "title": "Профиль",
@@ -104,6 +108,35 @@
     "enterName": "Пожалуйста, введите ваше имя.",
     "selectNationalityAndLocation": "Пожалуйста, выберите национальность и страну.",
     "writeQuestion": "Напишите ваш вопрос.",
-    "photoUploadFailed": "Не удалось загрузить фото. Попробуйте снова."
+    "photoUploadFailed": "Не удалось загрузить фото. Попробуйте снова.",
+    "fillTitleAndDescription": "Заполните тему и описание."
+  },
+  "categories": {
+    "all": "Всё",
+    "news": "Новости",
+    "events": "Мероприятия",
+    "places": "Стоит посетить"
+  },
+  "newPost": {
+    "title": "Новый пост",
+    "topicPlaceholder": "Тема",
+    "descriptionPlaceholder": "Описание",
+    "category": "Категория",
+    "addPhoto": "Добавить фото",
+    "post": "Опубликовать"
+  },
+  "forum": {
+    "title": "Форум",
+    "empty": "Пока нет вопросов. Задайте первый!",
+    "answered": "Отвечено",
+    "ask": "Задать вопрос"
+  },
+  "rank": {
+    "novice": "Новичок",
+    "helper": "Помощник",
+    "expert": "Знаток",
+    "master": "Мастер",
+    "guru": "Гуру",
+    "points": "Баллы: {{count}}"
   }
 }

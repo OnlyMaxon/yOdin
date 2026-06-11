@@ -74,7 +74,7 @@ export default function NotificationsScreen({ navigation }: any) {
         <View style={styles.content}>
           <Text style={styles.text}>
             <Text style={styles.bold}>{item.fromUserName}</Text>
-            {' '}{t('notifications.replied')}
+            {' '}{t(item.type === 'accepted' ? 'notifications.accepted' : 'notifications.replied')}
           </Text>
           <Text style={styles.question} numberOfLines={2}>
             "{item.discussionQuestion}"

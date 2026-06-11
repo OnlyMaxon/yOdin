@@ -26,12 +26,15 @@
     "title": "फ़ीड",
     "empty": "अभी कोई चर्चा नहीं। पहले बनें!",
     "replies_one": "{{count}} जवाब",
-    "replies_other": "{{count}} जवाब"
+    "replies_other": "{{count}} जवाब",
+    "emptyPosts": "अभी कोई पोस्ट नहीं। पहले बनें!"
   },
   "discussion": {
     "title": "चर्चा",
     "firstReply": "पहले जवाब दें 💬",
-    "replyPlaceholder": "जवाब लिखें..."
+    "replyPlaceholder": "जवाब लिखें...",
+    "acceptedAnswer": "स्वीकृत उत्तर",
+    "markHelped": "इससे मदद मिली"
   },
   "newDiscussion": {
     "title": "नई चर्चा",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "सूचनाएं",
     "empty": "अभी कोई सूचना नहीं",
-    "replied": "ने आपकी चर्चा का जवाब दिया"
+    "replied": "ने आपकी चर्चा का जवाब दिया",
+    "accepted": "ने आपका उत्तर स्वीकार किया"
   },
   "profile": {
     "title": "प्रोफ़ाइल",
@@ -103,6 +107,35 @@
     "enterName": "कृपया अपना नाम दर्ज करें।",
     "selectNationalityAndLocation": "कृपया अपनी राष्ट्रीयता और स्थान दोनों चुनें।",
     "writeQuestion": "कृपया अपना प्रश्न लिखें।",
-    "photoUploadFailed": "फ़ोटो अपलोड विफल। कृपया पुनः प्रयास करें।"
+    "photoUploadFailed": "फ़ोटो अपलोड विफल। कृपया पुनः प्रयास करें।",
+    "fillTitleAndDescription": "कृपया विषय और विवरण भरें।"
+  },
+  "categories": {
+    "all": "सभी",
+    "news": "समाचार",
+    "events": "कार्यक्रम",
+    "places": "घूमने लायक"
+  },
+  "newPost": {
+    "title": "नई पोस्ट",
+    "topicPlaceholder": "विषय",
+    "descriptionPlaceholder": "विवरण",
+    "category": "श्रेणी",
+    "addPhoto": "फोटो जोड़ें",
+    "post": "प्रकाशित करें"
+  },
+  "forum": {
+    "title": "फ़ोरम",
+    "empty": "अभी कोई सवाल नहीं। पहला सवाल पूछें!",
+    "answered": "उत्तर मिला",
+    "ask": "सवाल पूछें"
+  },
+  "rank": {
+    "novice": "नौसिखिया",
+    "helper": "सहायक",
+    "expert": "जानकार",
+    "master": "मास्टर",
+    "guru": "गुरु",
+    "points": "अंक: {{count}}"
   }
 }

@@ -26,12 +26,15 @@
     "title": "Inicio",
     "empty": "Aún no hay discusiones. ¡Sé el primero!",
     "replies_one": "{{count}} respuesta",
-    "replies_other": "{{count}} respuestas"
+    "replies_other": "{{count}} respuestas",
+    "emptyPosts": "Aún no hay publicaciones. ¡Sé el primero!"
   },
   "discussion": {
     "title": "Discusión",
     "firstReply": "Sé el primero en responder 💬",
-    "replyPlaceholder": "Escribe una respuesta..."
+    "replyPlaceholder": "Escribe una respuesta...",
+    "acceptedAnswer": "Respuesta aceptada",
+    "markHelped": "Me ayudó"
   },
   "newDiscussion": {
     "title": "Nueva discusión",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Notificaciones",
     "empty": "Aún no hay notificaciones",
-    "replied": "respondió a tu discusión"
+    "replied": "respondió a tu discusión",
+    "accepted": "aceptó tu respuesta"
   },
   "profile": {
     "title": "Perfil",
@@ -103,6 +107,35 @@
     "enterName": "Por favor ingresa tu nombre.",
     "selectNationalityAndLocation": "Por favor selecciona tu nacionalidad y ubicación.",
     "writeQuestion": "Por favor escribe tu pregunta.",
-    "photoUploadFailed": "Error al subir la foto. Por favor intenta de nuevo."
+    "photoUploadFailed": "Error al subir la foto. Por favor intenta de nuevo.",
+    "fillTitleAndDescription": "Completa el tema y la descripción."
+  },
+  "categories": {
+    "all": "Todo",
+    "news": "Noticias",
+    "events": "Eventos",
+    "places": "Vale la pena visitar"
+  },
+  "newPost": {
+    "title": "Nueva publicación",
+    "topicPlaceholder": "Tema",
+    "descriptionPlaceholder": "Descripción",
+    "category": "Categoría",
+    "addPhoto": "Añadir foto",
+    "post": "Publicar"
+  },
+  "forum": {
+    "title": "Foro",
+    "empty": "Aún no hay preguntas. ¡Haz la primera!",
+    "answered": "Respondida",
+    "ask": "Hacer una pregunta"
+  },
+  "rank": {
+    "novice": "Novato",
+    "helper": "Ayudante",
+    "expert": "Experto",
+    "master": "Maestro",
+    "guru": "Gurú",
+    "points": "Puntos: {{count}}"
   }
 }

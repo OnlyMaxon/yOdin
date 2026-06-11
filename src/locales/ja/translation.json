@@ -26,12 +26,15 @@
     "title": "フィード",
     "empty": "まだディスカッションはありません。最初の投稿をしよう！",
     "replies_one": "{{count}} 件の返信",
-    "replies_other": "{{count}} 件の返信"
+    "replies_other": "{{count}} 件の返信",
+    "emptyPosts": "まだ投稿がありません。最初の投稿をしましょう！"
   },
   "discussion": {
     "title": "ディスカッション",
     "firstReply": "最初に返信しよう 💬",
-    "replyPlaceholder": "返信を書く..."
+    "replyPlaceholder": "返信を書く...",
+    "acceptedAnswer": "ベストアンサー",
+    "markHelped": "役に立った"
   },
   "newDiscussion": {
     "title": "新しいディスカッション",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "通知",
     "empty": "まだ通知はありません",
-    "replied": "があなたのディスカッションに返信しました"
+    "replied": "があなたのディスカッションに返信しました",
+    "accepted": "があなたの回答を採用しました"
   },
   "profile": {
     "title": "プロフィール",
@@ -103,6 +107,35 @@
     "enterName": "名前を入力してください。",
     "selectNationalityAndLocation": "国籍と場所を選択してください。",
     "writeQuestion": "質問を書いてください。",
-    "photoUploadFailed": "写真のアップロードに失敗しました。もう一度お試しください。"
+    "photoUploadFailed": "写真のアップロードに失敗しました。もう一度お試しください。",
+    "fillTitleAndDescription": "トピックと説明を入力してください。"
+  },
+  "categories": {
+    "all": "すべて",
+    "news": "ニュース",
+    "events": "イベント",
+    "places": "おすすめスポット"
+  },
+  "newPost": {
+    "title": "新しい投稿",
+    "topicPlaceholder": "トピック",
+    "descriptionPlaceholder": "説明",
+    "category": "カテゴリー",
+    "addPhoto": "写真を追加",
+    "post": "投稿する"
+  },
+  "forum": {
+    "title": "フォーラム",
+    "empty": "まだ質問がありません。最初の質問をしましょう！",
+    "answered": "解決済み",
+    "ask": "質問する"
+  },
+  "rank": {
+    "novice": "初心者",
+    "helper": "ヘルパー",
+    "expert": "エキスパート",
+    "master": "マスター",
+    "guru": "グル",
+    "points": "ポイント：{{count}}"
   }
 }

@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
 import FeedStack from './FeedStack';
 import ProfileStack from './ProfileStack';
-import NewDiscussionModal from '../screens/NewDiscussionModal';
+import NewPostModal from '../screens/NewPostModal';
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +41,7 @@ export default function TabNavigator() {
           }}
         />
         <Tab.Screen
-          name="NewDiscussion"
+          name="NewPost"
           component={EmptyScreen}
           options={{
             tabBarButton: () => (
@@ -72,7 +72,7 @@ export default function TabNavigator() {
         />
       </Tab.Navigator>
 
-      <NewDiscussionModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+      <NewPostModal visible={modalVisible} onClose={() => setModalVisible(false)} />
     </>
   );
 }

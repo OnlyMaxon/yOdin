@@ -26,12 +26,15 @@
     "title": "Suapan",
     "empty": "Tiada perbincangan lagi. Jadilah yang pertama!",
     "replies_one": "{{count}} balasan",
-    "replies_other": "{{count}} balasan"
+    "replies_other": "{{count}} balasan",
+    "emptyPosts": "Belum ada kiriman. Jadilah yang pertama!"
   },
   "discussion": {
     "title": "Perbincangan",
     "firstReply": "Jadilah yang pertama membalas 💬",
-    "replyPlaceholder": "Tulis balasan..."
+    "replyPlaceholder": "Tulis balasan...",
+    "acceptedAnswer": "Jawapan diterima",
+    "markHelped": "Ini membantu"
   },
   "newDiscussion": {
     "title": "Perbincangan Baru",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Pemberitahuan",
     "empty": "Tiada pemberitahuan lagi",
-    "replied": "membalas perbincangan anda"
+    "replied": "membalas perbincangan anda",
+    "accepted": "menerima jawapan anda"
   },
   "profile": {
     "title": "Profil",
@@ -103,6 +107,35 @@
     "enterName": "Sila masukkan nama anda.",
     "selectNationalityAndLocation": "Sila pilih kewarganegaraan dan lokasi anda.",
     "writeQuestion": "Sila tulis soalan anda.",
-    "photoUploadFailed": "Gagal memuat naik foto. Sila cuba lagi."
+    "photoUploadFailed": "Gagal memuat naik foto. Sila cuba lagi.",
+    "fillTitleAndDescription": "Sila isi topik dan penerangan."
+  },
+  "categories": {
+    "all": "Semua",
+    "news": "Berita",
+    "events": "Acara",
+    "places": "Patut dilawati"
+  },
+  "newPost": {
+    "title": "Kiriman Baharu",
+    "topicPlaceholder": "Topik",
+    "descriptionPlaceholder": "Penerangan",
+    "category": "Kategori",
+    "addPhoto": "Tambah Foto",
+    "post": "Terbitkan"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Belum ada soalan. Tanya yang pertama!",
+    "answered": "Dijawab",
+    "ask": "Tanya Soalan"
+  },
+  "rank": {
+    "novice": "Orang baru",
+    "helper": "Pembantu",
+    "expert": "Pakar",
+    "master": "Mahir",
+    "guru": "Guru",
+    "points": "Mata: {{count}}"
   }
 }

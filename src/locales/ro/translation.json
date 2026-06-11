@@ -27,12 +27,15 @@
     "empty": "Nicio discuție încă. Fii primul!",
     "replies_one": "{{count}} răspuns",
     "replies_few": "{{count}} răspunsuri",
-    "replies_other": "{{count}} de răspunsuri"
+    "replies_other": "{{count}} de răspunsuri",
+    "emptyPosts": "Încă nu există postări. Fii primul!"
   },
   "discussion": {
     "title": "Discuție",
     "firstReply": "Fii primul care răspunde 💬",
-    "replyPlaceholder": "Scrie un răspuns..."
+    "replyPlaceholder": "Scrie un răspuns...",
+    "acceptedAnswer": "Răspuns acceptat",
+    "markHelped": "M-a ajutat"
   },
   "newDiscussion": {
     "title": "Discuție Nouă",
@@ -42,7 +45,8 @@
   "notifications": {
     "title": "Notificări",
     "empty": "Nicio notificare încă",
-    "replied": "a răspuns la discuția ta"
+    "replied": "a răspuns la discuția ta",
+    "accepted": "ți-a acceptat răspunsul"
   },
   "profile": {
     "title": "Profil",
@@ -104,6 +108,35 @@
     "enterName": "Te rugăm să introduci numele tău.",
     "selectNationalityAndLocation": "Te rugăm să selectezi naționalitatea și locația.",
     "writeQuestion": "Te rugăm să scrii întrebarea ta.",
-    "photoUploadFailed": "Încărcarea fotografiei a eșuat. Te rugăm să încerci din nou."
+    "photoUploadFailed": "Încărcarea fotografiei a eșuat. Te rugăm să încerci din nou.",
+    "fillTitleAndDescription": "Completează subiectul și descrierea."
+  },
+  "categories": {
+    "all": "Tot",
+    "news": "Știri",
+    "events": "Evenimente",
+    "places": "Merită vizitat"
+  },
+  "newPost": {
+    "title": "Postare nouă",
+    "topicPlaceholder": "Subiect",
+    "descriptionPlaceholder": "Descriere",
+    "category": "Categorie",
+    "addPhoto": "Adaugă fotografie",
+    "post": "Publică"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Încă nu există întrebări. Pune prima!",
+    "answered": "Răspuns primit",
+    "ask": "Pune o întrebare"
+  },
+  "rank": {
+    "novice": "Începător",
+    "helper": "Ajutor",
+    "expert": "Expert",
+    "master": "Maestru",
+    "guru": "Guru",
+    "points": "Puncte: {{count}}"
   }
 }

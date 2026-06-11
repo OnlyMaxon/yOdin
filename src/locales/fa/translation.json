@@ -26,12 +26,15 @@
     "title": "فید",
     "empty": "هنوز بحثی نیست. اولین نفر باشید!",
     "replies_one": "{{count}} پاسخ",
-    "replies_other": "{{count}} پاسخ"
+    "replies_other": "{{count}} پاسخ",
+    "emptyPosts": "هنوز پستی وجود ندارد. اولین نفر باشید!"
   },
   "discussion": {
     "title": "بحث",
     "firstReply": "اولین نفری باشید که پاسخ می‌دهد 💬",
-    "replyPlaceholder": "پاسخ بنویسید..."
+    "replyPlaceholder": "پاسخ بنویسید...",
+    "acceptedAnswer": "پاسخ پذیرفته‌شده",
+    "markHelped": "این کمک کرد"
   },
   "newDiscussion": {
     "title": "بحث جدید",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "اعلان‌ها",
     "empty": "هنوز اعلانی نیست",
-    "replied": "به بحث شما پاسخ داد"
+    "replied": "به بحث شما پاسخ داد",
+    "accepted": "پاسخ شما را پذیرفت"
   },
   "profile": {
     "title": "پروفایل",
@@ -103,6 +107,35 @@
     "enterName": "لطفاً نام خود را وارد کنید.",
     "selectNationalityAndLocation": "لطفاً ملیت و موقعیت خود را انتخاب کنید.",
     "writeQuestion": "لطفاً سوال خود را بنویسید.",
-    "photoUploadFailed": "آپلود عکس ناموفق بود. لطفاً دوباره تلاش کنید."
+    "photoUploadFailed": "آپلود عکس ناموفق بود. لطفاً دوباره تلاش کنید.",
+    "fillTitleAndDescription": "لطفاً موضوع و توضیحات را پر کنید."
+  },
+  "categories": {
+    "all": "همه",
+    "news": "اخبار",
+    "events": "رویدادها",
+    "places": "ارزش دیدن دارد"
+  },
+  "newPost": {
+    "title": "پست جدید",
+    "topicPlaceholder": "موضوع",
+    "descriptionPlaceholder": "توضیحات",
+    "category": "دسته‌بندی",
+    "addPhoto": "افزودن عکس",
+    "post": "انتشار"
+  },
+  "forum": {
+    "title": "انجمن",
+    "empty": "هنوز سوالی وجود ندارد. اولین سوال را بپرسید!",
+    "answered": "پاسخ داده شد",
+    "ask": "پرسیدن سوال"
+  },
+  "rank": {
+    "novice": "تازه‌کار",
+    "helper": "یاور",
+    "expert": "کارشناس",
+    "master": "استاد",
+    "guru": "گورو",
+    "points": "امتیاز: {{count}}"
   }
 }

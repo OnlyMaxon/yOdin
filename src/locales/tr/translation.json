@@ -26,12 +26,15 @@
     "title": "Akış",
     "empty": "Henüz tartışma yok. İlk siz olun!",
     "replies_one": "{{count}} yanıt",
-    "replies_other": "{{count}} yanıt"
+    "replies_other": "{{count}} yanıt",
+    "emptyPosts": "Henüz gönderi yok. İlk sen ol!"
   },
   "discussion": {
     "title": "Tartışma",
     "firstReply": "İlk yanıtı siz verin 💬",
-    "replyPlaceholder": "Yanıt yazın..."
+    "replyPlaceholder": "Yanıt yazın...",
+    "acceptedAnswer": "Kabul edilen yanıt",
+    "markHelped": "Bu yardımcı oldu"
   },
   "newDiscussion": {
     "title": "Yeni Tartışma",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Bildirimler",
     "empty": "Henüz bildirim yok",
-    "replied": "tartışmanıza yanıt verdi"
+    "replied": "tartışmanıza yanıt verdi",
+    "accepted": "yanıtını kabul etti"
   },
   "profile": {
     "title": "Profil",
@@ -103,6 +107,35 @@
     "enterName": "Lütfen adınızı girin.",
     "selectNationalityAndLocation": "Lütfen milliyetinizi ve konumunuzu seçin.",
     "writeQuestion": "Lütfen sorunuzu yazın.",
-    "photoUploadFailed": "Fotoğraf yüklenemedi. Lütfen tekrar deneyin."
+    "photoUploadFailed": "Fotoğraf yüklenemedi. Lütfen tekrar deneyin.",
+    "fillTitleAndDescription": "Lütfen konu ve açıklamayı doldurun."
+  },
+  "categories": {
+    "all": "Tümü",
+    "news": "Haberler",
+    "events": "Etkinlikler",
+    "places": "Görülmeye değer"
+  },
+  "newPost": {
+    "title": "Yeni Gönderi",
+    "topicPlaceholder": "Konu",
+    "descriptionPlaceholder": "Açıklama",
+    "category": "Kategori",
+    "addPhoto": "Fotoğraf ekle",
+    "post": "Yayınla"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Henüz soru yok. İlk soruyu sen sor!",
+    "answered": "Yanıtlandı",
+    "ask": "Soru Sor"
+  },
+  "rank": {
+    "novice": "Acemi",
+    "helper": "Yardımcı",
+    "expert": "Uzman",
+    "master": "Usta",
+    "guru": "Guru",
+    "points": "Puan: {{count}}"
   }
 }

@@ -2,10 +2,30 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Users — only the owner can write their own profile
+    // Users — only the owner can write their own profile.
+    // Exception: anyone can increment points by exactly 1 (accepted answer award).
     match /users/{userId} {
       allow read: if request.auth != null;
       allow write: if request.auth != null && request.auth.uid == userId;
+      allow update: if request.auth != null
+        && onlyUpdatingField(request, 'points')
+        && request.resource.data.points == resource.data.get('points', 0) + 1;
+    }
+
+    // Posts — event feed cards; authenticated users can read and create
+    match /posts/{postId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+        && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.title is string
+        && request.resource.data.title.size() > 0
+        && request.resource.data.title.size() <= 100
+        && request.resource.data.description is string
+        && request.resource.data.description.size() > 0
+        && request.resource.data.description.size() <= 1000
+        && request.resource.data.category in ['news', 'events', 'places'];
+      allow update, delete: if request.auth != null
+        && resource.data.authorId == request.auth.uid;
     }
 
     // Discussions — authenticated users can read and create
@@ -34,6 +54,11 @@ service cloud.firestore {
           && request.resource.data.text is string
           && request.resource.data.text.size() > 0
           && request.resource.data.text.size() <= 1000;
+        // Votes: users may only add/remove their own UID in likes/dislikes
+        allow update: if request.auth != null
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'dislikes'])
+          && ownUidArrayChange(resource.data.get('likes', []), request.resource.data.get('likes', []))
+          && ownUidArrayChange(resource.data.get('dislikes', []), request.resource.data.get('dislikes', []));
         allow delete: if request.auth != null
           && resource.data.authorId == request.auth.uid;
       }
@@ -72,6 +97,14 @@ service cloud.firestore {
 
     function onlyUpdatingField(req, field) {
       return req.resource.data.diff(resource.data).affectedKeys().hasOnly([field]);
+    }
+
+    // Array may stay the same, or differ only by the requester's own UID
+    function ownUidArrayChange(before, after) {
+      let uid = request.auth.uid;
+      return before == after
+        || (after.hasAll(before) && after.removeAll(before) == [uid])
+        || (before.hasAll(after) && before.removeAll(after) == [uid]);
     }
   }
 }

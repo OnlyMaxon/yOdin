@@ -27,12 +27,15 @@
     "empty": "Zatím žádné diskuse. Buďte první!",
     "replies_one": "{{count}} odpověď",
     "replies_few": "{{count}} odpovědi",
-    "replies_other": "{{count}} odpovědí"
+    "replies_other": "{{count}} odpovědí",
+    "emptyPosts": "Zatím žádné příspěvky. Buďte první!"
   },
   "discussion": {
     "title": "Diskuse",
     "firstReply": "Buďte první, kdo odpoví 💬",
-    "replyPlaceholder": "Napište odpověď..."
+    "replyPlaceholder": "Napište odpověď...",
+    "acceptedAnswer": "Přijatá odpověď",
+    "markHelped": "Pomohlo mi to"
   },
   "newDiscussion": {
     "title": "Nová diskuse",
@@ -42,7 +45,8 @@
   "notifications": {
     "title": "Oznámení",
     "empty": "Zatím žádná oznámení",
-    "replied": "odpověděl na vaši diskusi"
+    "replied": "odpověděl na vaši diskusi",
+    "accepted": "přijal(a) vaši odpověď"
   },
   "profile": {
     "title": "Profil",
@@ -104,6 +108,35 @@
     "enterName": "Prosím zadejte své jméno.",
     "selectNationalityAndLocation": "Prosím vyberte svou národnost a polohu.",
     "writeQuestion": "Prosím napište svou otázku.",
-    "photoUploadFailed": "Nahrávání fotografie se nezdařilo. Zkuste to prosím znovu."
+    "photoUploadFailed": "Nahrávání fotografie se nezdařilo. Zkuste to prosím znovu.",
+    "fillTitleAndDescription": "Vyplňte téma a popis."
+  },
+  "categories": {
+    "all": "Vše",
+    "news": "Novinky",
+    "events": "Akce",
+    "places": "Stojí za návštěvu"
+  },
+  "newPost": {
+    "title": "Nový příspěvek",
+    "topicPlaceholder": "Téma",
+    "descriptionPlaceholder": "Popis",
+    "category": "Kategorie",
+    "addPhoto": "Přidat fotku",
+    "post": "Zveřejnit"
+  },
+  "forum": {
+    "title": "Fórum",
+    "empty": "Zatím žádné otázky. Položte první!",
+    "answered": "Zodpovězeno",
+    "ask": "Položit otázku"
+  },
+  "rank": {
+    "novice": "Nováček",
+    "helper": "Pomocník",
+    "expert": "Znalec",
+    "master": "Mistr",
+    "guru": "Guru",
+    "points": "Body: {{count}}"
   }
 }

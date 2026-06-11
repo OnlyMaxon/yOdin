@@ -26,12 +26,15 @@
     "title": "פיד",
     "empty": "עדיין אין דיונים. היה הראשון!",
     "replies_one": "{{count}} תגובה",
-    "replies_other": "{{count}} תגובות"
+    "replies_other": "{{count}} תגובות",
+    "emptyPosts": "אין עדיין פוסטים. היו הראשונים!"
   },
   "discussion": {
     "title": "דיון",
     "firstReply": "היה הראשון להגיב 💬",
-    "replyPlaceholder": "כתוב תגובה..."
+    "replyPlaceholder": "כתוב תגובה...",
+    "acceptedAnswer": "תשובה מאושרת",
+    "markHelped": "זה עזר"
   },
   "newDiscussion": {
     "title": "דיון חדש",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "התראות",
     "empty": "עדיין אין התראות",
-    "replied": "הגיב לדיון שלך"
+    "replied": "הגיב לדיון שלך",
+    "accepted": "אישר/ה את התשובה שלך"
   },
   "profile": {
     "title": "פרופיל",
@@ -103,6 +107,35 @@
     "enterName": "אנא הכנס את שמך.",
     "selectNationalityAndLocation": "אנא בחר את הלאום והמיקום שלך.",
     "writeQuestion": "אנא כתוב את שאלתך.",
-    "photoUploadFailed": "העלאת התמונה נכשלה. אנא נסה שוב."
+    "photoUploadFailed": "העלאת התמונה נכשלה. אנא נסה שוב.",
+    "fillTitleAndDescription": "נא למלא נושא ותיאור."
+  },
+  "categories": {
+    "all": "הכול",
+    "news": "חדשות",
+    "events": "אירועים",
+    "places": "שווה ביקור"
+  },
+  "newPost": {
+    "title": "פוסט חדש",
+    "topicPlaceholder": "נושא",
+    "descriptionPlaceholder": "תיאור",
+    "category": "קטגוריה",
+    "addPhoto": "הוספת תמונה",
+    "post": "פרסום"
+  },
+  "forum": {
+    "title": "פורום",
+    "empty": "אין עדיין שאלות. שאלו את הראשונה!",
+    "answered": "נענתה",
+    "ask": "שאלו שאלה"
+  },
+  "rank": {
+    "novice": "מתחיל",
+    "helper": "עוזר",
+    "expert": "מומחה",
+    "master": "מאסטר",
+    "guru": "גורו",
+    "points": "נקודות: {{count}}"
   }
 }

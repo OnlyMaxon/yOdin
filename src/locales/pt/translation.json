@@ -26,12 +26,15 @@
     "title": "Feed",
     "empty": "Nenhuma discussão ainda. Seja o primeiro!",
     "replies_one": "{{count}} resposta",
-    "replies_other": "{{count}} respostas"
+    "replies_other": "{{count}} respostas",
+    "emptyPosts": "Ainda não há publicações. Seja o primeiro!"
   },
   "discussion": {
     "title": "Discussão",
     "firstReply": "Seja o primeiro a responder 💬",
-    "replyPlaceholder": "Escreva uma resposta..."
+    "replyPlaceholder": "Escreva uma resposta...",
+    "acceptedAnswer": "Resposta aceita",
+    "markHelped": "Isso ajudou"
   },
   "newDiscussion": {
     "title": "Nova Discussão",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Notificações",
     "empty": "Nenhuma notificação ainda",
-    "replied": "respondeu à sua discussão"
+    "replied": "respondeu à sua discussão",
+    "accepted": "aceitou sua resposta"
   },
   "profile": {
     "title": "Perfil",
@@ -103,6 +107,35 @@
     "enterName": "Por favor insira seu nome.",
     "selectNationalityAndLocation": "Por favor selecione sua nacionalidade e localização.",
     "writeQuestion": "Por favor escreva sua pergunta.",
-    "photoUploadFailed": "Falha ao enviar foto. Por favor tente novamente."
+    "photoUploadFailed": "Falha ao enviar foto. Por favor tente novamente.",
+    "fillTitleAndDescription": "Preencha o tema e a descrição."
+  },
+  "categories": {
+    "all": "Tudo",
+    "news": "Notícias",
+    "events": "Eventos",
+    "places": "Vale a pena visitar"
+  },
+  "newPost": {
+    "title": "Nova publicação",
+    "topicPlaceholder": "Tema",
+    "descriptionPlaceholder": "Descrição",
+    "category": "Categoria",
+    "addPhoto": "Adicionar foto",
+    "post": "Publicar"
+  },
+  "forum": {
+    "title": "Fórum",
+    "empty": "Ainda não há perguntas. Faça a primeira!",
+    "answered": "Respondida",
+    "ask": "Fazer uma pergunta"
+  },
+  "rank": {
+    "novice": "Novato",
+    "helper": "Ajudante",
+    "expert": "Especialista",
+    "master": "Mestre",
+    "guru": "Guru",
+    "points": "Pontos: {{count}}"
   }
 }

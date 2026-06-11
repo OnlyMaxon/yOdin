@@ -31,6 +31,7 @@ import { useFeedStore } from '../store/useFeedStore';
 import { useNotificationStore } from '../store/useNotificationStore';
 import { Discussion } from '../types';
 import { COUNTRIES, Country } from '../data/countries';
+import { getRank } from '../utils/rank';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
@@ -237,6 +238,9 @@ export default function ProfileScreen({ navigation }: any) {
     ? `${profile.firstName?.charAt(0) ?? ''}${profile.lastName?.charAt(0) ?? ''}`.toUpperCase()
     : '?';
 
+  const points = profile?.points ?? 0;
+  const rankKey = getRank(points);
+
   const data = tab === 'mine' ? myDiscussions : savedDiscussions;
 
   const themeOptions: { value: ThemePreference; label: string; icon: React.ComponentProps<typeof Ionicons>['name'] }[] = [
@@ -305,6 +309,13 @@ export default function ProfileScreen({ navigation }: any) {
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Ionicons name="location-sharp" size={13} color={colors.textSecondary} style={{ marginRight: 4 }} />
               <Text style={styles.location}>{profile?.location}</Text>
+            </View>
+            <View style={styles.rankRow}>
+              <View style={styles.rankBadge}>
+                <Ionicons name="ribbon" size={12} color={colors.primary} />
+                <Text style={styles.rankBadgeText}>{t(`rank.${rankKey}`)}</Text>
+              </View>
+              <Text style={styles.rankPoints}>{t('rank.points', { count: points })}</Text>
             </View>
             {photoError ? <Text style={styles.photoError}>{photoError}</Text> : null}
           </View>
@@ -643,6 +654,22 @@ function makeStyles(c: ColorPalette, topInset: number) {
       marginBottom: 2,
     },
     location: { fontSize: Typography.fontSizeSM, color: c.textSecondary },
+    rankRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 6 },
+    rankBadge: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 4,
+      backgroundColor: c.primaryLight,
+      paddingHorizontal: 8,
+      paddingVertical: 3,
+      borderRadius: 10,
+    },
+    rankBadgeText: {
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.primary,
+    },
+    rankPoints: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
     photoError: {
       fontSize: Typography.fontSizeXS,
       color: c.notification,

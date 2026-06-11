@@ -26,12 +26,15 @@
     "title": "动态",
     "empty": "暂无讨论，成为第一个吧！",
     "replies_one": "{{count}} 条回复",
-    "replies_other": "{{count}} 条回复"
+    "replies_other": "{{count}} 条回复",
+    "emptyPosts": "暂无帖子，来发布第一条吧！"
   },
   "discussion": {
     "title": "讨论",
     "firstReply": "成为第一个回复的人 💬",
-    "replyPlaceholder": "写下您的回复..."
+    "replyPlaceholder": "写下您的回复...",
+    "acceptedAnswer": "已采纳的回答",
+    "markHelped": "此回答有帮助"
   },
   "newDiscussion": {
     "title": "新讨论",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "通知",
     "empty": "暂无通知",
-    "replied": "回复了您的讨论"
+    "replied": "回复了您的讨论",
+    "accepted": "采纳了你的回答"
   },
   "profile": {
     "title": "个人资料",
@@ -103,6 +107,35 @@
     "enterName": "请输入您的姓名。",
     "selectNationalityAndLocation": "请选择您的国籍和所在地。",
     "writeQuestion": "请写下您的问题。",
-    "photoUploadFailed": "照片上传失败，请重试。"
+    "photoUploadFailed": "照片上传失败，请重试。",
+    "fillTitleAndDescription": "请填写主题和描述。"
+  },
+  "categories": {
+    "all": "全部",
+    "news": "新闻",
+    "events": "活动",
+    "places": "值得一去"
+  },
+  "newPost": {
+    "title": "新帖子",
+    "topicPlaceholder": "主题",
+    "descriptionPlaceholder": "描述",
+    "category": "分类",
+    "addPhoto": "添加照片",
+    "post": "发布"
+  },
+  "forum": {
+    "title": "论坛",
+    "empty": "暂无问题，来提出第一个吧！",
+    "answered": "已解答",
+    "ask": "提问"
+  },
+  "rank": {
+    "novice": "新手",
+    "helper": "助人者",
+    "expert": "行家",
+    "master": "大师",
+    "guru": "大神",
+    "points": "积分：{{count}}"
   }
 }

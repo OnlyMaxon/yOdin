@@ -26,6 +26,7 @@ export async function registerUser(
     location: '',
     photoURL: '',
     languages: [],
+    points: 0,
     createdAt: Date.now(),
   });
 }

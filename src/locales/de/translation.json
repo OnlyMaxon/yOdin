@@ -26,12 +26,15 @@
     "title": "Feed",
     "empty": "Noch keine Diskussionen. Sei der Erste!",
     "replies_one": "{{count}} Antwort",
-    "replies_other": "{{count}} Antworten"
+    "replies_other": "{{count}} Antworten",
+    "emptyPosts": "Noch keine Beiträge. Sei der Erste!"
   },
   "discussion": {
     "title": "Diskussion",
     "firstReply": "Sei der Erste, der antwortet 💬",
-    "replyPlaceholder": "Antwort schreiben..."
+    "replyPlaceholder": "Antwort schreiben...",
+    "acceptedAnswer": "Akzeptierte Antwort",
+    "markHelped": "Hat geholfen"
   },
   "newDiscussion": {
     "title": "Neue Diskussion",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Benachrichtigungen",
     "empty": "Noch keine Benachrichtigungen",
-    "replied": "hat auf deine Diskussion geantwortet"
+    "replied": "hat auf deine Diskussion geantwortet",
+    "accepted": "hat deine Antwort akzeptiert"
   },
   "profile": {
     "title": "Profil",
@@ -103,6 +107,35 @@
     "enterName": "Bitte gib deinen Namen ein.",
     "selectNationalityAndLocation": "Bitte wähle deine Nationalität und deinen Standort.",
     "writeQuestion": "Bitte schreibe deine Frage.",
-    "photoUploadFailed": "Foto-Upload fehlgeschlagen. Bitte versuche es erneut."
+    "photoUploadFailed": "Foto-Upload fehlgeschlagen. Bitte versuche es erneut.",
+    "fillTitleAndDescription": "Bitte Thema und Beschreibung ausfüllen."
+  },
+  "categories": {
+    "all": "Alle",
+    "news": "Nachrichten",
+    "events": "Veranstaltungen",
+    "places": "Sehenswert"
+  },
+  "newPost": {
+    "title": "Neuer Beitrag",
+    "topicPlaceholder": "Thema",
+    "descriptionPlaceholder": "Beschreibung",
+    "category": "Kategorie",
+    "addPhoto": "Foto hinzufügen",
+    "post": "Veröffentlichen"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Noch keine Fragen. Stelle die erste!",
+    "answered": "Beantwortet",
+    "ask": "Frage stellen"
+  },
+  "rank": {
+    "novice": "Neuling",
+    "helper": "Helfer",
+    "expert": "Experte",
+    "master": "Meister",
+    "guru": "Guru",
+    "points": "Punkte: {{count}}"
   }
 }

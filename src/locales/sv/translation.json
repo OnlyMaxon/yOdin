@@ -26,12 +26,15 @@
     "title": "Flöde",
     "empty": "Inga diskussioner än. Var den första!",
     "replies_one": "{{count}} svar",
-    "replies_other": "{{count}} svar"
+    "replies_other": "{{count}} svar",
+    "emptyPosts": "Inga inlägg än. Bli först!"
   },
   "discussion": {
     "title": "Diskussion",
     "firstReply": "Var den första att svara 💬",
-    "replyPlaceholder": "Skriv ett svar..."
+    "replyPlaceholder": "Skriv ett svar...",
+    "acceptedAnswer": "Accepterat svar",
+    "markHelped": "Det hjälpte"
   },
   "newDiscussion": {
     "title": "Ny diskussion",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Aviseringar",
     "empty": "Inga aviseringar än",
-    "replied": "svarade på din diskussion"
+    "replied": "svarade på din diskussion",
+    "accepted": "accepterade ditt svar"
   },
   "profile": {
     "title": "Profil",
@@ -103,6 +107,35 @@
     "enterName": "Ange ditt namn.",
     "selectNationalityAndLocation": "Välj din nationalitet och plats.",
     "writeQuestion": "Skriv din fråga.",
-    "photoUploadFailed": "Det gick inte att ladda upp bilden. Försök igen."
+    "photoUploadFailed": "Det gick inte att ladda upp bilden. Försök igen.",
+    "fillTitleAndDescription": "Fyll i ämne och beskrivning."
+  },
+  "categories": {
+    "all": "Allt",
+    "news": "Nyheter",
+    "events": "Evenemang",
+    "places": "Värt ett besök"
+  },
+  "newPost": {
+    "title": "Nytt inlägg",
+    "topicPlaceholder": "Ämne",
+    "descriptionPlaceholder": "Beskrivning",
+    "category": "Kategori",
+    "addPhoto": "Lägg till foto",
+    "post": "Publicera"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Inga frågor än. Ställ den första!",
+    "answered": "Besvarad",
+    "ask": "Ställ en fråga"
+  },
+  "rank": {
+    "novice": "Nybörjare",
+    "helper": "Hjälpare",
+    "expert": "Expert",
+    "master": "Mästare",
+    "guru": "Guru",
+    "points": "Poäng: {{count}}"
   }
 }

@@ -26,12 +26,15 @@
     "title": "Lent",
     "empty": "Hələ müzakirə yoxdur. İlk ol!",
     "replies_one": "{{count}} cavab",
-    "replies_other": "{{count}} cavab"
+    "replies_other": "{{count}} cavab",
+    "emptyPosts": "Hələ paylaşım yoxdur. İlk siz olun!"
   },
   "discussion": {
     "title": "Müzakirə",
     "firstReply": "Cavab verən ilk sən ol 💬",
-    "replyPlaceholder": "Cavab yaz..."
+    "replyPlaceholder": "Cavab yaz...",
+    "acceptedAnswer": "Qəbul edilmiş cavab",
+    "markHelped": "Cavab kömək etdi"
   },
   "newDiscussion": {
     "title": "Yeni müzakirə",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Bildirişlər",
     "empty": "Hələ bildiriş yoxdur",
-    "replied": "müzakirənizə cavab verdi"
+    "replied": "müzakirənizə cavab verdi",
+    "accepted": "cavabınızı qəbul etdi"
   },
   "profile": {
     "title": "Profil",
@@ -103,6 +107,35 @@
     "enterName": "Zəhmət olmasa adınızı daxil edin.",
     "selectNationalityAndLocation": "Zəhmət olmasa milliyyət və ölkə seçin.",
     "writeQuestion": "Sualınızı yazın.",
-    "photoUploadFailed": "Şəkil yüklənmədi. Yenidən cəhd edin."
+    "photoUploadFailed": "Şəkil yüklənmədi. Yenidən cəhd edin.",
+    "fillTitleAndDescription": "Mövzu və təsviri doldurun."
+  },
+  "categories": {
+    "all": "Hamısı",
+    "news": "Xəbərlər",
+    "events": "Tədbirlər",
+    "places": "Görməyə dəyər"
+  },
+  "newPost": {
+    "title": "Yeni paylaşım",
+    "topicPlaceholder": "Mövzu",
+    "descriptionPlaceholder": "Təsvir",
+    "category": "Kateqoriya",
+    "addPhoto": "Şəkil əlavə et",
+    "post": "Paylaş"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Hələ sual yoxdur. İlk sualı siz verin!",
+    "answered": "Cavablandı",
+    "ask": "Sual ver"
+  },
+  "rank": {
+    "novice": "Yeni başlayan",
+    "helper": "Köməkçi",
+    "expert": "Bilici",
+    "master": "Usta",
+    "guru": "Quru",
+    "points": "Xallar: {{count}}"
   }
 }

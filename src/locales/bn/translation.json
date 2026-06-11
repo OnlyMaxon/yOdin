@@ -26,12 +26,15 @@
     "title": "ফিড",
     "empty": "এখনও কোনো আলোচনা নেই। প্রথম হোন!",
     "replies_one": "{{count}}টি উত্তর",
-    "replies_other": "{{count}}টি উত্তর"
+    "replies_other": "{{count}}টি উত্তর",
+    "emptyPosts": "এখনও কোনো পোস্ট নেই। প্রথম হোন!"
   },
   "discussion": {
     "title": "আলোচনা",
     "firstReply": "প্রথম উত্তর দিন 💬",
-    "replyPlaceholder": "উত্তর লিখুন..."
+    "replyPlaceholder": "উত্তর লিখুন...",
+    "acceptedAnswer": "গৃহীত উত্তর",
+    "markHelped": "এটি সাহায্য করেছে"
   },
   "newDiscussion": {
     "title": "নতুন আলোচনা",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "বিজ্ঞপ্তি",
     "empty": "এখনও কোনো বিজ্ঞপ্তি নেই",
-    "replied": "আপনার আলোচনায় উত্তর দিয়েছেন"
+    "replied": "আপনার আলোচনায় উত্তর দিয়েছেন",
+    "accepted": "আপনার উত্তর গ্রহণ করেছেন"
   },
   "profile": {
     "title": "প্রোফাইল",
@@ -103,6 +107,35 @@
     "enterName": "আপনার নাম লিখুন।",
     "selectNationalityAndLocation": "আপনার জাতীয়তা এবং অবস্থান উভয়ই নির্বাচন করুন।",
     "writeQuestion": "আপনার প্রশ্ন লিখুন।",
-    "photoUploadFailed": "ছবি আপলোড ব্যর্থ। আবার চেষ্টা করুন।"
+    "photoUploadFailed": "ছবি আপলোড ব্যর্থ। আবার চেষ্টা করুন।",
+    "fillTitleAndDescription": "অনুগ্রহ করে বিষয় ও বিবরণ পূরণ করুন।"
+  },
+  "categories": {
+    "all": "সব",
+    "news": "খবর",
+    "events": "ইভেন্ট",
+    "places": "ঘুরে দেখার মতো"
+  },
+  "newPost": {
+    "title": "নতুন পোস্ট",
+    "topicPlaceholder": "বিষয়",
+    "descriptionPlaceholder": "বিবরণ",
+    "category": "ক্যাটাগরি",
+    "addPhoto": "ছবি যোগ করুন",
+    "post": "প্রকাশ করুন"
+  },
+  "forum": {
+    "title": "ফোরাম",
+    "empty": "এখনও কোনো প্রশ্ন নেই। প্রথম প্রশ্নটি করুন!",
+    "answered": "উত্তর দেওয়া হয়েছে",
+    "ask": "প্রশ্ন করুন"
+  },
+  "rank": {
+    "novice": "নবাগত",
+    "helper": "সাহায্যকারী",
+    "expert": "বিশেষজ্ঞ",
+    "master": "মাস্টার",
+    "guru": "গুরু",
+    "points": "পয়েন্ট: {{count}}"
   }
 }

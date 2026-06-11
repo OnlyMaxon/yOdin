@@ -8,20 +8,23 @@ import {
   ActivityIndicator,
   RefreshControl,
   Image,
+  ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
-import { useFeedStore } from '../store/useFeedStore';
+import { usePostStore, FeedFilter } from '../store/usePostStore';
 import { useNotificationStore } from '../store/useNotificationStore';
-import { fetchDiscussions, saveDiscussion, unsaveDiscussion, PAGE_SIZE } from '../services/discussionService';
+import { fetchPosts, PAGE_SIZE } from '../services/postService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
-import { Discussion } from '../types';
+import { Post, PostCategory, POST_CATEGORIES } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+
+const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
 export default function FeedScreen({ navigation }: any) {
   const { t } = useTranslation();
@@ -29,7 +32,7 @@ export default function FeedScreen({ navigation }: any) {
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top);
   const { profile } = useAuthStore();
-  const { discussions, setDiscussions, appendDiscussions, setLoading, isLoading, setHasMore, hasMore, toggleSaved } = useFeedStore();
+  const { posts, filter, setFilter, setPosts, appendPosts, setLoading, isLoading, setHasMore, hasMore } = usePostStore();
   const unreadCount = useNotificationStore((s) => s.unreadCount);
   const [refreshing, setRefreshing] = useState(false);
   const [lastDoc, setLastDoc] = useState<any>(null);
@@ -37,15 +40,16 @@ export default function FeedScreen({ navigation }: any) {
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.location]);
+  }, [profile?.location, filter]);
 
   async function loadFeed() {
     if (!profile?.location) return;
     setError('');
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location);
-      setDiscussions(data);
+      const category = filter === 'all' ? undefined : filter;
+      const { posts: data, lastDoc: last } = await fetchPosts(profile.location, category);
+      setPosts(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
     } catch (e: any) {
@@ -59,8 +63,9 @@ export default function FeedScreen({ navigation }: any) {
     if (!hasMore || isLoading || !lastDoc || !profile?.location) return;
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location, lastDoc);
-      appendDiscussions(data);
+      const category = filter === 'all' ? undefined : filter;
+      const { posts: data, lastDoc: last } = await fetchPosts(profile.location, category, lastDoc);
+      appendPosts(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
     } catch {
@@ -76,26 +81,18 @@ export default function FeedScreen({ navigation }: any) {
     setRefreshing(false);
   }
 
-  async function handleSave(item: Discussion) {
-    if (!profile?.uid) return;
-    const isSaved = item.savedBy?.includes(profile.uid) ?? false;
-    toggleSaved(item.id, profile.uid);
-    try {
-      if (isSaved) await unsaveDiscussion(profile.uid, item.id);
-      else await saveDiscussion(profile.uid, item.id);
-    } catch {
-      toggleSaved(item.id, profile.uid);
+  function categoryColor(category: PostCategory): string {
+    switch (category) {
+      case 'news': return colors.primary;
+      case 'events': return colors.accent;
+      case 'places': return colors.success;
     }
   }
 
-  function renderCard({ item }: { item: Discussion }) {
-    const isSaved = item.savedBy?.includes(profile?.uid ?? '') ?? false;
+  function renderCard({ item }: { item: Post }) {
+    const badgeColor = categoryColor(item.category);
     return (
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => navigation.navigate('DiscussionDetail', { discussionId: item.id, question: item.question })}
-        activeOpacity={0.85}
-      >
+      <View style={styles.card}>
         <View style={styles.cardHeader}>
           <View style={styles.avatar}>
             {item.authorPhoto ? (
@@ -112,24 +109,24 @@ export default function FeedScreen({ navigation }: any) {
               {getFlagEmoji(item.authorCountryCode)}  {item.authorNationality}
             </Text>
           </View>
-        </View>
-        <Text style={styles.question}>{item.question}</Text>
-        <View style={styles.cardFooter}>
-          <Text style={styles.replies}>
-            {t('feed.replies', { count: item.replyCount })}
-          </Text>
-          <View style={styles.cardFooterRight}>
-            <Text style={styles.time}>{formatTime(item.createdAt, t)}</Text>
-            <TouchableOpacity onPress={() => handleSave(item)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-              <Ionicons
-                name={isSaved ? 'bookmark' : 'bookmark-outline'}
-                size={20}
-                color={isSaved ? colors.primary : colors.textSecondary}
-              />
-            </TouchableOpacity>
+          <View style={[styles.categoryBadge, { backgroundColor: badgeColor + '22' }]}>
+            <Text style={[styles.categoryBadgeText, { color: badgeColor }]}>
+              {t(`categories.${item.category}`)}
+            </Text>
           </View>
         </View>
-      </TouchableOpacity>
+
+        {item.imageURL ? (
+          <Image source={{ uri: item.imageURL }} style={styles.postImage} resizeMode="cover" />
+        ) : null}
+
+        <Text style={styles.postTitle}>{item.title}</Text>
+        <Text style={styles.postDescription}>{item.description}</Text>
+
+        <View style={styles.cardFooter}>
+          <Text style={styles.time}>{formatTime(item.createdAt, t)}</Text>
+        </View>
+      </View>
     );
   }
 
@@ -162,31 +159,61 @@ export default function FeedScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
+      <View style={styles.filterBar}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterRow}
+        >
+          {FILTERS.map((f) => {
+            const active = filter === f;
+            return (
+              <TouchableOpacity
+                key={f}
+                style={[styles.chip, active && styles.chipActive]}
+                onPress={() => setFilter(f)}
+              >
+                <Text style={[styles.chipText, active && styles.chipTextActive]}>
+                  {f === 'all' ? t('categories.all') : t(`categories.${f}`)}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+          <TouchableOpacity
+            style={styles.forumChip}
+            onPress={() => navigation.navigate('Forum')}
+          >
+            <Ionicons name="chatbubbles-outline" size={15} color="#fff" />
+            <Text style={styles.forumChipText}>{t('forum.title')}</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+
       {error ? (
         <View style={styles.center}>
           <Text style={{ color: colors.notification, textAlign: 'center', padding: 24 }}>{error}</Text>
         </View>
-      ) : isLoading && discussions.length === 0 ? (
+      ) : isLoading && posts.length === 0 ? (
         <View style={styles.center}>
           <ActivityIndicator color={colors.primary} size="large" />
         </View>
       ) : (
         <FlatList
-          data={discussions}
+          data={posts}
           keyExtractor={(item) => item.id}
           renderItem={renderCard}
-          contentContainerStyle={discussions.length === 0 ? styles.center : styles.list}
+          contentContainerStyle={posts.length === 0 ? styles.center : styles.list}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
           ListEmptyComponent={
             <View style={styles.empty}>
-              <Text style={styles.emptyEmoji}>💬</Text>
-              <Text style={styles.emptyText}>{t('feed.empty')}</Text>
+              <Text style={styles.emptyEmoji}>📰</Text>
+              <Text style={styles.emptyText}>{t('feed.emptyPosts')}</Text>
             </View>
           }
           ListFooterComponent={
-            isLoading && discussions.length > 0
+            isLoading && posts.length > 0
               ? <ActivityIndicator color={colors.primary} style={{ padding: 16 }} />
               : null
           }
@@ -203,10 +230,8 @@ function makeStyles(c: ColorPalette, topInset: number) {
     header: {
       paddingHorizontal: 20,
       paddingTop: topInset + 12,
-      paddingBottom: 16,
+      paddingBottom: 12,
       backgroundColor: c.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -234,6 +259,51 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontSize: Typography.fontSizeSM,
       color: c.textSecondary,
       marginTop: 2,
+    },
+    filterBar: {
+      backgroundColor: c.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: c.border,
+    },
+    filterRow: {
+      paddingHorizontal: 16,
+      paddingBottom: 12,
+      paddingTop: 4,
+      gap: 8,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    chip: {
+      paddingHorizontal: 14,
+      paddingVertical: 7,
+      borderRadius: 18,
+      backgroundColor: c.background,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    chipActive: {
+      backgroundColor: c.primary,
+      borderColor: c.primary,
+    },
+    chipText: {
+      fontSize: Typography.fontSizeSM,
+      color: c.textSecondary,
+      fontWeight: Typography.fontWeightMedium,
+    },
+    chipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
+    forumChip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
+      paddingHorizontal: 14,
+      paddingVertical: 7,
+      borderRadius: 18,
+      backgroundColor: c.accent,
+    },
+    forumChipText: {
+      fontSize: Typography.fontSizeSM,
+      color: '#fff',
+      fontWeight: Typography.fontWeightSemiBold,
     },
     list: { padding: 16, gap: 12 },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
@@ -278,7 +348,30 @@ function makeStyles(c: ColorPalette, topInset: number) {
       color: c.textSecondary,
       marginTop: 2,
     },
-    question: {
+    categoryBadge: {
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius: 12,
+      marginLeft: 8,
+    },
+    categoryBadgeText: {
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+    },
+    postImage: {
+      width: '100%',
+      height: 180,
+      borderRadius: 12,
+      marginBottom: 12,
+      backgroundColor: c.background,
+    },
+    postTitle: {
+      fontSize: Typography.fontSizeLG,
+      fontWeight: Typography.fontWeightBold,
+      color: c.textPrimary,
+      marginBottom: 6,
+    },
+    postDescription: {
       fontSize: Typography.fontSizeMD,
       color: c.textPrimary,
       lineHeight: 22,
@@ -286,18 +379,8 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     cardFooter: {
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       alignItems: 'center',
-    },
-    cardFooterRight: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 10,
-    },
-    replies: {
-      fontSize: Typography.fontSizeSM,
-      color: c.primary,
-      fontWeight: Typography.fontWeightMedium,
     },
     time: {
       fontSize: Typography.fontSizeSM,

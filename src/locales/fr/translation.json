@@ -26,12 +26,15 @@
     "title": "Fil",
     "empty": "Pas encore de discussions. Soyez le premier !",
     "replies_one": "{{count}} réponse",
-    "replies_other": "{{count}} réponses"
+    "replies_other": "{{count}} réponses",
+    "emptyPosts": "Pas encore de publications. Soyez le premier !"
   },
   "discussion": {
     "title": "Discussion",
     "firstReply": "Soyez le premier à répondre 💬",
-    "replyPlaceholder": "Écrire une réponse..."
+    "replyPlaceholder": "Écrire une réponse...",
+    "acceptedAnswer": "Réponse acceptée",
+    "markHelped": "Cela m'a aidé"
   },
   "newDiscussion": {
     "title": "Nouvelle discussion",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Notifications",
     "empty": "Pas encore de notifications",
-    "replied": "a répondu à votre discussion"
+    "replied": "a répondu à votre discussion",
+    "accepted": "a accepté votre réponse"
   },
   "profile": {
     "title": "Profil",
@@ -103,6 +107,35 @@
     "enterName": "Veuillez entrer votre nom.",
     "selectNationalityAndLocation": "Veuillez sélectionner votre nationalité et votre emplacement.",
     "writeQuestion": "Veuillez écrire votre question.",
-    "photoUploadFailed": "Échec du téléchargement de la photo. Veuillez réessayer."
+    "photoUploadFailed": "Échec du téléchargement de la photo. Veuillez réessayer.",
+    "fillTitleAndDescription": "Veuillez remplir le sujet et la description."
+  },
+  "categories": {
+    "all": "Tout",
+    "news": "Actualités",
+    "events": "Événements",
+    "places": "À visiter"
+  },
+  "newPost": {
+    "title": "Nouvelle publication",
+    "topicPlaceholder": "Sujet",
+    "descriptionPlaceholder": "Description",
+    "category": "Catégorie",
+    "addPhoto": "Ajouter une photo",
+    "post": "Publier"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Pas encore de questions. Posez la première !",
+    "answered": "Répondu",
+    "ask": "Poser une question"
+  },
+  "rank": {
+    "novice": "Débutant",
+    "helper": "Assistant",
+    "expert": "Expert",
+    "master": "Maître",
+    "guru": "Gourou",
+    "points": "Points : {{count}}"
   }
 }

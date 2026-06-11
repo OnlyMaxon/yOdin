@@ -26,12 +26,15 @@
     "title": "Feed",
     "empty": "No discussions yet. Be the first!",
     "replies_one": "{{count}} reply",
-    "replies_other": "{{count}} replies"
+    "replies_other": "{{count}} replies",
+    "emptyPosts": "No posts yet. Be the first!"
   },
   "discussion": {
     "title": "Discussion",
     "firstReply": "Be the first to reply 💬",
-    "replyPlaceholder": "Write a reply..."
+    "replyPlaceholder": "Write a reply...",
+    "acceptedAnswer": "Accepted answer",
+    "markHelped": "This helped"
   },
   "newDiscussion": {
     "title": "New Discussion",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Notifications",
     "empty": "No notifications yet",
-    "replied": "replied to your discussion"
+    "replied": "replied to your discussion",
+    "accepted": "accepted your answer"
   },
   "profile": {
     "title": "Profile",
@@ -103,6 +107,35 @@
     "enterName": "Please enter your name.",
     "selectNationalityAndLocation": "Please select both your nationality and location.",
     "writeQuestion": "Please write your question.",
-    "photoUploadFailed": "Failed to upload photo. Please try again."
+    "photoUploadFailed": "Failed to upload photo. Please try again.",
+    "fillTitleAndDescription": "Please fill in the topic and description."
+  },
+  "categories": {
+    "all": "All",
+    "news": "News",
+    "events": "Events",
+    "places": "Worth Visiting"
+  },
+  "newPost": {
+    "title": "New Post",
+    "topicPlaceholder": "Topic",
+    "descriptionPlaceholder": "Description",
+    "category": "Category",
+    "addPhoto": "Add Photo",
+    "post": "Publish"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "No questions yet. Ask the first one!",
+    "answered": "Answered",
+    "ask": "Ask a Question"
+  },
+  "rank": {
+    "novice": "Novice",
+    "helper": "Helper",
+    "expert": "Expert",
+    "master": "Master",
+    "guru": "Guru",
+    "points": "Points: {{count}}"
   }
 }

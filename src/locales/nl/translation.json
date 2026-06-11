@@ -26,12 +26,15 @@
     "title": "Feed",
     "empty": "Nog geen discussies. Wees de eerste!",
     "replies_one": "{{count}} reactie",
-    "replies_other": "{{count}} reacties"
+    "replies_other": "{{count}} reacties",
+    "emptyPosts": "Nog geen berichten. Wees de eerste!"
   },
   "discussion": {
     "title": "Discussie",
     "firstReply": "Wees de eerste om te reageren 💬",
-    "replyPlaceholder": "Schrijf een reactie..."
+    "replyPlaceholder": "Schrijf een reactie...",
+    "acceptedAnswer": "Geaccepteerd antwoord",
+    "markHelped": "Dit hielp"
   },
   "newDiscussion": {
     "title": "Nieuwe Discussie",
@@ -41,7 +44,8 @@
   "notifications": {
     "title": "Meldingen",
     "empty": "Nog geen meldingen",
-    "replied": "heeft gereageerd op jouw discussie"
+    "replied": "heeft gereageerd op jouw discussie",
+    "accepted": "heeft je antwoord geaccepteerd"
   },
   "profile": {
     "title": "Profiel",
@@ -103,6 +107,35 @@
     "enterName": "Voer je naam in.",
     "selectNationalityAndLocation": "Selecteer je nationaliteit en locatie.",
     "writeQuestion": "Schrijf je vraag.",
-    "photoUploadFailed": "Foto uploaden mislukt. Probeer het opnieuw."
+    "photoUploadFailed": "Foto uploaden mislukt. Probeer het opnieuw.",
+    "fillTitleAndDescription": "Vul het onderwerp en de beschrijving in."
+  },
+  "categories": {
+    "all": "Alles",
+    "news": "Nieuws",
+    "events": "Evenementen",
+    "places": "De moeite waard"
+  },
+  "newPost": {
+    "title": "Nieuw bericht",
+    "topicPlaceholder": "Onderwerp",
+    "descriptionPlaceholder": "Beschrijving",
+    "category": "Categorie",
+    "addPhoto": "Foto toevoegen",
+    "post": "Publiceren"
+  },
+  "forum": {
+    "title": "Forum",
+    "empty": "Nog geen vragen. Stel de eerste!",
+    "answered": "Beantwoord",
+    "ask": "Stel een vraag"
+  },
+  "rank": {
+    "novice": "Beginner",
+    "helper": "Helper",
+    "expert": "Expert",
+    "master": "Meester",
+    "guru": "Goeroe",
+    "points": "Punten: {{count}}"
   }
 }
