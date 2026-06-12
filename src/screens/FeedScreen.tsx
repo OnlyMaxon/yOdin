@@ -28,7 +28,7 @@ import PostDetailModal from './PostDetailModal';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
-export default function FeedScreen({ navigation }: any) {
+export default function FeedScreen() {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -247,13 +247,6 @@ export default function FeedScreen({ navigation }: any) {
               </TouchableOpacity>
             );
           })}
-          <TouchableOpacity
-            style={styles.forumChip}
-            onPress={() => navigation.getParent()?.navigate('Forum')}
-          >
-            <Ionicons name="chatbubbles-outline" size={15} color="#fff" />
-            <Text style={styles.forumChipText}>{t('forum.title')}</Text>
-          </TouchableOpacity>
         </ScrollView>
       </View>
 
@@ -352,20 +345,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontWeight: Typography.fontWeightMedium,
     },
     chipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
-    forumChip: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 5,
-      paddingHorizontal: 14,
-      paddingVertical: 7,
-      borderRadius: 18,
-      backgroundColor: c.accent,
-    },
-    forumChipText: {
-      fontSize: Typography.fontSizeSM,
-      color: '#fff',
-      fontWeight: Typography.fontWeightSemiBold,
-    },
     list: { padding: 16, gap: 12 },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     empty: { alignItems: 'center', paddingTop: 80 },
