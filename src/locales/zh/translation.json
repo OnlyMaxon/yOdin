@@ -140,5 +140,10 @@
     "master": "大师",
     "guru": "大神",
     "points": "积分：{{count}}"
+  },
+  "comments": {
+    "title": "评论",
+    "placeholder": "写评论...",
+    "empty": "暂无评论，来发表第一条吧！"
   }
 }

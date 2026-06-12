@@ -140,5 +140,10 @@
     "master": "Meester",
     "guru": "Goeroe",
     "points": "Punten: {{count}}"
+  },
+  "comments": {
+    "title": "Reacties",
+    "placeholder": "Schrijf een reactie...",
+    "empty": "Nog geen reacties. Wees de eerste!"
   }
 }

@@ -29,6 +29,21 @@ export interface Post {
   imageURL?: string;
   location: string;
   createdAt: number;
+  likes?: string[];
+  dislikes?: string[];
+  commentCount?: number;
+}
+
+export interface PostComment {
+  id: string;
+  postId: string;
+  authorId: string;
+  authorName: string;
+  authorPhoto?: string;
+  authorNationality: string;
+  authorCountryCode: string;
+  text: string;
+  createdAt: number;
 }
 
 export interface Discussion {

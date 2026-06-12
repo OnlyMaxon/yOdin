@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { DocumentSnapshot } from 'firebase/firestore';
 import { useAuthStore } from '../store/useAuthStore';
 import { usePostStore, FeedFilter } from '../store/usePostStore';
-import { fetchPosts, deletePost, PAGE_SIZE } from '../services/postService';
+import { fetchPosts, deletePost, votePost, PAGE_SIZE } from '../services/postService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
 import { Post, PostCategory, POST_CATEGORIES } from '../types';
@@ -25,6 +25,7 @@ import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import NewPostModal from './NewPostModal';
+import PostDetailModal from './PostDetailModal';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
@@ -34,11 +35,40 @@ export default function FeedScreen({ navigation }: any) {
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top);
   const { profile } = useAuthStore();
-  const { posts, filter, setFilter, setPosts, appendPosts, setLoading, isLoading, setHasMore, hasMore, removePost } = usePostStore();
+  const { posts, filter, setFilter, setPosts, appendPosts, setLoading, isLoading, setHasMore, hasMore, removePost, setPostVote } = usePostStore();
   const [refreshing, setRefreshing] = useState(false);
   const [lastDoc, setLastDoc] = useState<DocumentSnapshot | null>(null);
   const [error, setError] = useState('');
   const [postModalVisible, setPostModalVisible] = useState(false);
+  const [detailPostId, setDetailPostId] = useState<string | null>(null);
+  const [detailVisible, setDetailVisible] = useState(false);
+  const [detailWithComments, setDetailWithComments] = useState(false);
+
+  function openDetail(postId: string, withComments: boolean) {
+    setDetailPostId(postId);
+    setDetailWithComments(withComments);
+    setDetailVisible(true);
+  }
+
+  async function handleVote(item: Post, vote: 'like' | 'dislike') {
+    if (!profile?.uid) return;
+    const uid = profile.uid;
+    const liked = item.likes?.includes(uid) ?? false;
+    const disliked = item.dislikes?.includes(uid) ?? false;
+    const likes = (item.likes ?? []).filter((id) => id !== uid);
+    const dislikes = (item.dislikes ?? []).filter((id) => id !== uid);
+    if (vote === 'like' && !liked) likes.push(uid);
+    if (vote === 'dislike' && !disliked) dislikes.push(uid);
+
+    const prevLikes = item.likes ?? [];
+    const prevDislikes = item.dislikes ?? [];
+    setPostVote(item.id, likes, dislikes);
+    try {
+      await votePost(item.id, uid, vote, { liked, disliked });
+    } catch {
+      setPostVote(item.id, prevLikes, prevDislikes);
+    }
+  }
 
   useEffect(() => {
     loadFeed();
@@ -116,8 +146,17 @@ export default function FeedScreen({ navigation }: any) {
   function renderCard({ item }: { item: Post }) {
     const badgeColor = categoryColor(item.category);
     const isOwner = item.authorId === profile?.uid;
+    const liked = item.likes?.includes(profile?.uid ?? '') ?? false;
+    const disliked = item.dislikes?.includes(profile?.uid ?? '') ?? false;
+    const likeCount = item.likes?.length ?? 0;
+    const dislikeCount = item.dislikes?.length ?? 0;
+    const commentCount = item.commentCount ?? 0;
     return (
-      <View style={styles.card}>
+      <TouchableOpacity
+        style={styles.card}
+        activeOpacity={0.9}
+        onPress={() => openDetail(item.id, false)}
+      >
         <View style={styles.cardHeader}>
           <View style={styles.avatar}>
             {item.authorPhoto ? (
@@ -149,6 +188,20 @@ export default function FeedScreen({ navigation }: any) {
         <Text style={styles.postDescription}>{item.description}</Text>
 
         <View style={styles.cardFooter}>
+          <View style={styles.actionBar}>
+            <TouchableOpacity style={styles.actionBtn} onPress={() => handleVote(item, 'like')} hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}>
+              <Ionicons name={liked ? 'heart' : 'heart-outline'} size={20} color={liked ? colors.notification : colors.textSecondary} />
+              {likeCount > 0 && <Text style={styles.actionCount}>{likeCount}</Text>}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionBtn} onPress={() => handleVote(item, 'dislike')} hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}>
+              <Ionicons name={disliked ? 'thumbs-down' : 'thumbs-down-outline'} size={18} color={disliked ? colors.primary : colors.textSecondary} />
+              {dislikeCount > 0 && <Text style={styles.actionCount}>{dislikeCount}</Text>}
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionBtn} onPress={() => openDetail(item.id, true)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}>
+              <Ionicons name="chatbubble-outline" size={18} color={colors.textSecondary} />
+              {commentCount > 0 && <Text style={styles.actionCount}>{commentCount}</Text>}
+            </TouchableOpacity>
+          </View>
           <Text style={styles.time}>{formatTime(item.createdAt, t)}</Text>
           {isOwner && (
             <TouchableOpacity
@@ -159,7 +212,7 @@ export default function FeedScreen({ navigation }: any) {
             </TouchableOpacity>
           )}
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -246,6 +299,12 @@ export default function FeedScreen({ navigation }: any) {
       )}
 
       <NewPostModal visible={postModalVisible} onClose={() => setPostModalVisible(false)} />
+      <PostDetailModal
+        visible={detailVisible}
+        postId={detailPostId}
+        startWithComments={detailWithComments}
+        onClose={() => setDetailVisible(false)}
+      />
     </View>
   );
 }
@@ -407,6 +466,21 @@ function makeStyles(c: ColorPalette, topInset: number) {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+    },
+    actionBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 18,
+    },
+    actionBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 5,
+    },
+    actionCount: {
+      fontSize: Typography.fontSizeSM,
+      color: c.textSecondary,
+      fontWeight: Typography.fontWeightMedium,
     },
     time: {
       fontSize: Typography.fontSizeSM,

@@ -140,5 +140,10 @@
     "master": "Usta",
     "guru": "Quru",
     "points": "Xallar: {{count}}"
+  },
+  "comments": {
+    "title": "Şərhlər",
+    "placeholder": "Şərh yazın...",
+    "empty": "Hələ şərh yoxdur. İlk siz olun!"
   }
 }

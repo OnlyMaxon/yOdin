@@ -140,5 +140,10 @@
     "master": "Mästare",
     "guru": "Guru",
     "points": "Poäng: {{count}}"
+  },
+  "comments": {
+    "title": "Kommentarer",
+    "placeholder": "Skriv en kommentar...",
+    "empty": "Inga kommentarer än. Bli först!"
   }
 }

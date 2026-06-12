@@ -140,5 +140,10 @@
     "master": "Bậc thầy",
     "guru": "Guru",
     "points": "Điểm: {{count}}"
+  },
+  "comments": {
+    "title": "Bình luận",
+    "placeholder": "Viết bình luận...",
+    "empty": "Chưa có bình luận nào. Hãy là người đầu tiên!"
   }
 }

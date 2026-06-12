@@ -141,5 +141,10 @@
     "master": "Mistr",
     "guru": "Guru",
     "points": "Body: {{count}}"
+  },
+  "comments": {
+    "title": "Komentáře",
+    "placeholder": "Napsat komentář...",
+    "empty": "Zatím žádné komentáře. Buďte první!"
   }
 }

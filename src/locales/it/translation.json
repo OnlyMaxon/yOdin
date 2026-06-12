@@ -140,5 +140,10 @@
     "master": "Maestro",
     "guru": "Guru",
     "points": "Punti: {{count}}"
+  },
+  "comments": {
+    "title": "Commenti",
+    "placeholder": "Scrivi un commento...",
+    "empty": "Ancora nessun commento. Sii il primo!"
   }
 }
