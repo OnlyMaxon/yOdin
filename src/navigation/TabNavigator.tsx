@@ -10,7 +10,7 @@ import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { useNotificationStore } from '../store/useNotificationStore';
 import { useAuthStore } from '../store/useAuthStore';
-import { subscribeNotifications } from '../services/notificationService';
+import { subscribeNotifications, cleanupOldNotifications } from '../services/notificationService';
 import FeedStack from './FeedStack';
 import ForumStack from './ForumStack';
 import NotificationsStack from './NotificationsStack';
@@ -115,6 +115,7 @@ export default function TabNavigator() {
   useEffect(() => {
     if (!uid) return;
     const unsubscribe = subscribeNotifications(uid, setNotifications);
+    cleanupOldNotifications(uid).catch(() => {});
     return unsubscribe;
   }, [uid, setNotifications]);
 

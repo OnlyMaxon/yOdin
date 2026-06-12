@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "Chào mừng đến với yOdin",
     "subtitle": "Kết nối qua các nền văn hóa",
@@ -45,7 +45,8 @@
     "title": "Thông báo",
     "empty": "Chưa có thông báo nào",
     "replied": "đã trả lời cuộc thảo luận của bạn",
-    "accepted": "đã chấp nhận câu trả lời của bạn"
+    "accepted": "đã chấp nhận câu trả lời của bạn",
+    "clearRead": "Xóa đã đọc"
   },
   "profile": {
     "title": "Hồ sơ",

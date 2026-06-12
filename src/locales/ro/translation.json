@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "Bun venit la yOdin",
     "subtitle": "Conectează-te între culturi",
@@ -46,7 +46,8 @@
     "title": "Notificări",
     "empty": "Nicio notificare încă",
     "replied": "a răspuns la discuția ta",
-    "accepted": "ți-a acceptat răspunsul"
+    "accepted": "ți-a acceptat răspunsul",
+    "clearRead": "Șterge citite"
   },
   "profile": {
     "title": "Profil",

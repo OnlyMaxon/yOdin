@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "欢迎来到 yOdin",
     "subtitle": "跨文化连接",
@@ -45,7 +45,8 @@
     "title": "通知",
     "empty": "暂无通知",
     "replied": "回复了您的讨论",
-    "accepted": "采纳了你的回答"
+    "accepted": "采纳了你的回答",
+    "clearRead": "清除已读"
   },
   "profile": {
     "title": "个人资料",

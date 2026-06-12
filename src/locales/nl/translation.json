@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "Welkom bij yOdin",
     "subtitle": "Verbind je over culturen heen",
@@ -45,7 +45,8 @@
     "title": "Meldingen",
     "empty": "Nog geen meldingen",
     "replied": "heeft gereageerd op jouw discussie",
-    "accepted": "heeft je antwoord geaccepteerd"
+    "accepted": "heeft je antwoord geaccepteerd",
+    "clearRead": "Gelezen wissen"
   },
   "profile": {
     "title": "Profiel",

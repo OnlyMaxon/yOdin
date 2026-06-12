@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "Bienvenido a yOdin",
     "subtitle": "Conecta entre culturas",
@@ -45,7 +45,8 @@
     "title": "Notificaciones",
     "empty": "Aún no hay notificaciones",
     "replied": "respondió a tu discusión",
-    "accepted": "aceptó tu respuesta"
+    "accepted": "aceptó tu respuesta",
+    "clearRead": "Borrar leídas"
   },
   "profile": {
     "title": "Perfil",

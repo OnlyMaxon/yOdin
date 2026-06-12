@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "yOdin-ə xoş gəldiniz",
     "subtitle": "Mədəniyyətlər arasında əlaqə",
@@ -45,7 +45,8 @@
     "title": "Bildirişlər",
     "empty": "Hələ bildiriş yoxdur",
     "replied": "müzakirənizə cavab verdi",
-    "accepted": "cavabınızı qəbul etdi"
+    "accepted": "cavabınızı qəbul etdi",
+    "clearRead": "Oxunmuşları sil"
   },
   "profile": {
     "title": "Profil",

@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "Vítejte v yOdin",
     "subtitle": "Spojte se napříč kulturami",
@@ -46,7 +46,8 @@
     "title": "Oznámení",
     "empty": "Zatím žádná oznámení",
     "replied": "odpověděl na vaši diskusi",
-    "accepted": "přijal(a) vaši odpověď"
+    "accepted": "přijal(a) vaši odpověď",
+    "clearRead": "Vymazat přečtené"
   },
   "profile": {
     "title": "Profil",

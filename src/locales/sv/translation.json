@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "Välkommen till yOdin",
     "subtitle": "Koppla samman kulturer",
@@ -45,7 +45,8 @@
     "title": "Aviseringar",
     "empty": "Inga aviseringar än",
     "replied": "svarade på din diskussion",
-    "accepted": "accepterade ditt svar"
+    "accepted": "accepterade ditt svar",
+    "clearRead": "Rensa lästa"
   },
   "profile": {
     "title": "Profil",

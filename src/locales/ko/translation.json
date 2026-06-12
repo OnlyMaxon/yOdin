@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "yOdin에 오신 것을 환영합니다",
     "subtitle": "문화를 넘어 연결하세요",
@@ -45,7 +45,8 @@
     "title": "알림",
     "empty": "아직 알림이 없습니다",
     "replied": "님이 내 토론에 답글을 달았습니다",
-    "accepted": "님이 회원님의 답변을 채택했습니다"
+    "accepted": "님이 회원님의 답변을 채택했습니다",
+    "clearRead": "읽은 것 삭제"
   },
   "profile": {
     "title": "프로필",

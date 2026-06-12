@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useNotificationStore } from '../store/useNotificationStore';
-import { markNotificationsRead } from '../services/notificationService';
+import { markNotificationsRead, deleteReadNotifications } from '../services/notificationService';
 import { AppNotification } from '../types';
 import { formatTime } from '../utils/formatTime';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -29,6 +29,8 @@ export default function NotificationsScreen({ navigation }: any) {
   // this screen only renders it and marks items read when viewed.
   const notifications = useNotificationStore((s) => s.notifications);
   const loaded = useNotificationStore((s) => s.loaded);
+  const removeNotifications = useNotificationStore((s) => s.removeNotifications);
+  const [clearingRead, setClearingRead] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -39,6 +41,20 @@ export default function NotificationsScreen({ navigation }: any) {
       markNotificationsRead(unreadIds).catch(() => {});
     }, []),
   );
+
+  async function handleClearRead() {
+    const readIds = notifications.filter((n) => n.read).map((n) => n.id);
+    if (readIds.length === 0) return;
+    setClearingRead(true);
+    removeNotifications(readIds);
+    try {
+      await deleteReadNotifications(readIds);
+    } catch {
+      // realtime listener will reconcile
+    } finally {
+      setClearingRead(false);
+    }
+  }
 
   function handleNotificationPress(item: AppNotification) {
     navigation.navigate('DiscussionDetail', {
@@ -88,7 +104,20 @@ export default function NotificationsScreen({ navigation }: any) {
           <View style={styles.backBtn} />
         )}
         <Text style={styles.headerTitle}>{t('notifications.title')}</Text>
-        <View style={styles.backBtn} />
+        {loaded && notifications.some((n) => n.read) ? (
+          <TouchableOpacity
+            onPress={handleClearRead}
+            style={styles.clearBtn}
+            disabled={clearingRead}
+          >
+            {clearingRead
+              ? <ActivityIndicator size="small" color={colors.textSecondary} />
+              : <Ionicons name="trash-outline" size={20} color={colors.textSecondary} />
+            }
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.backBtn} />
+        )}
       </View>
 
       {!loaded ? (
@@ -134,6 +163,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       color: c.textPrimary,
     },
     backBtn: { width: 32 },
+    clearBtn: { width: 32, alignItems: 'center', justifyContent: 'center' },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     empty: { alignItems: 'center', paddingTop: 80 },
     emptyEmoji: { fontSize: 48, marginBottom: 12 },

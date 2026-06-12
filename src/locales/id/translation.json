@@ -1,4 +1,4 @@
-{
+﻿{
   "auth": {
     "welcome": "Selamat datang di yOdin",
     "subtitle": "Terhubung lintas budaya",
@@ -45,7 +45,8 @@
     "title": "Notifikasi",
     "empty": "Belum ada notifikasi",
     "replied": "membalas diskusi Anda",
-    "accepted": "menerima jawaban Anda"
+    "accepted": "menerima jawaban Anda",
+    "clearRead": "Hapus yang dibaca"
   },
   "profile": {
     "title": "Profil",

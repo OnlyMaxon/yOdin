@@ -71,3 +71,30 @@ export async function markNotificationsRead(ids: string[]): Promise<void> {
   });
   await batch.commit();
 }
+
+export async function deleteReadNotifications(ids: string[]): Promise<void> {
+  if (ids.length === 0) return;
+  const batch = writeBatch(db);
+  ids.forEach((id) => batch.delete(doc(db, 'notifications', id)));
+  await batch.commit();
+}
+
+const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+
+export async function cleanupOldNotifications(uid: string): Promise<void> {
+  const cutoff = Date.now() - SEVEN_DAYS_MS;
+  const snap = await getDocs(
+    query(collection(db, 'notifications'), where('toUserId', '==', uid)),
+  );
+  const toDelete = snap.docs.filter((d) => {
+    const data = d.data();
+    if (!data.read) return false;
+    const ts = data.createdAt;
+    const ms: number = ts?.toMillis?.() ?? (ts as number) ?? 0;
+    return ms < cutoff;
+  });
+  if (toDelete.length === 0) return;
+  const batch = writeBatch(db);
+  toDelete.forEach((d) => batch.delete(d.ref));
+  await batch.commit();
+}
