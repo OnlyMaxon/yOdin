@@ -128,7 +128,9 @@
     "title": "Forum",
     "empty": "Belum ada soalan. Tanya yang pertama!",
     "answered": "Dijawab",
-    "ask": "Tanya Soalan"
+    "ask": "Tanya Soalan",
+    "search": "Cari soalan",
+    "nothingFound": "Tiada hasil ditemui"
   },
   "rank": {
     "novice": "Orang baru",

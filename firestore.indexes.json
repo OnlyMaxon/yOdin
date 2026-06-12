@@ -12,7 +12,7 @@
       "collectionGroup": "discussions",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "location", "order": "ASCENDING" },
+        { "fieldPath": "authorCountryCode", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" }
       ]
     },

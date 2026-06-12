@@ -128,7 +128,9 @@
     "title": "Forum",
     "empty": "Pas encore de questions. Posez la première !",
     "answered": "Répondu",
-    "ask": "Poser une question"
+    "ask": "Poser une question",
+    "search": "Rechercher des questions",
+    "nothingFound": "Aucun résultat"
   },
   "rank": {
     "novice": "Débutant",

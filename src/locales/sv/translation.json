@@ -128,7 +128,9 @@
     "title": "Forum",
     "empty": "Inga frågor än. Ställ den första!",
     "answered": "Besvarad",
-    "ask": "Ställ en fråga"
+    "ask": "Ställ en fråga",
+    "search": "Sök frågor",
+    "nothingFound": "Inget hittades"
   },
   "rank": {
     "novice": "Nybörjare",

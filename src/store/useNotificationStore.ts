@@ -4,6 +4,7 @@ import { AppNotification } from '../types';
 interface NotificationState {
   notifications: AppNotification[];
   unreadCount: number;
+  loaded: boolean;
   setNotifications: (notifications: AppNotification[]) => void;
   markAllRead: () => void;
 }
@@ -11,10 +12,12 @@ interface NotificationState {
 export const useNotificationStore = create<NotificationState>((set) => ({
   notifications: [],
   unreadCount: 0,
+  loaded: false,
   setNotifications: (notifications) =>
     set({
       notifications,
       unreadCount: notifications.filter((n) => !n.read).length,
+      loaded: true,
     }),
   markAllRead: () =>
     set((state) => ({

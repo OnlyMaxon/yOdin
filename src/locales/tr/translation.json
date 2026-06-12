@@ -128,7 +128,9 @@
     "title": "Forum",
     "empty": "Henüz soru yok. İlk soruyu sen sor!",
     "answered": "Yanıtlandı",
-    "ask": "Soru Sor"
+    "ask": "Soru Sor",
+    "search": "Sorularda ara",
+    "nothingFound": "Sonuç bulunamadı"
   },
   "rank": {
     "novice": "Acemi",

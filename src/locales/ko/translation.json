@@ -128,7 +128,9 @@
     "title": "포럼",
     "empty": "아직 질문이 없습니다. 첫 질문을 해보세요!",
     "answered": "답변 완료",
-    "ask": "질문하기"
+    "ask": "질문하기",
+    "search": "질문 검색",
+    "nothingFound": "검색 결과 없음"
   },
   "rank": {
     "novice": "새내기",

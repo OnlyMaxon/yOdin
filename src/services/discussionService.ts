@@ -35,12 +35,15 @@ export async function createDiscussion(
   return ref.id;
 }
 
+// The forum is scoped by nationality: a discussion belongs to its author's
+// nationality forum (authorCountryCode), so people of the same nationality see
+// and answer each other regardless of where they live.
 export async function fetchDiscussions(
-  location: string,
+  nationalityCode: string,
   cursor?: DocumentSnapshot,
 ): Promise<{ discussions: Discussion[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [
-    where('location', '==', location),
+    where('authorCountryCode', '==', nationalityCode),
     orderBy('createdAt', 'desc'),
     limit(PAGE_SIZE),
   ];
@@ -50,6 +53,25 @@ export async function fetchDiscussions(
   const discussions = snap.docs.map((d) => ({ id: d.id, ...d.data() } as Discussion));
   const lastDoc = snap.docs[snap.docs.length - 1] ?? null;
   return { discussions, lastDoc };
+}
+
+// Loads the whole nationality forum (capped) so search can run client-side over
+// the full base. Reuses the authorCountryCode+createdAt index.
+const SEARCH_FETCH_CAP = 500;
+
+export async function fetchAllDiscussions(
+  nationalityCode: string,
+  max: number = SEARCH_FETCH_CAP,
+): Promise<Discussion[]> {
+  const snap = await getDocs(
+    query(
+      collection(db, 'discussions'),
+      where('authorCountryCode', '==', nationalityCode),
+      orderBy('createdAt', 'desc'),
+      limit(max),
+    ),
+  );
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Discussion));
 }
 
 export async function fetchDiscussionById(discussionId: string): Promise<Discussion | null> {

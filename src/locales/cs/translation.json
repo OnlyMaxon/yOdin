@@ -129,7 +129,9 @@
     "title": "Fórum",
     "empty": "Zatím žádné otázky. Položte první!",
     "answered": "Zodpovězeno",
-    "ask": "Položit otázku"
+    "ask": "Položit otázku",
+    "search": "Hledat otázky",
+    "nothingFound": "Nic nenalezeno"
   },
   "rank": {
     "novice": "Nováček",

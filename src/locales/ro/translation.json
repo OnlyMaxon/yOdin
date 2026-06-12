@@ -129,7 +129,9 @@
     "title": "Forum",
     "empty": "Încă nu există întrebări. Pune prima!",
     "answered": "Răspuns primit",
-    "ask": "Pune o întrebare"
+    "ask": "Pune o întrebare",
+    "search": "Caută întrebări",
+    "nothingFound": "Nu s-a găsit nimic"
   },
   "rank": {
     "novice": "Începător",

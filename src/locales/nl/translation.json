@@ -128,7 +128,9 @@
     "title": "Forum",
     "empty": "Nog geen vragen. Stel de eerste!",
     "answered": "Beantwoord",
-    "ask": "Stel een vraag"
+    "ask": "Stel een vraag",
+    "search": "Vragen zoeken",
+    "nothingFound": "Niets gevonden"
   },
   "rank": {
     "novice": "Beginner",

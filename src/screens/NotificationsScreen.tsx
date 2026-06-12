@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import {
   View,
   Text,
@@ -9,10 +9,10 @@ import {
   Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { useAuthStore } from '../store/useAuthStore';
 import { useNotificationStore } from '../store/useNotificationStore';
-import { fetchNotifications, markNotificationsRead } from '../services/notificationService';
+import { markNotificationsRead } from '../services/notificationService';
 import { AppNotification } from '../types';
 import { formatTime } from '../utils/formatTime';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -25,29 +25,20 @@ export default function NotificationsScreen({ navigation }: any) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top);
-  const { profile } = useAuthStore();
-  const { notifications, setNotifications, markAllRead } = useNotificationStore();
-  const [loading, setLoading] = useState(true);
+  // Data comes from the global realtime subscription (set up in TabNavigator);
+  // this screen only renders it and marks items read when viewed.
+  const notifications = useNotificationStore((s) => s.notifications);
+  const loaded = useNotificationStore((s) => s.loaded);
 
-  useEffect(() => {
-    if (profile?.uid) loadNotifications();
-  }, [profile?.uid]);
-
-  async function loadNotifications() {
-    setLoading(true);
-    try {
-      const data = await fetchNotifications(profile!.uid);
-      setNotifications(data);
-      const unreadIds = data.filter((n) => !n.read).map((n) => n.id);
-      if (unreadIds.length > 0) {
-        await markNotificationsRead(unreadIds);
-        markAllRead();
-      }
-    } catch {
-    } finally {
-      setLoading(false);
-    }
-  }
+  useFocusEffect(
+    useCallback(() => {
+      const { notifications: current, markAllRead } = useNotificationStore.getState();
+      const unreadIds = current.filter((n) => !n.read).map((n) => n.id);
+      if (unreadIds.length === 0) return;
+      markAllRead(); // optimistic; the live listener will confirm
+      markNotificationsRead(unreadIds).catch(() => {});
+    }, []),
+  );
 
   function handleNotificationPress(item: AppNotification) {
     navigation.navigate('DiscussionDetail', {
@@ -89,14 +80,18 @@ export default function NotificationsScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Ionicons name="arrow-back" size={24} color={colors.textPrimary} />
-        </TouchableOpacity>
+        {navigation.canGoBack() ? (
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+            <Ionicons name="arrow-back" size={24} color={colors.textPrimary} />
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.backBtn} />
+        )}
         <Text style={styles.headerTitle}>{t('notifications.title')}</Text>
         <View style={styles.backBtn} />
       </View>
 
-      {loading ? (
+      {!loaded ? (
         <View style={styles.center}>
           <ActivityIndicator color={colors.primary} size="large" />
         </View>

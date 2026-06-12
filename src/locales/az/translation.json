@@ -128,7 +128,9 @@
     "title": "Forum",
     "empty": "Hələ sual yoxdur. İlk sualı siz verin!",
     "answered": "Cavablandı",
-    "ask": "Sual ver"
+    "ask": "Sual ver",
+    "search": "Suallarda axtarış",
+    "nothingFound": "Heç nə tapılmadı"
   },
   "rank": {
     "novice": "Yeni başlayan",

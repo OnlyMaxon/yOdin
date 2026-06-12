@@ -14,7 +14,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { usePostStore, FeedFilter } from '../store/usePostStore';
-import { useNotificationStore } from '../store/useNotificationStore';
 import { fetchPosts, PAGE_SIZE } from '../services/postService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
@@ -23,6 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+import NewPostModal from './NewPostModal';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
@@ -33,10 +33,10 @@ export default function FeedScreen({ navigation }: any) {
   const styles = makeStyles(colors, insets.top);
   const { profile } = useAuthStore();
   const { posts, filter, setFilter, setPosts, appendPosts, setLoading, isLoading, setHasMore, hasMore } = usePostStore();
-  const unreadCount = useNotificationStore((s) => s.unreadCount);
   const [refreshing, setRefreshing] = useState(false);
   const [lastDoc, setLastDoc] = useState<any>(null);
   const [error, setError] = useState('');
+  const [postModalVisible, setPostModalVisible] = useState(false);
 
   useEffect(() => {
     loadFeed();
@@ -142,20 +142,12 @@ export default function FeedScreen({ navigation }: any) {
           )}
         </View>
         <TouchableOpacity
-          style={styles.bellBtn}
-          onPress={() => navigation.navigate('Notifications')}
+          style={styles.addBtn}
+          onPress={() => setPostModalVisible(true)}
+          activeOpacity={0.85}
           hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Ionicons
-            name={unreadCount > 0 ? 'notifications' : 'notifications-outline'}
-            size={24}
-            color={colors.textPrimary}
-          />
-          {unreadCount > 0 && (
-            <View style={styles.bellBadge}>
-              <Text style={styles.bellBadgeText}>{unreadCount > 99 ? '99+' : unreadCount}</Text>
-            </View>
-          )}
+          <Ionicons name="add" size={26} color="#fff" />
         </TouchableOpacity>
       </View>
 
@@ -219,6 +211,8 @@ export default function FeedScreen({ navigation }: any) {
           }
         />
       )}
+
+      <NewPostModal visible={postModalVisible} onClose={() => setPostModalVisible(false)} />
     </View>
   );
 }
@@ -236,20 +230,19 @@ function makeStyles(c: ColorPalette, topInset: number) {
       alignItems: 'center',
       justifyContent: 'space-between',
     },
-    bellBtn: { position: 'relative', padding: 4 },
-    bellBadge: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-      minWidth: 16,
-      height: 16,
-      borderRadius: 8,
-      backgroundColor: c.notification,
+    addBtn: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: c.primary,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingHorizontal: 3,
+      shadowColor: c.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.35,
+      shadowRadius: 8,
+      elevation: 6,
     },
-    bellBadgeText: { color: '#fff', fontSize: 9, fontWeight: '700', lineHeight: 11 },
     headerTitle: {
       fontSize: Typography.fontSizeXL,
       fontWeight: Typography.fontWeightBold,

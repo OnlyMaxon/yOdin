@@ -28,12 +28,16 @@ service cloud.firestore {
         && resource.data.authorId == request.auth.uid;
     }
 
-    // Discussions — authenticated users can read and create
-    // Only the author can delete their own discussion
+    // Discussions form per-nationality forums: a discussion belongs to its
+    // author's nationality (authorCountryCode). Only users of the SAME
+    // nationality may read it, post it, or reply to it.
     match /discussions/{discussionId} {
-      allow read: if request.auth != null;
+      // Read your nationality's forum, plus your own questions and the ones you
+      // saved (so the profile tabs keep working even after a nationality change).
+      allow read: if canAccessDiscussion(resource.data);
       allow create: if request.auth != null
         && request.resource.data.authorId == request.auth.uid
+        && request.resource.data.authorCountryCode == myNationality()
         && request.resource.data.question is string
         && request.resource.data.question.size() > 0
         && request.resource.data.question.size() <= 500;
@@ -46,11 +50,13 @@ service cloud.firestore {
       allow delete: if request.auth != null
         && resource.data.authorId == request.auth.uid;
 
-      // Replies — authenticated users can read and create
+      // Replies — readable by anyone who can access the discussion; only
+      // same-nationality users may post (answer) in it.
       match /replies/{replyId} {
-        allow read: if request.auth != null;
+        allow read: if canAccessDiscussion(discussionData(discussionId));
         allow create: if request.auth != null
           && request.resource.data.authorId == request.auth.uid
+          && sameNationality(discussionData(discussionId).authorCountryCode)
           && request.resource.data.text is string
           && request.resource.data.text.size() > 0
           && request.resource.data.text.size() <= 1000;
@@ -78,13 +84,16 @@ service cloud.firestore {
         && request.resource.data.discussionQuestion is string;
     }
 
-    // savedBy update: user can only add or remove their own UID from the array
+    // savedBy update: user can only add or remove their own UID. Adding is
+    // restricted to the user's own nationality so saving can't be used to gain
+    // read access to another nationality's discussion; removing is always allowed.
     function savedByUpdate() {
-      let before = resource.data.savedBy;
-      let after = request.resource.data.savedBy;
+      let before = resource.data.get('savedBy', []);
+      let after = request.resource.data.get('savedBy', []);
       let uid = request.auth.uid;
       let diff = onlyUpdatingField(request, 'savedBy');
-      let adding = after.hasAll(before) && after.removeAll(before) == [uid];
+      let adding = after.hasAll(before) && after.removeAll(before) == [uid]
+        && sameNationality(resource.data.authorCountryCode);
       let removing = before.hasAll(after) && before.removeAll(after) == [uid];
       return diff && (adding || removing);
     }
@@ -97,6 +106,31 @@ service cloud.firestore {
 
     function onlyUpdatingField(req, field) {
       return req.resource.data.diff(resource.data).affectedKeys().hasOnly([field]);
+    }
+
+    // The signed-in user's own nationality code (from their user document).
+    function myNationality() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.countryCode;
+    }
+
+    // The full data of a discussion document by id.
+    function discussionData(discussionId) {
+      return get(/databases/$(database)/documents/discussions/$(discussionId)).data;
+    }
+
+    // True when the signed-in user shares the given nationality code.
+    function sameNationality(code) {
+      return request.auth != null && myNationality() == code;
+    }
+
+    // A user may access a discussion when it's in their nationality forum, or
+    // they authored it, or they previously saved it.
+    function canAccessDiscussion(d) {
+      return request.auth != null && (
+        myNationality() == d.authorCountryCode
+        || d.authorId == request.auth.uid
+        || request.auth.uid in d.get('savedBy', [])
+      );
     }
 
     // Array may stay the same, or differ only by the requester's own UID

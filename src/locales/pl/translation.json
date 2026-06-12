@@ -130,7 +130,9 @@
     "title": "Forum",
     "empty": "Brak pytań. Zadaj pierwsze!",
     "answered": "Odpowiedziano",
-    "ask": "Zadaj pytanie"
+    "ask": "Zadaj pytanie",
+    "search": "Szukaj pytań",
+    "nothingFound": "Nic nie znaleziono"
   },
   "rank": {
     "novice": "Nowicjusz",

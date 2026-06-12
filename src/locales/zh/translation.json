@@ -128,7 +128,9 @@
     "title": "论坛",
     "empty": "暂无问题，来提出第一个吧！",
     "answered": "已解答",
-    "ask": "提问"
+    "ask": "提问",
+    "search": "搜索问题",
+    "nothingFound": "未找到结果"
   },
   "rank": {
     "novice": "新手",

@@ -128,7 +128,9 @@
     "title": "Diễn đàn",
     "empty": "Chưa có câu hỏi nào. Hãy đặt câu hỏi đầu tiên!",
     "answered": "Đã trả lời",
-    "ask": "Đặt câu hỏi"
+    "ask": "Đặt câu hỏi",
+    "search": "Tìm câu hỏi",
+    "nothingFound": "Không tìm thấy gì"
   },
   "rank": {
     "novice": "Người mới",

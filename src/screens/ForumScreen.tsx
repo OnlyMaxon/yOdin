@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import {
   View,
   Text,
   FlatList,
   StyleSheet,
+  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
@@ -13,7 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
-import { fetchDiscussions, saveDiscussion, unsaveDiscussion, PAGE_SIZE } from '../services/discussionService';
+import { fetchDiscussions, fetchAllDiscussions, saveDiscussion, unsaveDiscussion, PAGE_SIZE } from '../services/discussionService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
 import { Discussion } from '../types';
@@ -33,18 +34,57 @@ export default function ForumScreen({ navigation }: any) {
   const [refreshing, setRefreshing] = useState(false);
   const [lastDoc, setLastDoc] = useState<any>(null);
   const [error, setError] = useState('');
+  const [search, setSearch] = useState('');
   const [askVisible, setAskVisible] = useState(false);
+  // Full question base for the location, lazily loaded the first time the user
+  // searches so the search covers the whole DB, not just the paginated feed.
+  const [allQuestions, setAllQuestions] = useState<Discussion[] | null>(null);
+  const [loadingAll, setLoadingAll] = useState(false);
+
+  const isSearching = search.trim().length > 0;
+
+  // Lazily pull the whole nationality forum once a search begins.
+  useEffect(() => {
+    if (!isSearching || allQuestions !== null || loadingAll || !profile?.countryCode) return;
+    setLoadingAll(true);
+    fetchAllDiscussions(profile.countryCode)
+      .then(setAllQuestions)
+      .catch(() => setAllQuestions([]))
+      .finally(() => setLoadingAll(false));
+  }, [isSearching, allQuestions, loadingAll, profile?.countryCode]);
+
+  // Search pool: the full base once loaded, plus any questions in the store that
+  // aren't in it yet (e.g. one just asked via the tab "+"). Falls back to the
+  // loaded feed while the full base is still fetching.
+  const searchPool = useMemo(() => {
+    if (!allQuestions) return discussions;
+    const ids = new Set(allQuestions.map((d) => d.id));
+    const extra = discussions.filter((d) => !ids.has(d.id));
+    return extra.length ? [...extra, ...allQuestions] : allQuestions;
+  }, [allQuestions, discussions]);
+
+  // Keyword search: a question matches when it contains every whitespace-separated
+  // token of the query (case-insensitive).
+  const filteredDiscussions = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return discussions;
+    const tokens = q.split(/\s+/);
+    return searchPool.filter((d) => {
+      const text = d.question.toLowerCase();
+      return tokens.every((tok) => text.includes(tok));
+    });
+  }, [discussions, searchPool, search]);
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.location]);
+  }, [profile?.countryCode]);
 
   async function loadFeed() {
-    if (!profile?.location) return;
+    if (!profile?.countryCode) return;
     setError('');
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location);
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.countryCode);
       setDiscussions(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -56,10 +96,10 @@ export default function ForumScreen({ navigation }: any) {
   }
 
   async function loadMore() {
-    if (!hasMore || isLoading || !lastDoc || !profile?.location) return;
+    if (!hasMore || isLoading || !lastDoc || !profile?.countryCode) return;
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location, lastDoc);
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.countryCode, lastDoc);
       appendDiscussions(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -72,6 +112,7 @@ export default function ForumScreen({ navigation }: any) {
 
   async function onRefresh() {
     setRefreshing(true);
+    setAllQuestions(null); // invalidate search cache so it reloads fresh
     await loadFeed();
     setRefreshing(false);
   }
@@ -143,40 +184,69 @@ export default function ForumScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Text style={styles.backText}>←</Text>
-        </TouchableOpacity>
+        {navigation.canGoBack() && (
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+            <Text style={styles.backText}>←</Text>
+          </TouchableOpacity>
+        )}
         <View style={{ flex: 1 }}>
           <Text style={styles.headerTitle}>{t('forum.title')}</Text>
           {profile && (
             <Text style={styles.headerSub}>
-              {getFlagEmoji(profile.countryCode)}  {profile.location}
+              {getFlagEmoji(profile.countryCode)}  {profile.nationality}
             </Text>
           )}
         </View>
+        <TouchableOpacity
+          style={styles.addBtn}
+          onPress={() => setAskVisible(true)}
+          activeOpacity={0.85}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Ionicons name="add" size={26} color="#fff" />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.searchBar}>
+        <Ionicons name="search" size={18} color={colors.textSecondary} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder={t('forum.search')}
+          placeholderTextColor={colors.textSecondary}
+          value={search}
+          onChangeText={setSearch}
+          returnKeyType="search"
+          autoCorrect={false}
+        />
+        {isSearching && (
+          <TouchableOpacity onPress={() => setSearch('')} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+            <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
+          </TouchableOpacity>
+        )}
       </View>
 
       {error ? (
         <View style={styles.center}>
           <Text style={{ color: colors.notification, textAlign: 'center', padding: 24 }}>{error}</Text>
         </View>
-      ) : isLoading && discussions.length === 0 ? (
+      ) : (isLoading && discussions.length === 0) || (isSearching && loadingAll && !allQuestions) ? (
         <View style={styles.center}>
           <ActivityIndicator color={colors.primary} size="large" />
         </View>
       ) : (
         <FlatList
-          data={discussions}
+          data={filteredDiscussions}
           keyExtractor={(item) => item.id}
           renderItem={renderCard}
-          contentContainerStyle={discussions.length === 0 ? styles.center : styles.list}
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={filteredDiscussions.length === 0 ? styles.center : styles.list}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
-          onEndReached={loadMore}
+          onEndReached={isSearching ? undefined : loadMore}
           onEndReachedThreshold={0.3}
           ListEmptyComponent={
             <View style={styles.empty}>
-              <Text style={styles.emptyEmoji}>💬</Text>
-              <Text style={styles.emptyText}>{t('forum.empty')}</Text>
+              <Text style={styles.emptyEmoji}>{isSearching ? '🔍' : '💬'}</Text>
+              <Text style={styles.emptyText}>{isSearching ? t('forum.nothingFound') : t('forum.empty')}</Text>
             </View>
           }
           ListFooterComponent={
@@ -187,12 +257,13 @@ export default function ForumScreen({ navigation }: any) {
         />
       )}
 
-      <TouchableOpacity style={styles.fab} onPress={() => setAskVisible(true)} activeOpacity={0.85}>
-        <Ionicons name="help-circle-outline" size={20} color="#fff" />
-        <Text style={styles.fabText}>{t('forum.ask')}</Text>
-      </TouchableOpacity>
-
-      <NewDiscussionModal visible={askVisible} onClose={() => setAskVisible(false)} />
+      <NewDiscussionModal
+        visible={askVisible}
+        onClose={() => {
+          setAskVisible(false);
+          setAllQuestions(null); // a new question may have been added — refresh search cache
+        }}
+      />
     </View>
   );
 }
@@ -214,6 +285,38 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     backBtn: { padding: 4 },
     backText: { fontSize: 24, color: c.textPrimary },
+    addBtn: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: c.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: c.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.35,
+      shadowRadius: 8,
+      elevation: 6,
+    },
+    searchBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      marginHorizontal: 16,
+      marginTop: 12,
+      paddingHorizontal: 14,
+      height: 44,
+      borderRadius: 22,
+      backgroundColor: c.surface,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    searchInput: {
+      flex: 1,
+      fontSize: Typography.fontSizeMD,
+      color: c.textPrimary,
+      padding: 0,
+    },
     headerTitle: {
       fontSize: Typography.fontSizeXL,
       fontWeight: Typography.fontWeightBold,
@@ -311,28 +414,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
     time: {
       fontSize: Typography.fontSizeSM,
       color: c.textSecondary,
-    },
-    fab: {
-      position: 'absolute',
-      bottom: 24,
-      right: 20,
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 6,
-      backgroundColor: c.primary,
-      paddingHorizontal: 18,
-      paddingVertical: 14,
-      borderRadius: 28,
-      shadowColor: c.primary,
-      shadowOffset: { width: 0, height: 6 },
-      shadowOpacity: 0.4,
-      shadowRadius: 12,
-      elevation: 8,
-    },
-    fabText: {
-      color: '#fff',
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightSemiBold,
     },
   });
 }

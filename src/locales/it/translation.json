@@ -128,7 +128,9 @@
     "title": "Forum",
     "empty": "Ancora nessuna domanda. Fai la prima!",
     "answered": "Risposta data",
-    "ask": "Fai una domanda"
+    "ask": "Fai una domanda",
+    "search": "Cerca domande",
+    "nothingFound": "Nessun risultato"
   },
   "rank": {
     "novice": "Novizio",
