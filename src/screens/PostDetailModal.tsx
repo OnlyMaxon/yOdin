@@ -23,6 +23,7 @@ import { votePost, addComment, fetchComments } from '../services/postService';
 import { PostComment } from '../types';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -41,7 +42,8 @@ interface Props {
 export default function PostDetailModal({ visible, postId, startWithComments, onClose }: Props) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const styles = makeStyles(colors);
+  const insets = useSafeAreaInsets();
+  const styles = makeStyles(colors, insets.bottom);
   const { profile } = useAuthStore();
   const post = usePostStore((s) => (postId ? s.posts.find((p) => p.id === postId) : undefined));
   const setPostVote = usePostStore((s) => s.setPostVote);
@@ -135,7 +137,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
         text: text.trim(),
       };
       const id = await addComment(post.id, data);
-      setComments((prev) => [...prev, { id, ...data, createdAt: Date.now() as any }]);
+      setComments((prev) => [...prev, { id, ...data, createdAt: Date.now() }]);
       incrementCommentCount(post.id);
       setText('');
       setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 100);
@@ -242,7 +244,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
           <View style={styles.sheet}>
           <KeyboardAvoidingView
             style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           >
             <View style={styles.sheetHandleRow}>
               <View style={styles.sheetHandle} />
@@ -298,7 +300,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   );
 }
 
-function makeStyles(c: ColorPalette) {
+function makeStyles(c: ColorPalette, bottomInset: number) {
   return StyleSheet.create({
     overlay: { flex: 1 },
     backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.55)' },
@@ -381,7 +383,7 @@ function makeStyles(c: ColorPalette) {
       alignItems: 'flex-end',
       paddingHorizontal: 16,
       paddingVertical: 12,
-      paddingBottom: Platform.OS === 'ios' ? 24 : 12,
+      paddingBottom: Math.max(bottomInset, 12) + 12,
       borderTopWidth: 1,
       borderTopColor: c.border,
       gap: 10,

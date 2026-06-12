@@ -32,8 +32,7 @@ service cloud.firestore {
         && request.resource.data.category in ['news', 'events', 'places'];
       allow update: if request.auth != null
         && (
-          resource.data.authorId == request.auth.uid
-          || postVoteUpdate()
+          postVoteUpdate()
           || commentCountUpdate()
         );
       allow delete: if request.auth != null
