@@ -1,105 +1,95 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
+import { useNotificationStore } from '../store/useNotificationStore';
+import { useAuthStore } from '../store/useAuthStore';
+import { subscribeNotifications } from '../services/notificationService';
 import FeedStack from './FeedStack';
 import ForumStack from './ForumStack';
+import NotificationsStack from './NotificationsStack';
 import ProfileStack from './ProfileStack';
-import NewPostModal from '../screens/NewPostModal';
-import NewDiscussionModal from '../screens/NewDiscussionModal';
 
 const Tab = createBottomTabNavigator();
 
 export default function TabNavigator() {
   const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
-  const [postModalVisible, setPostModalVisible] = useState(false);
-  const [questionModalVisible, setQuestionModalVisible] = useState(false);
-  const [activeTab, setActiveTab] = useState('Feed');
+  const unreadCount = useNotificationStore((s) => s.unreadCount);
+  const setNotifications = useNotificationStore((s) => s.setNotifications);
+  const uid = useAuthStore((s) => s.profile?.uid);
 
-  // The floating "+" posts to whatever section the user is in:
-  // Forum → ask a question; anywhere else → post to the feed.
-  function handleAddPress() {
-    if (activeTab === 'Forum') setQuestionModalVisible(true);
-    else setPostModalVisible(true);
-  }
+  // Keep notifications live for the whole signed-in session so the badge is
+  // always accurate and updates in real time, without opening the tab.
+  useEffect(() => {
+    if (!uid) return;
+    const unsubscribe = subscribeNotifications(uid, setNotifications);
+    return unsubscribe;
+  }, [uid, setNotifications]);
 
   return (
-    <>
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarStyle: [styles.tabBar, { backgroundColor: colors.tabBar }],
-          tabBarShowLabel: false,
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: [styles.tabBar, { backgroundColor: colors.tabBar }],
+        tabBarShowLabel: false,
+      }}
+    >
+      <Tab.Screen
+        name="Feed"
+        component={FeedStack}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? 'earth' : 'earth-outline'}
+              size={24}
+              color={focused ? colors.tabBarActive : colors.tabBarInactive}
+            />
+          ),
         }}
-        screenListeners={{
-          state: (e: any) => {
-            const navState = e.data?.state;
-            if (!navState) return;
-            const route = navState.routes[navState.index];
-            if (route?.name) setActiveTab(route.name);
-          },
+      />
+      <Tab.Screen
+        name="Forum"
+        component={ForumStack}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? 'chatbubbles' : 'chatbubbles-outline'}
+              size={24}
+              color={focused ? colors.tabBarActive : colors.tabBarInactive}
+            />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="Feed"
-          component={FeedStack}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? 'earth' : 'earth-outline'}
-                size={24}
-                color={focused ? colors.tabBarActive : colors.tabBarInactive}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Forum"
-          component={ForumStack}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? 'chatbubbles' : 'chatbubbles-outline'}
-                size={24}
-                color={focused ? colors.tabBarActive : colors.tabBarInactive}
-              />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Profile"
-          component={ProfileStack}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name={focused ? 'person' : 'person-outline'}
-                size={24}
-                color={focused ? colors.tabBarActive : colors.tabBarInactive}
-              />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-
-      {activeTab !== 'Profile' && (
-        <TouchableOpacity
-          style={[
-            styles.fab,
-            { bottom: insets.bottom + 84, backgroundColor: colors.primary, shadowColor: colors.primary },
-          ]}
-          onPress={handleAddPress}
-          activeOpacity={0.85}
-        >
-          <Ionicons name="add" size={30} color="#fff" />
-        </TouchableOpacity>
-      )}
-
-      <NewPostModal visible={postModalVisible} onClose={() => setPostModalVisible(false)} />
-      <NewDiscussionModal visible={questionModalVisible} onClose={() => setQuestionModalVisible(false)} />
-    </>
+      />
+      <Tab.Screen
+        name="Notifications"
+        component={NotificationsStack}
+        options={{
+          tabBarBadge: unreadCount > 0 ? (unreadCount > 99 ? '99+' : unreadCount) : undefined,
+          tabBarBadgeStyle: { backgroundColor: colors.notification },
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? 'notifications' : 'notifications-outline'}
+              size={24}
+              color={focused ? colors.tabBarActive : colors.tabBarInactive}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfileStack}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Ionicons
+              name={focused ? 'person' : 'person-outline'}
+              size={24}
+              color={focused ? colors.tabBarActive : colors.tabBarInactive}
+            />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
@@ -113,18 +103,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 16,
     elevation: 16,
-  },
-  fab: {
-    position: 'absolute',
-    right: 20,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowOffset: { width: 0, height: 6 },
-    shadowOpacity: 0.45,
-    shadowRadius: 12,
-    elevation: 10,
   },
 });

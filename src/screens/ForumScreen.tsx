@@ -22,6 +22,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+import NewDiscussionModal from './NewDiscussionModal';
 
 export default function ForumScreen({ navigation }: any) {
   const { t } = useTranslation();
@@ -34,6 +35,7 @@ export default function ForumScreen({ navigation }: any) {
   const [lastDoc, setLastDoc] = useState<any>(null);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
+  const [askVisible, setAskVisible] = useState(false);
   // Full question base for the location, lazily loaded the first time the user
   // searches so the search covers the whole DB, not just the paginated feed.
   const [allQuestions, setAllQuestions] = useState<Discussion[] | null>(null);
@@ -195,6 +197,14 @@ export default function ForumScreen({ navigation }: any) {
             </Text>
           )}
         </View>
+        <TouchableOpacity
+          style={styles.addBtn}
+          onPress={() => setAskVisible(true)}
+          activeOpacity={0.85}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Ionicons name="add" size={26} color="#fff" />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.searchBar}>
@@ -247,6 +257,13 @@ export default function ForumScreen({ navigation }: any) {
         />
       )}
 
+      <NewDiscussionModal
+        visible={askVisible}
+        onClose={() => {
+          setAskVisible(false);
+          setAllQuestions(null); // a new question may have been added — refresh search cache
+        }}
+      />
     </View>
   );
 }
@@ -268,6 +285,19 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     backBtn: { padding: 4 },
     backText: { fontSize: 24, color: c.textPrimary },
+    addBtn: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: c.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      shadowColor: c.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.35,
+      shadowRadius: 8,
+      elevation: 6,
+    },
     searchBar: {
       flexDirection: 'row',
       alignItems: 'center',

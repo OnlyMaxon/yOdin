@@ -8,7 +8,6 @@ export type FeedStackParamList = {
   FeedHome: undefined;
   Forum: undefined;
   DiscussionDetail: { discussionId: string; question: string };
-  Notifications: undefined;
 };
 
 export type ProfileStackParamList = {
@@ -21,8 +20,14 @@ export type ForumStackParamList = {
   DiscussionDetail: { discussionId: string; question: string };
 };
 
+export type NotificationsStackParamList = {
+  NotificationsHome: undefined;
+  DiscussionDetail: { discussionId: string; question: string };
+};
+
 export type TabParamList = {
   Feed: undefined;
   Forum: undefined;
+  Notifications: undefined;
   Profile: undefined;
 };
