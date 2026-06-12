@@ -88,6 +88,10 @@ export async function fetchPosts(
   return { posts, lastDoc };
 }
 
+export async function updatePostImage(postId: string, imageURL: string): Promise<void> {
+  await updateDoc(doc(db, 'posts', postId), { imageURL });
+}
+
 export async function deletePost(postId: string): Promise<void> {
   await deleteDoc(doc(db, 'posts', postId));
 }

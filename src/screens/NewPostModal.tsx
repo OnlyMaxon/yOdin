@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { usePostStore } from '../store/usePostStore';
-import { createPost } from '../services/postService';
+import { createPost, updatePostImage } from '../services/postService';
 import { uploadPostImage } from '../services/storageService';
 import { getErrorMessage } from '../services/errorHandler';
 import { PostCategory, POST_CATEGORIES } from '../types';
@@ -95,10 +95,6 @@ export default function NewPostModal({ visible, onClose }: Props) {
     setLoading(true);
     setError('');
     try {
-      let imageURL = '';
-      if (imageUri) {
-        imageURL = await uploadPostImage(profile.uid, imageUri);
-      }
       const data = {
         authorId: profile.uid,
         authorName: `${profile.firstName} ${profile.lastName}`,
@@ -108,12 +104,21 @@ export default function NewPostModal({ visible, onClose }: Props) {
         title: title.trim(),
         description: description.trim(),
         category,
-        imageURL,
+        imageURL: '',
         location: profile.location,
       };
       const id = await createPost(data);
+      let imageURL = '';
+      if (imageUri) {
+        try {
+          imageURL = await uploadPostImage(id, imageUri);
+          await updatePostImage(id, imageURL);
+        } catch {
+          // post created — image failed, continue without photo
+        }
+      }
       if (filter === 'all' || filter === category) {
-        prependPost({ id, ...data, createdAt: Date.now() });
+        prependPost({ id, ...data, imageURL, createdAt: Date.now() });
       }
       onClose();
     } catch (e) {

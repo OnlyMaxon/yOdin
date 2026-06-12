@@ -19,9 +19,9 @@ export async function uploadAvatar(uid: string, uri: string): Promise<string> {
   return await getDownloadURL(storageRef);
 }
 
-export async function uploadPostImage(uid: string, uri: string): Promise<string> {
+export async function uploadPostImage(postId: string, uri: string): Promise<string> {
   const blob = await uriToBlob(uri);
-  const storageRef = ref(storage, `posts/${uid}/${Date.now()}.jpg`);
+  const storageRef = ref(storage, `posts/${postId}/image.jpg`);
   await uploadBytes(storageRef, blob, { contentType: 'image/jpeg' });
   return await getDownloadURL(storageRef);
 }
