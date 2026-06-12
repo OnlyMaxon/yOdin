@@ -140,5 +140,10 @@
     "master": "마스터",
     "guru": "구루",
     "points": "포인트: {{count}}"
+  },
+  "comments": {
+    "title": "댓글",
+    "placeholder": "댓글 작성...",
+    "empty": "아직 댓글이 없습니다. 첫 댓글을 남겨보세요!"
   }
 }

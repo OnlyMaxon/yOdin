@@ -141,5 +141,10 @@
     "master": "Maestru",
     "guru": "Guru",
     "points": "Puncte: {{count}}"
+  },
+  "comments": {
+    "title": "Comentarii",
+    "placeholder": "Scrie un comentariu...",
+    "empty": "Încă nu există comentarii. Fii primul!"
   }
 }

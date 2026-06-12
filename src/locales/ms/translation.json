@@ -140,5 +140,10 @@
     "master": "Mahir",
     "guru": "Guru",
     "points": "Mata: {{count}}"
+  },
+  "comments": {
+    "title": "Komen",
+    "placeholder": "Tulis komen...",
+    "empty": "Belum ada komen. Jadilah yang pertama!"
   }
 }

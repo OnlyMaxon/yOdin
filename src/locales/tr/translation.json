@@ -140,5 +140,10 @@
     "master": "Usta",
     "guru": "Guru",
     "points": "Puan: {{count}}"
+  },
+  "comments": {
+    "title": "Yorumlar",
+    "placeholder": "Yorum yaz...",
+    "empty": "Henüz yorum yok. İlk sen ol!"
   }
 }

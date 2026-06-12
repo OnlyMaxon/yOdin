@@ -30,8 +30,26 @@ service cloud.firestore {
         && request.resource.data.description.size() > 0
         && request.resource.data.description.size() <= 1000
         && request.resource.data.category in ['news', 'events', 'places'];
-      allow update, delete: if request.auth != null
+      allow update: if request.auth != null
+        && (
+          resource.data.authorId == request.auth.uid
+          || postVoteUpdate()
+          || commentCountUpdate()
+        );
+      allow delete: if request.auth != null
         && resource.data.authorId == request.auth.uid;
+
+      // Comments — any authenticated user can read and post a comment
+      match /comments/{commentId} {
+        allow read: if request.auth != null;
+        allow create: if request.auth != null
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.text is string
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 1000;
+        allow delete: if request.auth != null
+          && resource.data.authorId == request.auth.uid;
+      }
     }
 
     // Discussions — per-nationality Q&A forum.
@@ -110,6 +128,19 @@ service cloud.firestore {
     function replyCountUpdate() {
       return onlyUpdatingField(request, 'replyCount')
         && request.resource.data.replyCount == resource.data.replyCount + 1;
+    }
+
+    // commentCount update: can only increment by exactly 1
+    function commentCountUpdate() {
+      return onlyUpdatingField(request, 'commentCount')
+        && request.resource.data.commentCount == resource.data.get('commentCount', 0) + 1;
+    }
+
+    // Post vote: a user may only add/remove their own UID in likes/dislikes
+    function postVoteUpdate() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'dislikes'])
+        && ownUidArrayChange(resource.data.get('likes', []), request.resource.data.get('likes', []))
+        && ownUidArrayChange(resource.data.get('dislikes', []), request.resource.data.get('dislikes', []));
     }
 
     function onlyUpdatingField(req, field) {
