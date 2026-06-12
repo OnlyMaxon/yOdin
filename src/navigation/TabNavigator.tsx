@@ -16,6 +16,10 @@ import ForumStack from './ForumStack';
 import NotificationsStack from './NotificationsStack';
 import ProfileStack from './ProfileStack';
 import NewPostModal from '../screens/NewPostModal';
+import NewDiscussionModal from '../screens/NewDiscussionModal';
+
+// Tabs where the center button creates content; elsewhere it is inert.
+const CREATE_ROUTES = ['Forum', 'Feed'];
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -31,12 +35,17 @@ const ICONS: Record<string, IconPair> = {
 function TabBar({
   state,
   navigation,
-  onNewPost,
-}: MaterialTopTabBarProps & { onNewPost: () => void }) {
+  onCreate,
+}: MaterialTopTabBarProps & { onCreate: (route: string) => void }) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.bottom);
   const unreadCount = useNotificationStore((s) => s.unreadCount);
+
+  // The center button creates content only on the Forum/Feed tabs; on the
+  // others it is shown disabled so its absence isn't mistaken for a glitch.
+  const activeRoute = state.routes[state.index]?.name;
+  const canCreate = CREATE_ROUTES.includes(activeRoute);
 
   const renderTab = (route: (typeof state.routes)[number], index: number) => {
     const focused = state.index === index;
@@ -81,8 +90,13 @@ function TabBar({
     <View style={styles.tabBar}>
       {state.routes.slice(0, mid).map((route, i) => renderTab(route, i))}
       <View style={styles.centerWrap}>
-        <TouchableOpacity style={styles.centerBtn} onPress={onNewPost} activeOpacity={0.85}>
-          <Ionicons name="add" size={30} color="#fff" />
+        <TouchableOpacity
+          style={[styles.centerBtn, !canCreate && styles.centerBtnDisabled]}
+          onPress={() => onCreate(activeRoute)}
+          disabled={!canCreate}
+          activeOpacity={0.85}
+        >
+          <Ionicons name="add" size={30} color={canCreate ? '#fff' : colors.tabBarInactive} />
         </TouchableOpacity>
       </View>
       {state.routes.slice(mid).map((route, i) => renderTab(route, mid + i))}
@@ -92,6 +106,7 @@ function TabBar({
 
 export default function TabNavigator() {
   const [newPostVisible, setNewPostVisible] = useState(false);
+  const [newDiscussionVisible, setNewDiscussionVisible] = useState(false);
   const setNotifications = useNotificationStore((s) => s.setNotifications);
   const uid = useAuthStore((s) => s.profile?.uid);
 
@@ -109,7 +124,12 @@ export default function TabNavigator() {
         tabBarPosition="bottom"
         screenOptions={{ swipeEnabled: true }}
         tabBar={(props) => (
-          <TabBar {...props} onNewPost={() => setNewPostVisible(true)} />
+          <TabBar
+            {...props}
+            onCreate={(route) =>
+              route === 'Forum' ? setNewDiscussionVisible(true) : setNewPostVisible(true)
+            }
+          />
         )}
       >
         <Tab.Screen name="Forum" component={ForumStack} />
@@ -118,6 +138,10 @@ export default function TabNavigator() {
         <Tab.Screen name="Profile" component={ProfileStack} />
       </Tab.Navigator>
       <NewPostModal visible={newPostVisible} onClose={() => setNewPostVisible(false)} />
+      <NewDiscussionModal
+        visible={newDiscussionVisible}
+        onClose={() => setNewDiscussionVisible(false)}
+      />
     </>
   );
 }
@@ -160,6 +184,11 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       shadowOpacity: 0.4,
       shadowRadius: 8,
       elevation: 8,
+    },
+    centerBtnDisabled: {
+      backgroundColor: c.border,
+      shadowOpacity: 0,
+      elevation: 0,
     },
     badge: {
       position: 'absolute',
