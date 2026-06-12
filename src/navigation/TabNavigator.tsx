@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  createMaterialTopTabNavigator,
+  MaterialTopTabBarProps,
+} from '@react-navigation/material-top-tabs';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
+import { ColorPalette } from '../theme/colors';
 import { useNotificationStore } from '../store/useNotificationStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { subscribeNotifications } from '../services/notificationService';
@@ -10,12 +15,83 @@ import FeedStack from './FeedStack';
 import ForumStack from './ForumStack';
 import NotificationsStack from './NotificationsStack';
 import ProfileStack from './ProfileStack';
+import NewPostModal from '../screens/NewPostModal';
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
+
+type IconPair = { active: keyof typeof Ionicons.glyphMap; inactive: keyof typeof Ionicons.glyphMap };
+
+const ICONS: Record<string, IconPair> = {
+  Forum: { active: 'chatbubbles', inactive: 'chatbubbles-outline' },
+  Feed: { active: 'earth', inactive: 'earth-outline' },
+  Notifications: { active: 'notifications', inactive: 'notifications-outline' },
+  Profile: { active: 'person', inactive: 'person-outline' },
+};
+
+function TabBar({
+  state,
+  navigation,
+  onNewPost,
+}: MaterialTopTabBarProps & { onNewPost: () => void }) {
+  const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
+  const styles = makeStyles(colors, insets.bottom);
+  const unreadCount = useNotificationStore((s) => s.unreadCount);
+
+  const renderTab = (route: (typeof state.routes)[number], index: number) => {
+    const focused = state.index === index;
+    const icon = ICONS[route.name];
+    const onPress = () => {
+      const event = navigation.emit({
+        type: 'tabPress',
+        target: route.key,
+        canPreventDefault: true,
+      });
+      if (!focused && !event.defaultPrevented) {
+        navigation.navigate(route.name);
+      }
+    };
+    const showBadge = route.name === 'Notifications' && unreadCount > 0;
+    return (
+      <TouchableOpacity
+        key={route.key}
+        style={styles.tabItem}
+        onPress={onPress}
+        activeOpacity={0.7}
+      >
+        <View>
+          <Ionicons
+            name={focused ? icon.active : icon.inactive}
+            size={24}
+            color={focused ? colors.tabBarActive : colors.tabBarInactive}
+          />
+          {showBadge && (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{unreadCount > 99 ? '99+' : unreadCount}</Text>
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  // The new-post button sits dead-center, splitting the tabs into two halves.
+  const mid = Math.floor(state.routes.length / 2);
+  return (
+    <View style={styles.tabBar}>
+      {state.routes.slice(0, mid).map((route, i) => renderTab(route, i))}
+      <View style={styles.centerWrap}>
+        <TouchableOpacity style={styles.centerBtn} onPress={onNewPost} activeOpacity={0.85}>
+          <Ionicons name="add" size={30} color="#fff" />
+        </TouchableOpacity>
+      </View>
+      {state.routes.slice(mid).map((route, i) => renderTab(route, mid + i))}
+    </View>
+  );
+}
 
 export default function TabNavigator() {
-  const { colors } = useTheme();
-  const unreadCount = useNotificationStore((s) => s.unreadCount);
+  const [newPostVisible, setNewPostVisible] = useState(false);
   const setNotifications = useNotificationStore((s) => s.setNotifications);
   const uid = useAuthStore((s) => s.profile?.uid);
 
@@ -28,80 +104,79 @@ export default function TabNavigator() {
   }, [uid, setNotifications]);
 
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: [styles.tabBar, { backgroundColor: colors.tabBar }],
-        tabBarShowLabel: false,
-      }}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={FeedStack}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? 'earth' : 'earth-outline'}
-              size={24}
-              color={focused ? colors.tabBarActive : colors.tabBarInactive}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Forum"
-        component={ForumStack}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? 'chatbubbles' : 'chatbubbles-outline'}
-              size={24}
-              color={focused ? colors.tabBarActive : colors.tabBarInactive}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Notifications"
-        component={NotificationsStack}
-        options={{
-          tabBarBadge: unreadCount > 0 ? (unreadCount > 99 ? '99+' : unreadCount) : undefined,
-          tabBarBadgeStyle: { backgroundColor: colors.notification },
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? 'notifications' : 'notifications-outline'}
-              size={24}
-              color={focused ? colors.tabBarActive : colors.tabBarInactive}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileStack}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <Ionicons
-              name={focused ? 'person' : 'person-outline'}
-              size={24}
-              color={focused ? colors.tabBarActive : colors.tabBarInactive}
-            />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+    <>
+      <Tab.Navigator
+        tabBarPosition="bottom"
+        screenOptions={{ swipeEnabled: true }}
+        tabBar={(props) => (
+          <TabBar {...props} onNewPost={() => setNewPostVisible(true)} />
+        )}
+      >
+        <Tab.Screen name="Forum" component={ForumStack} />
+        <Tab.Screen name="Feed" component={FeedStack} />
+        <Tab.Screen name="Notifications" component={NotificationsStack} />
+        <Tab.Screen name="Profile" component={ProfileStack} />
+      </Tab.Navigator>
+      <NewPostModal visible={newPostVisible} onClose={() => setNewPostVisible(false)} />
+    </>
   );
 }
 
-const styles = StyleSheet.create({
-  tabBar: {
-    borderTopWidth: 0,
-    height: 72,
-    paddingBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.08,
-    shadowRadius: 16,
-    elevation: 16,
-  },
-});
+function makeStyles(c: ColorPalette, bottomInset: number) {
+  return StyleSheet.create({
+    tabBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: c.tabBar,
+      height: 64 + bottomInset,
+      paddingBottom: bottomInset,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: -3 },
+      shadowOpacity: 0.08,
+      shadowRadius: 16,
+      elevation: 16,
+    },
+    tabItem: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%',
+    },
+    centerWrap: {
+      width: 72,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    centerBtn: {
+      width: 56,
+      height: 56,
+      borderRadius: 28,
+      backgroundColor: c.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: -24,
+      shadowColor: c.primary,
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.4,
+      shadowRadius: 8,
+      elevation: 8,
+    },
+    badge: {
+      position: 'absolute',
+      top: -5,
+      right: -9,
+      minWidth: 16,
+      height: 16,
+      borderRadius: 8,
+      backgroundColor: c.notification,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 3,
+    },
+    badgeText: {
+      color: '#fff',
+      fontSize: 10,
+      fontWeight: '700',
+    },
+  });
+}

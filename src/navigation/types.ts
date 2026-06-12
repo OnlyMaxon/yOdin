@@ -24,8 +24,8 @@ export type NotificationsStackParamList = {
 };
 
 export type TabParamList = {
-  Feed: undefined;
   Forum: undefined;
+  Feed: undefined;
   Notifications: undefined;
   Profile: undefined;
 };
