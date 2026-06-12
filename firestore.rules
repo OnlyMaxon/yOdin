@@ -52,12 +52,12 @@ service cloud.firestore {
       }
     }
 
-    // Discussions — per-nationality Q&A forum.
+    // Discussions — per-region Q&A forum.
     match /discussions/{discussionId} {
       allow read: if canAccessDiscussion(resource.data);
       allow create: if request.auth != null
         && request.resource.data.authorId == request.auth.uid
-        && request.resource.data.authorCountryCode == myNationality()
+        && request.resource.data.location == myLocation()
         && request.resource.data.question is string
         && request.resource.data.question.size() > 0
         && request.resource.data.question.size() <= 500;
@@ -71,12 +71,12 @@ service cloud.firestore {
       allow delete: if request.auth != null
         && resource.data.authorId == request.auth.uid;
 
-      // Replies — same-nationality users may read and post.
+      // Replies — same-region users may read and post.
       match /replies/{replyId} {
         allow read: if canAccessDiscussion(discussionData(discussionId));
         allow create: if request.auth != null
           && request.resource.data.authorId == request.auth.uid
-          && sameNationality(discussionData(discussionId).authorCountryCode)
+          && sameLocation(discussionData(discussionId).get('location', ''))
           && request.resource.data.text is string
           && request.resource.data.text.size() > 0
           && request.resource.data.text.size() <= 1000;
@@ -112,14 +112,14 @@ service cloud.firestore {
     }
 
     // savedBy update: user can only add or remove their own UID.
-    // Adding is restricted to same-nationality so saving can't grant cross-forum read access.
+    // Adding is restricted to same-region so saving can't grant cross-forum read access.
     function savedByUpdate() {
       let before = resource.data.get('savedBy', []);
       let after = request.resource.data.get('savedBy', []);
       let uid = request.auth.uid;
       let diff = onlyUpdatingField(request, 'savedBy');
       let adding = after.hasAll(before) && after.removeAll(before) == [uid]
-        && sameNationality(resource.data.authorCountryCode);
+        && sameLocation(resource.data.get('location', ''));
       let removing = before.hasAll(after) && before.removeAll(after) == [uid];
       return diff && (adding || removing);
     }
@@ -147,21 +147,21 @@ service cloud.firestore {
       return req.resource.data.diff(resource.data).affectedKeys().hasOnly([field]);
     }
 
-    function myNationality() {
-      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.countryCode;
+    function myLocation() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.location;
     }
 
     function discussionData(discussionId) {
       return get(/databases/$(database)/documents/discussions/$(discussionId)).data;
     }
 
-    function sameNationality(code) {
-      return request.auth != null && myNationality() == code;
+    function sameLocation(loc) {
+      return request.auth != null && myLocation() == loc;
     }
 
     function canAccessDiscussion(d) {
       return request.auth != null && (
-        myNationality() == d.authorCountryCode
+        myLocation() == d.get('location', '')
         || d.authorId == request.auth.uid
         || request.auth.uid in d.get('savedBy', [])
       );

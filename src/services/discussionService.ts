@@ -25,7 +25,7 @@ import { Discussion, Reply } from '../types';
 const PAGE_SIZE = 15;
 
 export async function createDiscussion(
-  data: Omit<Discussion, 'id' | 'createdAt' | 'replyCount' | 'location'>,
+  data: Omit<Discussion, 'id' | 'createdAt' | 'replyCount'>,
 ): Promise<string> {
   const ref = await addDoc(collection(db, 'discussions'), {
     ...data,
@@ -35,15 +35,15 @@ export async function createDiscussion(
   return ref.id;
 }
 
-// The forum is scoped by nationality: a discussion belongs to its author's
-// nationality forum (authorCountryCode), so people of the same nationality see
-// and answer each other regardless of where they live.
+// The forum is scoped by region (location): a discussion belongs to its
+// author's region of residence, so everyone living in the same region sees and
+// answers each other regardless of nationality.
 export async function fetchDiscussions(
-  nationalityCode: string,
+  location: string,
   cursor?: DocumentSnapshot,
 ): Promise<{ discussions: Discussion[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [
-    where('authorCountryCode', '==', nationalityCode),
+    where('location', '==', location),
     orderBy('createdAt', 'desc'),
     limit(PAGE_SIZE),
   ];
@@ -55,18 +55,18 @@ export async function fetchDiscussions(
   return { discussions, lastDoc };
 }
 
-// Loads the whole nationality forum (capped) so search can run client-side over
-// the full base. Reuses the authorCountryCode+createdAt index.
+// Loads the whole region forum (capped) so search can run client-side over the
+// full base. Reuses the location+createdAt index.
 const SEARCH_FETCH_CAP = 500;
 
 export async function fetchAllDiscussions(
-  nationalityCode: string,
+  location: string,
   max: number = SEARCH_FETCH_CAP,
 ): Promise<Discussion[]> {
   const snap = await getDocs(
     query(
       collection(db, 'discussions'),
-      where('authorCountryCode', '==', nationalityCode),
+      where('location', '==', location),
       orderBy('createdAt', 'desc'),
       limit(max),
     ),

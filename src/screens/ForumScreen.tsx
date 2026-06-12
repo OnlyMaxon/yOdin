@@ -44,15 +44,15 @@ export default function ForumScreen({ navigation }: any) {
 
   const isSearching = search.trim().length > 0;
 
-  // Lazily pull the whole nationality forum once a search begins.
+  // Lazily pull the whole region forum once a search begins.
   useEffect(() => {
-    if (!isSearching || allQuestions !== null || loadingAll || !profile?.countryCode) return;
+    if (!isSearching || allQuestions !== null || loadingAll || !profile?.location) return;
     setLoadingAll(true);
-    fetchAllDiscussions(profile.countryCode)
+    fetchAllDiscussions(profile.location)
       .then(setAllQuestions)
       .catch(() => setAllQuestions([]))
       .finally(() => setLoadingAll(false));
-  }, [isSearching, allQuestions, loadingAll, profile?.countryCode]);
+  }, [isSearching, allQuestions, loadingAll, profile?.location]);
 
   // Search pool: the full base once loaded, plus any questions in the store that
   // aren't in it yet (e.g. one just asked via the tab "+"). Falls back to the
@@ -78,14 +78,14 @@ export default function ForumScreen({ navigation }: any) {
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.countryCode]);
+  }, [profile?.location]);
 
   async function loadFeed() {
-    if (!profile?.countryCode) return;
+    if (!profile?.location) return;
     setError('');
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.countryCode);
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location);
       setDiscussions(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -97,10 +97,10 @@ export default function ForumScreen({ navigation }: any) {
   }
 
   async function loadMore() {
-    if (!hasMore || isLoading || !lastDoc || !profile?.countryCode) return;
+    if (!hasMore || isLoading || !lastDoc || !profile?.location) return;
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.countryCode, lastDoc);
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location, lastDoc);
       appendDiscussions(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -194,7 +194,7 @@ export default function ForumScreen({ navigation }: any) {
           <Text style={styles.headerTitle}>{t('forum.title')}</Text>
           {profile && (
             <Text style={styles.headerSub}>
-              {getFlagEmoji(profile.countryCode)}  {profile.nationality}
+              {getFlagEmoji(profile.countryCode)}  {profile.location}
             </Text>
           )}
         </View>

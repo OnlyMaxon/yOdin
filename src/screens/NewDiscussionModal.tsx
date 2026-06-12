@@ -73,6 +73,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
         authorPhoto: profile.photoURL ?? '',
         authorNationality: profile.nationality,
         authorCountryCode: profile.countryCode,
+        location: profile.location,
         question: question.trim(),
       });
       prependDiscussion({
@@ -82,6 +83,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
         authorPhoto: profile.photoURL ?? '',
         authorNationality: profile.nationality,
         authorCountryCode: profile.countryCode,
+        location: profile.location,
         question: question.trim(),
         createdAt: Date.now(),
         replyCount: 0,
