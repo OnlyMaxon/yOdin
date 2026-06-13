@@ -39,7 +39,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = makeStyles(colors, insets.top);
+  const styles = makeStyles(colors, insets.top, insets.bottom);
   const { profile } = useAuthStore();
   const { incrementReplyCount, toggleSaved, setAcceptedReply } = useFeedStore();
   const [discussion, setDiscussion] = useState<Discussion | null>(null);
@@ -520,7 +520,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   );
 }
 
-function makeStyles(c: ColorPalette, topInset: number) {
+function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background },
     header: {
@@ -747,7 +747,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       alignItems: 'flex-end',
       paddingHorizontal: 16,
       paddingVertical: 12,
-      paddingBottom: Platform.OS === 'ios' ? 28 : 12,
+      paddingBottom: Math.max(bottomInset, 12),
       backgroundColor: c.surface,
       borderTopWidth: 1,
       borderTopColor: c.border,
