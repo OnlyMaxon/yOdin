@@ -36,7 +36,11 @@
     "acceptedAnswer": "Geaccepteerd antwoord",
     "markHelped": "Dit hielp",
     "reply": "Beantwoorden",
-    "replyingTo": "Antwoord aan {{name}}"
+    "replyingTo": "Antwoord aan {{name}}",
+    "confirmAcceptTitle": "Discussie beëindigen?",
+    "confirmAccept": "Weet je zeker dat je de discussie wilt beëindigen door dit antwoord te accepteren?",
+    "yes": "Ja",
+    "no": "Nee"
   },
   "newDiscussion": {
     "title": "Nieuwe Discussie",

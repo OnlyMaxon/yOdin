@@ -10,6 +10,7 @@ import {
   Platform,
   ActivityIndicator,
   Image,
+  Alert,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -33,10 +34,6 @@ import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import { TAB_BAR_HEIGHT } from '../constants/layout';
 
-const ROOT_KEY = '__root__';
-const INDENT_STEP = 16;
-const MAX_INDENT_DEPTH = 5;
-
 export default function DiscussionDetailScreen({ route, navigation }: any) {
   const { discussionId, question: questionParam } = route.params;
   const { t } = useTranslation();
@@ -55,6 +52,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   const [accepting, setAccepting] = useState(false);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [replyingTo, setReplyingTo] = useState<Reply | null>(null);
+  const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const listRef = useRef<FlatList>(null);
   const inputRef = useRef<TextInput>(null);
 
@@ -96,32 +94,14 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     }
   }
 
-  // Flatten the reply tree (Reddit-style threading) into an ordered list with a
-  // depth per node. `replies` already arrives in chronological order, so we keep
-  // insertion order within each parent bucket. The accepted answer is pinned to
-  // the top among the top-level replies.
-  const threadedReplies = useMemo(() => {
-    const ids = new Set(replies.map((r) => r.id));
-    const byParent = new Map<string, Reply[]>();
-    for (const r of replies) {
-      const key = r.parentReplyId && ids.has(r.parentReplyId) ? r.parentReplyId : ROOT_KEY;
-      const bucket = byParent.get(key);
-      if (bucket) bucket.push(r);
-      else byParent.set(key, [r]);
-    }
-    const acceptedId = discussion?.acceptedReplyId;
-    const roots = byParent.get(ROOT_KEY) ?? [];
-    const orderedRoots = acceptedId
-      ? [...roots.filter((r) => r.id === acceptedId), ...roots.filter((r) => r.id !== acceptedId)]
-      : roots;
-    const out: { reply: Reply; depth: number }[] = [];
-    const walk = (node: Reply, depth: number) => {
-      out.push({ reply: node, depth });
-      for (const child of byParent.get(node.id) ?? []) walk(child, depth + 1);
-    };
-    for (const r of orderedRoots) walk(r, 0);
-    return out;
-  }, [replies, discussion?.acceptedReplyId]);
+  // Telegram-style chat: messages stay in a flat chronological stream. A reply
+  // to a specific message just references it (parentReplyId) and shows a quote;
+  // this map lets a bubble render the quoted message and jump to it.
+  const replyById = useMemo(() => {
+    const m = new Map<string, Reply>();
+    for (const r of replies) m.set(r.id, r);
+    return m;
+  }, [replies]);
 
   const isAnswered = !!discussion?.acceptedReplyId;
   const isQuestionAuthor = discussion?.authorId === profile?.uid;
@@ -198,6 +178,17 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     }
   }
 
+  function confirmAccept(reply: Reply) {
+    Alert.alert(
+      t('discussion.confirmAcceptTitle'),
+      t('discussion.confirmAccept'),
+      [
+        { text: t('discussion.no'), style: 'cancel' },
+        { text: t('discussion.yes'), onPress: () => handleAccept(reply) },
+      ],
+    );
+  }
+
   async function handleAccept(reply: Reply) {
     if (!profile || !discussion || accepting || discussion.acceptedReplyId) return;
     setAccepting(true);
@@ -224,9 +215,9 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           'accepted',
         );
       }
-      setTimeout(() => listRef.current?.scrollToOffset({ offset: 0, animated: true }), 100);
-    } catch {
+    } catch (e: any) {
       setDiscussion(prevDiscussion);
+      Alert.alert(t('errors.generic'), e?.message ?? '');
     } finally {
       setAccepting(false);
     }
@@ -269,58 +260,85 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     setTimeout(() => inputRef.current?.focus(), 50);
   }
 
-  function renderReply({ item }: { item: { reply: Reply; depth: number } }) {
-    const { reply, depth } = item;
-    const isMe = reply.authorId === profile?.uid;
-    const isAccepted = reply.id === discussion?.acceptedReplyId;
-    const initials = reply.authorName?.split(' ').map((w) => w[0]).join('').toUpperCase() ?? '?';
-    const liked = reply.likes?.includes(profile?.uid ?? '') ?? false;
-    const disliked = reply.dislikes?.includes(profile?.uid ?? '') ?? false;
-    const likeCount = reply.likes?.length ?? 0;
-    const dislikeCount = reply.dislikes?.length ?? 0;
-    const canAccept = isQuestionAuthor && !isAnswered && !isMe && depth === 0;
-    const indent = Math.min(depth, MAX_INDENT_DEPTH) * INDENT_STEP;
+  // Jump to a quoted message and briefly flash it (Telegram-style).
+  function scrollToMessage(id: string) {
+    const idx = replies.findIndex((r) => r.id === id);
+    if (idx < 0) return;
+    listRef.current?.scrollToIndex({ index: idx, viewPosition: 0.4, animated: true });
+    setHighlightedId(id);
+    setTimeout(() => setHighlightedId((cur) => (cur === id ? null : cur)), 1500);
+  }
+
+  function renderReply({ item }: { item: Reply }) {
+    const isMe = item.authorId === profile?.uid;
+    const isAccepted = item.id === discussion?.acceptedReplyId;
+    const isHighlighted = item.id === highlightedId;
+    const initials = item.authorName?.split(' ').map((w) => w[0]).join('').toUpperCase() ?? '?';
+    const liked = item.likes?.includes(profile?.uid ?? '') ?? false;
+    const disliked = item.dislikes?.includes(profile?.uid ?? '') ?? false;
+    const likeCount = item.likes?.length ?? 0;
+    const dislikeCount = item.dislikes?.length ?? 0;
+    const canAccept = isQuestionAuthor && !isAnswered && !isMe;
+    const parent = item.parentReplyId ? replyById.get(item.parentReplyId) : undefined;
 
     return (
-      <View style={{ marginLeft: indent }}>
-        <View
-          style={[
-            styles.replyCard,
-            depth > 0 && styles.replyCardNested,
-            isAccepted && styles.replyCardAccepted,
-          ]}
-        >
-          {isAccepted && (
-            <View style={styles.acceptedHeader}>
-              <Ionicons name="checkmark-circle" size={16} color={colors.success} />
-              <Text style={styles.acceptedHeaderText}>{t('discussion.acceptedAnswer')}</Text>
-            </View>
-          )}
-          <View style={styles.replyHeader}>
-            <View style={styles.replyAvatar}>
-              {reply.authorPhoto ? (
-                <Image source={{ uri: reply.authorPhoto }} style={styles.replyAvatarImage} />
-              ) : (
-                <Text style={styles.replyAvatarText}>{initials}</Text>
-              )}
-            </View>
-            <Text style={styles.replyAuthor} numberOfLines={1}>
-              {reply.authorName}  {flag(reply.authorCountryCode)}
-            </Text>
+      <View style={[styles.msgRow, isMe ? styles.msgRowMe : styles.msgRowOther]}>
+        {!isMe && (
+          <View style={styles.msgAvatar}>
+            {item.authorPhoto ? (
+              <Image source={{ uri: item.authorPhoto }} style={styles.msgAvatarImage} />
+            ) : (
+              <Text style={styles.msgAvatarText}>{initials}</Text>
+            )}
+          </View>
+        )}
+        <View style={styles.msgContent}>
+          <View
+            style={[
+              styles.bubble,
+              isMe ? styles.bubbleMe : styles.bubbleOther,
+              isAccepted && styles.bubbleAccepted,
+              isHighlighted && styles.bubbleHighlight,
+            ]}
+          >
+            {isAccepted && (
+              <View style={styles.acceptedHeader}>
+                <Ionicons name="checkmark-circle" size={14} color={colors.success} />
+                <Text style={styles.acceptedHeaderText}>{t('discussion.acceptedAnswer')}</Text>
+              </View>
+            )}
+            {!isMe && (
+              <Text style={styles.bubbleAuthor} numberOfLines={1}>
+                {item.authorName}  {flag(item.authorCountryCode)}
+              </Text>
+            )}
+            {parent && (
+              <TouchableOpacity
+                style={[styles.quote, isMe && styles.quoteMe]}
+                onPress={() => scrollToMessage(parent.id)}
+                activeOpacity={0.7}
+              >
+                <Text style={[styles.quoteAuthor, isMe && styles.quoteTextMe]} numberOfLines={1}>
+                  {parent.authorName}
+                </Text>
+                <Text style={[styles.quoteText, isMe && styles.quoteTextMe]} numberOfLines={1}>
+                  {parent.text}
+                </Text>
+              </TouchableOpacity>
+            )}
+            <Text style={[styles.msgText, isMe && styles.msgTextMe]}>{item.text}</Text>
           </View>
 
-          <Text style={styles.replyText}>{reply.text}</Text>
-
-          <View style={styles.replyActions}>
+          <View style={[styles.msgActions, isMe ? styles.msgActionsMe : styles.msgActionsOther]}>
             <TouchableOpacity
               style={styles.voteBtn}
-              onPress={() => handleVote(reply, 'like')}
+              onPress={() => handleVote(item, 'like')}
               disabled={isMe}
               hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
             >
               <Ionicons
                 name={liked ? 'thumbs-up' : 'thumbs-up-outline'}
-                size={16}
+                size={15}
                 color={liked ? colors.primary : colors.textSecondary}
               />
               {likeCount > 0 && (
@@ -329,13 +347,13 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.voteBtn}
-              onPress={() => handleVote(reply, 'dislike')}
+              onPress={() => handleVote(item, 'dislike')}
               disabled={isMe}
               hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
             >
               <Ionicons
                 name={disliked ? 'thumbs-down' : 'thumbs-down-outline'}
-                size={16}
+                size={15}
                 color={disliked ? colors.notification : colors.textSecondary}
               />
               {dislikeCount > 0 && (
@@ -344,19 +362,19 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.voteBtn}
-              onPress={() => startReplyTo(reply)}
+              onPress={() => startReplyTo(item)}
               hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
             >
-              <Ionicons name="arrow-undo-outline" size={15} color={colors.textSecondary} />
+              <Ionicons name="arrow-undo-outline" size={14} color={colors.textSecondary} />
               <Text style={styles.voteCount}>{t('discussion.reply')}</Text>
             </TouchableOpacity>
             {canAccept && (
               <TouchableOpacity
                 style={styles.acceptBtn}
-                onPress={() => handleAccept(reply)}
+                onPress={() => confirmAccept(item)}
                 disabled={accepting}
               >
-                <Ionicons name="checkmark-circle-outline" size={15} color={colors.success} />
+                <Ionicons name="checkmark-circle-outline" size={14} color={colors.success} />
                 <Text style={styles.acceptBtnText}>{t('discussion.markHelped')}</Text>
               </TouchableOpacity>
             )}
@@ -428,10 +446,20 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
 
           <FlatList
             ref={listRef}
-            data={threadedReplies}
-            keyExtractor={(item) => item.reply.id}
+            data={replies}
+            keyExtractor={(item) => item.id}
             renderItem={renderReply}
             contentContainerStyle={styles.repliesList}
+            onScrollToIndexFailed={(info) => {
+              listRef.current?.scrollToOffset({
+                offset: Math.max(0, info.averageItemLength * info.index),
+                animated: true,
+              });
+              setTimeout(
+                () => listRef.current?.scrollToIndex({ index: info.index, viewPosition: 0.4 }),
+                300,
+              );
+            }}
             ListEmptyComponent={
               <View style={styles.emptyReplies}>
                 <Text style={styles.emptyText}>{t('discussion.firstReply')}</Text>
@@ -542,7 +570,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       color: c.primary,
     },
     qAvatarImage: { width: 40, height: 40, borderRadius: 20 },
-    replyAvatarImage: { width: 28, height: 28, borderRadius: 14 },
+    msgAvatarImage: { width: 30, height: 30, borderRadius: 15 },
     qAuthorName: {
       fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightSemiBold,
@@ -572,62 +600,100 @@ function makeStyles(c: ColorPalette, topInset: number) {
     repliesList: { padding: 16, gap: 10, flexGrow: 1 },
     emptyReplies: { alignItems: 'center', paddingTop: 40 },
     emptyText: { fontSize: Typography.fontSizeMD, color: c.textSecondary },
-    replyCard: {
-      backgroundColor: c.surface,
-      borderRadius: 14,
-      borderWidth: 1,
-      borderColor: c.border,
-      padding: 12,
-    },
-    replyCardNested: {
-      borderLeftWidth: 3,
-      borderLeftColor: c.primary,
-      borderTopLeftRadius: 4,
-      borderBottomLeftRadius: 4,
-    },
-    replyCardAccepted: {
-      borderColor: c.success,
-      borderWidth: 1.5,
-      backgroundColor: c.success + '0F',
-    },
-    acceptedHeader: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 6,
-      marginBottom: 8,
-    },
-    acceptedHeaderText: {
-      fontSize: Typography.fontSizeSM,
-      fontWeight: Typography.fontWeightSemiBold,
-      color: c.success,
-    },
-    replyHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
-    replyAvatar: {
-      width: 28,
-      height: 28,
-      borderRadius: 14,
+    msgRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 8 },
+    msgRowMe: { justifyContent: 'flex-end' },
+    msgRowOther: { justifyContent: 'flex-start' },
+    msgAvatar: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
       backgroundColor: c.primaryLight,
       alignItems: 'center',
       justifyContent: 'center',
     },
-    replyAvatarText: {
+    msgAvatarText: {
       fontSize: Typography.fontSizeXS,
       fontWeight: Typography.fontWeightBold,
       color: c.primary,
     },
-    replyAuthor: {
-      flex: 1,
-      fontSize: Typography.fontSizeSM,
-      fontWeight: Typography.fontWeightSemiBold,
-      color: c.textPrimary,
+    msgContent: { maxWidth: '82%' },
+    bubble: {
+      borderRadius: 16,
+      paddingVertical: 8,
+      paddingHorizontal: 12,
     },
-    replyText: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 21 },
-    replyActions: {
+    bubbleOther: {
+      backgroundColor: c.surface,
+      borderBottomLeftRadius: 4,
+      borderWidth: 1,
+      borderColor: c.border,
+      alignSelf: 'flex-start',
+    },
+    bubbleMe: {
+      backgroundColor: c.primary,
+      borderBottomRightRadius: 4,
+      alignSelf: 'flex-end',
+    },
+    bubbleAccepted: {
+      borderColor: c.success,
+      borderWidth: 1.5,
+    },
+    bubbleHighlight: {
+      borderColor: c.accent,
+      borderWidth: 2,
+    },
+    acceptedHeader: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 18,
-      marginTop: 10,
+      gap: 5,
+      marginBottom: 6,
     },
+    acceptedHeaderText: {
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.success,
+    },
+    bubbleAuthor: {
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.primary,
+      marginBottom: 4,
+    },
+    quote: {
+      borderLeftWidth: 3,
+      borderLeftColor: c.primary,
+      backgroundColor: c.primaryLight,
+      borderRadius: 6,
+      paddingVertical: 5,
+      paddingHorizontal: 8,
+      marginBottom: 6,
+      gap: 2,
+    },
+    quoteMe: {
+      borderLeftColor: '#fff',
+      backgroundColor: 'rgba(255,255,255,0.18)',
+    },
+    quoteAuthor: {
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.primary,
+    },
+    quoteText: {
+      fontSize: Typography.fontSizeXS,
+      color: c.textSecondary,
+    },
+    quoteTextMe: { color: 'rgba(255,255,255,0.92)' },
+    msgText: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 21 },
+    msgTextMe: { color: '#fff' },
+    msgActions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 16,
+      marginTop: 5,
+      paddingHorizontal: 4,
+    },
+    msgActionsMe: { justifyContent: 'flex-end' },
+    msgActionsOther: { justifyContent: 'flex-start' },
     voteBtn: {
       flexDirection: 'row',
       alignItems: 'center',

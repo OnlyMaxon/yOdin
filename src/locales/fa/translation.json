@@ -36,7 +36,11 @@
     "acceptedAnswer": "پاسخ پذیرفته‌شده",
     "markHelped": "این کمک کرد",
     "reply": "پاسخ",
-    "replyingTo": "پاسخ به {{name}}"
+    "replyingTo": "پاسخ به {{name}}",
+    "confirmAcceptTitle": "گفتگو پایان یابد؟",
+    "confirmAccept": "آیا مطمئن هستید که می‌خواهید با پذیرش این پاسخ گفتگو را پایان دهید؟",
+    "yes": "بله",
+    "no": "خیر"
   },
   "newDiscussion": {
     "title": "بحث جدید",

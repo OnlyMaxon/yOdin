@@ -36,7 +36,11 @@
     "acceptedAnswer": "채택된 답변",
     "markHelped": "도움이 됐어요",
     "reply": "답글",
-    "replyingTo": "{{name}}에게 답글"
+    "replyingTo": "{{name}}에게 답글",
+    "confirmAcceptTitle": "토론을 종료할까요?",
+    "confirmAccept": "이 답변을 채택하여 토론을 종료하시겠습니까?",
+    "yes": "예",
+    "no": "아니오"
   },
   "newDiscussion": {
     "title": "새 토론",

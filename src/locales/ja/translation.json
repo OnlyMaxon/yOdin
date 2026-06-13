@@ -36,7 +36,11 @@
     "acceptedAnswer": "ベストアンサー",
     "markHelped": "役に立った",
     "reply": "返信",
-    "replyingTo": "{{name}} への返信"
+    "replyingTo": "{{name}} への返信",
+    "confirmAcceptTitle": "ディスカッションを終了しますか？",
+    "confirmAccept": "この回答を承認してディスカッションを終了してもよろしいですか？",
+    "yes": "はい",
+    "no": "いいえ"
   },
   "newDiscussion": {
     "title": "新しいディスカッション",

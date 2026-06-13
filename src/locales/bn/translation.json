@@ -36,7 +36,11 @@
     "acceptedAnswer": "গৃহীত উত্তর",
     "markHelped": "এটি সাহায্য করেছে",
     "reply": "উত্তর দিন",
-    "replyingTo": "{{name}} কে উত্তর"
+    "replyingTo": "{{name}} কে উত্তর",
+    "confirmAcceptTitle": "আলোচনা শেষ করবেন?",
+    "confirmAccept": "আপনি কি নিশ্চিত যে এই উত্তরটি গ্রহণ করে আলোচনা শেষ করতে চান?",
+    "yes": "হ্যাঁ",
+    "no": "না"
   },
   "newDiscussion": {
     "title": "নতুন আলোচনা",

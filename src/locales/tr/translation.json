@@ -36,7 +36,11 @@
     "acceptedAnswer": "Kabul edilen yanıt",
     "markHelped": "Bu yardımcı oldu",
     "reply": "Yanıtla",
-    "replyingTo": "{{name}}'e yanıt"
+    "replyingTo": "{{name}}'e yanıt",
+    "confirmAcceptTitle": "Tartışma sonlandırılsın mı?",
+    "confirmAccept": "Bu yanıtı kabul ederek tartışmayı sonlandırmak istediğinize emin misiniz?",
+    "yes": "Evet",
+    "no": "Hayır"
   },
   "newDiscussion": {
     "title": "Yeni Tartışma",

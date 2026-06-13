@@ -40,7 +40,11 @@
     "acceptedAnswer": "الإجابة المقبولة",
     "markHelped": "هذه الإجابة ساعدتني",
     "reply": "رد",
-    "replyingTo": "ردًّا على {{name}}"
+    "replyingTo": "ردًّا على {{name}}",
+    "confirmAcceptTitle": "إنهاء النقاش؟",
+    "confirmAccept": "هل أنت متأكد أنك تريد إنهاء النقاش بقبول هذه الإجابة؟",
+    "yes": "نعم",
+    "no": "لا"
   },
   "newDiscussion": {
     "title": "نقاش جديد",

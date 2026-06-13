@@ -36,7 +36,11 @@
     "acceptedAnswer": "Accepterat svar",
     "markHelped": "Det hjälpte",
     "reply": "Svara",
-    "replyingTo": "Svarar {{name}}"
+    "replyingTo": "Svarar {{name}}",
+    "confirmAcceptTitle": "Avsluta diskussionen?",
+    "confirmAccept": "Är du säker på att du vill avsluta diskussionen genom att acceptera detta svar?",
+    "yes": "Ja",
+    "no": "Nej"
   },
   "newDiscussion": {
     "title": "Ny diskussion",

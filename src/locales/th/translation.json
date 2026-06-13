@@ -36,7 +36,11 @@
     "acceptedAnswer": "คำตอบที่ได้รับการยอมรับ",
     "markHelped": "คำตอบนี้ช่วยได้",
     "reply": "ตอบ",
-    "replyingTo": "ตอบกลับ {{name}}"
+    "replyingTo": "ตอบกลับ {{name}}",
+    "confirmAcceptTitle": "จบการสนทนาหรือไม่?",
+    "confirmAccept": "คุณแน่ใจหรือไม่ว่าต้องการจบการสนทนาโดยยอมรับคำตอบนี้?",
+    "yes": "ใช่",
+    "no": "ไม่"
   },
   "newDiscussion": {
     "title": "การสนทนาใหม่",

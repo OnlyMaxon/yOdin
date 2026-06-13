@@ -37,7 +37,11 @@
     "acceptedAnswer": "Răspuns acceptat",
     "markHelped": "M-a ajutat",
     "reply": "Răspunde",
-    "replyingTo": "Răspuns pentru {{name}}"
+    "replyingTo": "Răspuns pentru {{name}}",
+    "confirmAcceptTitle": "Închideți discuția?",
+    "confirmAccept": "Sigur doriți să închideți discuția acceptând acest răspuns?",
+    "yes": "Da",
+    "no": "Nu"
   },
   "newDiscussion": {
     "title": "Discuție Nouă",

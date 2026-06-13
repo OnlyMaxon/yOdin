@@ -36,7 +36,11 @@
     "acceptedAnswer": "Jawaban diterima",
     "markHelped": "Ini membantu",
     "reply": "Balas",
-    "replyingTo": "Membalas {{name}}"
+    "replyingTo": "Membalas {{name}}",
+    "confirmAcceptTitle": "Akhiri diskusi?",
+    "confirmAccept": "Apakah Anda yakin ingin mengakhiri diskusi dengan menerima jawaban ini?",
+    "yes": "Ya",
+    "no": "Tidak"
   },
   "newDiscussion": {
     "title": "Diskusi Baru",

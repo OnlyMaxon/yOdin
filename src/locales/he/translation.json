@@ -36,7 +36,11 @@
     "acceptedAnswer": "תשובה מאושרת",
     "markHelped": "זה עזר",
     "reply": "השב",
-    "replyingTo": "מגיב ל-{{name}}"
+    "replyingTo": "מגיב ל-{{name}}",
+    "confirmAcceptTitle": "לסיים את הדיון?",
+    "confirmAccept": "האם אתה בטוח שברצונך לסיים את הדיון בקבלת תשובה זו?",
+    "yes": "כן",
+    "no": "לא"
   },
   "newDiscussion": {
     "title": "דיון חדש",

@@ -36,7 +36,11 @@
     "acceptedAnswer": "स्वीकृत उत्तर",
     "markHelped": "इससे मदद मिली",
     "reply": "जवाब दें",
-    "replyingTo": "{{name}} को जवाब दे रहे हैं"
+    "replyingTo": "{{name}} को जवाब दे रहे हैं",
+    "confirmAcceptTitle": "चर्चा समाप्त करें?",
+    "confirmAccept": "क्या आप वाकई इस उत्तर को स्वीकार करके चर्चा समाप्त करना चाहते हैं?",
+    "yes": "हाँ",
+    "no": "नहीं"
   },
   "newDiscussion": {
     "title": "नई चर्चा",

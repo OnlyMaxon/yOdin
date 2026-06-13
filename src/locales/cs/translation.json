@@ -37,7 +37,11 @@
     "acceptedAnswer": "Přijatá odpověď",
     "markHelped": "Pomohlo mi to",
     "reply": "Odpovědět",
-    "replyingTo": "Odpovídáte {{name}}"
+    "replyingTo": "Odpovídáte {{name}}",
+    "confirmAcceptTitle": "Ukončit diskuzi?",
+    "confirmAccept": "Opravdu chcete ukončit diskuzi přijetím této odpovědi?",
+    "yes": "Ano",
+    "no": "Ne"
   },
   "newDiscussion": {
     "title": "Nová diskuse",

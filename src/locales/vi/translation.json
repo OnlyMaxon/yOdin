@@ -36,7 +36,11 @@
     "acceptedAnswer": "Câu trả lời được chấp nhận",
     "markHelped": "Hữu ích",
     "reply": "Trả lời",
-    "replyingTo": "Đang trả lời {{name}}"
+    "replyingTo": "Đang trả lời {{name}}",
+    "confirmAcceptTitle": "Kết thúc thảo luận?",
+    "confirmAccept": "Bạn có chắc muốn kết thúc thảo luận bằng cách chấp nhận câu trả lời này không?",
+    "yes": "Có",
+    "no": "Không"
   },
   "newDiscussion": {
     "title": "Thảo luận mới",

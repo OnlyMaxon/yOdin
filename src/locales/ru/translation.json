@@ -37,7 +37,11 @@
     "acceptedAnswer": "Принятый ответ",
     "markHelped": "Ответ помог",
     "reply": "Ответить",
-    "replyingTo": "Ответ для {{name}}"
+    "replyingTo": "Ответ для {{name}}",
+    "confirmAcceptTitle": "Завершить дискуссию?",
+    "confirmAccept": "Вы действительно хотите завершить дискуссию приняв этот ответ?",
+    "yes": "Да",
+    "no": "Нет"
   },
   "newDiscussion": {
     "title": "Новая дискуссия",

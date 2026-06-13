@@ -36,7 +36,11 @@
     "acceptedAnswer": "Qəbul edilmiş cavab",
     "markHelped": "Cavab kömək etdi",
     "reply": "Cavab ver",
-    "replyingTo": "{{name}} üçün cavab"
+    "replyingTo": "{{name}} üçün cavab",
+    "confirmAcceptTitle": "Müzakirəni bitirmək?",
+    "confirmAccept": "Bu cavabı qəbul edərək müzakirəni bitirmək istədiyinizə əminsiniz?",
+    "yes": "Bəli",
+    "no": "Xeyr"
   },
   "newDiscussion": {
     "title": "Yeni müzakirə",

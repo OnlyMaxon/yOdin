@@ -36,7 +36,11 @@
     "acceptedAnswer": "Jawapan diterima",
     "markHelped": "Ini membantu",
     "reply": "Balas",
-    "replyingTo": "Membalas {{name}}"
+    "replyingTo": "Membalas {{name}}",
+    "confirmAcceptTitle": "Tamatkan perbincangan?",
+    "confirmAccept": "Adakah anda pasti mahu menamatkan perbincangan dengan menerima jawapan ini?",
+    "yes": "Ya",
+    "no": "Tidak"
   },
   "newDiscussion": {
     "title": "Perbincangan Baru",

@@ -36,7 +36,11 @@
     "acceptedAnswer": "Réponse acceptée",
     "markHelped": "Cela m'a aidé",
     "reply": "Répondre",
-    "replyingTo": "Répondre à {{name}}"
+    "replyingTo": "Répondre à {{name}}",
+    "confirmAcceptTitle": "Terminer la discussion ?",
+    "confirmAccept": "Voulez-vous vraiment terminer la discussion en acceptant cette réponse ?",
+    "yes": "Oui",
+    "no": "Non"
   },
   "newDiscussion": {
     "title": "Nouvelle discussion",

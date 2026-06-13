@@ -36,7 +36,11 @@
     "acceptedAnswer": "已采纳的回答",
     "markHelped": "此回答有帮助",
     "reply": "回复",
-    "replyingTo": "回复 {{name}}"
+    "replyingTo": "回复 {{name}}",
+    "confirmAcceptTitle": "结束讨论？",
+    "confirmAccept": "确定要接受此回答并结束讨论吗？",
+    "yes": "是",
+    "no": "否"
   },
   "newDiscussion": {
     "title": "新讨论",
