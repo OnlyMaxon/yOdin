@@ -34,18 +34,13 @@ export async function createDiscussion(
   return ref.id;
 }
 
-// The forum is global by default: questions from every region and nationality
-// are shown, so anyone can see and answer anyone else. Pass `location` to
-// restrict to one country (future country filter).
 export async function fetchDiscussions(
-  location?: string,
+  nationality?: string,
   cursor?: DocumentSnapshot,
 ): Promise<{ discussions: Discussion[]; lastDoc: DocumentSnapshot | null }> {
-  const constraints: QueryConstraint[] = [
-    ...(location ? [where('location', '==', location)] : []),
-    orderBy('createdAt', 'desc'),
-    limit(PAGE_SIZE),
-  ];
+  const constraints: QueryConstraint[] = [];
+  if (nationality) constraints.push(where('authorNationality', '==', nationality));
+  constraints.push(orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 
   const snap = await getDocs(query(collection(db, 'discussions'), ...constraints));

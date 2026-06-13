@@ -24,6 +24,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+import { weightedSort } from '../utils/weightedSort';
 
 export default function ForumScreen({ navigation }: any) {
   const { t } = useTranslation();
@@ -41,21 +42,22 @@ export default function ForumScreen({ navigation }: any) {
   // Tracks saved state for Algolia results not yet loaded into the store.
   // Key = discussionId, value = whether the current user has saved it.
   const [savedOverrides, setSavedOverrides] = useState<Record<string, boolean>>({});
+  const [natFilter, setNatFilter] = useState<'all' | 'mine'>('all');
 
   const isSearching = search.trim().length > 0;
 
   const runSearch = useCallback(async (q: string) => {
-    if (!profile?.location) { setSearching(false); return; }
     setSearching(true);
     try {
-      const hits = await searchDiscussions(q, profile.location);
+      const nationality = natFilter === 'mine' ? profile?.nationality : undefined;
+      const hits = await searchDiscussions(q, nationality);
       setAlgoliaHits(hits);
     } catch {
       setAlgoliaHits([]);
     } finally {
       setSearching(false);
     }
-  }, [profile?.location]);
+  }, [natFilter, profile?.nationality]);
 
   // Debounced Algolia search — fires 300ms after the user stops typing
   useEffect(() => {
@@ -100,15 +102,17 @@ export default function ForumScreen({ navigation }: any) {
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.uid]);
+  }, [profile?.uid, natFilter]);
 
   async function loadFeed() {
     if (!profile?.uid) return;
     setError('');
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions();
-      setDiscussions(data);
+      const nationality = natFilter === 'mine' ? profile.nationality : undefined;
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(nationality);
+      const sorted = natFilter === 'all' ? weightedSort(data, profile.nationality) : data;
+      setDiscussions(sorted);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
     } catch (e: any) {
@@ -119,11 +123,15 @@ export default function ForumScreen({ navigation }: any) {
   }
 
   async function loadMore() {
-    if (!hasMore || isLoading || !lastDoc || !profile?.uid) return;
+    if (!hasMore || isLoading || !lastDoc) return;
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(undefined, lastDoc);
-      appendDiscussions(data);
+      const nationality = natFilter === 'mine' ? profile?.nationality : undefined;
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(nationality, lastDoc);
+      const sorted = natFilter === 'all' && profile?.nationality
+        ? weightedSort(data, profile.nationality)
+        : data;
+      appendDiscussions(sorted);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
     } catch {
@@ -272,6 +280,24 @@ export default function ForumScreen({ navigation }: any) {
         )}
       </View>
 
+      <View style={styles.natBar}>
+        {(['all', 'mine'] as const).map((f) => {
+          const active = natFilter === f;
+          const label = f === 'all'
+            ? t('categories.all')
+            : `${getFlagEmoji(profile?.countryCode ?? '')} ${profile?.nationality ?? ''}`;
+          return (
+            <TouchableOpacity
+              key={f}
+              style={[styles.natChip, active && styles.natChipActive]}
+              onPress={() => setNatFilter(f)}
+            >
+              <Text style={[styles.natChipText, active && styles.natChipTextActive]}>{label}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
       {error ? (
         <View style={styles.center}>
           <Text style={{ color: colors.notification, textAlign: 'center', padding: 24 }}>{error}</Text>
@@ -353,6 +379,33 @@ function makeStyles(c: ColorPalette, topInset: number) {
       color: c.textSecondary,
       marginTop: 2,
     },
+    natBar: {
+      flexDirection: 'row',
+      paddingHorizontal: 16,
+      paddingVertical: 10,
+      gap: 8,
+      borderBottomWidth: 1,
+      borderBottomColor: c.border,
+      backgroundColor: c.surface,
+    },
+    natChip: {
+      paddingHorizontal: 14,
+      paddingVertical: 7,
+      borderRadius: 18,
+      backgroundColor: c.background,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    natChipActive: {
+      backgroundColor: c.primary,
+      borderColor: c.primary,
+    },
+    natChipText: {
+      fontSize: Typography.fontSizeSM,
+      color: c.textSecondary,
+      fontWeight: Typography.fontWeightMedium,
+    },
+    natChipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
     list: { padding: 16, gap: 12, paddingBottom: 96 },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     empty: { alignItems: 'center', paddingTop: 80 },

@@ -26,6 +26,7 @@ import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import PostDetailModal from './PostDetailModal';
 import FollowButton from '../components/FollowButton';
+import { weightedSort } from '../utils/weightedSort';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
@@ -42,6 +43,7 @@ export default function FeedScreen({ navigation }: any) {
   const [detailPostId, setDetailPostId] = useState<string | null>(null);
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailWithComments, setDetailWithComments] = useState(false);
+  const [natFilter, setNatFilter] = useState<'all' | 'mine'>('all');
 
   function openDetail(postId: string, withComments: boolean) {
     setDetailPostId(postId);
@@ -84,7 +86,7 @@ export default function FeedScreen({ navigation }: any) {
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.uid, filter]);
+  }, [profile?.uid, filter, natFilter]);
 
   async function loadFeed() {
     if (!profile?.uid) return;
@@ -92,8 +94,10 @@ export default function FeedScreen({ navigation }: any) {
     setLoading(true);
     try {
       const category = filter === 'all' ? undefined : filter;
-      const { posts: data, lastDoc: last } = await fetchPosts(undefined, category);
-      setPosts(data);
+      const nationality = natFilter === 'mine' ? profile.nationality : undefined;
+      const { posts: data, lastDoc: last } = await fetchPosts(category, nationality);
+      const sorted = natFilter === 'all' ? weightedSort(data, profile.nationality) : data;
+      setPosts(sorted);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
     } catch (e: any) {
@@ -104,12 +108,16 @@ export default function FeedScreen({ navigation }: any) {
   }
 
   async function loadMore() {
-    if (!hasMore || isLoading || !lastDoc || !profile?.uid) return;
+    if (!hasMore || isLoading || !lastDoc) return;
     setLoading(true);
     try {
       const category = filter === 'all' ? undefined : filter;
-      const { posts: data, lastDoc: last } = await fetchPosts(undefined, category, lastDoc);
-      appendPosts(data);
+      const nationality = natFilter === 'mine' ? profile?.nationality : undefined;
+      const { posts: data, lastDoc: last } = await fetchPosts(category, nationality, lastDoc);
+      const sorted = natFilter === 'all' && profile?.nationality
+        ? weightedSort(data, profile.nationality)
+        : data;
+      appendPosts(sorted);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
     } catch {
@@ -275,6 +283,23 @@ export default function FeedScreen({ navigation }: any) {
             );
           })}
         </ScrollView>
+        <View style={styles.natRow}>
+          {(['all', 'mine'] as const).map((f) => {
+            const active = natFilter === f;
+            const label = f === 'all'
+              ? t('categories.all')
+              : `${getFlagEmoji(profile?.countryCode ?? '')} ${profile?.nationality ?? ''}`;
+            return (
+              <TouchableOpacity
+                key={f}
+                style={[styles.chip, active && styles.chipActive]}
+                onPress={() => setNatFilter(f)}
+              >
+                <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
 
       {error ? (
@@ -348,11 +373,18 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     filterRow: {
       paddingHorizontal: 16,
-      paddingBottom: 12,
+      paddingBottom: 8,
       paddingTop: 4,
       gap: 8,
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    natRow: {
+      flexDirection: 'row',
+      paddingHorizontal: 16,
+      paddingBottom: 12,
+      paddingTop: 4,
+      gap: 8,
     },
     chip: {
       paddingHorizontal: 14,

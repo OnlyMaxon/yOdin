@@ -76,13 +76,13 @@ export async function fetchComments(postId: string): Promise<PostComment[]> {
 // The feed is global by default: posts from every region and nationality are
 // shown. Pass `location` to restrict to one country (future country filter).
 export async function fetchPosts(
-  location?: string,
   category?: PostCategory,
+  nationality?: string,
   cursor?: DocumentSnapshot,
 ): Promise<{ posts: Post[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [];
-  if (location) constraints.push(where('location', '==', location));
   if (category) constraints.push(where('category', '==', category));
+  if (nationality) constraints.push(where('authorNationality', '==', nationality));
   constraints.push(orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 
