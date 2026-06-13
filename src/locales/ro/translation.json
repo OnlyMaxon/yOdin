@@ -35,7 +35,9 @@
     "firstReply": "Fii primul care răspunde 💬",
     "replyPlaceholder": "Scrie un răspuns...",
     "acceptedAnswer": "Răspuns acceptat",
-    "markHelped": "M-a ajutat"
+    "markHelped": "M-a ajutat",
+    "reply": "Răspunde",
+    "replyingTo": "Răspuns pentru {{name}}"
   },
   "newDiscussion": {
     "title": "Discuție Nouă",

@@ -34,7 +34,9 @@
     "firstReply": "Var den första att svara 💬",
     "replyPlaceholder": "Skriv ett svar...",
     "acceptedAnswer": "Accepterat svar",
-    "markHelped": "Det hjälpte"
+    "markHelped": "Det hjälpte",
+    "reply": "Svara",
+    "replyingTo": "Svarar {{name}}"
   },
   "newDiscussion": {
     "title": "Ny diskussion",

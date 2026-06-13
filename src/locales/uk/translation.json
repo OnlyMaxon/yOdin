@@ -35,7 +35,9 @@
     "firstReply": "Будьте першим, хто відповість 💬",
     "replyPlaceholder": "Напишіть відповідь...",
     "acceptedAnswer": "Прийнята відповідь",
-    "markHelped": "Відповідь допомогла"
+    "markHelped": "Відповідь допомогла",
+    "reply": "Відповісти",
+    "replyingTo": "Відповідь {{name}}"
   },
   "newDiscussion": {
     "title": "Нове обговорення",

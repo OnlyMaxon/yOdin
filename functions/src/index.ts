@@ -62,6 +62,8 @@ export const onDiscussionUpdated = onDocumentUpdated(
     }
     if (after.acceptedReplyId && before.acceptedReplyId !== after.acceptedReplyId) {
       updates.acceptedReplyId = after.acceptedReplyId;
+      if (after.acceptedReplyText) updates.acceptedReplyText = after.acceptedReplyText;
+      if (after.acceptedReplyAuthorName) updates.acceptedReplyAuthorName = after.acceptedReplyAuthorName;
     }
 
     if (Object.keys(updates).length === 0) return;

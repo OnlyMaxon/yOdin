@@ -34,7 +34,9 @@
     "firstReply": "İlk yanıtı siz verin 💬",
     "replyPlaceholder": "Yanıt yazın...",
     "acceptedAnswer": "Kabul edilen yanıt",
-    "markHelped": "Bu yardımcı oldu"
+    "markHelped": "Bu yardımcı oldu",
+    "reply": "Yanıtla",
+    "replyingTo": "{{name}}'e yanıt"
   },
   "newDiscussion": {
     "title": "Yeni Tartışma",

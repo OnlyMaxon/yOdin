@@ -34,7 +34,9 @@
     "firstReply": "เป็นคนแรกที่ตอบกลับ 💬",
     "replyPlaceholder": "เขียนการตอบกลับ...",
     "acceptedAnswer": "คำตอบที่ได้รับการยอมรับ",
-    "markHelped": "คำตอบนี้ช่วยได้"
+    "markHelped": "คำตอบนี้ช่วยได้",
+    "reply": "ตอบ",
+    "replyingTo": "ตอบกลับ {{name}}"
   },
   "newDiscussion": {
     "title": "การสนทนาใหม่",

@@ -35,7 +35,9 @@
     "firstReply": "Buďte první, kdo odpoví 💬",
     "replyPlaceholder": "Napište odpověď...",
     "acceptedAnswer": "Přijatá odpověď",
-    "markHelped": "Pomohlo mi to"
+    "markHelped": "Pomohlo mi to",
+    "reply": "Odpovědět",
+    "replyingTo": "Odpovídáte {{name}}"
   },
   "newDiscussion": {
     "title": "Nová diskuse",

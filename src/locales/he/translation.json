@@ -34,7 +34,9 @@
     "firstReply": "היה הראשון להגיב 💬",
     "replyPlaceholder": "כתוב תגובה...",
     "acceptedAnswer": "תשובה מאושרת",
-    "markHelped": "זה עזר"
+    "markHelped": "זה עזר",
+    "reply": "השב",
+    "replyingTo": "מגיב ל-{{name}}"
   },
   "newDiscussion": {
     "title": "דיון חדש",

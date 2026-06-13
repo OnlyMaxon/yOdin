@@ -34,7 +34,9 @@
     "firstReply": "اولین نفری باشید که پاسخ می‌دهد 💬",
     "replyPlaceholder": "پاسخ بنویسید...",
     "acceptedAnswer": "پاسخ پذیرفته‌شده",
-    "markHelped": "این کمک کرد"
+    "markHelped": "این کمک کرد",
+    "reply": "پاسخ",
+    "replyingTo": "پاسخ به {{name}}"
   },
   "newDiscussion": {
     "title": "بحث جدید",

@@ -34,7 +34,9 @@
     "firstReply": "成为第一个回复的人 💬",
     "replyPlaceholder": "写下您的回复...",
     "acceptedAnswer": "已采纳的回答",
-    "markHelped": "此回答有帮助"
+    "markHelped": "此回答有帮助",
+    "reply": "回复",
+    "replyingTo": "回复 {{name}}"
   },
   "newDiscussion": {
     "title": "新讨论",

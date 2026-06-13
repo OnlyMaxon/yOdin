@@ -83,6 +83,8 @@ export default function ForumScreen({ navigation }: any) {
             replyCount: hit.replyCount,
             createdAt: hit.createdAt,
             acceptedReplyId: hit.acceptedReplyId,
+            acceptedReplyText: hit.acceptedReplyText,
+            acceptedReplyAuthorName: hit.acceptedReplyAuthorName,
             savedBy: [],
           }
         );

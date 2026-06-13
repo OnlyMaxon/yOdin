@@ -34,7 +34,9 @@
     "firstReply": "첫 번째로 답글을 달아보세요 💬",
     "replyPlaceholder": "답글 작성...",
     "acceptedAnswer": "채택된 답변",
-    "markHelped": "도움이 됐어요"
+    "markHelped": "도움이 됐어요",
+    "reply": "답글",
+    "replyingTo": "{{name}}에게 답글"
   },
   "newDiscussion": {
     "title": "새 토론",

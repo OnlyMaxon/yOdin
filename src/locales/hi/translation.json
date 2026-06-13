@@ -34,7 +34,9 @@
     "firstReply": "पहले जवाब दें 💬",
     "replyPlaceholder": "जवाब लिखें...",
     "acceptedAnswer": "स्वीकृत उत्तर",
-    "markHelped": "इससे मदद मिली"
+    "markHelped": "इससे मदद मिली",
+    "reply": "जवाब दें",
+    "replyingTo": "{{name}} को जवाब दे रहे हैं"
   },
   "newDiscussion": {
     "title": "नई चर्चा",

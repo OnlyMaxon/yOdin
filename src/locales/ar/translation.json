@@ -38,7 +38,9 @@
     "firstReply": "كن أول من يرد 💬",
     "replyPlaceholder": "اكتب ردًا...",
     "acceptedAnswer": "الإجابة المقبولة",
-    "markHelped": "هذه الإجابة ساعدتني"
+    "markHelped": "هذه الإجابة ساعدتني",
+    "reply": "رد",
+    "replyingTo": "ردًّا على {{name}}"
   },
   "newDiscussion": {
     "title": "نقاش جديد",

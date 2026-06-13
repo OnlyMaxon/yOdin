@@ -34,7 +34,9 @@
     "firstReply": "最初に返信しよう 💬",
     "replyPlaceholder": "返信を書く...",
     "acceptedAnswer": "ベストアンサー",
-    "markHelped": "役に立った"
+    "markHelped": "役に立った",
+    "reply": "返信",
+    "replyingTo": "{{name}} への返信"
   },
   "newDiscussion": {
     "title": "新しいディスカッション",

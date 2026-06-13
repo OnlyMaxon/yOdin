@@ -34,7 +34,9 @@
     "firstReply": "Wees de eerste om te reageren 💬",
     "replyPlaceholder": "Schrijf een reactie...",
     "acceptedAnswer": "Geaccepteerd antwoord",
-    "markHelped": "Dit hielp"
+    "markHelped": "Dit hielp",
+    "reply": "Beantwoorden",
+    "replyingTo": "Antwoord aan {{name}}"
   },
   "newDiscussion": {
     "title": "Nieuwe Discussie",

@@ -34,7 +34,9 @@
     "firstReply": "প্রথম উত্তর দিন 💬",
     "replyPlaceholder": "উত্তর লিখুন...",
     "acceptedAnswer": "গৃহীত উত্তর",
-    "markHelped": "এটি সাহায্য করেছে"
+    "markHelped": "এটি সাহায্য করেছে",
+    "reply": "উত্তর দিন",
+    "replyingTo": "{{name}} কে উত্তর"
   },
   "newDiscussion": {
     "title": "নতুন আলোচনা",

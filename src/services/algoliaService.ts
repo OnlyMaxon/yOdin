@@ -26,6 +26,8 @@ export type AlgoliaHit = {
   replyCount: number;
   createdAt: number;
   acceptedReplyId?: string;
+  acceptedReplyText?: string;
+  acceptedReplyAuthorName?: string;
 };
 
 export async function searchDiscussions(query: string, location: string): Promise<AlgoliaHit[]> {
@@ -49,6 +51,8 @@ export async function searchDiscussions(query: string, location: string): Promis
         'replyCount',
         'createdAt',
         'acceptedReplyId',
+        'acceptedReplyText',
+        'acceptedReplyAuthorName',
       ],
     },
   });

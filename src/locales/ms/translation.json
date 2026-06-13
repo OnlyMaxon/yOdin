@@ -34,7 +34,9 @@
     "firstReply": "Jadilah yang pertama membalas 💬",
     "replyPlaceholder": "Tulis balasan...",
     "acceptedAnswer": "Jawapan diterima",
-    "markHelped": "Ini membantu"
+    "markHelped": "Ini membantu",
+    "reply": "Balas",
+    "replyingTo": "Membalas {{name}}"
   },
   "newDiscussion": {
     "title": "Perbincangan Baru",
