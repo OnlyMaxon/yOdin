@@ -40,6 +40,9 @@ firestore-debug.log
 # typescript
 *.tsbuildinfo
 
+# Cloud Functions compiled output
+functions/lib/
+
 # generated native folders
 /ios
 /android

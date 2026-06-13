@@ -17,7 +17,8 @@ import {
   increment,
   QueryConstraint,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { db, storage } from './firebase';
+import { ref, deleteObject as deleteStorageObject } from 'firebase/storage';
 import { Post, PostCategory, PostComment } from '../types';
 
 const PAGE_SIZE = 15;
@@ -94,6 +95,7 @@ export async function updatePostImage(postId: string, imageURL: string): Promise
 
 export async function deletePost(postId: string): Promise<void> {
   await deleteDoc(doc(db, 'posts', postId));
+  deleteStorageObject(ref(storage, `posts/${postId}/image.jpg`)).catch(() => {});
 }
 
 export { PAGE_SIZE };

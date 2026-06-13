@@ -9,6 +9,7 @@ import {
   doc,
   writeBatch,
   onSnapshot,
+  Timestamp,
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { AppNotification } from '../types';
@@ -82,19 +83,17 @@ export async function deleteReadNotifications(ids: string[]): Promise<void> {
 const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
 
 export async function cleanupOldNotifications(uid: string): Promise<void> {
-  const cutoff = Date.now() - SEVEN_DAYS_MS;
+  const cutoff = Timestamp.fromMillis(Date.now() - SEVEN_DAYS_MS);
   const snap = await getDocs(
-    query(collection(db, 'notifications'), where('toUserId', '==', uid)),
+    query(
+      collection(db, 'notifications'),
+      where('toUserId', '==', uid),
+      where('read', '==', true),
+      where('createdAt', '<', cutoff),
+    ),
   );
-  const toDelete = snap.docs.filter((d) => {
-    const data = d.data();
-    if (!data.read) return false;
-    const ts = data.createdAt;
-    const ms: number = ts?.toMillis?.() ?? (ts as number) ?? 0;
-    return ms < cutoff;
-  });
-  if (toDelete.length === 0) return;
+  if (snap.empty) return;
   const batch = writeBatch(db);
-  toDelete.forEach((d) => batch.delete(d.ref));
+  snap.docs.forEach((d) => batch.delete(d.ref));
   await batch.commit();
 }

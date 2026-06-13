@@ -15,7 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { DocumentSnapshot } from 'firebase/firestore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
-import { fetchDiscussions, fetchAllDiscussions, saveDiscussion, unsaveDiscussion, PAGE_SIZE } from '../services/discussionService';
+import { fetchDiscussions, saveDiscussion, unsaveDiscussion, PAGE_SIZE } from '../services/discussionService';
+import { searchDiscussions, AlgoliaHit } from '../services/algoliaService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
 import { Discussion } from '../types';
@@ -35,44 +36,59 @@ export default function ForumScreen({ navigation }: any) {
   const [lastDoc, setLastDoc] = useState<DocumentSnapshot | null>(null);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
-  // Full question base for the location, lazily loaded the first time the user
-  // searches so the search covers the whole DB, not just the paginated feed.
-  const [allQuestions, setAllQuestions] = useState<Discussion[] | null>(null);
-  const [loadingAll, setLoadingAll] = useState(false);
+  const [algoliaHits, setAlgoliaHits] = useState<AlgoliaHit[]>([]);
+  const [searching, setSearching] = useState(false);
 
   const isSearching = search.trim().length > 0;
 
-  // Lazily pull the whole region forum once a search begins.
+  // Debounced Algolia search — fires 300ms after the user stops typing
   useEffect(() => {
-    if (!isSearching || allQuestions !== null || loadingAll || !profile?.location) return;
-    setLoadingAll(true);
-    fetchAllDiscussions(profile.location)
-      .then(setAllQuestions)
-      .catch(() => setAllQuestions([]))
-      .finally(() => setLoadingAll(false));
-  }, [isSearching, allQuestions, loadingAll, profile?.location]);
+    const q = search.trim();
+    if (!q) {
+      setSearching(false);
+      setAlgoliaHits([]);
+      return;
+    }
+    setSearching(true);
+    const timer = setTimeout(async () => {
+      if (!profile?.location) { setSearching(false); return; }
+      try {
+        const hits = await searchDiscussions(q, profile.location);
+        setAlgoliaHits(hits);
+      } catch {
+        setAlgoliaHits([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, profile?.location]);
 
-  // Search pool: the full base once loaded, plus any questions in the store that
-  // aren't in it yet (e.g. one just asked via the tab "+"). Falls back to the
-  // loaded feed while the full base is still fetching.
-  const searchPool = useMemo(() => {
-    if (!allQuestions) return discussions;
-    const ids = new Set(allQuestions.map((d) => d.id));
-    const extra = discussions.filter((d) => !ids.has(d.id));
-    return extra.length ? [...extra, ...allQuestions] : allQuestions;
-  }, [allQuestions, discussions]);
-
-  // Keyword search: a question matches when it contains every whitespace-separated
-  // token of the query (case-insensitive).
-  const filteredDiscussions = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    if (!q) return discussions;
-    const tokens = q.split(/\s+/);
-    return searchPool.filter((d) => {
-      const text = d.question.toLowerCase();
-      return tokens.every((tok) => text.includes(tok));
-    });
-  }, [discussions, searchPool, search]);
+  // Map Algolia hits → Discussion objects, merging with store data where available
+  // (store version has live savedBy/replyCount; Algolia version used as fallback)
+  const searchResults = useMemo(
+    () =>
+      algoliaHits.map((hit) => {
+        const stored = discussions.find((d) => d.id === hit.objectID);
+        return (
+          stored ?? {
+            id: hit.objectID,
+            question: hit.question,
+            authorId: hit.authorId,
+            authorName: hit.authorName,
+            authorPhoto: hit.authorPhoto,
+            authorNationality: hit.authorNationality,
+            authorCountryCode: hit.authorCountryCode,
+            location: hit.location,
+            replyCount: hit.replyCount,
+            createdAt: hit.createdAt,
+            acceptedReplyId: hit.acceptedReplyId,
+            savedBy: [],
+          }
+        );
+      }),
+    [algoliaHits, discussions],
+  );
 
   useEffect(() => {
     loadFeed();
@@ -111,7 +127,7 @@ export default function ForumScreen({ navigation }: any) {
 
   async function onRefresh() {
     setRefreshing(true);
-    setAllQuestions(null); // invalidate search cache so it reloads fresh
+    setAlgoliaHits([]);
     await loadFeed();
     setRefreshing(false);
   }
@@ -220,17 +236,17 @@ export default function ForumScreen({ navigation }: any) {
         <View style={styles.center}>
           <Text style={{ color: colors.notification, textAlign: 'center', padding: 24 }}>{error}</Text>
         </View>
-      ) : (isLoading && discussions.length === 0) || (isSearching && loadingAll && !allQuestions) ? (
+      ) : (!isSearching && isLoading && discussions.length === 0) || (isSearching && searching) ? (
         <View style={styles.center}>
           <ActivityIndicator color={colors.primary} size="large" />
         </View>
       ) : (
         <FlatList
-          data={filteredDiscussions}
+          data={isSearching ? searchResults : discussions}
           keyExtractor={(item) => item.id}
           renderItem={renderCard}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={filteredDiscussions.length === 0 ? styles.center : styles.list}
+          contentContainerStyle={(isSearching ? searchResults : discussions).length === 0 ? styles.center : styles.list}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
           onEndReached={isSearching ? undefined : loadMore}
           onEndReachedThreshold={0.3}
