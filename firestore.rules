@@ -52,9 +52,10 @@ service cloud.firestore {
       }
     }
 
-    // Discussions — per-region Q&A forum.
+    // Discussions — global Q&A forum (visible across regions/nationalities).
+    // `location` is still stamped on each doc for a future country filter.
     match /discussions/{discussionId} {
-      allow read: if canAccessDiscussion(resource.data);
+      allow read: if request.auth != null;
       allow create: if request.auth != null
         && request.resource.data.authorId == request.auth.uid
         && request.resource.data.location == myLocation()
@@ -71,12 +72,11 @@ service cloud.firestore {
       allow delete: if request.auth != null
         && resource.data.authorId == request.auth.uid;
 
-      // Replies — same-region users may read and post.
+      // Replies — any authenticated user may read and post (global forum).
       match /replies/{replyId} {
-        allow read: if canAccessDiscussion(discussionData(discussionId));
+        allow read: if request.auth != null;
         allow create: if request.auth != null
           && request.resource.data.authorId == request.auth.uid
-          && sameLocation(discussionData(discussionId).get('location', ''))
           && request.resource.data.text is string
           && request.resource.data.text.size() > 0
           && request.resource.data.text.size() <= 1000;
@@ -117,16 +117,9 @@ service cloud.firestore {
     }
 
     // savedBy update: user can only add or remove their own UID.
-    // Adding is restricted to same-region so saving can't grant cross-forum read access.
     function savedByUpdate() {
-      let before = resource.data.get('savedBy', []);
-      let after = request.resource.data.get('savedBy', []);
-      let uid = request.auth.uid;
-      let diff = onlyUpdatingField(request, 'savedBy');
-      let adding = after.hasAll(before) && after.removeAll(before) == [uid]
-        && sameLocation(resource.data.get('location', ''));
-      let removing = before.hasAll(after) && before.removeAll(after) == [uid];
-      return diff && (adding || removing);
+      return onlyUpdatingField(request, 'savedBy')
+        && ownUidArrayChange(resource.data.get('savedBy', []), request.resource.data.get('savedBy', []));
     }
 
     // replyCount update: increment only, by exactly 1.
@@ -160,22 +153,6 @@ service cloud.firestore {
 
     function myLocation() {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.location;
-    }
-
-    function discussionData(discussionId) {
-      return get(/databases/$(database)/documents/discussions/$(discussionId)).data;
-    }
-
-    function sameLocation(loc) {
-      return request.auth != null && myLocation() == loc;
-    }
-
-    function canAccessDiscussion(d) {
-      return request.auth != null && (
-        myLocation() == d.get('location', '')
-        || d.authorId == request.auth.uid
-        || request.auth.uid in d.get('savedBy', [])
-      );
     }
 
     function ownUidArrayChange(before, after) {

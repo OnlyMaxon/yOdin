@@ -100,14 +100,14 @@ export default function ForumScreen({ navigation }: any) {
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.location]);
+  }, [profile?.uid]);
 
   async function loadFeed() {
-    if (!profile?.location) return;
+    if (!profile?.uid) return;
     setError('');
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location);
+      const { discussions: data, lastDoc: last } = await fetchDiscussions();
       setDiscussions(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -119,10 +119,10 @@ export default function ForumScreen({ navigation }: any) {
   }
 
   async function loadMore() {
-    if (!hasMore || isLoading || !lastDoc || !profile?.location) return;
+    if (!hasMore || isLoading || !lastDoc || !profile?.uid) return;
     setLoading(true);
     try {
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(profile.location, lastDoc);
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(undefined, lastDoc);
       appendDiscussions(data);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);

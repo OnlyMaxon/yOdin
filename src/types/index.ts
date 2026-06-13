@@ -10,6 +10,7 @@ export interface User {
   languages?: string[];
   points?: number;
   createdAt: number;
+  following?: string[];
 }
 
 export type PostCategory = 'news' | 'events' | 'places';

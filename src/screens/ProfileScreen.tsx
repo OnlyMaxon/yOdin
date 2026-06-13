@@ -22,6 +22,7 @@ import { logoutUser, updateUserProfile } from '../services/authService';
 import { uploadAvatar } from '../services/storageService';
 import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDiscussions } from '../services/discussionService';
 import { deletePost, unsavePost, fetchUserPosts, fetchSavedPosts } from '../services/postService';
+import { countFollowers } from '../services/userService';
 import { formatTime } from '../utils/formatTime';
 import PostDetailModal from './PostDetailModal';
 import { setAppLanguage } from '../services/i18n';
@@ -87,6 +88,7 @@ export default function ProfileScreen({ navigation }: any) {
   const [myDiscussions, setMyDiscussions] = useState<Discussion[]>([]);
   const [savedPosts, setSavedPosts] = useState<Post[]>([]);
   const [savedDiscussions, setSavedDiscussions] = useState<Discussion[]>([]);
+  const [followersCount, setFollowersCount] = useState(0);
   const [savedVisible, setSavedVisible] = useState(false);
   const [savedTab, setSavedTab] = useState<'posts' | 'discussions'>('posts');
   const [detailPost, setDetailPost] = useState<Post | null>(null);
@@ -127,16 +129,18 @@ export default function ProfileScreen({ navigation }: any) {
     if (!profile?.uid) return;
     setLoading(true);
     try {
-      const [mineD, savedD, mineP, savedP] = await Promise.all([
+      const [mineD, savedD, mineP, savedP, followers] = await Promise.all([
         fetchUserDiscussions(profile.uid),
         fetchSavedDiscussions(profile.uid),
         fetchUserPosts(profile.uid),
         fetchSavedPosts(profile.uid),
+        countFollowers(profile.uid),
       ]);
       setMyDiscussions(mineD);
       setSavedDiscussions(savedD);
       setMyPosts(mineP);
       setSavedPosts(savedP);
+      setFollowersCount(followers);
     } catch {
       Alert.alert(t('errors.generic'));
     } finally {
@@ -414,6 +418,16 @@ export default function ProfileScreen({ navigation }: any) {
                 <Text style={styles.rankBadgeText}>{t(`rank.${rankKey}`)}</Text>
               </View>
               <Text style={styles.rankPoints}>{t('rank.points', { count: points })}</Text>
+            </View>
+            <View style={styles.statsRow}>
+              <View style={styles.statItem}>
+                <Text style={styles.statNum}>{followersCount}</Text>
+                <Text style={styles.statLabel}>{t('profile.followers')}</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Text style={styles.statNum}>{profile?.following?.length ?? 0}</Text>
+                <Text style={styles.statLabel}>{t('profile.followingCount')}</Text>
+              </View>
             </View>
             {photoError ? <Text style={styles.photoError}>{photoError}</Text> : null}
           </View>
@@ -840,6 +854,10 @@ function makeStyles(c: ColorPalette, topInset: number) {
       color: c.primary,
     },
     rankPoints: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
+    statsRow: { flexDirection: 'row', gap: 24, marginTop: 10 },
+    statItem: { alignItems: 'center' },
+    statNum: { fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightBold, color: c.textPrimary },
+    statLabel: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginTop: 2 },
     photoError: {
       fontSize: Typography.fontSizeXS,
       color: c.notification,

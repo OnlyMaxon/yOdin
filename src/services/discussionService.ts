@@ -34,15 +34,15 @@ export async function createDiscussion(
   return ref.id;
 }
 
-// The forum is scoped by region (location): a discussion belongs to its
-// author's region of residence, so everyone living in the same region sees and
-// answers each other regardless of nationality.
+// The forum is global by default: questions from every region and nationality
+// are shown, so anyone can see and answer anyone else. Pass `location` to
+// restrict to one country (future country filter).
 export async function fetchDiscussions(
-  location: string,
+  location?: string,
   cursor?: DocumentSnapshot,
 ): Promise<{ discussions: Discussion[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [
-    where('location', '==', location),
+    ...(location ? [where('location', '==', location)] : []),
     orderBy('createdAt', 'desc'),
     limit(PAGE_SIZE),
   ];
