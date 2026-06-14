@@ -1,6 +1,5 @@
 import {
   doc,
-  getDoc,
   updateDoc,
   arrayUnion,
   arrayRemove,
@@ -10,12 +9,6 @@ import {
   getCountFromServer,
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { User } from '../types';
-
-export async function fetchUser(uid: string): Promise<User | null> {
-  const snap = await getDoc(doc(db, 'users', uid));
-  return snap.exists() ? ({ uid, ...snap.data() } as User) : null;
-}
 
 // Following is stored as an array on the follower's own user document, so a
 // follow/unfollow is just a self-update (allowed by the existing owner rule).

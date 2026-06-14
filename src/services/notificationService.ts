@@ -14,17 +14,6 @@ import {
 import { db } from './firebase';
 import { AppNotification } from '../types';
 
-export async function fetchNotifications(uid: string): Promise<AppNotification[]> {
-  const snap = await getDocs(
-    query(
-      collection(db, 'notifications'),
-      where('toUserId', '==', uid),
-      orderBy('createdAt', 'desc'),
-    ),
-  );
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() } as AppNotification));
-}
-
 // Realtime subscription: keeps the unread badge and list live for as long as the
 // user is signed in. Returns an unsubscribe function.
 export function subscribeNotifications(

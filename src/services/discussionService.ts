@@ -136,20 +136,18 @@ export async function voteReply(
 export async function acceptReply(
   discussionId: string,
   replyId: string,
-  replyAuthorId: string,
   replyText: string,
   replyAuthorName: string,
 ): Promise<void> {
-  const batch = writeBatch(db);
   // Denormalize the accepted answer onto the discussion so the forum feed can
   // show it under the question without an extra read per card.
-  batch.update(doc(db, 'discussions', discussionId), {
+  // The reputation point is awarded server-side by the onDiscussionUpdated
+  // Cloud Function — never from the client, which could otherwise farm points.
+  await updateDoc(doc(db, 'discussions', discussionId), {
     acceptedReplyId: replyId,
     acceptedReplyText: replyText,
     acceptedReplyAuthorName: replyAuthorName,
   });
-  batch.update(doc(db, 'users', replyAuthorId), { points: increment(1) });
-  await batch.commit();
 }
 
 export async function deleteDiscussion(discussionId: string): Promise<void> {

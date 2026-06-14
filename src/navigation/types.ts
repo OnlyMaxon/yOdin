@@ -1,34 +1,8 @@
+// Only AuthStackParamList lives here — it's consumed by AuthNavigator. Each tab
+// stack (Feed/Forum/Profile/Notifications) declares and exports its own param
+// list in its file, so keeping copies here would only invite drift.
 export type AuthStackParamList = {
   Welcome: undefined;
   Register: { mode: 'login' | 'register' };
   Onboarding: undefined;
-};
-
-export type FeedStackParamList = {
-  FeedHome: undefined;
-  UserProfile: { userId: string };
-  DiscussionDetail: { discussionId: string; question: string };
-};
-
-export type ProfileStackParamList = {
-  ProfileHome: undefined;
-  DiscussionDetail: { discussionId: string; question: string };
-};
-
-export type ForumStackParamList = {
-  ForumHome: undefined;
-  DiscussionDetail: { discussionId: string; question: string };
-  UserProfile: { userId: string };
-};
-
-export type NotificationsStackParamList = {
-  NotificationsHome: undefined;
-  DiscussionDetail: { discussionId: string; question: string };
-};
-
-export type TabParamList = {
-  Forum: undefined;
-  Feed: undefined;
-  Notifications: undefined;
-  Profile: undefined;
 };

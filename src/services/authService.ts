@@ -16,9 +16,10 @@ export async function registerUser(
 ): Promise<void> {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(user, { displayName: `${firstName} ${lastName}` });
+  // Email is intentionally NOT stored here: the users doc is world-readable by
+  // any authenticated user, and the email already lives in Firebase Auth.
   await setDoc(doc(db, 'users', user.uid), {
     uid: user.uid,
-    email,
     firstName,
     lastName,
     nationality: '',
@@ -39,9 +40,10 @@ export async function logoutUser(): Promise<void> {
   await signOut(auth);
 }
 
+// Single source of truth for reading a user profile (auth flow + social screens).
 export async function getUserProfile(uid: string): Promise<User | null> {
   const snap = await getDoc(doc(db, 'users', uid));
-  return snap.exists() ? (snap.data() as User) : null;
+  return snap.exists() ? ({ uid, ...snap.data() } as User) : null;
 }
 
 export async function updateUserProfile(uid: string, data: Partial<User>): Promise<void> {

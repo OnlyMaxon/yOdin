@@ -13,7 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { useAuthStore } from '../store/useAuthStore';
-import { fetchUser, countFollowers } from '../services/userService';
+import { countFollowers } from '../services/userService';
+import { getUserProfile } from '../services/authService';
 import { fetchUserPosts } from '../services/postService';
 import { fetchUserDiscussions } from '../services/discussionService';
 import { User, Post, Discussion } from '../types';
@@ -53,7 +54,7 @@ export default function UserProfileScreen({ route, navigation }: any) {
       // another region, which the security rules deny — that must not crash the
       // whole profile, so we swallow per-query failures and fall back to empties.
       const [u, p, d, fc] = await Promise.all([
-        fetchUser(userId).catch(() => null),
+        getUserProfile(userId).catch(() => null),
         fetchUserPosts(userId).catch(() => []),
         fetchUserDiscussions(userId).catch(() => []),
         countFollowers(userId).catch(() => 0),

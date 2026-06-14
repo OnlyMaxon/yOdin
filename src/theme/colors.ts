@@ -31,6 +31,3 @@ export const DarkColors: ColorPalette = {
   tabBarActive: '#7C71F0',
   tabBarInactive: '#6B7280',
 };
-
-// Legacy export — screens use useTheme() hook instead
-export const Colors = LightColors;

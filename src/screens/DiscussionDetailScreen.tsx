@@ -200,7 +200,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       acceptedReplyAuthorName: reply.authorName,
     });
     try {
-      await acceptReply(discussionId, reply.id, reply.authorId, reply.text, reply.authorName);
+      await acceptReply(discussionId, reply.id, reply.text, reply.authorName);
       setAcceptedReply(discussionId, reply.id, reply.text, reply.authorName);
       if (reply.authorId !== profile.uid) {
         await createNotification(
