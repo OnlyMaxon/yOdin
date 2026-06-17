@@ -27,7 +27,8 @@
     "empty": "Inga diskussioner än. Var den första!",
     "replies_one": "{{count}} svar",
     "replies_other": "{{count}} svar",
-    "emptyPosts": "Inga inlägg än. Bli först!"
+    "emptyPosts": "Inga inlägg än. Bli först!",
+    "allNations": "Alla nationaliteter"
   },
   "discussion": {
     "title": "Diskussion",

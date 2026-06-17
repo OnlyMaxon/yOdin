@@ -27,7 +27,8 @@
     "empty": "暂无讨论，成为第一个吧！",
     "replies_one": "{{count}} 条回复",
     "replies_other": "{{count}} 条回复",
-    "emptyPosts": "暂无帖子，来发布第一条吧！"
+    "emptyPosts": "暂无帖子，来发布第一条吧！",
+    "allNations": "所有国籍"
   },
   "discussion": {
     "title": "讨论",

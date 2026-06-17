@@ -27,7 +27,8 @@
     "empty": "अभी कोई चर्चा नहीं। पहले बनें!",
     "replies_one": "{{count}} जवाब",
     "replies_other": "{{count}} जवाब",
-    "emptyPosts": "अभी कोई पोस्ट नहीं। पहले बनें!"
+    "emptyPosts": "अभी कोई पोस्ट नहीं। पहले बनें!",
+    "allNations": "सभी राष्ट्रीयताएं"
   },
   "discussion": {
     "title": "चर्चा",

@@ -27,7 +27,8 @@
     "empty": "Nessuna discussione ancora. Sii il primo!",
     "replies_one": "{{count}} risposta",
     "replies_other": "{{count}} risposte",
-    "emptyPosts": "Ancora nessun post. Sii il primo!"
+    "emptyPosts": "Ancora nessun post. Sii il primo!",
+    "allNations": "Tutte le nazionalità"
   },
   "discussion": {
     "title": "Discussione",

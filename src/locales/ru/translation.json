@@ -28,7 +28,8 @@
     "replies_one": "{{count}} ответ",
     "replies_few": "{{count}} ответа",
     "replies_other": "{{count}} ответов",
-    "emptyPosts": "Пока нет постов. Будьте первым!"
+    "emptyPosts": "Пока нет постов. Будьте первым!",
+    "allNations": "Все нации"
   },
   "discussion": {
     "title": "Дискуссия",

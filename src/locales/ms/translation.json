@@ -27,7 +27,8 @@
     "empty": "Tiada perbincangan lagi. Jadilah yang pertama!",
     "replies_one": "{{count}} balasan",
     "replies_other": "{{count}} balasan",
-    "emptyPosts": "Belum ada kiriman. Jadilah yang pertama!"
+    "emptyPosts": "Belum ada kiriman. Jadilah yang pertama!",
+    "allNations": "Semua kewarganegaraan"
   },
   "discussion": {
     "title": "Perbincangan",

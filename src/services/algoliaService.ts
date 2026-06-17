@@ -30,14 +30,18 @@ export type AlgoliaHit = {
   acceptedReplyAuthorName?: string;
 };
 
-export async function searchDiscussions(query: string, nationality?: string): Promise<AlgoliaHit[]> {
+export async function searchDiscussions(query: string, nationalities?: string[]): Promise<AlgoliaHit[]> {
   const client = getClient();
   if (!client) return [];
+  // A single inner array means OR — match any of the selected nationalities.
+  const facetFilters = nationalities && nationalities.length > 0
+    ? [nationalities.map((n) => 'authorNationality:' + n)]
+    : undefined;
   const result = await client.searchSingleIndex({
     indexName: INDEX,
     searchParams: {
       query,
-      ...(nationality ? { facetFilters: [['authorNationality:' + nationality]] } : {}),
+      ...(facetFilters ? { facetFilters } : {}),
       hitsPerPage: 50,
       restrictSearchableAttributes: ['question'],
       attributesToRetrieve: [

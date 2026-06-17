@@ -74,15 +74,17 @@ export async function fetchComments(postId: string): Promise<PostComment[]> {
 }
 
 // The feed is global by default: posts from every region and nationality are
-// shown. Pass `location` to restrict to one country (future country filter).
+// shown. Pass `nationalities` to restrict the feed to one or more nationalities
+// (Firestore `in` supports up to 30 values).
 export async function fetchPosts(
   category?: PostCategory,
-  nationality?: string,
+  nationalities?: string[],
   cursor?: DocumentSnapshot,
 ): Promise<{ posts: Post[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [];
   if (category) constraints.push(where('category', '==', category));
-  if (nationality) constraints.push(where('authorNationality', '==', nationality));
+  if (nationalities && nationalities.length > 0 && nationalities.length <= 30)
+    constraints.push(where('authorNationality', 'in', nationalities));
   constraints.push(orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 

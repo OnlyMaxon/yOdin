@@ -26,7 +26,9 @@ import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import PostDetailModal from './PostDetailModal';
 import FollowButton from '../components/FollowButton';
+import NationFilterDrawer from '../components/NationFilterDrawer';
 import { weightedSort } from '../utils/weightedSort';
+import { COUNTRIES } from '../data/countries';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
@@ -43,7 +45,15 @@ export default function FeedScreen({ navigation }: any) {
   const [detailPostId, setDetailPostId] = useState<string | null>(null);
   const [detailVisible, setDetailVisible] = useState(false);
   const [detailWithComments, setDetailWithComments] = useState(false);
-  const [natFilter, setNatFilter] = useState<'all' | 'mine'>('all');
+  // Empty = all nationalities; otherwise filter to these (country names).
+  const [selectedNations, setSelectedNations] = useState<string[]>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  function toggleNation(name: string) {
+    setSelectedNations((prev) =>
+      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name],
+    );
+  }
 
   function openDetail(postId: string, withComments: boolean) {
     setDetailPostId(postId);
@@ -86,7 +96,7 @@ export default function FeedScreen({ navigation }: any) {
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.uid, filter, natFilter]);
+  }, [profile?.uid, filter, selectedNations]);
 
   async function loadFeed() {
     if (!profile?.uid) return;
@@ -94,9 +104,8 @@ export default function FeedScreen({ navigation }: any) {
     setLoading(true);
     try {
       const category = filter === 'all' ? undefined : filter;
-      const nationality = natFilter === 'mine' ? profile.nationality : undefined;
-      const { posts: data, lastDoc: last } = await fetchPosts(category, nationality);
-      const sorted = natFilter === 'all' ? weightedSort(data, profile.nationality) : data;
+      const { posts: data, lastDoc: last } = await fetchPosts(category, selectedNations);
+      const sorted = selectedNations.length === 0 ? weightedSort(data, profile.nationality) : data;
       setPosts(sorted);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -112,9 +121,8 @@ export default function FeedScreen({ navigation }: any) {
     setLoading(true);
     try {
       const category = filter === 'all' ? undefined : filter;
-      const nationality = natFilter === 'mine' ? profile?.nationality : undefined;
-      const { posts: data, lastDoc: last } = await fetchPosts(category, nationality, lastDoc);
-      const sorted = natFilter === 'all' && profile?.nationality
+      const { posts: data, lastDoc: last } = await fetchPosts(category, selectedNations, lastDoc);
+      const sorted = selectedNations.length === 0 && profile?.nationality
         ? weightedSort(data, profile.nationality)
         : data;
       appendPosts(sorted);
@@ -160,6 +168,7 @@ export default function FeedScreen({ navigation }: any) {
       case 'news': return colors.primary;
       case 'events': return colors.accent;
       case 'places': return colors.success;
+      default: return colors.textSecondary;
     }
   }
 
@@ -275,21 +284,43 @@ export default function FeedScreen({ navigation }: any) {
           })}
         </ScrollView>
         <View style={styles.natRow}>
-          {(['all', 'mine'] as const).map((f) => {
-            const active = natFilter === f;
-            const label = f === 'all'
-              ? t('categories.all')
-              : `${getFlagEmoji(profile?.countryCode ?? '')} ${profile?.nationality ?? ''}`;
-            return (
+          <TouchableOpacity
+            style={[styles.drawerBtn, selectedNations.length > 0 && styles.drawerBtnActive]}
+            onPress={() => setDrawerOpen(true)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.primary : colors.textPrimary} />
+            {selectedNations.length > 0 && (
+              <View style={styles.drawerBadge}>
+                <Text style={styles.drawerBadgeText}>{selectedNations.length}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.natChips}
+          >
+            <TouchableOpacity
+              style={[styles.chip, selectedNations.length === 0 && styles.chipActive]}
+              onPress={() => setSelectedNations([])}
+            >
+              <Text style={[styles.chipText, selectedNations.length === 0 && styles.chipTextActive]}>
+                🌍 {t('feed.allNations')}
+              </Text>
+            </TouchableOpacity>
+            {selectedNations.map((nation) => (
               <TouchableOpacity
-                key={f}
-                style={[styles.chip, active && styles.chipActive]}
-                onPress={() => setNatFilter(f)}
+                key={nation}
+                style={[styles.chip, styles.chipActive]}
+                onPress={() => toggleNation(nation)}
               >
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>{label}</Text>
+                <Text style={[styles.chipText, styles.chipTextActive]}>
+                  {COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} {nation}  ✕
+                </Text>
               </TouchableOpacity>
-            );
-          })}
+            ))}
+          </ScrollView>
         </View>
       </View>
 
@@ -329,6 +360,19 @@ export default function FeedScreen({ navigation }: any) {
         postId={detailPostId}
         startWithComments={detailWithComments}
         onClose={() => setDetailVisible(false)}
+        onOpenProfile={(userId) => {
+          setDetailVisible(false);
+          setTimeout(() => navigation.navigate('UserProfile', { userId }), 250);
+        }}
+      />
+
+      <NationFilterDrawer
+        visible={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        selected={selectedNations}
+        onToggle={toggleNation}
+        onClear={() => setSelectedNations([])}
+        myNationality={profile?.nationality}
       />
     </View>
   );
@@ -367,11 +411,37 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     natRow: {
       flexDirection: 'row',
+      alignItems: 'center',
       paddingHorizontal: 16,
       paddingBottom: 12,
       paddingTop: 4,
       gap: 8,
     },
+    drawerBtn: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: c.background,
+      borderWidth: 1,
+      borderColor: c.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    drawerBtnActive: { borderColor: c.primary, backgroundColor: c.primaryLight },
+    drawerBadge: {
+      position: 'absolute',
+      top: -4,
+      right: -4,
+      minWidth: 16,
+      height: 16,
+      borderRadius: 8,
+      paddingHorizontal: 4,
+      backgroundColor: c.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    drawerBadgeText: { color: '#fff', fontSize: 10, fontWeight: Typography.fontWeightBold },
+    natChips: { gap: 8, alignItems: 'center', paddingRight: 8 },
     chip: {
       paddingHorizontal: 14,
       paddingVertical: 7,

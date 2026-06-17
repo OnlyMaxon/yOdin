@@ -34,12 +34,16 @@ export async function createDiscussion(
   return ref.id;
 }
 
+// The forum is global by default: questions from every region and nationality
+// are shown. Pass `nationalities` to restrict the forum to one or more
+// nationalities (Firestore `in` supports up to 30 values).
 export async function fetchDiscussions(
-  nationality?: string,
+  nationalities?: string[],
   cursor?: DocumentSnapshot,
 ): Promise<{ discussions: Discussion[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [];
-  if (nationality) constraints.push(where('authorNationality', '==', nationality));
+  if (nationalities && nationalities.length > 0 && nationalities.length <= 30)
+    constraints.push(where('authorNationality', 'in', nationalities));
   constraints.push(orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 

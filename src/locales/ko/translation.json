@@ -27,7 +27,8 @@
     "empty": "아직 토론이 없습니다. 첫 번째가 되세요!",
     "replies_one": "{{count}}개 답글",
     "replies_other": "{{count}}개 답글",
-    "emptyPosts": "아직 게시물이 없습니다. 첫 게시물을 올려보세요!"
+    "emptyPosts": "아직 게시물이 없습니다. 첫 게시물을 올려보세요!",
+    "allNations": "모든 국적"
   },
   "discussion": {
     "title": "토론",

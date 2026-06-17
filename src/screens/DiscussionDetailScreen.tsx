@@ -260,6 +260,11 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     setTimeout(() => inputRef.current?.focus(), 50);
   }
 
+  function openProfile(userId?: string) {
+    if (!userId) return;
+    navigation.navigate('UserProfile', { userId });
+  }
+
   // Jump to a quoted message and briefly flash it (Telegram-style).
   function scrollToMessage(id: string) {
     const idx = replies.findIndex((r) => r.id === id);
@@ -284,13 +289,17 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     return (
       <View style={[styles.msgRow, isMe ? styles.msgRowMe : styles.msgRowOther]}>
         {!isMe && (
-          <View style={styles.msgAvatar}>
+          <TouchableOpacity
+            style={styles.msgAvatar}
+            activeOpacity={0.7}
+            onPress={() => openProfile(item.authorId)}
+          >
             {item.authorPhoto ? (
               <Image source={{ uri: item.authorPhoto }} style={styles.msgAvatarImage} />
             ) : (
               <Text style={styles.msgAvatarText}>{initials}</Text>
             )}
-          </View>
+          </TouchableOpacity>
         )}
         <View style={styles.msgContent}>
           <View
@@ -308,7 +317,12 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
               </View>
             )}
             {!isMe && (
-              <Text style={styles.bubbleAuthor} numberOfLines={1}>
+              <Text
+                style={styles.bubbleAuthor}
+                numberOfLines={1}
+                onPress={() => openProfile(item.authorId)}
+                suppressHighlighting
+              >
                 {item.authorName}  {flag(item.authorCountryCode)}
               </Text>
             )}
@@ -417,7 +431,11 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         <>
           {discussion && (
             <View style={[styles.questionBlock, isAnswered && styles.questionBlockAnswered]}>
-              <View style={styles.questionAuthorRow}>
+              <TouchableOpacity
+                style={styles.questionAuthorRow}
+                activeOpacity={0.7}
+                onPress={() => openProfile(discussion.authorId)}
+              >
                 <View style={styles.qAvatar}>
                   {discussion.authorPhoto ? (
                     <Image source={{ uri: discussion.authorPhoto }} style={styles.qAvatarImage} />
@@ -439,7 +457,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
                     <Text style={styles.answeredBadgeText}>{t('forum.answered')}</Text>
                   </View>
                 )}
-              </View>
+              </TouchableOpacity>
               <Text style={styles.questionText}>{discussion.question}</Text>
             </View>
           )}

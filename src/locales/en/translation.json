@@ -27,7 +27,8 @@
     "empty": "No discussions yet. Be the first!",
     "replies_one": "{{count}} reply",
     "replies_other": "{{count}} replies",
-    "emptyPosts": "No posts yet. Be the first!"
+    "emptyPosts": "No posts yet. Be the first!",
+    "allNations": "All nationalities"
   },
   "discussion": {
     "title": "Discussion",

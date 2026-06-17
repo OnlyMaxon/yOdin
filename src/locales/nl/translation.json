@@ -27,7 +27,8 @@
     "empty": "Nog geen discussies. Wees de eerste!",
     "replies_one": "{{count}} reactie",
     "replies_other": "{{count}} reacties",
-    "emptyPosts": "Nog geen berichten. Wees de eerste!"
+    "emptyPosts": "Nog geen berichten. Wees de eerste!",
+    "allNations": "Alle nationaliteiten"
   },
   "discussion": {
     "title": "Discussie",

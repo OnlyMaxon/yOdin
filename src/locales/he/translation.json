@@ -27,7 +27,8 @@
     "empty": "עדיין אין דיונים. היה הראשון!",
     "replies_one": "{{count}} תגובה",
     "replies_other": "{{count}} תגובות",
-    "emptyPosts": "אין עדיין פוסטים. היו הראשונים!"
+    "emptyPosts": "אין עדיין פוסטים. היו הראשונים!",
+    "allNations": "כל הלאומים"
   },
   "discussion": {
     "title": "דיון",

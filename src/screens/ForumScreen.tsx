@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   RefreshControl,
   Image,
+  ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +27,8 @@ import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import { weightedSort } from '../utils/weightedSort';
 import FollowButton from '../components/FollowButton';
+import NationFilterDrawer from '../components/NationFilterDrawer';
+import { COUNTRIES } from '../data/countries';
 
 export default function ForumScreen({ navigation }: any) {
   const { t } = useTranslation();
@@ -43,22 +46,29 @@ export default function ForumScreen({ navigation }: any) {
   // Tracks saved state for Algolia results not yet loaded into the store.
   // Key = discussionId, value = whether the current user has saved it.
   const [savedOverrides, setSavedOverrides] = useState<Record<string, boolean>>({});
-  const [natFilter, setNatFilter] = useState<'all' | 'mine'>('all');
+  // Empty = all nationalities; otherwise filter to these (country names).
+  const [selectedNations, setSelectedNations] = useState<string[]>([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  function toggleNation(name: string) {
+    setSelectedNations((prev) =>
+      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name],
+    );
+  }
 
   const isSearching = search.trim().length > 0;
 
   const runSearch = useCallback(async (q: string) => {
     setSearching(true);
     try {
-      const nationality = natFilter === 'mine' ? profile?.nationality : undefined;
-      const hits = await searchDiscussions(q, nationality);
+      const hits = await searchDiscussions(q, selectedNations);
       setAlgoliaHits(hits);
     } catch {
       setAlgoliaHits([]);
     } finally {
       setSearching(false);
     }
-  }, [natFilter, profile?.nationality]);
+  }, [selectedNations]);
 
   // Debounced Algolia search — fires 300ms after the user stops typing
   useEffect(() => {
@@ -103,16 +113,15 @@ export default function ForumScreen({ navigation }: any) {
 
   useEffect(() => {
     loadFeed();
-  }, [profile?.uid, natFilter]);
+  }, [profile?.uid, selectedNations]);
 
   async function loadFeed() {
     if (!profile?.uid) return;
     setError('');
     setLoading(true);
     try {
-      const nationality = natFilter === 'mine' ? profile.nationality : undefined;
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(nationality);
-      const sorted = natFilter === 'all' ? weightedSort(data, profile.nationality) : data;
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(selectedNations);
+      const sorted = selectedNations.length === 0 ? weightedSort(data, profile.nationality) : data;
       setDiscussions(sorted);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -127,9 +136,8 @@ export default function ForumScreen({ navigation }: any) {
     if (!hasMore || isLoading || !lastDoc) return;
     setLoading(true);
     try {
-      const nationality = natFilter === 'mine' ? profile?.nationality : undefined;
-      const { discussions: data, lastDoc: last } = await fetchDiscussions(nationality, lastDoc);
-      const sorted = natFilter === 'all' && profile?.nationality
+      const { discussions: data, lastDoc: last } = await fetchDiscussions(selectedNations, lastDoc);
+      const sorted = selectedNations.length === 0 && profile?.nationality
         ? weightedSort(data, profile.nationality)
         : data;
       appendDiscussions(sorted);
@@ -285,21 +293,43 @@ export default function ForumScreen({ navigation }: any) {
       </View>
 
       <View style={styles.natBar}>
-        {(['all', 'mine'] as const).map((f) => {
-          const active = natFilter === f;
-          const label = f === 'all'
-            ? t('categories.all')
-            : `${getFlagEmoji(profile?.countryCode ?? '')} ${profile?.nationality ?? ''}`;
-          return (
+        <TouchableOpacity
+          style={[styles.drawerBtn, selectedNations.length > 0 && styles.drawerBtnActive]}
+          onPress={() => setDrawerOpen(true)}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+        >
+          <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.primary : colors.textPrimary} />
+          {selectedNations.length > 0 && (
+            <View style={styles.drawerBadge}>
+              <Text style={styles.drawerBadgeText}>{selectedNations.length}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.natChips}
+        >
+          <TouchableOpacity
+            style={[styles.natChip, selectedNations.length === 0 && styles.natChipActive]}
+            onPress={() => setSelectedNations([])}
+          >
+            <Text style={[styles.natChipText, selectedNations.length === 0 && styles.natChipTextActive]}>
+              🌍 {t('feed.allNations')}
+            </Text>
+          </TouchableOpacity>
+          {selectedNations.map((nation) => (
             <TouchableOpacity
-              key={f}
-              style={[styles.natChip, active && styles.natChipActive]}
-              onPress={() => setNatFilter(f)}
+              key={nation}
+              style={[styles.natChip, styles.natChipActive]}
+              onPress={() => toggleNation(nation)}
             >
-              <Text style={[styles.natChipText, active && styles.natChipTextActive]}>{label}</Text>
+              <Text style={[styles.natChipText, styles.natChipTextActive]}>
+                {COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} {nation}  ✕
+              </Text>
             </TouchableOpacity>
-          );
-        })}
+          ))}
+        </ScrollView>
       </View>
 
       {error ? (
@@ -333,6 +363,15 @@ export default function ForumScreen({ navigation }: any) {
           }
         />
       )}
+
+      <NationFilterDrawer
+        visible={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        selected={selectedNations}
+        onToggle={toggleNation}
+        onClear={() => setSelectedNations([])}
+        myNationality={profile?.nationality}
+      />
     </View>
   );
 }
@@ -381,6 +420,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     natBar: {
       flexDirection: 'row',
+      alignItems: 'center',
       paddingHorizontal: 16,
       paddingVertical: 10,
       gap: 8,
@@ -388,6 +428,31 @@ function makeStyles(c: ColorPalette, topInset: number) {
       borderBottomColor: c.border,
       backgroundColor: c.surface,
     },
+    drawerBtn: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: c.background,
+      borderWidth: 1,
+      borderColor: c.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    drawerBtnActive: { borderColor: c.primary, backgroundColor: c.primaryLight },
+    drawerBadge: {
+      position: 'absolute',
+      top: -4,
+      right: -4,
+      minWidth: 16,
+      height: 16,
+      borderRadius: 8,
+      paddingHorizontal: 4,
+      backgroundColor: c.primary,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    drawerBadgeText: { color: '#fff', fontSize: 10, fontWeight: Typography.fontWeightBold },
+    natChips: { gap: 8, alignItems: 'center', paddingRight: 8 },
     natChip: {
       paddingHorizontal: 14,
       paddingVertical: 7,

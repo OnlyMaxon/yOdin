@@ -27,7 +27,8 @@
     "empty": "এখনও কোনো আলোচনা নেই। প্রথম হোন!",
     "replies_one": "{{count}}টি উত্তর",
     "replies_other": "{{count}}টি উত্তর",
-    "emptyPosts": "এখনও কোনো পোস্ট নেই। প্রথম হোন!"
+    "emptyPosts": "এখনও কোনো পোস্ট নেই। প্রথম হোন!",
+    "allNations": "সব জাতীয়তা"
   },
   "discussion": {
     "title": "আলোচনা",
