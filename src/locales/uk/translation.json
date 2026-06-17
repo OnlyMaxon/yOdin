@@ -28,7 +28,8 @@
     "replies_one": "{{count}} відповідь",
     "replies_few": "{{count}} відповіді",
     "replies_other": "{{count}} відповідей",
-    "emptyPosts": "Поки немає дописів. Будьте першим!"
+    "emptyPosts": "Поки немає дописів. Будьте першим!",
+    "allNations": "Усі нації"
   },
   "discussion": {
     "title": "Обговорення",

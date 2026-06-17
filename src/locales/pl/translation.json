@@ -29,7 +29,8 @@
     "replies_few": "{{count}} odpowiedzi",
     "replies_many": "{{count}} odpowiedzi",
     "replies_other": "{{count}} odpowiedzi",
-    "emptyPosts": "Brak postów. Bądź pierwszy!"
+    "emptyPosts": "Brak postów. Bądź pierwszy!",
+    "allNations": "Wszystkie narodowości"
   },
   "discussion": {
     "title": "Dyskusja",

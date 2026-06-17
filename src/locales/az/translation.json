@@ -27,7 +27,8 @@
     "empty": "Hələ müzakirə yoxdur. İlk ol!",
     "replies_one": "{{count}} cavab",
     "replies_other": "{{count}} cavab",
-    "emptyPosts": "Hələ paylaşım yoxdur. İlk siz olun!"
+    "emptyPosts": "Hələ paylaşım yoxdur. İlk siz olun!",
+    "allNations": "Bütün millətlər"
   },
   "discussion": {
     "title": "Müzakirə",

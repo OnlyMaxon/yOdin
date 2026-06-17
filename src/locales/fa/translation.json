@@ -27,7 +27,8 @@
     "empty": "هنوز بحثی نیست. اولین نفر باشید!",
     "replies_one": "{{count}} پاسخ",
     "replies_other": "{{count}} پاسخ",
-    "emptyPosts": "هنوز پستی وجود ندارد. اولین نفر باشید!"
+    "emptyPosts": "هنوز پستی وجود ندارد. اولین نفر باشید!",
+    "allNations": "همه ملیت‌ها"
   },
   "discussion": {
     "title": "بحث",

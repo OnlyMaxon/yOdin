@@ -230,6 +230,10 @@ export default function UserProfileScreen({ route, navigation }: any) {
         postId={detailPost?.id ?? null}
         fallbackPost={detailPost}
         onClose={() => setDetailVisible(false)}
+        onOpenProfile={(uid) => {
+          setDetailVisible(false);
+          setTimeout(() => navigation.push('UserProfile', { userId: uid }), 250);
+        }}
       />
     </View>
   );

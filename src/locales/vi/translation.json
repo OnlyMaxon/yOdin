@@ -27,7 +27,8 @@
     "empty": "Chưa có cuộc thảo luận nào. Hãy là người đầu tiên!",
     "replies_one": "{{count}} trả lời",
     "replies_other": "{{count}} trả lời",
-    "emptyPosts": "Chưa có bài viết nào. Hãy là người đầu tiên!"
+    "emptyPosts": "Chưa có bài viết nào. Hãy là người đầu tiên!",
+    "allNations": "Tất cả quốc tịch"
   },
   "discussion": {
     "title": "Thảo luận",

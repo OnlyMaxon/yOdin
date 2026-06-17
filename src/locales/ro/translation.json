@@ -28,7 +28,8 @@
     "replies_one": "{{count}} răspuns",
     "replies_few": "{{count}} răspunsuri",
     "replies_other": "{{count}} de răspunsuri",
-    "emptyPosts": "Încă nu există postări. Fii primul!"
+    "emptyPosts": "Încă nu există postări. Fii primul!",
+    "allNations": "Toate naționalitățile"
   },
   "discussion": {
     "title": "Discuție",

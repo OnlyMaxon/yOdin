@@ -160,6 +160,7 @@ export default function FeedScreen({ navigation }: any) {
       case 'news': return colors.primary;
       case 'events': return colors.accent;
       case 'places': return colors.success;
+      default: return colors.textSecondary;
     }
   }
 
@@ -278,7 +279,7 @@ export default function FeedScreen({ navigation }: any) {
           {(['all', 'mine'] as const).map((f) => {
             const active = natFilter === f;
             const label = f === 'all'
-              ? t('categories.all')
+              ? `🌍 ${t('feed.allNations')}`
               : `${getFlagEmoji(profile?.countryCode ?? '')} ${profile?.nationality ?? ''}`;
             return (
               <TouchableOpacity
@@ -329,6 +330,10 @@ export default function FeedScreen({ navigation }: any) {
         postId={detailPostId}
         startWithComments={detailWithComments}
         onClose={() => setDetailVisible(false)}
+        onOpenProfile={(userId) => {
+          setDetailVisible(false);
+          setTimeout(() => navigation.navigate('UserProfile', { userId }), 250);
+        }}
       />
     </View>
   );

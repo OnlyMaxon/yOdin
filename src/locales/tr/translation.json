@@ -27,7 +27,8 @@
     "empty": "Henüz tartışma yok. İlk siz olun!",
     "replies_one": "{{count}} yanıt",
     "replies_other": "{{count}} yanıt",
-    "emptyPosts": "Henüz gönderi yok. İlk sen ol!"
+    "emptyPosts": "Henüz gönderi yok. İlk sen ol!",
+    "allNations": "Tüm milletler"
   },
   "discussion": {
     "title": "Tartışma",

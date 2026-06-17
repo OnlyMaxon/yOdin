@@ -288,7 +288,7 @@ export default function ForumScreen({ navigation }: any) {
         {(['all', 'mine'] as const).map((f) => {
           const active = natFilter === f;
           const label = f === 'all'
-            ? t('categories.all')
+            ? `🌍 ${t('feed.allNations')}`
             : `${getFlagEmoji(profile?.countryCode ?? '')} ${profile?.nationality ?? ''}`;
           return (
             <TouchableOpacity

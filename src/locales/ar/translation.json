@@ -31,7 +31,8 @@
     "replies_few": "{{count}} ردود",
     "replies_many": "{{count}} ردًا",
     "replies_other": "{{count}} ردود",
-    "emptyPosts": "لا توجد منشورات بعد. كن أول من ينشر!"
+    "emptyPosts": "لا توجد منشورات بعد. كن أول من ينشر!",
+    "allNations": "كل الجنسيات"
   },
   "discussion": {
     "title": "نقاش",

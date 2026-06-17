@@ -39,9 +39,11 @@ interface Props {
   onClose: () => void;
   // Used when the post isn't in the feed store (e.g. opened from the profile).
   fallbackPost?: Post | null;
+  // Navigate to a user's profile (parent closes the modal then navigates).
+  onOpenProfile?: (userId: string) => void;
 }
 
-export default function PostDetailModal({ visible, postId, startWithComments, onClose, fallbackPost }: Props) {
+export default function PostDetailModal({ visible, postId, startWithComments, onClose, fallbackPost, onOpenProfile }: Props) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -154,15 +156,24 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
     const initials = item.authorName?.split(' ').map((w) => w[0]).join('').toUpperCase() ?? '?';
     return (
       <View style={styles.commentRow}>
-        <View style={styles.commentAvatar}>
+        <TouchableOpacity
+          style={styles.commentAvatar}
+          activeOpacity={onOpenProfile ? 0.7 : 1}
+          disabled={!onOpenProfile}
+          onPress={() => item.authorId && onOpenProfile?.(item.authorId)}
+        >
           {item.authorPhoto ? (
             <Image source={{ uri: item.authorPhoto }} style={styles.commentAvatarImg} />
           ) : (
             <Text style={styles.commentAvatarText}>{initials}</Text>
           )}
-        </View>
+        </TouchableOpacity>
         <View style={styles.commentBody}>
-          <Text style={styles.commentAuthor}>
+          <Text
+            style={styles.commentAuthor}
+            onPress={() => item.authorId && onOpenProfile?.(item.authorId)}
+            suppressHighlighting
+          >
             {item.authorName}  {getFlagEmoji(item.authorCountryCode)}
           </Text>
           <Text style={styles.commentText}>{item.text}</Text>
@@ -203,19 +214,26 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
           >
             <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
               <View style={styles.cardHeader}>
-                <View style={styles.avatar}>
-                  {post.authorPhoto ? (
-                    <Image source={{ uri: post.authorPhoto }} style={styles.avatarImg} />
-                  ) : (
-                    <Text style={styles.avatarText}>{post.authorName?.charAt(0).toUpperCase()}</Text>
-                  )}
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.authorName}>{post.authorName}</Text>
-                  <Text style={styles.authorMeta}>
-                    {getFlagEmoji(post.authorCountryCode)}  {post.authorNationality}
-                  </Text>
-                </View>
+                <TouchableOpacity
+                  style={styles.authorTap}
+                  activeOpacity={onOpenProfile ? 0.7 : 1}
+                  disabled={!onOpenProfile}
+                  onPress={() => post.authorId && onOpenProfile?.(post.authorId)}
+                >
+                  <View style={styles.avatar}>
+                    {post.authorPhoto ? (
+                      <Image source={{ uri: post.authorPhoto }} style={styles.avatarImg} />
+                    ) : (
+                      <Text style={styles.avatarText}>{post.authorName?.charAt(0).toUpperCase()}</Text>
+                    )}
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.authorName}>{post.authorName}</Text>
+                    <Text style={styles.authorMeta}>
+                      {getFlagEmoji(post.authorCountryCode)}  {post.authorNationality}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
                   <Ionicons name="close" size={22} color={colors.textSecondary} />
                 </TouchableOpacity>
@@ -333,6 +351,7 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       elevation: 24,
     },
     cardHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
+    authorTap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 12 },
     avatar: {
       width: 44, height: 44, borderRadius: 22,
       backgroundColor: c.primaryLight, alignItems: 'center', justifyContent: 'center',

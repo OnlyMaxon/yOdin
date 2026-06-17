@@ -34,6 +34,8 @@ export async function createDiscussion(
   return ref.id;
 }
 
+// The forum is global by default: questions from every region and nationality
+// are shown. Pass `nationality` to restrict the forum to a single nationality.
 export async function fetchDiscussions(
   nationality?: string,
   cursor?: DocumentSnapshot,
