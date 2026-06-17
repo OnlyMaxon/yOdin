@@ -19,11 +19,9 @@ export type AlgoliaHit = {
   question: string;
   authorId: string;
   authorName: string;
-  authorPhoto: string;
   authorNationality: string;
   authorCountryCode: string;
   location: string;
-  replyCount: number;
   createdAt: number;
   acceptedReplyId?: string;
   acceptedReplyText?: string;
@@ -48,7 +46,6 @@ export async function searchDiscussions(query: string, nationality?: string): Pr
         'authorNationality',
         'authorCountryCode',
         'location',
-        'replyCount',
         'createdAt',
         'acceptedReplyId',
         'acceptedReplyText',
