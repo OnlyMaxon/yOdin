@@ -4,5 +4,6 @@
 export type AuthStackParamList = {
   Welcome: undefined;
   Register: { mode: 'login' | 'register' };
+  ForgotPassword: undefined;
   Onboarding: undefined;
 };

@@ -20,7 +20,20 @@
     "selectLocation": "选择您的国家...",
     "selectNationalityTitle": "选择国籍",
     "selectLocationTitle": "选择位置",
-    "search": "搜索..."
+    "search": "搜索...",
+    "forgotPassword": "忘记密码？",
+    "resetPasswordTitle": "重置密码",
+    "resetPasswordSubtitle": "输入您的邮箱，我们将发送重置链接。",
+    "sendResetLink": "发送重置链接",
+    "checkInbox": "请查收邮件",
+    "resetEmailSent": "已向 {{email}} 发送密码重置链接",
+    "backToLogin": "返回登录",
+    "verifyEmailTitle": "验证您的邮箱",
+    "verifyEmailSubtitle": "已向 {{email}} 发送验证链接，点击链接激活账户。",
+    "resendEmail": "重新发送",
+    "emailResent": "已发送！",
+    "continueToApp": "进入应用",
+    "openEmailApp": "打开邮件应用"
   },
   "feed": {
     "title": "动态",

@@ -40,6 +40,7 @@ export async function createPost(
     likes: [],
     dislikes: [],
     commentCount: 0,
+    feedScore: 0,
     createdAt: serverTimestamp(),
   };
   if (id) {
@@ -99,7 +100,7 @@ export async function fetchPosts(
   if (category) constraints.push(where('category', '==', category));
   if (nationalities && nationalities.length > 0 && nationalities.length <= 30)
     constraints.push(where('authorNationality', 'in', nationalities));
-  constraints.push(orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
+  constraints.push(orderBy('feedScore', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 
   const snap = await getDocs(query(collection(db, 'posts'), ...constraints));

@@ -20,7 +20,20 @@
     "selectLocation": "Land wählen...",
     "selectNationalityTitle": "Nationalität wählen",
     "selectLocationTitle": "Standort wählen",
-    "search": "Suchen..."
+    "search": "Suchen...",
+    "forgotPassword": "Passwort vergessen?",
+    "resetPasswordTitle": "Passwort zurücksetzen",
+    "resetPasswordSubtitle": "Gib deine E-Mail ein und wir senden dir einen Reset-Link.",
+    "sendResetLink": "Reset-Link senden",
+    "checkInbox": "Überprüfe dein Postfach",
+    "resetEmailSent": "Wir haben einen Passwort-Reset-Link an {{email}} gesendet",
+    "backToLogin": "Zurück zum Login",
+    "verifyEmailTitle": "E-Mail bestätigen",
+    "verifyEmailSubtitle": "Wir haben einen Bestätigungslink an {{email}} gesendet. Tippe auf den Link, um dein Konto zu aktivieren.",
+    "resendEmail": "E-Mail erneut senden",
+    "emailResent": "Gesendet!",
+    "continueToApp": "Weiter zur App",
+    "openEmailApp": "E-Mail-App öffnen"
   },
   "feed": {
     "title": "Feed",

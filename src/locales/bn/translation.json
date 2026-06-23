@@ -20,7 +20,20 @@
     "selectLocation": "আপনার দেশ নির্বাচন করুন...",
     "selectNationalityTitle": "জাতীয়তা নির্বাচন করুন",
     "selectLocationTitle": "অবস্থান নির্বাচন করুন",
-    "search": "অনুসন্ধান..."
+    "search": "অনুসন্ধান...",
+    "forgotPassword": "পাসওয়ার্ড ভুলে গেছেন?",
+    "resetPasswordTitle": "পাসওয়ার্ড রিসেট করুন",
+    "resetPasswordSubtitle": "আপনার ইমেইল দিন, আমরা একটি রিসেট লিঙ্ক পাঠাব।",
+    "sendResetLink": "রিসেট লিঙ্ক পাঠান",
+    "checkInbox": "ইনবক্স চেক করুন",
+    "resetEmailSent": "{{email}}-এ পাসওয়ার্ড রিসেট লিঙ্ক পাঠানো হয়েছে",
+    "backToLogin": "লগইনে ফিরে যান",
+    "verifyEmailTitle": "আপনার ইমেইল যাচাই করুন",
+    "verifyEmailSubtitle": "{{email}}-এ একটি যাচাইকরণ লিঙ্ক পাঠানো হয়েছে। অ্যাকাউন্ট সক্রিয় করতে লিঙ্কে ট্যাপ করুন।",
+    "resendEmail": "ইমেইল পুনরায় পাঠান",
+    "emailResent": "পাঠানো হয়েছে!",
+    "continueToApp": "অ্যাপে চালিয়ে যান",
+    "openEmailApp": "ইমেইল অ্যাপ খুলুন"
   },
   "feed": {
     "title": "ফিড",

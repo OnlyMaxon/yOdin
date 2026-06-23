@@ -20,7 +20,20 @@
     "selectLocation": "Seleziona il tuo paese...",
     "selectNationalityTitle": "Seleziona Nazionalità",
     "selectLocationTitle": "Seleziona Posizione",
-    "search": "Cerca..."
+    "search": "Cerca...",
+    "forgotPassword": "Password dimenticata?",
+    "resetPasswordTitle": "Reimposta password",
+    "resetPasswordSubtitle": "Inserisci la tua email e ti invieremo un link di reimpostazione.",
+    "sendResetLink": "Invia link",
+    "checkInbox": "Controlla la tua casella",
+    "resetEmailSent": "Abbiamo inviato un link per reimpostare la password a {{email}}",
+    "backToLogin": "Torna al login",
+    "verifyEmailTitle": "Verifica la tua email",
+    "verifyEmailSubtitle": "Abbiamo inviato un link di verifica a {{email}}. Tocca il link per attivare il tuo account.",
+    "resendEmail": "Reinvia email",
+    "emailResent": "Inviato!",
+    "continueToApp": "Continua all'app",
+    "openEmailApp": "Apri app email"
   },
   "feed": {
     "title": "Feed",

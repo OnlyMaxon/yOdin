@@ -20,7 +20,20 @@
     "selectLocation": "अपना देश चुनें...",
     "selectNationalityTitle": "राष्ट्रीयता चुनें",
     "selectLocationTitle": "स्थान चुनें",
-    "search": "खोजें..."
+    "search": "खोजें...",
+    "forgotPassword": "पासवर्ड भूल गए?",
+    "resetPasswordTitle": "पासवर्ड रीसेट करें",
+    "resetPasswordSubtitle": "अपना ईमेल दर्ज करें, हम रीसेट लिंक भेजेंगे।",
+    "sendResetLink": "रीसेट लिंक भेजें",
+    "checkInbox": "इनबॉक्स जांचें",
+    "resetEmailSent": "{{email}} पर पासवर्ड रीसेट लिंक भेजा गया",
+    "backToLogin": "लॉगिन पर वापस जाएं",
+    "verifyEmailTitle": "ईमेल सत्यापित करें",
+    "verifyEmailSubtitle": "{{email}} पर सत्यापन लिंक भेजा गया। खाता सक्रिय करने के लिए लिंक पर टैप करें।",
+    "resendEmail": "ईमेल पुनः भेजें",
+    "emailResent": "भेजा गया!",
+    "continueToApp": "ऐप में जाएं",
+    "openEmailApp": "ईमेल ऐप खोलें"
   },
   "feed": {
     "title": "फ़ीड",

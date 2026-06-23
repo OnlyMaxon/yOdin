@@ -20,7 +20,20 @@
     "selectLocation": "Välj ditt land...",
     "selectNationalityTitle": "Välj nationalitet",
     "selectLocationTitle": "Välj plats",
-    "search": "Sök..."
+    "search": "Sök...",
+    "forgotPassword": "Glömt lösenordet?",
+    "resetPasswordTitle": "Återställ lösenord",
+    "resetPasswordSubtitle": "Ange din e-post så skickar vi en återställningslänk.",
+    "sendResetLink": "Skicka länk",
+    "checkInbox": "Kolla din inkorg",
+    "resetEmailSent": "Vi skickade en länk för lösenordsåterställning till {{email}}",
+    "backToLogin": "Tillbaka till inloggning",
+    "verifyEmailTitle": "Verifiera din e-post",
+    "verifyEmailSubtitle": "Vi skickade en verifieringslänk till {{email}}. Tryck på länken för att aktivera ditt konto.",
+    "resendEmail": "Skicka om e-post",
+    "emailResent": "Skickat!",
+    "continueToApp": "Fortsätt till appen",
+    "openEmailApp": "Öppna e-postapp"
   },
   "feed": {
     "title": "Flöde",

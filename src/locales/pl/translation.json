@@ -20,7 +20,20 @@
     "selectLocation": "Wybierz kraj...",
     "selectNationalityTitle": "Wybierz narodowość",
     "selectLocationTitle": "Wybierz lokalizację",
-    "search": "Szukaj..."
+    "search": "Szukaj...",
+    "forgotPassword": "Zapomniałeś hasła?",
+    "resetPasswordTitle": "Resetuj hasło",
+    "resetPasswordSubtitle": "Podaj swój e-mail, a wyślemy Ci link resetujący.",
+    "sendResetLink": "Wyślij link",
+    "checkInbox": "Sprawdź skrzynkę",
+    "resetEmailSent": "Wysłaliśmy link resetujący hasło na {{email}}",
+    "backToLogin": "Wróć do logowania",
+    "verifyEmailTitle": "Zweryfikuj swój e-mail",
+    "verifyEmailSubtitle": "Wysłaliśmy link weryfikacyjny na {{email}}. Kliknij link, aby aktywować konto.",
+    "resendEmail": "Wyślij ponownie",
+    "emailResent": "Wysłano!",
+    "continueToApp": "Przejdź do aplikacji",
+    "openEmailApp": "Otwórz aplikację pocztową"
   },
   "feed": {
     "title": "Feed",

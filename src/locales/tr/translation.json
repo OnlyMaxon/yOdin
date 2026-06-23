@@ -20,7 +20,20 @@
     "selectLocation": "Ülkenizi seçin...",
     "selectNationalityTitle": "Milliyet Seçin",
     "selectLocationTitle": "Konum Seçin",
-    "search": "Ara..."
+    "search": "Ara...",
+    "forgotPassword": "Şifremi Unuttum",
+    "resetPasswordTitle": "Şifre Sıfırla",
+    "resetPasswordSubtitle": "E-postanı gir, sıfırlama bağlantısı gönderelim.",
+    "sendResetLink": "Bağlantı Gönder",
+    "checkInbox": "Gelen Kutunu Kontrol Et",
+    "resetEmailSent": "{{email}} adresine şifre sıfırlama bağlantısı gönderdik",
+    "backToLogin": "Girişe Dön",
+    "verifyEmailTitle": "E-Postanı Doğrula",
+    "verifyEmailSubtitle": "{{email}} adresine doğrulama bağlantısı gönderdik. Hesabını etkinleştirmek için bağlantıya dokun.",
+    "resendEmail": "Tekrar Gönder",
+    "emailResent": "Gönderildi!",
+    "continueToApp": "Uygulamaya Devam Et",
+    "openEmailApp": "E-Posta Uygulamasını Aç"
   },
   "feed": {
     "title": "Akış",

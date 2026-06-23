@@ -20,7 +20,20 @@
     "selectLocation": "Pilih negara Anda...",
     "selectNationalityTitle": "Pilih Kebangsaan",
     "selectLocationTitle": "Pilih Lokasi",
-    "search": "Cari..."
+    "search": "Cari...",
+    "forgotPassword": "Lupa Kata Sandi?",
+    "resetPasswordTitle": "Atur Ulang Kata Sandi",
+    "resetPasswordSubtitle": "Masukkan email Anda dan kami akan mengirim tautan pengaturan ulang.",
+    "sendResetLink": "Kirim Tautan",
+    "checkInbox": "Periksa Kotak Masuk",
+    "resetEmailSent": "Kami telah mengirim tautan pengaturan ulang kata sandi ke {{email}}",
+    "backToLogin": "Kembali ke Login",
+    "verifyEmailTitle": "Verifikasi Email Anda",
+    "verifyEmailSubtitle": "Kami mengirim tautan verifikasi ke {{email}}. Ketuk tautan untuk mengaktifkan akun Anda.",
+    "resendEmail": "Kirim Ulang Email",
+    "emailResent": "Terkirim!",
+    "continueToApp": "Lanjutkan ke Aplikasi",
+    "openEmailApp": "Buka Aplikasi Email"
   },
   "feed": {
     "title": "Beranda",

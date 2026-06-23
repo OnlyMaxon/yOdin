@@ -20,7 +20,20 @@
     "selectLocation": "کشورتان را انتخاب کنید...",
     "selectNationalityTitle": "انتخاب ملیت",
     "selectLocationTitle": "انتخاب موقعیت",
-    "search": "جستجو..."
+    "search": "جستجو...",
+    "forgotPassword": "رمز عبور را فراموش کردید؟",
+    "resetPasswordTitle": "بازنشانی رمز عبور",
+    "resetPasswordSubtitle": "ایمیل خود را وارد کنید تا لینک بازنشانی ارسال کنیم.",
+    "sendResetLink": "ارسال لینک",
+    "checkInbox": "صندوق ورودی را بررسی کنید",
+    "resetEmailSent": "لینک بازنشانی رمز عبور به {{email}} ارسال شد",
+    "backToLogin": "بازگشت به ورود",
+    "verifyEmailTitle": "ایمیل خود را تأیید کنید",
+    "verifyEmailSubtitle": "لینک تأیید به {{email}} ارسال شد. برای فعال‌سازی حساب روی لینک ضربه بزنید.",
+    "resendEmail": "ارسال مجدد",
+    "emailResent": "ارسال شد!",
+    "continueToApp": "ادامه به برنامه",
+    "openEmailApp": "باز کردن برنامه ایمیل"
   },
   "feed": {
     "title": "فید",

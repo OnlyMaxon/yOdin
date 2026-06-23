@@ -20,7 +20,20 @@
     "selectLocation": "Select your country...",
     "selectNationalityTitle": "Select Nationality",
     "selectLocationTitle": "Select Location",
-    "search": "Search..."
+    "search": "Search...",
+    "forgotPassword": "Forgot Password?",
+    "resetPasswordTitle": "Reset Password",
+    "resetPasswordSubtitle": "Enter your email and we'll send you a reset link.",
+    "sendResetLink": "Send Reset Link",
+    "checkInbox": "Check Your Inbox",
+    "resetEmailSent": "We sent a password reset link to {{email}}",
+    "backToLogin": "Back to Log In",
+    "verifyEmailTitle": "Verify Your Email",
+    "verifyEmailSubtitle": "We sent a verification link to {{email}}. Tap the link to activate your account.",
+    "resendEmail": "Resend Email",
+    "emailResent": "Sent!",
+    "continueToApp": "Continue to App",
+    "openEmailApp": "Open Email App"
   },
   "feed": {
     "title": "Feed",

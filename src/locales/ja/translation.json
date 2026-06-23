@@ -20,7 +20,20 @@
     "selectLocation": "国を選択...",
     "selectNationalityTitle": "国籍を選択",
     "selectLocationTitle": "場所を選択",
-    "search": "検索..."
+    "search": "検索...",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "resetPasswordTitle": "パスワードをリセット",
+    "resetPasswordSubtitle": "メールアドレスを入力してください。リセットリンクをお送りします。",
+    "sendResetLink": "リセットリンクを送信",
+    "checkInbox": "メールをご確認ください",
+    "resetEmailSent": "{{email}} にパスワードリセットリンクを送信しました",
+    "backToLogin": "ログインに戻る",
+    "verifyEmailTitle": "メールを確認してください",
+    "verifyEmailSubtitle": "{{email}} に確認リンクを送信しました。リンクをタップしてアカウントを有効化してください。",
+    "resendEmail": "再送信",
+    "emailResent": "送信しました！",
+    "continueToApp": "アプリを続ける",
+    "openEmailApp": "メールアプリを開く"
   },
   "feed": {
     "title": "フィード",

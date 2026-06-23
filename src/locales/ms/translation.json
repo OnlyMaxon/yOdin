@@ -20,7 +20,20 @@
     "selectLocation": "Pilih negara anda...",
     "selectNationalityTitle": "Pilih Kewarganegaraan",
     "selectLocationTitle": "Pilih Lokasi",
-    "search": "Cari..."
+    "search": "Cari...",
+    "forgotPassword": "Lupa Kata Laluan?",
+    "resetPasswordTitle": "Tetapkan Semula Kata Laluan",
+    "resetPasswordSubtitle": "Masukkan e-mel anda dan kami akan menghantar pautan tetapan semula.",
+    "sendResetLink": "Hantar Pautan",
+    "checkInbox": "Semak Peti Masuk",
+    "resetEmailSent": "Kami telah menghantar pautan tetapan semula kata laluan ke {{email}}",
+    "backToLogin": "Kembali ke Log Masuk",
+    "verifyEmailTitle": "Sahkan E-mel Anda",
+    "verifyEmailSubtitle": "Kami menghantar pautan pengesahan ke {{email}}. Ketik pautan untuk mengaktifkan akaun anda.",
+    "resendEmail": "Hantar Semula E-mel",
+    "emailResent": "Dihantar!",
+    "continueToApp": "Teruskan ke Aplikasi",
+    "openEmailApp": "Buka Aplikasi E-mel"
   },
   "feed": {
     "title": "Suapan",

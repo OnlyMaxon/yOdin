@@ -64,6 +64,10 @@ export const onDiscussionUpdated = onDocumentUpdated(
 
     if (before.replyCount !== after.replyCount) {
       updates.replyCount = after.replyCount;
+      const newFeedScore = (after.replyCount ?? 0) * 2;
+      if ((before.feedScore ?? 0) !== newFeedScore) {
+        await db.doc(`discussions/${event.params.docId}`).update({ feedScore: newFeedScore });
+      }
     }
     if (after.acceptedReplyId && before.acceptedReplyId !== after.acceptedReplyId) {
       updates.acceptedReplyId = after.acceptedReplyId;
@@ -93,5 +97,24 @@ export const onDiscussionUpdated = onDocumentUpdated(
       objectID: event.params.docId,
       attributesToUpdate: updates,
     });
+  },
+);
+
+// Post liked or commented → recompute feedScore server-side
+export const onPostUpdated = onDocumentUpdated(
+  { document: 'posts/{docId}' },
+  async (event) => {
+    const before = event.data?.before.data();
+    const after = event.data?.after.data();
+    if (!before || !after) return;
+
+    const likesChanged = (before.likes?.length ?? 0) !== (after.likes?.length ?? 0);
+    const commentCountChanged = (before.commentCount ?? 0) !== (after.commentCount ?? 0);
+    if (!likesChanged && !commentCountChanged) return;
+
+    const newFeedScore = (after.likes?.length ?? 0) * 3 + (after.commentCount ?? 0) * 2;
+    if ((before.feedScore ?? 0) !== newFeedScore) {
+      await db.doc(`posts/${event.params.docId}`).update({ feedScore: newFeedScore });
+    }
   },
 );

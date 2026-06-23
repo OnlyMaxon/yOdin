@@ -20,7 +20,20 @@
     "selectLocation": "Chọn quốc gia của bạn...",
     "selectNationalityTitle": "Chọn quốc tịch",
     "selectLocationTitle": "Chọn vị trí",
-    "search": "Tìm kiếm..."
+    "search": "Tìm kiếm...",
+    "forgotPassword": "Quên mật khẩu?",
+    "resetPasswordTitle": "Đặt lại mật khẩu",
+    "resetPasswordSubtitle": "Nhập email của bạn và chúng tôi sẽ gửi liên kết đặt lại.",
+    "sendResetLink": "Gửi liên kết",
+    "checkInbox": "Kiểm tra hộp thư",
+    "resetEmailSent": "Chúng tôi đã gửi liên kết đặt lại mật khẩu đến {{email}}",
+    "backToLogin": "Quay lại đăng nhập",
+    "verifyEmailTitle": "Xác minh email của bạn",
+    "verifyEmailSubtitle": "Chúng tôi đã gửi liên kết xác minh đến {{email}}. Nhấn vào liên kết để kích hoạt tài khoản.",
+    "resendEmail": "Gửi lại email",
+    "emailResent": "Đã gửi!",
+    "continueToApp": "Tiếp tục vào ứng dụng",
+    "openEmailApp": "Mở ứng dụng email"
   },
   "feed": {
     "title": "Bảng tin",

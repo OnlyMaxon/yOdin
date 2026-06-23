@@ -20,7 +20,20 @@
     "selectLocation": "Выберите страну...",
     "selectNationalityTitle": "Выбор национальности",
     "selectLocationTitle": "Выбор страны",
-    "search": "Поиск..."
+    "search": "Поиск...",
+    "forgotPassword": "Забыли пароль?",
+    "resetPasswordTitle": "Сброс пароля",
+    "resetPasswordSubtitle": "Введите email и мы отправим ссылку для сброса пароля.",
+    "sendResetLink": "Отправить ссылку",
+    "checkInbox": "Проверьте почту",
+    "resetEmailSent": "Мы отправили ссылку для сброса пароля на {{email}}",
+    "backToLogin": "Вернуться ко входу",
+    "verifyEmailTitle": "Подтвердите email",
+    "verifyEmailSubtitle": "Мы отправили ссылку для подтверждения на {{email}}. Нажмите на ссылку, чтобы активировать аккаунт.",
+    "resendEmail": "Отправить снова",
+    "emailResent": "Отправлено!",
+    "continueToApp": "Продолжить",
+    "openEmailApp": "Открыть почту"
   },
   "feed": {
     "title": "Лента",

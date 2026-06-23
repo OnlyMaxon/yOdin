@@ -20,7 +20,20 @@
     "selectLocation": "Ölkəni seçin...",
     "selectNationalityTitle": "Milliyyət seçin",
     "selectLocationTitle": "Ölkə seçin",
-    "search": "Axtar..."
+    "search": "Axtar...",
+    "forgotPassword": "Şifrəni unutmusunuz?",
+    "resetPasswordTitle": "Şifrəni sıfırla",
+    "resetPasswordSubtitle": "Email daxil edin, sıfırlama linki göndərəcəyik.",
+    "sendResetLink": "Link göndər",
+    "checkInbox": "Poçtunuzu yoxlayın",
+    "resetEmailSent": "{{email}} ünvanına şifrə sıfırlama linki göndərdik",
+    "backToLogin": "Girişə qayıt",
+    "verifyEmailTitle": "Emailinizi təsdiqləyin",
+    "verifyEmailSubtitle": "{{email}} ünvanına təsdiq linki göndərdik. Hesabı aktivləşdirmək üçün linkə klikləyin.",
+    "resendEmail": "Yenidən göndər",
+    "emailResent": "Göndərildi!",
+    "continueToApp": "Tətbiqə keçin",
+    "openEmailApp": "Poçtu aç"
   },
   "feed": {
     "title": "Lent",

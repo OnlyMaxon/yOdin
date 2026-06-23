@@ -35,7 +35,7 @@ export async function createDiscussion(
   data: Omit<Discussion, 'id' | 'createdAt' | 'replyCount'>,
   id?: string,
 ): Promise<string> {
-  const payload = { ...data, replyCount: 0, createdAt: serverTimestamp() };
+  const payload = { ...data, replyCount: 0, feedScore: 0, createdAt: serverTimestamp() };
   if (id) {
     await setDoc(doc(db, 'discussions', id), payload);
     return id;
@@ -54,7 +54,7 @@ export async function fetchDiscussions(
   const constraints: QueryConstraint[] = [];
   if (nationalities && nationalities.length > 0 && nationalities.length <= 30)
     constraints.push(where('authorNationality', 'in', nationalities));
-  constraints.push(orderBy('createdAt', 'desc'), limit(PAGE_SIZE));
+  constraints.push(orderBy('feedScore', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 
   const snap = await getDocs(query(collection(db, 'discussions'), ...constraints));

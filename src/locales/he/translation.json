@@ -20,7 +20,20 @@
     "selectLocation": "בחר את המדינה שלך...",
     "selectNationalityTitle": "בחר לאום",
     "selectLocationTitle": "בחר מיקום",
-    "search": "חיפוש..."
+    "search": "חיפוש...",
+    "forgotPassword": "שכחת את הסיסמה?",
+    "resetPasswordTitle": "איפוס סיסמה",
+    "resetPasswordSubtitle": "הכנס את כתובת המייל שלך ונשלח לך קישור לאיפוס.",
+    "sendResetLink": "שלח קישור",
+    "checkInbox": "בדוק את תיבת הדואר",
+    "resetEmailSent": "שלחנו קישור לאיפוס סיסמה אל {{email}}",
+    "backToLogin": "חזרה להתחברות",
+    "verifyEmailTitle": "אמת את כתובת המייל",
+    "verifyEmailSubtitle": "שלחנו קישור אימות אל {{email}}. הקש על הקישור להפעלת החשבון.",
+    "resendEmail": "שלח שוב",
+    "emailResent": "נשלח!",
+    "continueToApp": "המשך לאפליקציה",
+    "openEmailApp": "פתח אפליקציית דואר"
   },
   "feed": {
     "title": "פיד",

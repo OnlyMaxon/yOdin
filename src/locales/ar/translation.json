@@ -20,7 +20,20 @@
     "selectLocation": "اختر بلدك...",
     "selectNationalityTitle": "اختر الجنسية",
     "selectLocationTitle": "اختر الموقع",
-    "search": "بحث..."
+    "search": "بحث...",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "resetPasswordTitle": "إعادة تعيين كلمة المرور",
+    "resetPasswordSubtitle": "أدخل بريدك الإلكتروني وسنرسل لك رابط إعادة التعيين.",
+    "sendResetLink": "إرسال الرابط",
+    "checkInbox": "تحقق من بريدك",
+    "resetEmailSent": "أرسلنا رابط إعادة تعيين كلمة المرور إلى {{email}}",
+    "backToLogin": "العودة إلى تسجيل الدخول",
+    "verifyEmailTitle": "تحقق من بريدك الإلكتروني",
+    "verifyEmailSubtitle": "أرسلنا رابط التحقق إلى {{email}}. انقر على الرابط لتفعيل حسابك.",
+    "resendEmail": "إعادة الإرسال",
+    "emailResent": "تم الإرسال!",
+    "continueToApp": "متابعة إلى التطبيق",
+    "openEmailApp": "فتح تطبيق البريد"
   },
   "feed": {
     "title": "الرئيسية",

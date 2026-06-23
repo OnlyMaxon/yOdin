@@ -20,7 +20,20 @@
     "selectLocation": "Selecteer jouw land...",
     "selectNationalityTitle": "Selecteer Nationaliteit",
     "selectLocationTitle": "Selecteer Locatie",
-    "search": "Zoeken..."
+    "search": "Zoeken...",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "resetPasswordTitle": "Wachtwoord opnieuw instellen",
+    "resetPasswordSubtitle": "Voer je e-mailadres in en we sturen je een resetlink.",
+    "sendResetLink": "Resetlink sturen",
+    "checkInbox": "Controleer je inbox",
+    "resetEmailSent": "We hebben een wachtwoord resetlink gestuurd naar {{email}}",
+    "backToLogin": "Terug naar inloggen",
+    "verifyEmailTitle": "Verifieer je e-mail",
+    "verifyEmailSubtitle": "We hebben een verificatielink gestuurd naar {{email}}. Tik op de link om je account te activeren.",
+    "resendEmail": "E-mail opnieuw sturen",
+    "emailResent": "Verstuurd!",
+    "continueToApp": "Doorgaan naar app",
+    "openEmailApp": "E-mailapp openen"
   },
   "feed": {
     "title": "Feed",

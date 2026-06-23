@@ -20,7 +20,20 @@
     "selectLocation": "เลือกประเทศของคุณ...",
     "selectNationalityTitle": "เลือกสัญชาติ",
     "selectLocationTitle": "เลือกที่อยู่",
-    "search": "ค้นหา..."
+    "search": "ค้นหา...",
+    "forgotPassword": "ลืมรหัสผ่าน?",
+    "resetPasswordTitle": "รีเซ็ตรหัสผ่าน",
+    "resetPasswordSubtitle": "กรอกอีเมลของคุณ เราจะส่งลิงก์รีเซ็ตให้คุณ",
+    "sendResetLink": "ส่งลิงก์รีเซ็ต",
+    "checkInbox": "ตรวจสอบกล่องจดหมาย",
+    "resetEmailSent": "เราส่งลิงก์รีเซ็ตรหัสผ่านไปที่ {{email}} แล้ว",
+    "backToLogin": "กลับไปเข้าสู่ระบบ",
+    "verifyEmailTitle": "ยืนยันอีเมลของคุณ",
+    "verifyEmailSubtitle": "เราส่งลิงก์ยืนยันไปที่ {{email}} แล้ว แตะลิงก์เพื่อเปิดใช้งานบัญชีของคุณ",
+    "resendEmail": "ส่งอีเมลอีกครั้ง",
+    "emailResent": "ส่งแล้ว!",
+    "continueToApp": "ดำเนินการต่อในแอป",
+    "openEmailApp": "เปิดแอปอีเมล"
   },
   "feed": {
     "title": "ฟีด",

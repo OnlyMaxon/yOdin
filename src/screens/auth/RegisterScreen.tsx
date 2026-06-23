@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { registerUser, loginUser } from '../../services/authService';
+import { useAuthStore } from '../../store/useAuthStore';
 import { getErrorMessage } from '../../services/errorHandler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../hooks/useTheme';
@@ -32,6 +33,7 @@ export default function RegisterScreen({ navigation, route }: any) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const setPendingEmailVerification = useAuthStore((s) => s.setPendingEmailVerification);
 
   async function handleSubmit() {
     setError('');
@@ -43,6 +45,7 @@ export default function RegisterScreen({ navigation, route }: any) {
     try {
       if (mode === 'register') {
         await registerUser(email.trim(), password, firstName.trim(), lastName.trim());
+        setPendingEmailVerification(true);
       } else {
         await loginUser(email.trim(), password);
       }
@@ -105,6 +108,15 @@ export default function RegisterScreen({ navigation, route }: any) {
           onChangeText={setPassword}
           secureTextEntry
         />
+
+        {mode === 'login' && (
+          <TouchableOpacity
+            style={styles.forgotWrap}
+            onPress={() => navigation.navigate('ForgotPassword')}
+          >
+            <Text style={styles.forgotText}>{t('auth.forgotPassword')}</Text>
+          </TouchableOpacity>
+        )}
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
@@ -181,6 +193,12 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     switchMode: { alignItems: 'center', marginTop: 20 },
     switchText: {
+      color: c.primary,
+      fontSize: Typography.fontSizeSM,
+      fontWeight: Typography.fontWeightMedium,
+    },
+    forgotWrap: { alignSelf: 'flex-end', marginBottom: 4 },
+    forgotText: {
       color: c.primary,
       fontSize: Typography.fontSizeSM,
       fontWeight: Typography.fontWeightMedium,

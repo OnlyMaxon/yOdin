@@ -20,7 +20,20 @@
     "selectLocation": "Vyberte zemi...",
     "selectNationalityTitle": "Vyberte národnost",
     "selectLocationTitle": "Vyberte polohu",
-    "search": "Hledat..."
+    "search": "Hledat...",
+    "forgotPassword": "Zapomněli jste heslo?",
+    "resetPasswordTitle": "Obnovit heslo",
+    "resetPasswordSubtitle": "Zadejte svůj e-mail a pošleme vám odkaz pro obnovení.",
+    "sendResetLink": "Odeslat odkaz",
+    "checkInbox": "Zkontrolujte doručenou poštu",
+    "resetEmailSent": "Odeslali jsme odkaz pro obnovení hesla na {{email}}",
+    "backToLogin": "Zpět na přihlášení",
+    "verifyEmailTitle": "Ověřte svůj e-mail",
+    "verifyEmailSubtitle": "Odeslali jsme ověřovací odkaz na {{email}}. Klepnutím na odkaz aktivujete svůj účet.",
+    "resendEmail": "Znovu odeslat e-mail",
+    "emailResent": "Odesláno!",
+    "continueToApp": "Pokračovat do aplikace",
+    "openEmailApp": "Otevřít e-mailovou aplikaci"
   },
   "feed": {
     "title": "Přehled",

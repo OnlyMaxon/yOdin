@@ -20,7 +20,20 @@
     "selectLocation": "Оберіть країну...",
     "selectNationalityTitle": "Оберіть національність",
     "selectLocationTitle": "Оберіть місцезнаходження",
-    "search": "Пошук..."
+    "search": "Пошук...",
+    "forgotPassword": "Забули пароль?",
+    "resetPasswordTitle": "Скинути пароль",
+    "resetPasswordSubtitle": "Введіть email і ми надішлемо посилання для скидання пароля.",
+    "sendResetLink": "Надіслати посилання",
+    "checkInbox": "Перевірте пошту",
+    "resetEmailSent": "Ми надіслали посилання для скидання пароля на {{email}}",
+    "backToLogin": "Повернутися до входу",
+    "verifyEmailTitle": "Підтвердіть email",
+    "verifyEmailSubtitle": "Ми надіслали посилання для підтвердження на {{email}}. Натисніть посилання, щоб активувати акаунт.",
+    "resendEmail": "Надіслати знову",
+    "emailResent": "Надіслано!",
+    "continueToApp": "Продовжити",
+    "openEmailApp": "Відкрити пошту"
   },
   "feed": {
     "title": "Стрічка",

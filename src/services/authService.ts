@@ -3,6 +3,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  sendPasswordResetEmail,
+  sendEmailVerification,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from './firebase';
@@ -16,6 +18,7 @@ export async function registerUser(
 ): Promise<void> {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   await updateProfile(user, { displayName: `${firstName} ${lastName}` });
+  await sendEmailVerification(user);
   // Email is intentionally NOT stored here: the users doc is world-readable by
   // any authenticated user, and the email already lives in Firebase Auth.
   await setDoc(doc(db, 'users', user.uid), {
@@ -48,4 +51,13 @@ export async function getUserProfile(uid: string): Promise<User | null> {
 
 export async function updateUserProfile(uid: string, data: Partial<User>): Promise<void> {
   await setDoc(doc(db, 'users', uid), data, { merge: true });
+}
+
+export async function resetPassword(email: string): Promise<void> {
+  await sendPasswordResetEmail(auth, email);
+}
+
+export async function resendVerificationEmail(): Promise<void> {
+  const user = auth.currentUser;
+  if (user) await sendEmailVerification(user);
 }

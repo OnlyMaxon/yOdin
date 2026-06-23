@@ -20,7 +20,20 @@
     "selectLocation": "Selectează țara...",
     "selectNationalityTitle": "Selectează Naționalitatea",
     "selectLocationTitle": "Selectează Locația",
-    "search": "Caută..."
+    "search": "Caută...",
+    "forgotPassword": "Ai uitat parola?",
+    "resetPasswordTitle": "Resetează parola",
+    "resetPasswordSubtitle": "Introdu adresa de e-mail și îți vom trimite un link de resetare.",
+    "sendResetLink": "Trimite link",
+    "checkInbox": "Verifică-ți căsuța poștală",
+    "resetEmailSent": "Am trimis un link de resetare a parolei la {{email}}",
+    "backToLogin": "Înapoi la autentificare",
+    "verifyEmailTitle": "Verifică-ți e-mailul",
+    "verifyEmailSubtitle": "Am trimis un link de verificare la {{email}}. Atinge link-ul pentru a-ți activa contul.",
+    "resendEmail": "Retrimite e-mail",
+    "emailResent": "Trimis!",
+    "continueToApp": "Continuă în aplicație",
+    "openEmailApp": "Deschide aplicația de e-mail"
   },
   "feed": {
     "title": "Flux",

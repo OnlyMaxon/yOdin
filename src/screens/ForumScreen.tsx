@@ -124,7 +124,9 @@ export default function ForumScreen({ navigation }: any) {
     setLoading(true);
     try {
       const { discussions: data, lastDoc: last } = await fetchDiscussions(selectedNations);
-      const sorted = selectedNations.length === 0 ? weightedSort(data, profile.nationality) : data;
+      const sorted = selectedNations.length === 0
+        ? weightedSort(data, { myNationality: profile.nationality, following: profile.following ?? [] }, (d) => d.replyCount ?? 0)
+        : data;
       setDiscussions(sorted);
       setLastDoc(last);
       setHasMore(data.length === PAGE_SIZE);
@@ -141,7 +143,7 @@ export default function ForumScreen({ navigation }: any) {
     try {
       const { discussions: data, lastDoc: last } = await fetchDiscussions(selectedNations, lastDoc);
       const sorted = selectedNations.length === 0 && profile?.nationality
-        ? weightedSort(data, profile.nationality)
+        ? weightedSort(data, { myNationality: profile.nationality, following: profile.following ?? [] }, (d) => d.replyCount ?? 0)
         : data;
       appendDiscussions(sorted);
       setLastDoc(last);
