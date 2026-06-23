@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "Təsvir",
     "category": "Kateqoriya",
     "addPhoto": "Şəkil əlavə et",
+    "photos": "Şəkillər ({{count}}-ə qədər)",
     "post": "Paylaş"
   },
   "forum": {

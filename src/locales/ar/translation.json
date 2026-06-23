@@ -146,6 +146,7 @@
     "descriptionPlaceholder": "الوصف",
     "category": "الفئة",
     "addPhoto": "إضافة صورة",
+    "photos": "Photos (up to {{count}})",
     "post": "نشر"
   },
   "forum": {

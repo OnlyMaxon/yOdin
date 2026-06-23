@@ -16,9 +16,13 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
-import { createDiscussion } from '../services/discussionService';
+import { createDiscussion, newDiscussionId } from '../services/discussionService';
+import { uploadDiscussionImages } from '../services/storageService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { getErrorMessage } from '../services/errorHandler';
+import PhotoPicker from '../components/PhotoPicker';
+
+const MAX_PHOTOS = 5;
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
@@ -37,6 +41,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
   const { profile } = useAuthStore();
   const { prependDiscussion } = useFeedStore();
   const [question, setQuestion] = useState('');
+  const [images, setImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const slideAnim = useRef(new Animated.Value(600)).current;
@@ -44,6 +49,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
   useEffect(() => {
     if (visible) {
       setQuestion('');
+      setImages([]);
       setError('');
       Animated.spring(slideAnim, {
         toValue: 0,
@@ -67,7 +73,16 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
     setLoading(true);
     setError('');
     try {
-      const id = await createDiscussion({
+      const id = newDiscussionId();
+      let imageURLs: string[] = [];
+      if (images.length > 0) {
+        try {
+          imageURLs = await uploadDiscussionImages(id, images);
+        } catch {
+          // Photo upload failed — post the question without images rather than blocking.
+        }
+      }
+      const data = {
         authorId: profile.uid,
         authorName: `${profile.firstName} ${profile.lastName}`,
         authorPhoto: profile.photoURL ?? '',
@@ -75,19 +90,10 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
         authorCountryCode: profile.countryCode,
         location: profile.location,
         question: question.trim(),
-      });
-      prependDiscussion({
-        id,
-        authorId: profile.uid,
-        authorName: `${profile.firstName} ${profile.lastName}`,
-        authorPhoto: profile.photoURL ?? '',
-        authorNationality: profile.nationality,
-        authorCountryCode: profile.countryCode,
-        location: profile.location,
-        question: question.trim(),
-        createdAt: Date.now(),
-        replyCount: 0,
-      });
+        imageURLs,
+      };
+      await createDiscussion(data, id);
+      prependDiscussion({ id, ...data, createdAt: Date.now(), replyCount: 0 });
       onClose();
     } catch (e) {
       setError(getErrorMessage(e, t));
@@ -151,6 +157,10 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
             </View>
           </View>
 
+          <View style={styles.photoSection}>
+            <PhotoPicker images={images} onChange={setImages} max={MAX_PHOTOS} />
+          </View>
+
           {error ? <Text style={styles.error}>{error}</Text> : null}
 
           <TouchableOpacity
@@ -204,6 +214,7 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     closeBtn: { padding: 4 },
     closeText: { fontSize: 18, color: c.textSecondary },
     body: { flexDirection: 'row', gap: 16, marginBottom: 12 },
+    photoSection: { marginBottom: 16 },
     authorCol: { alignItems: 'center', width: 64 },
     avatar: {
       width: 48,

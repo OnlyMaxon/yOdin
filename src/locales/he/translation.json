@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "תיאור",
     "category": "קטגוריה",
     "addPhoto": "הוספת תמונה",
+    "photos": "Photos (up to {{count}})",
     "post": "פרסום"
   },
   "forum": {

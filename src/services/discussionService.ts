@@ -11,6 +11,7 @@ import {
   DocumentSnapshot,
   serverTimestamp,
   doc,
+  setDoc,
   updateDoc,
   arrayUnion,
   arrayRemove,
@@ -19,19 +20,28 @@ import {
   QueryConstraint,
 } from 'firebase/firestore';
 import { db } from './firebase';
+import { deleteStorageFolder } from './storageService';
 import { Discussion, Reply } from '../types';
 
 const PAGE_SIZE = 15;
 
+// Generate a discussion id up front so photos can be uploaded to its storage
+// path and their URLs written into the document at creation time.
+export function newDiscussionId(): string {
+  return doc(collection(db, 'discussions')).id;
+}
+
 export async function createDiscussion(
   data: Omit<Discussion, 'id' | 'createdAt' | 'replyCount'>,
+  id?: string,
 ): Promise<string> {
-  const ref = await addDoc(collection(db, 'discussions'), {
-    ...data,
-    replyCount: 0,
-    createdAt: serverTimestamp(),
-  });
-  return ref.id;
+  const payload = { ...data, replyCount: 0, createdAt: serverTimestamp() };
+  if (id) {
+    await setDoc(doc(db, 'discussions', id), payload);
+    return id;
+  }
+  const created = await addDoc(collection(db, 'discussions'), payload);
+  return created.id;
 }
 
 // The forum is global by default: questions from every region and nationality
@@ -160,6 +170,8 @@ export async function deleteDiscussion(discussionId: string): Promise<void> {
   repliesSnap.docs.forEach((replyDoc) => batch.delete(replyDoc.ref));
   batch.delete(doc(db, 'discussions', discussionId));
   await batch.commit();
+  // Clean up any attached photos from storage (best-effort).
+  deleteStorageFolder(`discussions/${discussionId}`).catch(() => {});
 }
 
 export { PAGE_SIZE };

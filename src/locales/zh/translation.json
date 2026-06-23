@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "描述",
     "category": "分类",
     "addPhoto": "添加照片",
+    "photos": "Photos (up to {{count}})",
     "post": "发布"
   },
   "forum": {

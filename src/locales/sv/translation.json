@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "Beskrivning",
     "category": "Kategori",
     "addPhoto": "Lägg till foto",
+    "photos": "Photos (up to {{count}})",
     "post": "Publicera"
   },
   "forum": {

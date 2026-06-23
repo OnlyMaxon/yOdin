@@ -28,6 +28,7 @@ export interface Post {
   description: string;
   category: PostCategory;
   imageURL?: string;
+  imageURLs?: string[];
   location: string;
   createdAt: number;
   likes?: string[];
@@ -56,6 +57,7 @@ export interface Discussion {
   authorNationality: string;
   authorCountryCode: string;
   question: string;
+  imageURLs?: string[];
   location?: string;
   createdAt: number;
   replyCount: number;

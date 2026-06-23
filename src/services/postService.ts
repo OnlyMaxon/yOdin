@@ -19,8 +19,8 @@ import {
   increment,
   QueryConstraint,
 } from 'firebase/firestore';
-import { db, storage } from './firebase';
-import { ref, deleteObject as deleteStorageObject } from 'firebase/storage';
+import { db } from './firebase';
+import { deleteStorageFolder } from './storageService';
 import { Post, PostCategory, PostComment } from '../types';
 
 const PAGE_SIZE = 15;
@@ -141,7 +141,8 @@ export async function fetchSavedPosts(uid: string): Promise<Post[]> {
 
 export async function deletePost(postId: string): Promise<void> {
   await deleteDoc(doc(db, 'posts', postId));
-  deleteStorageObject(ref(storage, `posts/${postId}/image.jpg`)).catch(() => {});
+  // Remove all of the post's photos from storage (best-effort).
+  deleteStorageFolder(`posts/${postId}`).catch(() => {});
 }
 
 export { PAGE_SIZE };

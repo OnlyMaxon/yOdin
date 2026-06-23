@@ -27,6 +27,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+import PhotoGrid from '../components/PhotoGrid';
 
 const SCREEN_H = Dimensions.get('window').height;
 const SHEET_H = Math.round(SCREEN_H * 0.5);
@@ -239,9 +240,14 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                 </TouchableOpacity>
               </View>
 
-              {post.imageURL ? (
-                <Image source={{ uri: post.imageURL }} style={styles.postImage} resizeMode="cover" />
-              ) : null}
+              {(() => {
+                const imgs = post.imageURLs?.length ? post.imageURLs : (post.imageURL ? [post.imageURL] : []);
+                return imgs.length ? (
+                  <View style={styles.photoWrap}>
+                    <PhotoGrid images={imgs} />
+                  </View>
+                ) : null;
+              })()}
 
               <Text style={styles.postTitle}>{post.title}</Text>
               <Text style={styles.postDescription}>{post.description}</Text>
@@ -361,6 +367,7 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     authorName: { fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightSemiBold, color: c.textPrimary },
     authorMeta: { fontSize: Typography.fontSizeSM, color: c.textSecondary, marginTop: 2 },
     postImage: { width: '100%', height: 160, borderRadius: 12, marginBottom: 12, backgroundColor: c.background },
+    photoWrap: { marginBottom: 12 },
     postTitle: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.textPrimary, marginBottom: 6 },
     postDescription: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 22, marginBottom: 8 },
     actionBar: {

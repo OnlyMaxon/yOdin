@@ -11,17 +11,17 @@ import {
   Platform,
   ActivityIndicator,
   Keyboard,
-  Image,
   ScrollView,
   Alert,
 } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
-import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { usePostStore } from '../store/usePostStore';
 import { createPost, newPostId } from '../services/postService';
-import { uploadPostImage } from '../services/storageService';
+import { uploadPostImages } from '../services/storageService';
+import PhotoPicker from '../components/PhotoPicker';
+
+const MAX_PHOTOS = 10;
 import { getErrorMessage } from '../services/errorHandler';
 import { PostCategory, POST_CATEGORIES } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -44,7 +44,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState<PostCategory>('news');
-  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [images, setImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const slideAnim = useRef(new Animated.Value(600)).current;
@@ -54,7 +54,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
       setTitle('');
       setDescription('');
       setCategory('news');
-      setImageUri(null);
+      setImages([]);
       setError('');
       Animated.spring(slideAnim, {
         toValue: 0,
@@ -71,20 +71,6 @@ export default function NewPostModal({ visible, onClose }: Props) {
     }
   }, [visible]);
 
-  async function handlePickImage() {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') return;
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: false,
-      quality: 0.7,
-    });
-
-    if (result.canceled || !result.assets[0]) return;
-    setImageUri(result.assets[0].uri);
-  }
-
   async function handlePost() {
     if (!title.trim() || !description.trim()) {
       setError(t('errors.fillTitleAndDescription'));
@@ -95,14 +81,14 @@ export default function NewPostModal({ visible, onClose }: Props) {
     setLoading(true);
     setError('');
     try {
-      // Upload the image first so its URL can be saved with the post document.
-      // (The posts security rules don't allow updating imageURL after creation,
-      // so it must be present at create time or it would be lost on refresh.)
+      // Upload photos first so their URLs are saved with the post document.
+      // (The posts security rules don't allow updating image fields after
+      // creation, so they must be present at create time.)
       const id = newPostId();
-      let imageURL = '';
-      if (imageUri) {
+      let imageURLs: string[] = [];
+      if (images.length > 0) {
         try {
-          imageURL = await uploadPostImage(id, imageUri);
+          imageURLs = await uploadPostImages(id, images);
         } catch {
           Alert.alert(t('errors.photoUploadFailed'));
         }
@@ -116,7 +102,8 @@ export default function NewPostModal({ visible, onClose }: Props) {
         title: title.trim(),
         description: description.trim(),
         category,
-        imageURL,
+        imageURL: imageURLs[0] ?? '',
+        imageURLs,
         location: profile.location,
       };
       await createPost(data, id);
@@ -191,19 +178,8 @@ export default function NewPostModal({ visible, onClose }: Props) {
               })}
             </View>
 
-            {imageUri ? (
-              <View style={styles.imagePreviewWrap}>
-                <Image source={{ uri: imageUri }} style={styles.imagePreview} />
-                <TouchableOpacity style={styles.removeImageBtn} onPress={() => setImageUri(null)}>
-                  <Ionicons name="close" size={16} color="#fff" />
-                </TouchableOpacity>
-              </View>
-            ) : (
-              <TouchableOpacity style={styles.addPhotoBtn} onPress={handlePickImage}>
-                <Ionicons name="image-outline" size={20} color={colors.primary} />
-                <Text style={styles.addPhotoText}>{t('newPost.addPhoto')}</Text>
-              </TouchableOpacity>
-            )}
+            <Text style={styles.photoLabel}>{t('newPost.photos', { count: MAX_PHOTOS })}</Text>
+            <PhotoPicker images={images} onChange={setImages} max={MAX_PHOTOS} />
 
             {error ? <Text style={styles.error}>{error}</Text> : null}
 
@@ -294,6 +270,12 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       fontWeight: Typography.fontWeightSemiBold,
       color: c.textSecondary,
       marginBottom: 8,
+    },
+    photoLabel: {
+      fontSize: Typography.fontSizeSM,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.textSecondary,
+      marginBottom: 10,
     },
     categoryRow: { flexDirection: 'row', gap: 8, marginBottom: 16, flexWrap: 'wrap' },
     categoryChip: {

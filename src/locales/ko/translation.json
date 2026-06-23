@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "설명",
     "category": "카테고리",
     "addPhoto": "사진 추가",
+    "photos": "Photos (up to {{count}})",
     "post": "게시"
   },
   "forum": {

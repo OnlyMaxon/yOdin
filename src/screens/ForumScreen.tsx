@@ -30,6 +30,7 @@ import { Typography } from '../theme/typography';
 import { weightedSort } from '../utils/weightedSort';
 import FollowButton from '../components/FollowButton';
 import NationFilterDrawer from '../components/NationFilterDrawer';
+import PhotoGrid from '../components/PhotoGrid';
 import { COUNTRIES } from '../data/countries';
 
 export default function ForumScreen({ navigation }: any) {
@@ -264,6 +265,11 @@ export default function ForumScreen({ navigation }: any) {
           </View>
         </View>
         <Text style={styles.question}>{item.question}</Text>
+        {item.imageURLs && item.imageURLs.length > 0 ? (
+          <View style={styles.photoWrap}>
+            <PhotoGrid images={item.imageURLs} />
+          </View>
+        ) : null}
         {isAnswered && item.acceptedReplyText ? (
           <View style={styles.answerBox}>
             <View style={styles.answerHeader}>
@@ -578,6 +584,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       lineHeight: 22,
       marginBottom: 12,
     },
+    photoWrap: { marginBottom: 12 },
     answerBox: {
       backgroundColor: c.surface,
       borderLeftWidth: 3,

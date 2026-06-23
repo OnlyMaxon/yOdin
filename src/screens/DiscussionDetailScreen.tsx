@@ -33,6 +33,7 @@ import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import { TAB_BAR_HEIGHT } from '../constants/layout';
+import PhotoGrid from '../components/PhotoGrid';
 
 export default function DiscussionDetailScreen({ route, navigation }: any) {
   const { discussionId, question: questionParam } = route.params;
@@ -459,6 +460,11 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
                 )}
               </TouchableOpacity>
               <Text style={styles.questionText}>{discussion.question}</Text>
+              {discussion.imageURLs && discussion.imageURLs.length > 0 ? (
+                <View style={styles.questionPhotos}>
+                  <PhotoGrid images={discussion.imageURLs} />
+                </View>
+              ) : null}
             </View>
           )}
 
@@ -615,6 +621,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       lineHeight: 26,
       fontWeight: Typography.fontWeightMedium,
     },
+    questionPhotos: { marginTop: 12 },
     repliesList: { padding: 16, gap: 10, flexGrow: 1 },
     emptyReplies: { alignItems: 'center', paddingTop: 40 },
     emptyText: { fontSize: Typography.fontSizeMD, color: c.textSecondary },

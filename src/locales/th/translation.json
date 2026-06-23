@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "คำอธิบาย",
     "category": "หมวดหมู่",
     "addPhoto": "เพิ่มรูปภาพ",
+    "photos": "Photos (up to {{count}})",
     "post": "เผยแพร่"
   },
   "forum": {

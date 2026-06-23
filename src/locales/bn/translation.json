@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "বিবরণ",
     "category": "ক্যাটাগরি",
     "addPhoto": "ছবি যোগ করুন",
+    "photos": "Photos (up to {{count}})",
     "post": "প্রকাশ করুন"
   },
   "forum": {

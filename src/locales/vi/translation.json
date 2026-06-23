@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "Mô tả",
     "category": "Danh mục",
     "addPhoto": "Thêm ảnh",
+    "photos": "Photos (up to {{count}})",
     "post": "Đăng"
   },
   "forum": {

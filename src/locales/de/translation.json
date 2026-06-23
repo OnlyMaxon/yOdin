@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "Beschreibung",
     "category": "Kategorie",
     "addPhoto": "Foto hinzufügen",
+    "photos": "Photos (up to {{count}})",
     "post": "Veröffentlichen"
   },
   "forum": {

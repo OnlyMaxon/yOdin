@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "توضیحات",
     "category": "دسته‌بندی",
     "addPhoto": "افزودن عکس",
+    "photos": "Photos (up to {{count}})",
     "post": "انتشار"
   },
   "forum": {

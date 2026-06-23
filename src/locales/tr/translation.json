@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "Açıklama",
     "category": "Kategori",
     "addPhoto": "Fotoğraf ekle",
+    "photos": "Photos (up to {{count}})",
     "post": "Yayınla"
   },
   "forum": {

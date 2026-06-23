@@ -143,6 +143,7 @@
     "descriptionPlaceholder": "Описание",
     "category": "Категория",
     "addPhoto": "Добавить фото",
+    "photos": "Фото (до {{count}})",
     "post": "Опубликовать"
   },
   "forum": {

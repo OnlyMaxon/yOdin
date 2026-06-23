@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "Deskripsi",
     "category": "Kategori",
     "addPhoto": "Tambah Foto",
+    "photos": "Photos (up to {{count}})",
     "post": "Terbitkan"
   },
   "forum": {

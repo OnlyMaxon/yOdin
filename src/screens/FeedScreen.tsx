@@ -28,6 +28,7 @@ import { Typography } from '../theme/typography';
 import PostDetailModal from './PostDetailModal';
 import FollowButton from '../components/FollowButton';
 import NationFilterDrawer from '../components/NationFilterDrawer';
+import PhotoGrid from '../components/PhotoGrid';
 import { weightedSort } from '../utils/weightedSort';
 import { COUNTRIES } from '../data/countries';
 
@@ -248,9 +249,14 @@ export default function FeedScreen({ navigation }: any) {
           </Text>
         </View>
 
-        {item.imageURL ? (
-          <Image source={{ uri: item.imageURL }} style={styles.postImage} resizeMode="cover" />
-        ) : null}
+        {(() => {
+          const imgs = item.imageURLs?.length ? item.imageURLs : (item.imageURL ? [item.imageURL] : []);
+          return imgs.length ? (
+            <View style={styles.photoWrap}>
+              <PhotoGrid images={imgs} />
+            </View>
+          ) : null;
+        })()}
 
         <Text style={styles.postTitle}>{item.title}</Text>
         <Text style={styles.postDescription}>{item.description}</Text>
@@ -560,6 +566,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       marginBottom: 12,
       backgroundColor: c.background,
     },
+    photoWrap: { marginBottom: 12 },
     postTitle: {
       fontSize: Typography.fontSizeLG,
       fontWeight: Typography.fontWeightBold,

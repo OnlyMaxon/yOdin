@@ -143,6 +143,7 @@
     "descriptionPlaceholder": "Popis",
     "category": "Kategorie",
     "addPhoto": "Přidat fotku",
+    "photos": "Photos (up to {{count}})",
     "post": "Zveřejnit"
   },
   "forum": {

@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "विवरण",
     "category": "श्रेणी",
     "addPhoto": "फोटो जोड़ें",
+    "photos": "Photos (up to {{count}})",
     "post": "प्रकाशित करें"
   },
   "forum": {

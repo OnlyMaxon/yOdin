@@ -142,6 +142,7 @@
     "descriptionPlaceholder": "説明",
     "category": "カテゴリー",
     "addPhoto": "写真を追加",
+    "photos": "Photos (up to {{count}})",
     "post": "投稿する"
   },
   "forum": {
