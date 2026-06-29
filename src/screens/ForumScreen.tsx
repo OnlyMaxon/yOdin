@@ -322,25 +322,26 @@ export default function ForumScreen({ navigation }: any) {
         <Text style={styles.headerTitle}>{t('forum.title')}</Text>
       </View>
 
-      <View style={styles.searchBar}>
-        <Ionicons name="search" size={18} color={colors.textSecondary} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder={t('forum.search')}
-          placeholderTextColor={colors.textSecondary}
-          value={search}
-          onChangeText={setSearch}
-          returnKeyType="search"
-          autoCorrect={false}
-        />
-        {isSearching && (
-          <TouchableOpacity onPress={() => setSearch('')} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-            <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
-          </TouchableOpacity>
-        )}
-      </View>
+      <View style={styles.filterBar}>
+        <View style={styles.searchBar}>
+          <Ionicons name="search" size={18} color={colors.textSecondary} />
+          <TextInput
+            style={styles.searchInput}
+            placeholder={t('forum.search')}
+            placeholderTextColor={colors.textSecondary}
+            value={search}
+            onChangeText={setSearch}
+            returnKeyType="search"
+            autoCorrect={false}
+          />
+          {isSearching && (
+            <TouchableOpacity onPress={() => setSearch('')} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+              <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
+            </TouchableOpacity>
+          )}
+        </View>
 
-      <View style={styles.natBar}>
+        <View style={styles.natBar}>
         <TouchableOpacity
           style={[styles.drawerBtn, selectedNations.length > 0 && styles.drawerBtnActive]}
           onPress={() => setDrawerOpen(true)}
@@ -378,6 +379,7 @@ export default function ForumScreen({ navigation }: any) {
             </TouchableOpacity>
           ))}
         </ScrollView>
+        </View>
       </View>
 
       {error ? (
@@ -451,16 +453,22 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     backBtn: { padding: 4 },
     backText: { fontSize: 24, color: c.textPrimary },
+    filterBar: {
+      backgroundColor: c.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: c.border,
+      paddingTop: 10,
+    },
     searchBar: {
       flexDirection: 'row',
       alignItems: 'center',
       gap: 8,
       marginHorizontal: 16,
-      marginTop: 12,
+      marginBottom: 10,
       paddingHorizontal: 14,
       height: 44,
       borderRadius: 22,
-      backgroundColor: c.surface,
+      backgroundColor: c.background,
       borderWidth: 1,
       borderColor: c.border,
     },
@@ -480,11 +488,8 @@ function makeStyles(c: ColorPalette, topInset: number) {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: 16,
-      paddingVertical: 10,
+      paddingVertical: 8,
       gap: 8,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
-      backgroundColor: c.surface,
     },
     drawerBtn: {
       width: 36,
