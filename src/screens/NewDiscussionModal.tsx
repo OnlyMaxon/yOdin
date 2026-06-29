@@ -13,6 +13,7 @@ import {
   Keyboard,
   Image,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
@@ -21,12 +22,12 @@ import { uploadDiscussionImages } from '../services/storageService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { getErrorMessage } from '../services/errorHandler';
 import PhotoPicker from '../components/PhotoPicker';
-
-const MAX_PHOTOS = 5;
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+
+const MAX_PHOTOS = 5;
 
 interface Props {
   visible: boolean;
@@ -122,9 +123,11 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
           <View style={styles.header}>
             <Text style={styles.headerTitle}>{t('newDiscussion.title')}</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-              <Text style={styles.closeText}>✕</Text>
+              <Ionicons name="close" size={18} color={colors.textSecondary} />
             </TouchableOpacity>
           </View>
+
+          <View style={styles.divider} />
 
           <View style={styles.body}>
             <View style={styles.authorCol}>
@@ -141,7 +144,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
               <Text style={styles.authorFlag}>{flag}</Text>
             </View>
 
-            <View style={styles.inputCol}>
+            <View style={styles.inputWrapper}>
               <TextInput
                 style={styles.input}
                 placeholder={t('newDiscussion.placeholder')}
@@ -158,10 +161,16 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
           </View>
 
           <View style={styles.photoSection}>
+            <Text style={styles.sectionLabel}>{t('newPost.photos', { count: MAX_PHOTOS })}</Text>
             <PhotoPicker images={images} onChange={setImages} max={MAX_PHOTOS} />
           </View>
 
-          {error ? <Text style={styles.error}>{error}</Text> : null}
+          {error ? (
+            <View style={styles.errorRow}>
+              <Ionicons name="alert-circle-outline" size={14} color={colors.notification} />
+              <Text style={styles.error}>{error}</Text>
+            </View>
+          ) : null}
 
           <TouchableOpacity
             style={[styles.postBtn, (!question.trim() || loading) && styles.postBtnDisabled]}
@@ -204,18 +213,28 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 20,
+      paddingBottom: 16,
     },
     headerTitle: {
       fontSize: Typography.fontSizeLG,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
     },
-    closeBtn: { padding: 4 },
-    closeText: { fontSize: 18, color: c.textSecondary },
-    body: { flexDirection: 'row', gap: 16, marginBottom: 12 },
-    photoSection: { marginBottom: 16 },
-    authorCol: { alignItems: 'center', width: 64 },
+    closeBtn: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: c.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    divider: {
+      height: 1,
+      backgroundColor: c.border,
+      marginBottom: 16,
+    },
+    body: { flexDirection: 'row', gap: 14, marginBottom: 16 },
+    authorCol: { alignItems: 'center', width: 60 },
     avatar: {
       width: 48,
       height: 48,
@@ -238,24 +257,48 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       textAlign: 'center',
     },
     authorFlag: { fontSize: 18, marginTop: 4 },
-    inputCol: { flex: 1 },
+    inputWrapper: {
+      flex: 1,
+      backgroundColor: c.background,
+      borderWidth: 1.5,
+      borderColor: c.border,
+      borderRadius: 14,
+      paddingHorizontal: 14,
+      paddingTop: 12,
+      paddingBottom: 8,
+    },
     input: {
       fontSize: Typography.fontSizeMD,
       color: c.textPrimary,
       lineHeight: 22,
-      minHeight: 120,
+      minHeight: 100,
       textAlignVertical: 'top',
     },
     charCount: {
       fontSize: Typography.fontSizeXS,
       color: c.textSecondary,
       textAlign: 'right',
-      marginTop: 4,
+      marginTop: 6,
+    },
+    sectionLabel: {
+      fontSize: Typography.fontSizeXS,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.textSecondary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.8,
+      marginBottom: 10,
+    },
+    photoSection: { marginBottom: 16 },
+    errorRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      marginBottom: 12,
     },
     error: {
       color: c.notification,
       fontSize: Typography.fontSizeSM,
-      marginBottom: 12,
+      flex: 1,
     },
     postBtn: {
       backgroundColor: c.primary,

@@ -14,20 +14,21 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { usePostStore } from '../store/usePostStore';
 import { createPost, newPostId } from '../services/postService';
 import { uploadPostImages } from '../services/storageService';
 import PhotoPicker from '../components/PhotoPicker';
-
-const MAX_PHOTOS = 10;
 import { getErrorMessage } from '../services/errorHandler';
 import { PostCategory, POST_CATEGORIES } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+
+const MAX_PHOTOS = 10;
 
 interface Props {
   visible: boolean;
@@ -133,11 +134,17 @@ export default function NewPostModal({ visible, onClose }: Props) {
           <View style={styles.header}>
             <Text style={styles.headerTitle}>{t('newPost.title')}</Text>
             <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-              <Text style={styles.closeText}>✕</Text>
+              <Ionicons name="close" size={18} color={colors.textSecondary} />
             </TouchableOpacity>
           </View>
 
-          <ScrollView keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+          <View style={styles.divider} />
+
+          <ScrollView
+            style={styles.scrollArea}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
             <TextInput
               style={styles.titleInput}
               placeholder={t('newPost.topicPlaceholder')}
@@ -146,6 +153,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
               onChangeText={setTitle}
               maxLength={100}
             />
+            <Text style={styles.charCount}>{title.length}/100</Text>
 
             <TextInput
               style={styles.descriptionInput}
@@ -177,11 +185,19 @@ export default function NewPostModal({ visible, onClose }: Props) {
               })}
             </View>
 
-            <Text style={styles.photoLabel}>{t('newPost.photos', { count: MAX_PHOTOS })}</Text>
-            <PhotoPicker images={images} onChange={setImages} max={MAX_PHOTOS} />
+            <Text style={styles.sectionLabel}>{t('newPost.photos', { count: MAX_PHOTOS })}</Text>
+            <View style={styles.photoWrapper}>
+              <PhotoPicker images={images} onChange={setImages} max={MAX_PHOTOS} />
+            </View>
+          </ScrollView>
 
-            {error ? <Text style={styles.error}>{error}</Text> : null}
-
+          <View style={styles.footer}>
+            {error ? (
+              <View style={styles.errorRow}>
+                <Ionicons name="alert-circle-outline" size={14} color={colors.notification} />
+                <Text style={styles.error}>{error}</Text>
+              </View>
+            ) : null}
             <TouchableOpacity
               style={[styles.postBtn, !canPost && styles.postBtnDisabled]}
               onPress={handlePost}
@@ -192,7 +208,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
                 : <Text style={styles.postBtnText}>{t('newPost.post')}</Text>
               }
             </TouchableOpacity>
-          </ScrollView>
+          </View>
         </Animated.View>
       </KeyboardAvoidingView>
     </Modal>
@@ -224,15 +240,27 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginBottom: 16,
+      paddingBottom: 16,
     },
     headerTitle: {
       fontSize: Typography.fontSizeLG,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
     },
-    closeBtn: { padding: 4 },
-    closeText: { fontSize: 18, color: c.textSecondary },
+    closeBtn: {
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: c.background,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    divider: {
+      height: 1,
+      backgroundColor: c.border,
+      marginBottom: 16,
+    },
+    scrollArea: { flexShrink: 1 },
     titleInput: {
       backgroundColor: c.background,
       borderWidth: 1.5,
@@ -243,7 +271,7 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightSemiBold,
       color: c.textPrimary,
-      marginBottom: 12,
+      marginBottom: 4,
     },
     descriptionInput: {
       backgroundColor: c.background,
@@ -256,27 +284,23 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       color: c.textPrimary,
       minHeight: 100,
       maxHeight: 160,
+      marginBottom: 4,
     },
     charCount: {
       fontSize: Typography.fontSizeXS,
       color: c.textSecondary,
       textAlign: 'right',
-      marginTop: 4,
-      marginBottom: 12,
+      marginBottom: 14,
     },
     sectionLabel: {
-      fontSize: Typography.fontSizeSM,
+      fontSize: Typography.fontSizeXS,
       fontWeight: Typography.fontWeightSemiBold,
       color: c.textSecondary,
-      marginBottom: 8,
-    },
-    photoLabel: {
-      fontSize: Typography.fontSizeSM,
-      fontWeight: Typography.fontWeightSemiBold,
-      color: c.textSecondary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.8,
       marginBottom: 10,
     },
-    categoryRow: { flexDirection: 'row', gap: 8, marginBottom: 16, flexWrap: 'wrap' },
+    categoryRow: { flexDirection: 'row', gap: 8, marginBottom: 18, flexWrap: 'wrap' },
     categoryChip: {
       paddingHorizontal: 14,
       paddingVertical: 8,
@@ -295,45 +319,22 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       fontWeight: Typography.fontWeightMedium,
     },
     categoryChipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
-    addPhotoBtn: {
+    photoWrapper: { marginBottom: 8 },
+    footer: {
+      paddingTop: 14,
+      borderTopWidth: 1,
+      borderTopColor: c.border,
+      gap: 10,
+    },
+    errorRow: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'center',
-      gap: 8,
-      paddingVertical: 14,
-      borderRadius: 14,
-      borderWidth: 1.5,
-      borderColor: c.border,
-      borderStyle: 'dashed',
-      marginBottom: 16,
-    },
-    addPhotoText: {
-      fontSize: Typography.fontSizeMD,
-      color: c.primary,
-      fontWeight: Typography.fontWeightMedium,
-    },
-    imagePreviewWrap: { marginBottom: 16, position: 'relative' },
-    imagePreview: {
-      width: '100%',
-      height: 160,
-      borderRadius: 14,
-      backgroundColor: c.background,
-    },
-    removeImageBtn: {
-      position: 'absolute',
-      top: 8,
-      right: 8,
-      width: 28,
-      height: 28,
-      borderRadius: 14,
-      backgroundColor: 'rgba(0,0,0,0.55)',
-      alignItems: 'center',
-      justifyContent: 'center',
+      gap: 6,
     },
     error: {
       color: c.notification,
       fontSize: Typography.fontSizeSM,
-      marginBottom: 12,
+      flex: 1,
     },
     postBtn: {
       backgroundColor: c.primary,
