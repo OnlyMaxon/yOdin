@@ -28,8 +28,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
-import PhotoGrid from '../components/PhotoGrid';
-import VideoPlayerView from '../components/VideoPlayerView';
+import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
 import ReportSheet from '../components/ReportSheet';
 import { createParticipantNotification } from '../services/notificationService';
@@ -37,7 +36,6 @@ import { createReport } from '../services/reportService';
 
 const SCREEN_H = Dimensions.get('window').height;
 const SHEET_H = Math.round(SCREEN_H * 0.5);
-const CARD_MAX = SCREEN_H - SHEET_H - 80; // card stays fully above the comments sheet
 
 interface Props {
   visible: boolean;
@@ -267,7 +265,12 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
     );
   }
 
-  // Lift the centered card into the upper half when the comments sheet is open.
+  // The post sizes to its content (same as the feed card). It may grow up to
+  // most of the screen when comments are closed; when they're open it's capped
+  // to the area above the sheet and lifted there.
+  const fullH = SCREEN_H - insets.top - insets.bottom - 24;
+  const upperH = SCREEN_H - SHEET_H - insets.top - 24;
+  const cardMax = commentsOpen ? upperH : fullH;
   const cardShift = commentsAnim.interpolate({
     inputRange: [0, 1],
     outputRange: [0, -Math.round(SHEET_H / 2)],
@@ -289,15 +292,16 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
             style={[
               styles.card,
               {
+                maxHeight: cardMax,
                 opacity: cardAnim,
                 transform: [
-                  { scale: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [0.92, 1] }) },
+                  { scale: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [0.96, 1] }) },
                   { translateY: cardShift },
                 ],
               },
             ]}
           >
-            <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+            <ScrollView style={{ flexShrink: 1 }} showsVerticalScrollIndicator={false} bounces={false}>
               <View style={styles.cardHeader}>
                 <TouchableOpacity
                   style={styles.authorTap}
@@ -324,13 +328,14 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                 </TouchableOpacity>
               </View>
 
-              {post.videoURL ? (
+              {post.videoURL || (post.imageURLs && post.imageURLs.length > 0) ? (
                 <View style={styles.photoWrap}>
-                  <VideoPlayerView uri={post.videoURL} />
-                </View>
-              ) : post.imageURLs && post.imageURLs.length > 0 ? (
-                <View style={styles.photoWrap}>
-                  <PhotoGrid images={post.imageURLs} />
+                  <MediaCarousel
+                    images={post.imageURLs}
+                    videoURL={post.videoURL}
+                    videoPoster={post.videoPoster}
+                    videoInline
+                  />
                 </View>
               ) : null}
 
@@ -486,7 +491,6 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     centerWrap: { ...StyleSheet.absoluteFillObject, justifyContent: 'center' },
     card: {
       marginHorizontal: 16,
-      maxHeight: CARD_MAX,
       backgroundColor: c.surface,
       borderRadius: 20,
       padding: 16,

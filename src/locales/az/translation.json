@@ -199,8 +199,6 @@
   },
   "report": {
     "title": "Şikayət et",
-    "message": "Bu məzmun haqqında moderatorlara şikayət edilsin?",
-    "confirm": "Şikayət et",
     "cancel": "Ləğv et",
     "sentTitle": "Təşəkkürlər",
     "sentMessage": "Şikayətiniz moderatorlara göndərildi.",

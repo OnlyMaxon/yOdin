@@ -234,8 +234,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     cardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 },
     typeBadge: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10 },
-    typePost: { backgroundColor: c.primary },
-    typeDiscussion: { backgroundColor: c.accent },
     typeBadgeText: { color: '#fff', fontSize: Typography.fontSizeXS, fontWeight: Typography.fontWeightSemiBold },
     time: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
     reason: { fontSize: Typography.fontSizeSM, color: c.notification, fontWeight: Typography.fontWeightSemiBold, marginBottom: 4 },

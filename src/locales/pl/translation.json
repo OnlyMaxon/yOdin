@@ -201,8 +201,6 @@
   },
   "report": {
     "title": "Report",
-    "message": "Report this to the moderators?",
-    "confirm": "Report",
     "cancel": "Cancel",
     "sentTitle": "Thank you",
     "sentMessage": "Your report has been sent to the moderators.",

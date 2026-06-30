@@ -108,7 +108,8 @@ export default function NewPostModal({ visible, onClose }: Props) {
         } catch {
           Alert.alert(t('errors.videoUploadFailed'));
         }
-      } else if (images.length > 0) {
+      }
+      if (images.length > 0) {
         try {
           imageURLs = await uploadPostImages(id, images);
         } catch {
@@ -264,16 +265,12 @@ export default function NewPostModal({ visible, onClose }: Props) {
               </View>
             ) : null}
 
-            {!video ? (
-              <>
-                <Text style={styles.sectionLabel}>{t('newPost.photos', { count: MAX_PHOTOS })}</Text>
-                <View style={styles.photoWrapper}>
-                  <PhotoPicker images={images} onChange={setImages} max={MAX_PHOTOS} />
-                </View>
-              </>
-            ) : null}
+            <Text style={styles.sectionLabel}>{t('newPost.photos', { count: MAX_PHOTOS })}</Text>
+            <View style={styles.photoWrapper}>
+              <PhotoPicker images={images} onChange={setImages} max={MAX_PHOTOS} />
+            </View>
             <View style={styles.videoWrapper}>
-              <VideoAttach value={video} onChange={setVideo} disabled={images.length > 0} />
+              <VideoAttach value={video} onChange={setVideo} />
             </View>
           </ScrollView>
 

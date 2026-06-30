@@ -34,20 +34,21 @@ export default function PhotoPicker({ images, onChange, max }: Props) {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') return;
 
+    // Pick one photo at a time so the built-in crop/edit step is available
+    // (native editing is incompatible with multi-select). Tapping "+" again
+    // adds another cropped photo, up to `max`.
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
-      allowsMultipleSelection: true,
-      selectionLimit: max - images.length,
+      allowsEditing: true,
       quality: 1,
     });
     if (result.canceled || result.assets.length === 0) return;
 
     setBusy(true);
     try {
-      const optimized = await Promise.all(
-        result.assets.map((a) => optimizeImage(a.uri, a.width, a.height)),
-      );
-      onChange([...images, ...optimized].slice(0, max));
+      const a = result.assets[0];
+      const optimized = await optimizeImage(a.uri, a.width, a.height);
+      onChange([...images, optimized].slice(0, max));
     } finally {
       setBusy(false);
     }
