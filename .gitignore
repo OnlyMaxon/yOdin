@@ -32,6 +32,10 @@ firestore-debug.log
 .DS_Store
 *.pem
 
+# Editor temp files
+*.swp
+*.swo
+
 # local env files
 .env
 .env.local
