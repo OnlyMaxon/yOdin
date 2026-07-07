@@ -156,7 +156,8 @@
     "fillTitleAndDescription": "Mövzu və təsviri doldurun.",
     "videoTooLong": "Video {{count}} saniyədən qısa olmalıdır",
     "videoTooLarge": "Video çox böyükdür (maks. 50 MB)",
-    "videoUploadFailed": "Video yüklənmədi"
+    "videoUploadFailed": "Video yüklənmədi",
+    "selectCategory": "Kateqoriya seçin"
   },
   "categories": {
     "all": "Hamısı",

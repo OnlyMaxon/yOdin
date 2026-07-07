@@ -157,7 +157,8 @@
     "fillTitleAndDescription": "Заполните тему и описание.",
     "videoTooLong": "Видео не длиннее {{count}} сек",
     "videoTooLarge": "Видео слишком большое (макс. 50 МБ)",
-    "videoUploadFailed": "Не удалось загрузить видео"
+    "videoUploadFailed": "Не удалось загрузить видео",
+    "selectCategory": "Выберите категорию"
   },
   "categories": {
     "all": "Всё",

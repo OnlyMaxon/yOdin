@@ -96,7 +96,10 @@ service cloud.firestore {
           && request.resource.data.authorId == request.auth.uid
           && request.resource.data.text is string
           && request.resource.data.text.size() > 0
-          && request.resource.data.text.size() <= 1000;
+          && request.resource.data.text.size() <= 1000
+          // Once the question author accepts an answer the thread is closed —
+          // no further replies (enforced here so it can't be bypassed via API).
+          && get(/databases/$(database)/documents/discussions/$(discussionId)).data.get('acceptedReplyId', null) == null;
         // Votes: users may only add/remove their own UID in likes/dislikes
         allow update: if request.auth != null
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'dislikes'])

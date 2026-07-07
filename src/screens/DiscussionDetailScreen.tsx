@@ -6,7 +6,7 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
-  Keyboard,
+  KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
   Image,
@@ -33,7 +33,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
-import { TAB_BAR_HEIGHT } from '../constants/layout';
 import PhotoGrid from '../components/PhotoGrid';
 import VideoPlayerView from '../components/VideoPlayerView';
 import ReportSheet from '../components/ReportSheet';
@@ -54,7 +53,6 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState('');
   const [accepting, setAccepting] = useState(false);
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
   const [replyingTo, setReplyingTo] = useState<Reply | null>(null);
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [reportReply, setReportReply] = useState<Reply | null>(null);
@@ -66,24 +64,6 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     loadAll();
   }, []);
 
-  // KeyboardAvoidingView misreads its frame inside the material-top-tabs pager,
-  // so we lift the composer manually. The bar sits above the bottom tab bar, so
-  // the lift is the keyboard height minus the tab bar it already clears.
-  useEffect(() => {
-    const showEvt = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
-    const hideEvt = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
-    const showSub = Keyboard.addListener(showEvt, (e) =>
-      setKeyboardHeight(e.endCoordinates?.height ?? 0),
-    );
-    const hideSub = Keyboard.addListener(hideEvt, () => setKeyboardHeight(0));
-    return () => {
-      showSub.remove();
-      hideSub.remove();
-    };
-  }, []);
-
-  const keyboardLift =
-    keyboardHeight > 0 ? Math.max(keyboardHeight - TAB_BAR_HEIGHT - insets.bottom, 0) : 0;
 
   async function loadAll() {
     setLoading(true);
@@ -403,14 +383,16 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
                 <Text style={[styles.voteCount, disliked && { color: colors.notification }]}>{dislikeCount}</Text>
               )}
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.voteBtn}
-              onPress={() => startReplyTo(item)}
-              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
-            >
-              <Ionicons name="arrow-undo-outline" size={14} color={colors.textSecondary} />
-              <Text style={styles.voteCount}>{t('discussion.reply')}</Text>
-            </TouchableOpacity>
+            {!isAnswered && (
+              <TouchableOpacity
+                style={styles.voteBtn}
+                onPress={() => startReplyTo(item)}
+                hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+              >
+                <Ionicons name="arrow-undo-outline" size={14} color={colors.textSecondary} />
+                <Text style={styles.voteCount}>{t('discussion.reply')}</Text>
+              </TouchableOpacity>
+            )}
             {canAccept && (
               <TouchableOpacity
                 style={styles.acceptBtn}
@@ -428,7 +410,13 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      // The bottom tab bar is hidden on this screen, so the composer reaches the
+      // device bottom and no offset is needed. (Android uses windowSoftInputMode
+      // resize, which handles the lift on its own.)
+    >
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backText}>←</Text>
@@ -542,21 +530,13 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           </TouchableOpacity>
         </View>
       ) : null}
-      {replyBlocked ? (
-        <View style={[styles.blockedBar, { marginBottom: keyboardLift }]}>
+      {isAnswered ? null : replyBlocked ? (
+        <View style={styles.blockedBar}>
           <Ionicons name="lock-closed" size={16} color={colors.notification} />
           <Text style={styles.blockedText}>{t('moderation.blockedBanner')}</Text>
         </View>
       ) : (
-        <View
-          style={[
-            styles.inputBar,
-            {
-              marginBottom: keyboardLift,
-              paddingBottom: keyboardHeight > 0 ? 12 : undefined,
-            },
-          ]}
-        >
+        <View style={styles.inputBar}>
           <TextInput
             ref={inputRef}
             style={styles.input}
@@ -585,7 +565,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         onClose={() => setReportReply(null)}
         onSubmit={submitReplyReport}
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

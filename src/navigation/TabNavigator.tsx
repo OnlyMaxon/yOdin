@@ -4,6 +4,7 @@ import {
   MaterialTopTabBarProps,
 } from '@react-navigation/material-top-tabs';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
@@ -21,6 +22,11 @@ import { TAB_BAR_HEIGHT } from '../constants/layout';
 
 // Tabs where the center button creates content; elsewhere it is inert.
 const CREATE_ROUTES = ['Forum', 'Feed'];
+
+// Full-screen nested routes that hide the bottom nav bar — so the keyboard can
+// cover the bottom of the screen without the nav buttons jumping up over the
+// input (the composer lives on these screens).
+const FULLSCREEN_ROUTES = ['DiscussionDetail'];
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -42,6 +48,11 @@ function TabBar({
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.bottom);
   const unreadCount = useNotificationStore((s) => s.unreadCount);
+
+  // Hide the whole bar on full-screen detail routes (e.g. the discussion thread
+  // with its message composer).
+  const nestedRoute = getFocusedRouteNameFromRoute(state.routes[state.index]);
+  if (nestedRoute && FULLSCREEN_ROUTES.includes(nestedRoute)) return null;
 
   // The center button creates content only on the Forum/Feed tabs; on the
   // others it is shown disabled so its absence isn't mistaken for a glitch.

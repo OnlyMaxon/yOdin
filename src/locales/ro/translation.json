@@ -157,7 +157,8 @@
     "fillTitleAndDescription": "Completează subiectul și descrierea.",
     "videoTooLong": "Video must be under {{count}}s",
     "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video"
+    "videoUploadFailed": "Couldn’t upload the video",
+    "selectCategory": "Please choose a category"
   },
   "categories": {
     "all": "Tot",

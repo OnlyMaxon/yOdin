@@ -46,7 +46,8 @@ export default function NewPostModal({ visible, onClose }: Props) {
   const { prependPost, filter } = usePostStore();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState<PostCategory>('news');
+  // No category is preselected — the author must pick one to publish.
+  const [category, setCategory] = useState<PostCategory | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [video, setVideo] = useState<AttachedVideo | null>(null);
   // Event sign-up sheet (only offered for the "events" category).
@@ -61,7 +62,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
     if (visible) {
       setTitle('');
       setDescription('');
-      setCategory('news');
+      setCategory(null);
       setImages([]);
       setVideo(null);
       setSignupEnabled(false);
@@ -86,6 +87,10 @@ export default function NewPostModal({ visible, onClose }: Props) {
   async function handlePost() {
     if (!title.trim() || !description.trim()) {
       setError(t('errors.fillTitleAndDescription'));
+      return;
+    }
+    if (!category) {
+      setError(t('errors.selectCategory'));
       return;
     }
     if (!profile) return;
@@ -149,7 +154,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
     }
   }
 
-  const canPost = title.trim().length > 0 && description.trim().length > 0 && !loading;
+  const canPost = title.trim().length > 0 && description.trim().length > 0 && category !== null && !loading;
 
   return (
     <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
@@ -284,7 +289,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
             <TouchableOpacity
               style={[styles.postBtn, !canPost && styles.postBtnDisabled]}
               onPress={handlePost}
-              disabled={!canPost}
+              disabled={loading}
             >
               {loading
                 ? <ActivityIndicator color="#fff" />
