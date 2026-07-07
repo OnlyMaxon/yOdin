@@ -318,11 +318,6 @@ export default function ForumScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {navigation.canGoBack() && (
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-            <Text style={styles.backText}>←</Text>
-          </TouchableOpacity>
-        )}
         <Text style={styles.headerTitle}>{t('forum.title')}</Text>
       </View>
 
