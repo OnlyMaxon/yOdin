@@ -31,8 +31,8 @@ export default function WanderingEye() {
       if (!active) return;
       idx = (idx + 1) % WAYPOINTS.length;
       const { x, y } = WAYPOINTS[idx];
-      const blink = Math.random() < 0.28;
-      const moveDuration = 480 + Math.random() * 420;
+      const blink = Math.random() < 0.55;
+      const moveDuration = 220 + Math.random() * 180;
 
       const move = Animated.parallel([
         Animated.timing(pupilX, {
@@ -58,7 +58,7 @@ export default function WanderingEye() {
         : move;
 
       sequence.start(() => {
-        if (active) timer = setTimeout(step, 120 + Math.random() * 380);
+        if (active) timer = setTimeout(step, 60 + Math.random() * 140);
       });
     }
 
