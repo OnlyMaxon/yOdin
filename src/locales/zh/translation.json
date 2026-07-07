@@ -188,7 +188,8 @@
     "search": "搜索问题",
     "nothingFound": "未找到结果",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "新手",

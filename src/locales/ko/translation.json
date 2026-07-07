@@ -188,7 +188,8 @@
     "search": "질문 검색",
     "nothingFound": "검색 결과 없음",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "새내기",

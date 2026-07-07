@@ -192,7 +192,8 @@
     "search": "البحث في الأسئلة",
     "nothingFound": "لم يتم العثور على شيء",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "مبتدئ",

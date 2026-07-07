@@ -189,7 +189,8 @@
     "search": "Пошук за питаннями",
     "nothingFound": "Нічого не знайдено",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Новачок",

@@ -188,7 +188,8 @@
     "search": "質問を検索",
     "nothingFound": "見つかりませんでした",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "初心者",

@@ -189,7 +189,8 @@
     "search": "Hledat otázky",
     "nothingFound": "Nic nenalezeno",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Nováček",

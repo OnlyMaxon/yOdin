@@ -188,7 +188,8 @@
     "search": "প্রশ্ন খুঁজুন",
     "nothingFound": "কিছু পাওয়া যায়নি",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "নবাগত",

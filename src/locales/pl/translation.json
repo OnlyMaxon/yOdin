@@ -190,7 +190,8 @@
     "search": "Szukaj pytań",
     "nothingFound": "Nic nie znaleziono",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Nowicjusz",

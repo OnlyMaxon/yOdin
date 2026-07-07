@@ -188,7 +188,8 @@
     "search": "Cari pertanyaan",
     "nothingFound": "Tidak ada hasil",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Pemula",

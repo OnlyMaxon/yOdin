@@ -188,7 +188,8 @@
     "search": "Tìm câu hỏi",
     "nothingFound": "Không tìm thấy gì",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Người mới",

@@ -189,7 +189,8 @@
     "search": "Caută întrebări",
     "nothingFound": "Nu s-a găsit nimic",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Începător",

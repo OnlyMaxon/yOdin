@@ -188,7 +188,8 @@
     "search": "Cari soalan",
     "nothingFound": "Tiada hasil ditemui",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Orang baru",

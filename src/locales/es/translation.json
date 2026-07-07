@@ -188,7 +188,8 @@
     "search": "Buscar preguntas",
     "nothingFound": "No se encontró nada",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "Novato",

@@ -189,7 +189,8 @@
     "search": "Поиск по вопросам",
     "nothingFound": "Ничего не найдено",
     "questionOfDay": "Вопрос дня",
-    "promo": "Промо"
+    "promo": "Промо",
+    "unanswered": "Без ответа"
   },
   "rank": {
     "novice": "Новичок",

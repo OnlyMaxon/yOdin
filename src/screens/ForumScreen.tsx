@@ -57,6 +57,8 @@ export default function ForumScreen({ navigation }: any) {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [topQuestion, setTopQuestion] = useState<Discussion | null>(null);
   const [reportTarget, setReportTarget] = useState<Discussion | null>(null);
+  // Client-side filter over the loaded questions by whether they're solved.
+  const [answerFilter, setAnswerFilter] = useState<'all' | 'answered' | 'unanswered'>('all');
 
   function toggleNation(name: string) {
     setSelectedNations((prev) =>
@@ -315,6 +317,19 @@ export default function ForumScreen({ navigation }: any) {
     );
   }
 
+  const baseList = isSearching ? searchResults : discussions;
+  const visibleList = answerFilter === 'all'
+    ? baseList
+    : baseList.filter((d) =>
+        answerFilter === 'answered' ? !!d.acceptedReplyId : !d.acceptedReplyId,
+      );
+
+  const ANSWER_FILTERS: { key: typeof answerFilter; label: string }[] = [
+    { key: 'all', label: t('categories.all') },
+    { key: 'answered', label: t('forum.answered') },
+    { key: 'unanswered', label: t('forum.unanswered') },
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -379,6 +394,23 @@ export default function ForumScreen({ navigation }: any) {
           ))}
         </ScrollView>
         </View>
+
+        <View style={styles.answerRow}>
+          {ANSWER_FILTERS.map((f) => {
+            const active = answerFilter === f.key;
+            return (
+              <TouchableOpacity
+                key={f.key}
+                style={[styles.answerChip, active && styles.answerChipActive]}
+                onPress={() => setAnswerFilter(f.key)}
+              >
+                <Text style={[styles.answerChipText, active && styles.answerChipTextActive]}>
+                  {f.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
 
       {error ? (
@@ -391,11 +423,11 @@ export default function ForumScreen({ navigation }: any) {
         </View>
       ) : (
         <FlatList
-          data={isSearching ? searchResults : discussions}
+          data={visibleList}
           keyExtractor={(item) => item.id}
           renderItem={renderCard}
           keyboardShouldPersistTaps="handled"
-          contentContainerStyle={(isSearching ? searchResults : discussions).length === 0 ? styles.center : styles.list}
+          contentContainerStyle={visibleList.length === 0 ? styles.center : styles.list}
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
           onEndReached={isSearching ? undefined : loadMore}
           onEndReachedThreshold={0.3}
@@ -411,8 +443,10 @@ export default function ForumScreen({ navigation }: any) {
           }
           ListEmptyComponent={
             <View style={styles.empty}>
-              <Text style={styles.emptyEmoji}>{isSearching ? '🔍' : '💬'}</Text>
-              <Text style={styles.emptyText}>{isSearching ? t('forum.nothingFound') : t('forum.empty')}</Text>
+              <Text style={styles.emptyEmoji}>{isSearching || answerFilter !== 'all' ? '🔍' : '💬'}</Text>
+              <Text style={styles.emptyText}>
+                {isSearching || answerFilter !== 'all' ? t('forum.nothingFound') : t('forum.empty')}
+              </Text>
             </View>
           }
           ListFooterComponent={
@@ -538,6 +572,18 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontWeight: Typography.fontWeightMedium,
     },
     natChipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
+    answerRow: { flexDirection: 'row', gap: 8, paddingHorizontal: 16, paddingBottom: 12, paddingTop: 4 },
+    answerChip: {
+      paddingHorizontal: 16,
+      paddingVertical: 7,
+      borderRadius: 18,
+      backgroundColor: c.background,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    answerChipActive: { backgroundColor: c.primary, borderColor: c.primary },
+    answerChipText: { fontSize: Typography.fontSizeSM, color: c.textSecondary, fontWeight: Typography.fontWeightMedium },
+    answerChipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
     list: { padding: 14, gap: 14, paddingBottom: 96 },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     empty: { alignItems: 'center', paddingTop: 80 },

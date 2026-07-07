@@ -188,7 +188,8 @@
     "search": "सवाल खोजें",
     "nothingFound": "कुछ नहीं मिला",
     "questionOfDay": "Question of the day",
-    "promo": "Promo"
+    "promo": "Promo",
+    "unanswered": "Unanswered"
   },
   "rank": {
     "novice": "नौसिखिया",
