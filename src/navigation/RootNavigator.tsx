@@ -6,6 +6,7 @@ import { auth } from '../services/firebase';
 import { getUserProfile } from '../services/authService';
 import { useAuthStore } from '../store/useAuthStore';
 import { isModerator } from '../config/moderation';
+import { LightColors } from '../theme/colors';
 import AuthNavigator from './AuthNavigator';
 import TabNavigator from './TabNavigator';
 import OnboardingScreen from '../screens/auth/OnboardingScreen';
@@ -76,8 +77,8 @@ export default function RootNavigator() {
 
   if (appState === 'loading') {
     return (
-      <View style={{ flex: 1, backgroundColor: '#F8F8FF', alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size="large" color="#5B4FE8" />
+      <View style={{ flex: 1, backgroundColor: LightColors.background, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size="large" color={LightColors.primary} />
       </View>
     );
   }
