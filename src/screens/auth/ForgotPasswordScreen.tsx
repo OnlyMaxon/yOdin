@@ -12,6 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '../../hooks/useTheme';
 import { Typography } from '../../theme/typography';
 import { resetPassword } from '../../services/authService';
 import { getErrorMessage } from '../../services/errorHandler';
@@ -25,8 +26,9 @@ const INPUT_PLACEHOLDER = 'rgba(255,255,255,0.5)';
 
 export default function ForgotPasswordScreen({ navigation }: any) {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = makeStyles(insets.top);
+  const styles = makeStyles(insets.top, colors);
 
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -50,7 +52,7 @@ export default function ForgotPasswordScreen({ navigation }: any) {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={22} color={AUTH_BG} />
+          <Ionicons name="chevron-back" size={22} color={colors.primary} />
         </TouchableOpacity>
         <View style={styles.sentContent}>
           <Text style={styles.sentIcon}>📬</Text>
@@ -68,7 +70,7 @@ export default function ForgotPasswordScreen({ navigation }: any) {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={22} color={AUTH_BG} />
+          <Ionicons name="chevron-back" size={22} color={colors.primary} />
         </TouchableOpacity>
 
         <Text style={styles.title}>{t('auth.resetPasswordTitle')}</Text>
@@ -97,7 +99,7 @@ export default function ForgotPasswordScreen({ navigation }: any) {
           disabled={state === 'loading'}
         >
           {state === 'loading'
-            ? <ActivityIndicator color={AUTH_BG} />
+            ? <ActivityIndicator color={colors.primary} />
             : <Text style={styles.btnText}>{t('auth.sendResetLink')}</Text>
           }
         </TouchableOpacity>
@@ -106,11 +108,11 @@ export default function ForgotPasswordScreen({ navigation }: any) {
   );
 }
 
-function makeStyles(topInset: number) {
+function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalette) {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#EDE4FF',
+      backgroundColor: c.background,
       paddingHorizontal: 24,
       paddingTop: topInset + 24,
       paddingBottom: 40,
@@ -119,7 +121,7 @@ function makeStyles(topInset: number) {
       width: 40,
       height: 40,
       borderRadius: 20,
-      backgroundColor: 'rgba(108,53,222,0.12)',
+      backgroundColor: c.primaryLight,
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 32,
@@ -127,12 +129,12 @@ function makeStyles(topInset: number) {
     title: {
       fontSize: Typography.fontSizeXXL,
       fontWeight: Typography.fontWeightBold,
-      color: '#1A1A2E',
+      color: c.textPrimary,
       marginBottom: 8,
     },
     subtitle: {
       fontSize: Typography.fontSizeMD,
-      color: '#6B7280',
+      color: c.textSecondary,
       marginBottom: 28,
       lineHeight: 22,
     },
@@ -170,7 +172,7 @@ function makeStyles(topInset: number) {
     },
     btnDisabled: { opacity: 0.6 },
     btnText: {
-      color: AUTH_BG,
+      color: c.primary,
       fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightSemiBold,
     },
@@ -186,7 +188,7 @@ function makeStyles(topInset: number) {
     },
     sentSubtitle: {
       fontSize: Typography.fontSizeMD,
-      color: '#6B7280',
+      color: c.textSecondary,
       textAlign: 'center',
       lineHeight: 22,
       marginTop: 8,

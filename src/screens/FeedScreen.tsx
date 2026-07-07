@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  Animated,
   View,
   Text,
   FlatList,
@@ -58,6 +59,20 @@ export default function FeedScreen({ navigation }: any) {
   const [topQuestion, setTopQuestion] = useState<Discussion | null>(null);
   const [reportTarget, setReportTarget] = useState<Post | null>(null);
   const [participantsPost, setParticipantsPost] = useState<Post | null>(null);
+
+  const prevScrollY = useRef(0);
+  const filterAnim = useRef(new Animated.Value(1)).current;
+
+  function handleScroll(e: any) {
+    const y = e.nativeEvent.contentOffset.y;
+    const diff = y - prevScrollY.current;
+    if (diff > 8 && y > 40) {
+      Animated.timing(filterAnim, { toValue: 0, duration: 180, useNativeDriver: false }).start();
+    } else if (diff < -8) {
+      Animated.timing(filterAnim, { toValue: 1, duration: 200, useNativeDriver: false }).start();
+    }
+    prevScrollY.current = y;
+  }
 
   function toggleNation(name: string) {
     setSelectedNations((prev) =>
@@ -390,7 +405,14 @@ export default function FeedScreen({ navigation }: any) {
         <Text style={styles.headerTitle}>{t('feed.title')}</Text>
       </View>
 
-      <View style={styles.filterBar}>
+      <Animated.View style={[
+        styles.filterBar,
+        {
+          overflow: 'hidden',
+          maxHeight: filterAnim.interpolate({ inputRange: [0, 1], outputRange: [0, 120] }),
+          opacity: filterAnim,
+        },
+      ]}>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -450,7 +472,7 @@ export default function FeedScreen({ navigation }: any) {
             ))}
           </ScrollView>
         </View>
-      </View>
+      </Animated.View>
 
       {error ? (
         <View style={styles.center}>
@@ -469,6 +491,8 @@ export default function FeedScreen({ navigation }: any) {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
           onEndReached={loadMore}
           onEndReachedThreshold={0.3}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
           ListHeaderComponent={
             topQuestion ? (
               <View style={styles.qodWrap}>

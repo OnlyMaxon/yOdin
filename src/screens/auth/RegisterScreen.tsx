@@ -16,6 +16,7 @@ import { registerUser, loginUser } from '../../services/authService';
 import { useAuthStore } from '../../store/useAuthStore';
 import { getErrorMessage } from '../../services/errorHandler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useTheme } from '../../hooks/useTheme';
 import { Typography } from '../../theme/typography';
 
 type Mode = 'register' | 'login';
@@ -27,8 +28,9 @@ const INPUT_PLACEHOLDER = 'rgba(255,255,255,0.5)';
 
 export default function RegisterScreen({ navigation, route }: any) {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = makeStyles(insets.top);
+  const styles = makeStyles(insets.top, colors);
   const [mode, setMode] = useState<Mode>(route?.params?.mode ?? 'register');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -64,7 +66,7 @@ export default function RegisterScreen({ navigation, route }: any) {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={22} color={AUTH_BG} />
+          <Ionicons name="chevron-back" size={22} color={colors.primary} />
         </TouchableOpacity>
 
         <Text style={styles.title}>
@@ -144,7 +146,7 @@ export default function RegisterScreen({ navigation, route }: any) {
           disabled={loading}
         >
           {loading
-            ? <ActivityIndicator color={AUTH_BG} />
+            ? <ActivityIndicator color={colors.primary} />
             : <Text style={styles.btnText}>{mode === 'register' ? t('auth.next') : t('auth.login')}</Text>
           }
         </TouchableOpacity>
@@ -162,11 +164,11 @@ export default function RegisterScreen({ navigation, route }: any) {
   );
 }
 
-function makeStyles(topInset: number) {
+function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalette) {
   return StyleSheet.create({
     container: {
       flexGrow: 1,
-      backgroundColor: '#EDE4FF',
+      backgroundColor: c.background,
       paddingHorizontal: 24,
       paddingTop: topInset + 24,
       paddingBottom: 40,
@@ -175,7 +177,7 @@ function makeStyles(topInset: number) {
       width: 40,
       height: 40,
       borderRadius: 20,
-      backgroundColor: 'rgba(108,53,222,0.12)',
+      backgroundColor: c.primaryLight,
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: 32,
@@ -183,7 +185,7 @@ function makeStyles(topInset: number) {
     title: {
       fontSize: Typography.fontSizeXXL,
       fontWeight: Typography.fontWeightBold,
-      color: '#1A1A2E',
+      color: c.textPrimary,
       marginBottom: 28,
     },
     row: { flexDirection: 'row', marginBottom: 12 },
@@ -221,19 +223,19 @@ function makeStyles(topInset: number) {
     },
     btnDisabled: { opacity: 0.6 },
     btnText: {
-      color: AUTH_BG,
+      color: c.primary,
       fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightSemiBold,
     },
     switchMode: { alignItems: 'center', marginTop: 24 },
     switchText: {
-      color: AUTH_BG,
+      color: c.primary,
       fontSize: Typography.fontSizeSM,
       fontWeight: Typography.fontWeightMedium,
     },
     forgotWrap: { alignSelf: 'flex-end', marginBottom: 4 },
     forgotText: {
-      color: AUTH_BG,
+      color: c.primary,
       fontSize: Typography.fontSizeSM,
       fontWeight: Typography.fontWeightMedium,
     },

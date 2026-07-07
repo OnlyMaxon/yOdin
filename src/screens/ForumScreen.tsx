@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import {
+  Animated,
   View,
   Text,
   FlatList,
@@ -59,6 +60,33 @@ export default function ForumScreen({ navigation }: any) {
   const [reportTarget, setReportTarget] = useState<Discussion | null>(null);
   // Client-side filter over the loaded questions by whether they're solved.
   const [answerFilter, setAnswerFilter] = useState<'all' | 'answered' | 'unanswered'>('all');
+
+  const prevScrollY = useRef(0);
+  const filterAnim = useRef(new Animated.Value(1)).current;
+
+  const CYCLE: Array<typeof answerFilter> = ['all', 'answered', 'unanswered'];
+  const cycleIcon = answerFilter === 'answered' ? 'checkmark-circle' as const
+    : answerFilter === 'unanswered' ? 'help-circle-outline' as const
+    : 'apps-outline' as const;
+  const cycleColor = answerFilter === 'answered' ? colors.success
+    : answerFilter === 'unanswered' ? colors.primary
+    : colors.textSecondary;
+
+  function cycleAnswerFilter() {
+    const idx = CYCLE.indexOf(answerFilter);
+    setAnswerFilter(CYCLE[(idx + 1) % CYCLE.length]);
+  }
+
+  function handleScroll(e: any) {
+    const y = e.nativeEvent.contentOffset.y;
+    const diff = y - prevScrollY.current;
+    if (diff > 8 && y > 40) {
+      Animated.timing(filterAnim, { toValue: 0, duration: 180, useNativeDriver: false }).start();
+    } else if (diff < -8) {
+      Animated.timing(filterAnim, { toValue: 1, duration: 200, useNativeDriver: false }).start();
+    }
+    prevScrollY.current = y;
+  }
 
   function toggleNation(name: string) {
     setSelectedNations((prev) =>
@@ -325,23 +353,16 @@ export default function ForumScreen({ navigation }: any) {
         answerFilter === 'answered' ? !!d.acceptedReplyId : !d.acceptedReplyId,
       );
 
-  const ANSWER_FILTERS: { key: typeof answerFilter; label: string; icon: keyof typeof Ionicons.glyphMap }[] = [
-    { key: 'all', label: t('categories.all'), icon: 'apps-outline' },
-    { key: 'answered', label: t('forum.answered'), icon: 'checkmark-circle-outline' },
-    { key: 'unanswered', label: t('forum.unanswered'), icon: 'help-circle-outline' },
-  ];
 
   return (
     <View style={styles.container}>
+      {/* Header with inline search */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('forum.title')}</Text>
-      </View>
-
-      <View style={styles.filterBar}>
-        <View style={styles.searchBar}>
-          <Ionicons name="search" size={18} color={colors.textSecondary} />
+        <View style={styles.headerSearch}>
+          <Ionicons name="search" size={16} color={colors.textSecondary} />
           <TextInput
-            style={styles.searchInput}
+            style={styles.headerSearchInput}
             placeholder={t('forum.search')}
             placeholderTextColor={colors.textSecondary}
             value={search}
@@ -351,70 +372,68 @@ export default function ForumScreen({ navigation }: any) {
           />
           {isSearching && (
             <TouchableOpacity onPress={() => setSearch('')} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-              <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
+              <Ionicons name="close-circle" size={16} color={colors.textSecondary} />
             </TouchableOpacity>
           )}
-        </View>
-
-        <View style={styles.natBar}>
-        <TouchableOpacity
-          style={[styles.drawerBtn, selectedNations.length > 0 && styles.drawerBtnActive]}
-          onPress={() => setDrawerOpen(true)}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        >
-          <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.primary : colors.textPrimary} />
-          {selectedNations.length > 0 && (
-            <View style={styles.drawerBadge}>
-              <Text style={styles.drawerBadgeText}>{selectedNations.length}</Text>
-            </View>
-          )}
-        </TouchableOpacity>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.natChips}
-        >
-          <TouchableOpacity
-            style={[styles.natChip, selectedNations.length === 0 && styles.natChipActive]}
-            onPress={() => setSelectedNations([])}
-          >
-            <Text style={[styles.natChipText, selectedNations.length === 0 && styles.natChipTextActive]}>
-              🌍 {t('feed.allNations')}
-            </Text>
-          </TouchableOpacity>
-          {selectedNations.map((nation) => (
-            <TouchableOpacity
-              key={nation}
-              style={[styles.natChip, styles.natChipActive]}
-              onPress={() => toggleNation(nation)}
-            >
-              <Text style={[styles.natChipText, styles.natChipTextActive]}>
-                {COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} {nation}  ✕
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-        </View>
-
-        <View style={styles.segment}>
-          {ANSWER_FILTERS.map((f) => {
-            const active = answerFilter === f.key;
-            return (
-              <TouchableOpacity
-                key={f.key}
-                style={[styles.segmentItem, active && styles.segmentItemActive]}
-                onPress={() => setAnswerFilter(f.key)}
-                activeOpacity={0.7}
-              >
-                <Ionicons name={f.icon} size={15} color={active ? '#fff' : colors.textSecondary} />
-                <Text style={[styles.segmentText, active && styles.segmentTextActive]} numberOfLines={1}>
-                  {f.label}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
         </View>
       </View>
+
+      {/* Collapsible filter bar — slides up on scroll down, returns on scroll up */}
+      <Animated.View style={[
+        styles.filterBar,
+        {
+          overflow: 'hidden',
+          maxHeight: filterAnim.interpolate({ inputRange: [0, 1], outputRange: [0, 100] }),
+          opacity: filterAnim,
+        },
+      ]}>
+        <View style={styles.natBar}>
+          <TouchableOpacity
+            style={[styles.drawerBtn, selectedNations.length > 0 && styles.drawerBtnActive]}
+            onPress={() => setDrawerOpen(true)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.primary : colors.textPrimary} />
+            {selectedNations.length > 0 && (
+              <View style={styles.drawerBadge}>
+                <Text style={styles.drawerBadgeText}>{selectedNations.length}</Text>
+              </View>
+            )}
+          </TouchableOpacity>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.natChips}
+          >
+            <TouchableOpacity
+              style={[styles.natChip, selectedNations.length === 0 && styles.natChipActive]}
+              onPress={() => setSelectedNations([])}
+            >
+              <Text style={[styles.natChipText, selectedNations.length === 0 && styles.natChipTextActive]}>
+                🌍 {t('feed.allNations')}
+              </Text>
+            </TouchableOpacity>
+            {selectedNations.map((nation) => (
+              <TouchableOpacity
+                key={nation}
+                style={[styles.natChip, styles.natChipActive]}
+                onPress={() => toggleNation(nation)}
+              >
+                <Text style={[styles.natChipText, styles.natChipTextActive]}>
+                  {COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} {nation}  ✕
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+          <TouchableOpacity
+            style={[styles.cycleBtn, answerFilter !== 'all' && styles.cycleBtnActive]}
+            onPress={cycleAnswerFilter}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Ionicons name={cycleIcon} size={18} color={cycleColor} />
+          </TouchableOpacity>
+        </View>
+      </Animated.View>
 
       {error ? (
         <View style={styles.center}>
@@ -434,6 +453,8 @@ export default function ForumScreen({ navigation }: any) {
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} />}
           onEndReached={isSearching ? undefined : loadMore}
           onEndReachedThreshold={0.3}
+          onScroll={handleScroll}
+          scrollEventThrottle={16}
           ListHeaderComponent={
             !isSearching && topQuestion ? (
               <View style={styles.qodWrap}>
@@ -499,30 +520,28 @@ function makeStyles(c: ColorPalette, topInset: number) {
       borderBottomColor: c.border,
       paddingTop: 10,
     },
-    searchBar: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 8,
-      marginHorizontal: 16,
-      marginBottom: 10,
-      paddingHorizontal: 14,
-      height: 44,
-      borderRadius: 22,
-      backgroundColor: c.background,
-      borderWidth: 1,
-      borderColor: c.border,
-    },
-    searchInput: {
-      flex: 1,
-      fontSize: Typography.fontSizeMD,
-      color: c.textPrimary,
-      padding: 0,
-    },
     headerTitle: {
       fontSize: Typography.fontSizeXL,
       fontWeight: Typography.fontWeightBold,
       color: c.primary,
+    },
+    headerSearch: {
       flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      paddingHorizontal: 12,
+      height: 38,
+      borderRadius: 19,
+      backgroundColor: c.background,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    headerSearchInput: {
+      flex: 1,
+      fontSize: Typography.fontSizeSM,
+      color: c.textPrimary,
+      padding: 0,
     },
     natBar: {
       flexDirection: 'row',
@@ -530,6 +549,20 @@ function makeStyles(c: ColorPalette, topInset: number) {
       paddingHorizontal: 16,
       paddingVertical: 8,
       gap: 8,
+    },
+    cycleBtn: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: c.background,
+      borderWidth: 1,
+      borderColor: c.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    cycleBtnActive: {
+      borderColor: c.primary,
+      backgroundColor: c.primaryLight,
     },
     drawerBtn: {
       width: 36,
@@ -575,35 +608,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontWeight: Typography.fontWeightMedium,
     },
     natChipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
-    segment: {
-      flexDirection: 'row',
-      gap: 4,
-      marginHorizontal: 16,
-      marginBottom: 12,
-      marginTop: 2,
-      padding: 4,
-      borderRadius: 14,
-      backgroundColor: c.background,
-    },
-    segmentItem: {
-      flex: 1,
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 5,
-      paddingVertical: 8,
-      borderRadius: 10,
-    },
-    segmentItemActive: {
-      backgroundColor: c.primary,
-      shadowColor: c.primary,
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.25,
-      shadowRadius: 5,
-      elevation: 2,
-    },
-    segmentText: { fontSize: Typography.fontSizeSM, color: c.textSecondary, fontWeight: Typography.fontWeightMedium },
-    segmentTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
     list: { padding: 14, gap: 14, paddingBottom: 96 },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     empty: { alignItems: 'center', paddingTop: 80 },

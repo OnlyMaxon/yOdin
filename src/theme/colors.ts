@@ -18,16 +18,16 @@ export const LightColors = {
 
 export const DarkColors: ColorPalette = {
   primary: '#8B6EF5',
-  primaryLight: '#2D2B4E',
+  primaryLight: '#2A1F5C',
   accent: '#FF6B6B',
-  background: '#0F0F1A',
-  surface: '#1A1A2E',
-  textPrimary: '#F0F0FF',
-  textSecondary: '#8B8FA8',
-  border: '#2D2D45',
+  background: '#12102A',
+  surface: '#1C1840',
+  textPrimary: '#F0EEFF',
+  textSecondary: '#9B99C0',
+  border: '#2E2860',
   success: '#10B981',
   notification: '#EF4444',
-  tabBar: '#1A1A2E',
+  tabBar: '#1C1840',
   tabBarActive: '#8B6EF5',
   tabBarInactive: '#6B7280',
 };

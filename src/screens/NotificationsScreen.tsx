@@ -165,7 +165,7 @@ export default function NotificationsScreen({ navigation }: any) {
           data={notifications}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
-          contentContainerStyle={notifications.length === 0 ? styles.center : { paddingBottom: 96 }}
+          contentContainerStyle={notifications.length === 0 ? styles.center : { paddingTop: 8, paddingBottom: 96 }}
           ListEmptyComponent={
             <View style={styles.empty}>
               <Text style={styles.emptyEmoji}>🔔</Text>
@@ -207,13 +207,23 @@ function makeStyles(c: ColorPalette, topInset: number) {
     item: {
       flexDirection: 'row',
       alignItems: 'flex-start',
-      paddingHorizontal: 20,
-      paddingVertical: 16,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
+      paddingHorizontal: 16,
+      paddingVertical: 14,
+      marginHorizontal: 14,
+      marginVertical: 5,
+      borderRadius: 18,
       backgroundColor: c.surface,
+      shadowColor: '#6C35DE',
+      shadowOffset: { width: 0, height: 3 },
+      shadowOpacity: 0.07,
+      shadowRadius: 10,
+      elevation: 2,
     },
-    itemUnread: { backgroundColor: c.primaryLight },
+    itemUnread: {
+      borderLeftWidth: 3,
+      borderLeftColor: c.primary,
+      backgroundColor: c.primaryLight,
+    },
     avatar: {
       width: 44,
       height: 44,
