@@ -401,6 +401,7 @@ export default function FeedScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.headerBlock}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('feed.title')}</Text>
       </View>
@@ -473,6 +474,7 @@ export default function FeedScreen({ navigation }: any) {
           </ScrollView>
         </View>
       </Animated.View>
+      </View>
 
       {error ? (
         <View style={styles.center}>
@@ -561,6 +563,11 @@ export default function FeedScreen({ navigation }: any) {
 function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background },
+    headerBlock: {
+      backgroundColor: c.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: c.border,
+    },
     header: {
       paddingHorizontal: 16,
       paddingTop: topInset + 12,
@@ -569,8 +576,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
     },
     headerTitle: {
       fontSize: Typography.fontSizeXL,
@@ -579,8 +584,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     filterBar: {
       backgroundColor: c.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
     },
     filterRow: {
       paddingHorizontal: 16,

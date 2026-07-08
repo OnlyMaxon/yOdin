@@ -357,6 +357,7 @@ export default function ForumScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       {/* Header with inline search */}
+      <View style={styles.headerBlock}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>{t('forum.title')}</Text>
         <View style={styles.headerSearch}>
@@ -434,6 +435,7 @@ export default function ForumScreen({ navigation }: any) {
           </TouchableOpacity>
         </View>
       </Animated.View>
+      </View>
 
       {error ? (
         <View style={styles.center}>
@@ -503,21 +505,22 @@ export default function ForumScreen({ navigation }: any) {
 function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
     container: { flex: 1, backgroundColor: c.background },
+    headerBlock: {
+      backgroundColor: c.surface,
+      borderBottomWidth: 1,
+      borderBottomColor: c.border,
+    },
     header: {
       paddingHorizontal: 16,
       paddingTop: topInset + 12,
       paddingBottom: 16,
       backgroundColor: c.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
       flexDirection: 'row',
       alignItems: 'center',
       gap: 12,
     },
     filterBar: {
       backgroundColor: c.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
       paddingTop: 10,
     },
     headerTitle: {
