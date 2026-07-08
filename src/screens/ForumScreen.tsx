@@ -517,11 +517,11 @@ function makeStyles(c: ColorPalette, topInset: number) {
       backgroundColor: c.surface,
       flexDirection: 'row',
       alignItems: 'center',
-      gap: 12,
+      gap: 10,
     },
     filterBar: {
       backgroundColor: c.surface,
-      paddingTop: 10,
+      
     },
     headerTitle: {
       fontSize: Typography.fontSizeXL,

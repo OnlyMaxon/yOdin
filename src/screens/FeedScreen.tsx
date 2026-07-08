@@ -597,7 +597,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: 16,
-      paddingBottom: 12,
+      paddingBottom: 8,
       paddingTop: 4,
       gap: 8,
     },
