@@ -459,7 +459,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                   onPress={sendComment}
                   disabled={!text.trim() || sending}
                 >
-                  {sending ? <ActivityIndicator color="#fff" size="small" /> : <Text style={styles.sendText}>↑</Text>}
+                  {sending ? <ActivityIndicator color="#fff" size="small" /> : <Ionicons name="arrow-up" size={22} color="#fff" />}
                 </TouchableOpacity>
               </View>
             )}
@@ -612,7 +612,6 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       backgroundColor: c.primary, alignItems: 'center', justifyContent: 'center',
     },
     sendBtnDisabled: { opacity: 0.4 },
-    sendText: { color: '#fff', fontSize: 20, fontWeight: Typography.fontWeightBold },
     blockedBar: {
       flexDirection: 'row',
       alignItems: 'center',

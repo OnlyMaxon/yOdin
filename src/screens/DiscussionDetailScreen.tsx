@@ -555,7 +555,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           >
             {sending
               ? <ActivityIndicator color="#fff" size="small" />
-              : <Text style={styles.sendText}>↑</Text>
+              : <Ionicons name="arrow-up" size={22} color="#fff" />
             }
           </TouchableOpacity>
         </View>
@@ -825,7 +825,6 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       justifyContent: 'center',
     },
     sendBtnDisabled: { opacity: 0.4 },
-    sendText: { color: '#fff', fontSize: 20, fontWeight: Typography.fontWeightBold },
     blockedBar: {
       flexDirection: 'row',
       alignItems: 'center',
