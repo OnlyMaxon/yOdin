@@ -194,7 +194,8 @@
     "nothingFound": "Nothing found",
     "questionOfDay": "Question of the day",
     "promo": "Promo",
-    "unanswered": "Unanswered"
+    "unanswered": "Unanswered",
+    "attachments": "Attachments"
   },
   "rank": {
     "novice": "Novice",

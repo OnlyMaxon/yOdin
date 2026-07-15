@@ -26,6 +26,7 @@ import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
 import { Post, PostCategory, POST_CATEGORIES, Discussion, ReportReason } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useScrollToTop } from '@react-navigation/native';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -58,6 +59,9 @@ export default function FeedScreen({ navigation }: any) {
   const [selectedNations, setSelectedNations] = useState<string[]>([]);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [topQuestion, setTopQuestion] = useState<Discussion | null>(null);
+  // Tapping the Feed tab while already on it scrolls back to the top.
+  const listRef = useRef<FlatList>(null);
+  useScrollToTop(listRef);
   const [reportTarget, setReportTarget] = useState<Post | null>(null);
   const [participantsPost, setParticipantsPost] = useState<Post | null>(null);
 
@@ -323,6 +327,7 @@ export default function FeedScreen({ navigation }: any) {
               videoURL={item.videoURL}
               videoPoster={item.videoPoster}
               onVideoPress={() => openDetail(item.id, false)}
+              onImagePress={() => openDetail(item.id, false)}
             />
           </View>
         ) : null}
@@ -487,6 +492,7 @@ export default function FeedScreen({ navigation }: any) {
         </View>
       ) : (
         <FlatList
+          ref={listRef}
           data={posts}
           keyExtractor={(item) => item.id}
           renderItem={renderCard}
@@ -693,7 +699,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontSize: Typography.fontSizeXS,
       fontWeight: Typography.fontWeightSemiBold,
     },
-    photoWrap: { marginBottom: 12, marginHorizontal: -16, overflow: 'hidden' },
+    photoWrap: { marginBottom: 12 },
     qodWrap: { marginBottom: 4 },
     postTitle: {
       fontSize: Typography.fontSizeLG,

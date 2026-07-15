@@ -11,6 +11,9 @@ import {
   RefreshControl,
   Image,
   ScrollView,
+  LayoutAnimation,
+  Platform,
+  UIManager,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -26,6 +29,7 @@ import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
 import { Discussion, ReportReason } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useScrollToTop } from '@react-navigation/native';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -37,6 +41,11 @@ import VideoPreview from '../components/VideoPreview';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
 import EmptyState from '../components/EmptyState';
 import { COUNTRIES } from '../data/countries';
+
+// Enable the expand/collapse animation for the attachments panel on old-arch Android.
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export default function ForumScreen({ navigation }: any) {
   const { t } = useTranslation();
@@ -61,9 +70,19 @@ export default function ForumScreen({ navigation }: any) {
   const [reportTarget, setReportTarget] = useState<Discussion | null>(null);
   // Client-side filter over the loaded questions by whether they're solved.
   const [answerFilter, setAnswerFilter] = useState<'all' | 'answered' | 'unanswered'>('all');
+  // Which cards have their attachments panel expanded (keyed by discussion id).
+  const [expandedAttach, setExpandedAttach] = useState<Record<string, boolean>>({});
+
+  function toggleAttach(id: string) {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    setExpandedAttach((prev) => ({ ...prev, [id]: !prev[id] }));
+  }
 
   const prevScrollY = useRef(0);
   const filterAnim = useRef(new Animated.Value(1)).current;
+  // Tapping the Forum tab while already on it scrolls back to the top.
+  const listRef = useRef<FlatList>(null);
+  useScrollToTop(listRef);
 
   const CYCLE: Array<typeof answerFilter> = ['all', 'answered', 'unanswered'];
   const cycleIcon = answerFilter === 'answered' ? 'checkmark-circle' as const
@@ -262,6 +281,8 @@ export default function ForumScreen({ navigation }: any) {
       : (savedOverrides[item.id] ?? false);
     const isAnswered = !!item.acceptedReplyId;
     const isOwner = item.authorId === profile?.uid;
+    const attachCount = (item.imageURLs?.length ?? 0) + (item.videoURL ? 1 : 0);
+    const attachExpanded = !!expandedAttach[item.id];
     return (
       <TouchableOpacity
         style={[styles.card, isAnswered && styles.cardAnswered]}
@@ -301,17 +322,39 @@ export default function ForumScreen({ navigation }: any) {
           </View>
         </View>
         <Text style={styles.question}>{item.question}</Text>
-        {item.videoURL ? (
-          <View style={styles.photoWrap}>
-            <VideoPreview
-              poster={item.videoPoster}
-              onPress={() => navigation.navigate('DiscussionDetail', { discussionId: item.id, question: item.question })}
-            />
-          </View>
-        ) : null}
-        {item.imageURLs && item.imageURLs.length > 0 ? (
-          <View style={styles.photoWrap}>
-            <PhotoGrid images={item.imageURLs} />
+        {attachCount > 0 ? (
+          <View style={styles.attachBlock}>
+            <TouchableOpacity
+              style={styles.attachBtn}
+              onPress={() => toggleAttach(item.id)}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="attach" size={16} color={colors.primary} />
+              <Text style={styles.attachBtnText}>
+                {t('forum.attachments')} · {attachCount}
+              </Text>
+              <Ionicons
+                name={attachExpanded ? 'chevron-up' : 'chevron-down'}
+                size={16}
+                color={colors.primary}
+              />
+            </TouchableOpacity>
+            {attachExpanded ? (
+              <View style={styles.attachMedia}>
+                {item.videoURL ? (
+                  <VideoPreview
+                    poster={item.videoPoster}
+                    onPress={() => navigation.navigate('DiscussionDetail', { discussionId: item.id, question: item.question })}
+                  />
+                ) : null}
+                {item.imageURLs && item.imageURLs.length > 0 ? (
+                  <PhotoGrid
+                    images={item.imageURLs}
+                    onPress={() => navigation.navigate('DiscussionDetail', { discussionId: item.id, question: item.question })}
+                  />
+                ) : null}
+              </View>
+            ) : null}
           </View>
         ) : null}
         {isAnswered && item.acceptedReplyText ? (
@@ -446,6 +489,7 @@ export default function ForumScreen({ navigation }: any) {
         </View>
       ) : (
         <FlatList
+          ref={listRef}
           data={visibleList}
           keyExtractor={(item) => item.id}
           renderItem={renderCard}
@@ -675,6 +719,25 @@ function makeStyles(c: ColorPalette, topInset: number) {
       marginBottom: 12,
     },
     photoWrap: { marginBottom: 12, marginHorizontal: -16, overflow: 'hidden' },
+    attachBlock: { marginBottom: 12 },
+    attachBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      gap: 6,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 12,
+      backgroundColor: c.primaryLight,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    attachBtnText: {
+      fontSize: Typography.fontSizeSM,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.primary,
+    },
+    attachMedia: { marginTop: 10, gap: 8 },
     answerBox: {
       backgroundColor: c.surface,
       borderLeftWidth: 3,
