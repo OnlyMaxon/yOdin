@@ -57,7 +57,7 @@ export async function fetchDiscussions(
   if (answerFilter === 'answered')
     constraints.push(where('isAnswered', '==', true));
   else if (answerFilter === 'unanswered')
-    constraints.push(where('acceptedReplyId', '==', null));
+    constraints.push(where('isAnswered', '==', false));
   constraints.push(orderBy('feedScore', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 
