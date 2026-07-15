@@ -23,13 +23,16 @@ interface Props {
   // with a play badge and a tap opens the detail (cheap to scroll).
   videoInline?: boolean;
   onVideoPress?: () => void;
+  // When provided, tapping a photo runs this instead of opening the fullscreen
+  // viewer (used in the feed so a tap opens the post, like the rest of the card).
+  onImagePress?: () => void;
 }
 
 type Item = { type: 'image'; uri: string } | { type: 'video'; uri: string; poster?: string };
 
 // Instagram-style swipeable media: photos and an optional video in one card,
 // square framed, with page dots + a counter. Photos open a fullscreen viewer.
-export default function MediaCarousel({ images, videoURL, videoPoster, videoInline, onVideoPress }: Props) {
+export default function MediaCarousel({ images, videoURL, videoPoster, videoInline, onVideoPress, onImagePress }: Props) {
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
   const [page, setPage] = useState(0);
@@ -50,7 +53,11 @@ export default function MediaCarousel({ images, videoURL, videoPoster, videoInli
   function renderItem({ item, index }: { item: Item; index: number }) {
     if (item.type === 'image') {
       return (
-        <TouchableOpacity activeOpacity={0.95} onPress={() => setViewerIndex(index)} style={{ width, height: width }}>
+        <TouchableOpacity
+          activeOpacity={0.95}
+          onPress={() => (onImagePress ? onImagePress() : setViewerIndex(index))}
+          style={{ width, height: width }}
+        >
           <Image source={{ uri: item.uri }} style={styles.media} resizeMode="cover" />
         </TouchableOpacity>
       );

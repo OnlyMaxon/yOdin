@@ -190,7 +190,8 @@
     "nothingFound": "見つかりませんでした",
     "questionOfDay": "Question of the day",
     "promo": "Promo",
-    "unanswered": "Unanswered"
+    "unanswered": "Unanswered",
+    "attachments": "添付ファイル"
   },
   "rank": {
     "novice": "初心者",

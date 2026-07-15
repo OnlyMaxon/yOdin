@@ -190,7 +190,8 @@
     "nothingFound": "검색 결과 없음",
     "questionOfDay": "Question of the day",
     "promo": "Promo",
-    "unanswered": "Unanswered"
+    "unanswered": "Unanswered",
+    "attachments": "첨부 파일"
   },
   "rank": {
     "novice": "새내기",

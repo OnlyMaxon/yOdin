@@ -9,11 +9,15 @@ const BLOCK_H = 230; // total height for multi-photo collages
 
 interface Props {
   images: string[];
+  // When provided, tapping any tile runs this instead of opening the fullscreen
+  // viewer (used in the forum card so photos are attachments — openable only
+  // after tapping through to the question).
+  onPress?: () => void;
 }
 
 // Adaptive photo collage (1–4+ tiles, Telegram/Instagram style). Tapping any
 // tile opens a fullscreen swipeable viewer of the full set.
-export default function PhotoGrid({ images }: Props) {
+export default function PhotoGrid({ images, onPress }: Props) {
   const { colors } = useTheme();
   const [width, setWidth] = useState(0);
   const [viewerIndex, setViewerIndex] = useState<number | null>(null);
@@ -24,7 +28,11 @@ export default function PhotoGrid({ images }: Props) {
 
   function Tile({ uri, index, style, extra }: { uri: string; index: number; style: any; extra?: number }) {
     return (
-      <TouchableOpacity activeOpacity={0.9} onPress={() => setViewerIndex(index)} style={style}>
+      <TouchableOpacity
+        activeOpacity={0.9}
+        onPress={() => (onPress ? onPress() : setViewerIndex(index))}
+        style={style}
+      >
         <Image source={{ uri }} style={styles.img} resizeMode="cover" />
         {extra ? (
           <View style={styles.moreOverlay}>

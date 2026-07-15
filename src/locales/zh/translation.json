@@ -190,7 +190,8 @@
     "nothingFound": "未找到结果",
     "questionOfDay": "Question of the day",
     "promo": "Promo",
-    "unanswered": "Unanswered"
+    "unanswered": "Unanswered",
+    "attachments": "附件"
   },
   "rank": {
     "novice": "新手",

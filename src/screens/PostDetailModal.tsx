@@ -335,6 +335,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                     videoURL={post.videoURL}
                     videoPoster={post.videoPoster}
                     videoInline
+                    onImagePress={() => {}}
                   />
                 </View>
               ) : null}

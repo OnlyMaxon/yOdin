@@ -353,36 +353,38 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           </TouchableOpacity>
 
           <View style={[styles.msgActions, isMe ? styles.msgActionsMe : styles.msgActionsOther]}>
-            <TouchableOpacity
-              style={styles.voteBtn}
-              onPress={() => handleVote(item, 'like')}
-              disabled={isMe}
-              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
-            >
-              <Ionicons
-                name={liked ? 'thumbs-up' : 'thumbs-up-outline'}
-                size={15}
-                color={liked ? colors.primary : colors.textSecondary}
-              />
-              {likeCount > 0 && (
-                <Text style={[styles.voteCount, liked && { color: colors.primary }]}>{likeCount}</Text>
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.voteBtn}
-              onPress={() => handleVote(item, 'dislike')}
-              disabled={isMe}
-              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
-            >
-              <Ionicons
-                name={disliked ? 'thumbs-down' : 'thumbs-down-outline'}
-                size={15}
-                color={disliked ? colors.notification : colors.textSecondary}
-              />
-              {dislikeCount > 0 && (
-                <Text style={[styles.voteCount, disliked && { color: colors.notification }]}>{dislikeCount}</Text>
-              )}
-            </TouchableOpacity>
+            {!isMe && (
+              <>
+                <TouchableOpacity
+                  style={styles.voteBtn}
+                  onPress={() => handleVote(item, 'like')}
+                  hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+                >
+                  <Ionicons
+                    name={liked ? 'thumbs-up' : 'thumbs-up-outline'}
+                    size={15}
+                    color={liked ? colors.primary : colors.textSecondary}
+                  />
+                  {likeCount > 0 && (
+                    <Text style={[styles.voteCount, liked && { color: colors.primary }]}>{likeCount}</Text>
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.voteBtn}
+                  onPress={() => handleVote(item, 'dislike')}
+                  hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+                >
+                  <Ionicons
+                    name={disliked ? 'thumbs-down' : 'thumbs-down-outline'}
+                    size={15}
+                    color={disliked ? colors.notification : colors.textSecondary}
+                  />
+                  {dislikeCount > 0 && (
+                    <Text style={[styles.voteCount, disliked && { color: colors.notification }]}>{dislikeCount}</Text>
+                  )}
+                </TouchableOpacity>
+              </>
+            )}
             {!isAnswered && (
               <TouchableOpacity
                 style={styles.voteBtn}
