@@ -29,7 +29,14 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-video"
+      "expo-video",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow yOdin to access your photos to attach them to discussions and posts.",
+          "isAccessMediaLocationEnabled": false
+        }
+      ]
     ]
   }
 }

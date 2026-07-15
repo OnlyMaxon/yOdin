@@ -63,8 +63,9 @@ export default function PhotoPickerSheet({ visible, maxSelect, onDone, onCancel 
 
   useEffect(() => {
     if (!visible) return;
-    if (!permission?.granted) {
-      if (permission?.canAskAgain !== false) requestPermission();
+    if (permission === null) return; // status not loaded yet
+    if (!permission.granted) {
+      if (permission.canAskAgain) requestPermission();
       return;
     }
     loadPage(undefined, true);
@@ -130,11 +131,10 @@ export default function PhotoPickerSheet({ visible, maxSelect, onDone, onCancel 
     const isPicked = isPickedUri(item.uri);
     const pickedIndex = selected.findIndex(a => a.uri === item.uri);
     const atLimit = !isPicked && selected.length >= maxSelect;
-    const isRightEdge = (index + 1) % COLS === 0;
 
     return (
       <TouchableOpacity
-        style={[styles.cell, !isRightEdge && styles.cellGap]}
+        style={styles.cell}
         activeOpacity={0.85}
         onPress={() => !atLimit && toggleSelect(item)}
       >
@@ -234,7 +234,6 @@ function makeStyles(c: ColorPalette, topInset: number, _bottomInset: number) {
     },
     row: { gap: GAP },
     cell: { width: CELL, height: CELL, overflow: 'hidden' },
-    cellGap: { marginRight: 0 },
     cameraCell: {
       backgroundColor: c.primaryLight,
       alignItems: 'center',
