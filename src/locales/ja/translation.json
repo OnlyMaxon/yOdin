@@ -157,7 +157,8 @@
     "videoTooLong": "Video must be under {{count}}s",
     "videoTooLarge": "Video is too large (max 50 MB)",
     "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category"
+    "selectCategory": "Please choose a category",
+    "galleryPermission": "設定でギャラリーへのアクセスを許可してください"
   },
   "categories": {
     "all": "すべて",
@@ -179,7 +180,10 @@
     "limitPlaceholder": "Max",
     "media": "Media",
     "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos"
+    "maxPhotos": "Up to {{count}} photos",
+    "selectPhotos": "写真を選択",
+    "done": "完了",
+    "cancel": "キャンセル"
   },
   "forum": {
     "title": "フォーラム",

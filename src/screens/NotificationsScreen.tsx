@@ -133,13 +133,6 @@ export default function NotificationsScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        {navigation.canGoBack() ? (
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-            <Ionicons name="arrow-back" size={24} color={colors.textPrimary} />
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.backBtn} />
-        )}
         <Text style={styles.headerTitle}>{t('notifications.title')}</Text>
         {loaded && notifications.some((n) => n.read) ? (
           <TouchableOpacity

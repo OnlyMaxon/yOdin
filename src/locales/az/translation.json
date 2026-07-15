@@ -157,7 +157,8 @@
     "videoTooLong": "Video {{count}} saniyədən qısa olmalıdır",
     "videoTooLarge": "Video çox böyükdür (maks. 50 MB)",
     "videoUploadFailed": "Video yüklənmədi",
-    "selectCategory": "Kateqoriya seçin"
+    "selectCategory": "Kateqoriya seçin",
+    "galleryPermission": "Cihaz parametrlərindən qalereya girişinə icazə verin"
   },
   "categories": {
     "all": "Hamısı",
@@ -179,7 +180,10 @@
     "limitPlaceholder": "Maks",
     "media": "Media",
     "addMedia": "Foto / video",
-    "maxPhotos": "{{count}} fotoya qədər"
+    "maxPhotos": "{{count}} fotoya qədər",
+    "selectPhotos": "Şəkil seçin",
+    "done": "Hazır",
+    "cancel": "Ləğv et"
   },
   "forum": {
     "title": "Forum",

@@ -157,7 +157,8 @@
     "videoTooLong": "Video must be under {{count}}s",
     "videoTooLarge": "Video is too large (max 50 MB)",
     "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category"
+    "selectCategory": "Please choose a category",
+    "galleryPermission": "Bật quyền truy cập thư viện trong Cài đặt"
   },
   "categories": {
     "all": "Tất cả",
@@ -179,7 +180,10 @@
     "limitPlaceholder": "Max",
     "media": "Media",
     "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos"
+    "maxPhotos": "Up to {{count}} photos",
+    "selectPhotos": "Chọn ảnh",
+    "done": "Xong",
+    "cancel": "Hủy"
   },
   "forum": {
     "title": "Diễn đàn",

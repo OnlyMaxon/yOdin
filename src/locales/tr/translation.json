@@ -157,7 +157,8 @@
     "videoTooLong": "Video must be under {{count}}s",
     "videoTooLarge": "Video is too large (max 50 MB)",
     "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category"
+    "selectCategory": "Please choose a category",
+    "galleryPermission": "Cihaz Ayarlarından galeri erişimine izin verin"
   },
   "categories": {
     "all": "Tümü",
@@ -179,7 +180,10 @@
     "limitPlaceholder": "Max",
     "media": "Media",
     "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos"
+    "maxPhotos": "Up to {{count}} photos",
+    "selectPhotos": "Fotoğraf seçin",
+    "done": "Bitti",
+    "cancel": "İptal"
   },
   "forum": {
     "title": "Forum",

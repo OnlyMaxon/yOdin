@@ -161,7 +161,8 @@
     "videoTooLong": "Video must be under {{count}}s",
     "videoTooLarge": "Video is too large (max 50 MB)",
     "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category"
+    "selectCategory": "Please choose a category",
+    "galleryPermission": "فعّل الوصول إلى الصور في إعدادات الجهاز"
   },
   "categories": {
     "all": "الكل",
@@ -183,7 +184,10 @@
     "limitPlaceholder": "Max",
     "media": "Media",
     "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos"
+    "maxPhotos": "Up to {{count}} photos",
+    "selectPhotos": "اختر الصور",
+    "done": "تم",
+    "cancel": "إلغاء"
   },
   "forum": {
     "title": "المنتدى",

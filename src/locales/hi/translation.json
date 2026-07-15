@@ -157,7 +157,8 @@
     "videoTooLong": "Video must be under {{count}}s",
     "videoTooLarge": "Video is too large (max 50 MB)",
     "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category"
+    "selectCategory": "Please choose a category",
+    "galleryPermission": "सेटिंग्स में गैलरी एक्सेस सक्षम करें"
   },
   "categories": {
     "all": "सभी",
@@ -179,7 +180,10 @@
     "limitPlaceholder": "Max",
     "media": "Media",
     "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos"
+    "maxPhotos": "Up to {{count}} photos",
+    "selectPhotos": "फ़ोटो चुनें",
+    "done": "हो गया",
+    "cancel": "रद्द करें"
   },
   "forum": {
     "title": "फ़ोरम",

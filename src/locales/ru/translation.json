@@ -158,7 +158,8 @@
     "videoTooLong": "Видео не длиннее {{count}} сек",
     "videoTooLarge": "Видео слишком большое (макс. 50 МБ)",
     "videoUploadFailed": "Не удалось загрузить видео",
-    "selectCategory": "Выберите категорию"
+    "selectCategory": "Выберите категорию",
+    "galleryPermission": "Разрешите доступ к галерее в настройках устройства"
   },
   "categories": {
     "all": "Всё",
@@ -180,7 +181,10 @@
     "limitPlaceholder": "Кол-во",
     "media": "Медиа",
     "addMedia": "Фото / видео",
-    "maxPhotos": "До {{count}} фото"
+    "maxPhotos": "До {{count}} фото",
+    "selectPhotos": "Выберите фото",
+    "done": "Готово",
+    "cancel": "Отмена"
   },
   "forum": {
     "title": "Форум",

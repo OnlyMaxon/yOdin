@@ -19,6 +19,7 @@
     "expo-image-manipulator": "~14.0.8",
     "expo-image-picker": "^55.0.20",
     "expo-localization": "^55.0.14",
+    "expo-media-library": "~18.2.1",
     "expo-status-bar": "~3.0.9",
     "expo-video": "~3.0.16",
     "expo-video-thumbnails": "~10.0.8",

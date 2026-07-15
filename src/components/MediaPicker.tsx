@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   View,
-  Text,
   Image,
   StyleSheet,
   TouchableOpacity,
@@ -14,9 +13,9 @@ import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
-import { Typography } from '../theme/typography';
 import { optimizeImage } from '../utils/imageOptimize';
 import { processVideoAsset, videoPickerOptions, VideoPickError, MAX_VIDEO_DURATION_S } from '../utils/pickVideo';
+import PhotoPickerSheet, { PickedAsset } from './PhotoPickerSheet';
 
 export interface AttachedVideo {
   uri: string;
@@ -31,46 +30,47 @@ interface Props {
   maxPhotos: number;
 }
 
-// One control for all media: photos AND a single video share a single "+" tile.
-// The OS picker shows both; images are cropped and compressed, a video gets a
-// poster still. Thumbnails (photos + the video) sit in one horizontal strip.
 export default function MediaPicker({ images, onChangeImages, video, onChangeVideo, maxPhotos }: Props) {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = makeStyles(colors);
+  const [sheetVisible, setSheetVisible] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  const canAdd = images.length < maxPhotos || !video;
+  const canAddPhoto = images.length < maxPhotos;
+  const canAddVideo = !video;
 
-  async function add() {
-    if (busy || !canAdd) return;
+  async function handlePhotosDone(picked: PickedAsset[]) {
+    setSheetVisible(false);
+    if (picked.length === 0) return;
+    setBusy(true);
+    try {
+      const slots = maxPhotos - images.length;
+      const toProcess = picked.slice(0, slots);
+      const optimized = await Promise.all(
+        toProcess.map(a => optimizeImage(a.uri, a.width || undefined, a.height || undefined)),
+      );
+      onChangeImages([...images, ...optimized].slice(0, maxPhotos));
+    } catch {
+      Alert.alert(t('errors.generic'));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function addVideo() {
+    if (busy) return;
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (status !== 'granted') return;
-
-    // One item at a time so the built-in crop/trim step is available (native
-    // editing is incompatible with multi-select).
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images', 'videos'],
-      allowsEditing: true,
-      quality: 0.7,
+      mediaTypes: ['videos'],
       ...videoPickerOptions,
     });
     if (result.canceled || result.assets.length === 0) return;
-
-    const asset = result.assets[0];
     setBusy(true);
     try {
-      if (asset.type === 'video') {
-        const v = await processVideoAsset(asset);
-        onChangeVideo({ uri: v.uri, poster: v.poster });
-      } else {
-        if (images.length >= maxPhotos) {
-          Alert.alert(t('newPost.maxPhotos', { count: maxPhotos }));
-          return;
-        }
-        const optimized = await optimizeImage(asset.uri, asset.width, asset.height);
-        onChangeImages([...images, optimized].slice(0, maxPhotos));
-      }
+      const v = await processVideoAsset(result.assets[0]);
+      onChangeVideo({ uri: v.uri, poster: v.poster });
     } catch (e) {
       if (e instanceof VideoPickError) Alert.alert(t(e.key, { count: MAX_VIDEO_DURATION_S }));
       else Alert.alert(t('errors.generic'));
@@ -84,52 +84,75 @@ export default function MediaPicker({ images, onChangeImages, video, onChangeVid
   }
 
   return (
-    <ScrollView
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.row}
-      keyboardShouldPersistTaps="handled"
-    >
-      {images.map((uri, i) => (
-        <View key={`${uri}-${i}`} style={styles.thumbWrap}>
-          <Image source={{ uri }} style={styles.thumb} />
-          <TouchableOpacity style={styles.removeBtn} onPress={() => removeImageAt(i)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}>
-            <Ionicons name="close" size={13} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      ))}
-
-      {video ? (
-        <View style={styles.thumbWrap}>
-          {video.poster ? (
-            <Image source={{ uri: video.poster }} style={styles.thumb} />
-          ) : (
-            <View style={[styles.thumb, styles.videoFallback]}>
-              <Ionicons name="videocam" size={22} color={colors.primary} />
-            </View>
-          )}
-          <View style={styles.playBadge}>
-            <Ionicons name="play" size={14} color="#fff" style={{ marginLeft: 2 }} />
+    <>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.row}
+        keyboardShouldPersistTaps="handled"
+      >
+        {images.map((uri, i) => (
+          <View key={`${uri}-${i}`} style={styles.thumbWrap}>
+            <Image source={{ uri }} style={styles.thumb} />
+            <TouchableOpacity
+              style={styles.removeBtn}
+              onPress={() => removeImageAt(i)}
+              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+            >
+              <Ionicons name="close" size={13} color="#fff" />
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.removeBtn} onPress={() => onChangeVideo(null)} hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}>
-            <Ionicons name="close" size={13} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      ) : null}
+        ))}
 
-      {canAdd && (
-        <TouchableOpacity style={styles.addTile} onPress={add} disabled={busy} activeOpacity={0.7}>
-          {busy ? (
+        {video ? (
+          <View style={styles.thumbWrap}>
+            {video.poster ? (
+              <Image source={{ uri: video.poster }} style={styles.thumb} />
+            ) : (
+              <View style={[styles.thumb, styles.videoFallback]}>
+                <Ionicons name="videocam" size={22} color={colors.primary} />
+              </View>
+            )}
+            <View style={styles.playBadge}>
+              <Ionicons name="play" size={14} color="#fff" style={{ marginLeft: 2 }} />
+            </View>
+            <TouchableOpacity
+              style={styles.removeBtn}
+              onPress={() => onChangeVideo(null)}
+              hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
+            >
+              <Ionicons name="close" size={13} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
+        {busy ? (
+          <View style={styles.addTile}>
             <ActivityIndicator color={colors.primary} />
-          ) : (
-            <>
-              <Ionicons name="images-outline" size={22} color={colors.primary} />
-              <Text style={styles.addText}>{t('newPost.addMedia')}</Text>
-            </>
-          )}
-        </TouchableOpacity>
-      )}
-    </ScrollView>
+          </View>
+        ) : (
+          <>
+            {canAddPhoto && (
+              <TouchableOpacity style={styles.addTile} onPress={() => setSheetVisible(true)} activeOpacity={0.7}>
+                <Ionicons name="images-outline" size={24} color={colors.primary} />
+              </TouchableOpacity>
+            )}
+            {canAddVideo && (
+              <TouchableOpacity style={styles.addTile} onPress={addVideo} activeOpacity={0.7}>
+                <Ionicons name="videocam-outline" size={24} color={colors.primary} />
+              </TouchableOpacity>
+            )}
+          </>
+        )}
+      </ScrollView>
+
+      <PhotoPickerSheet
+        visible={sheetVisible}
+        maxSelect={maxPhotos - images.length}
+        onDone={handlePhotosDone}
+        onCancel={() => setSheetVisible(false)}
+      />
+    </>
   );
 }
 
@@ -176,9 +199,6 @@ function makeStyles(c: ColorPalette) {
       backgroundColor: c.primaryLight,
       alignItems: 'center',
       justifyContent: 'center',
-      gap: 3,
-      paddingHorizontal: 4,
     },
-    addText: { fontSize: Typography.fontSizeXS, color: c.primary, fontWeight: Typography.fontWeightSemiBold, textAlign: 'center' },
   });
 }

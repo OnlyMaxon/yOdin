@@ -159,7 +159,8 @@
     "videoTooLong": "Video must be under {{count}}s",
     "videoTooLarge": "Video is too large (max 50 MB)",
     "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category"
+    "selectCategory": "Please choose a category",
+    "galleryPermission": "Włącz dostęp do galerii w Ustawieniach urządzenia"
   },
   "categories": {
     "all": "Wszystko",
@@ -181,7 +182,10 @@
     "limitPlaceholder": "Max",
     "media": "Media",
     "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos"
+    "maxPhotos": "Up to {{count}} photos",
+    "selectPhotos": "Wybierz zdjęcia",
+    "done": "Gotowe",
+    "cancel": "Anuluj"
   },
   "forum": {
     "title": "Forum",
