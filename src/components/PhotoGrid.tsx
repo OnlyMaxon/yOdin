@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, LayoutChangeEvent } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, LayoutChangeEvent } from 'react-native';
 import { useTheme } from '../hooks/useTheme';
+import AppImage from './AppImage';
 import PhotoViewer from './PhotoViewer';
 
 const GAP = 3;
@@ -33,7 +34,7 @@ export default function PhotoGrid({ images, onPress }: Props) {
         onPress={() => (onPress ? onPress() : setViewerIndex(index))}
         style={style}
       >
-        <Image source={{ uri }} style={styles.img} resizeMode="cover" />
+        <AppImage source={{ uri }} style={styles.img} contentFit="cover" />
         {extra ? (
           <View style={styles.moreOverlay}>
             <Text style={styles.moreText}>+{extra}</Text>

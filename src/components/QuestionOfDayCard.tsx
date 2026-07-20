@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import AppImage from './AppImage';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -42,7 +43,7 @@ export default function QuestionOfDayCard({ discussion, onPress, promoted }: Pro
       <View style={styles.footer}>
         <View style={styles.avatar}>
           {discussion.authorPhoto ? (
-            <Image source={{ uri: discussion.authorPhoto }} style={styles.avatarImg} />
+            <AppImage source={{ uri: discussion.authorPhoto }} style={styles.avatarImg} contentFit="cover" />
           ) : (
             <Text style={styles.avatarText}>{initials}</Text>
           )}

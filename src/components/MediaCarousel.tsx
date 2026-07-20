@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  Image,
   StyleSheet,
   TouchableOpacity,
   FlatList,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
+import AppImage from './AppImage';
 import PhotoViewer from './PhotoViewer';
 import VideoPlayerView from './VideoPlayerView';
 
@@ -58,7 +58,7 @@ export default function MediaCarousel({ images, videoURL, videoPoster, videoInli
           onPress={() => (onImagePress ? onImagePress() : setViewerIndex(index))}
           style={{ width, height: width }}
         >
-          <Image source={{ uri: item.uri }} style={styles.media} resizeMode="cover" />
+          <AppImage source={{ uri: item.uri }} style={styles.media} contentFit="cover" />
         </TouchableOpacity>
       );
     }
@@ -71,7 +71,7 @@ export default function MediaCarousel({ images, videoURL, videoPoster, videoInli
     }
     return (
       <TouchableOpacity activeOpacity={0.95} onPress={onVideoPress} style={{ width, height: width, backgroundColor: '#000' }}>
-        {item.poster ? <Image source={{ uri: item.poster }} style={styles.media} resizeMode="cover" /> : null}
+        {item.poster ? <AppImage source={{ uri: item.poster }} style={styles.media} contentFit="cover" /> : null}
         <View style={styles.playBadge}>
           <Ionicons name="play" size={26} color="#fff" style={{ marginLeft: 3 }} />
         </View>

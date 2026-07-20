@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
-  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
+import AppImage from '../components/AppImage';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { fetchFollowers, fetchFollowing } from '../services/userService';
@@ -60,7 +60,7 @@ export default function FollowListScreen({ route, navigation }: any) {
       >
         <View style={styles.avatar}>
           {item.photoURL ? (
-            <Image source={{ uri: item.photoURL }} style={styles.avatarImage} />
+            <AppImage source={{ uri: item.photoURL }} style={styles.avatarImage} contentFit="cover" />
           ) : (
             <Text style={styles.avatarText}>{initials}</Text>
           )}

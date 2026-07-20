@@ -4,11 +4,11 @@ import {
   Text,
   StyleSheet,
   Modal,
-  Image,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AppImage from './AppImage';
 import PagerView from 'react-native-pager-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -42,7 +42,7 @@ export default function PhotoViewer({ visible, images, initialIndex = 0, onClose
         >
           {images.map((uri, i) => (
             <View key={`${uri}-${i}`} style={styles.page}>
-              <Image source={{ uri }} style={styles.image} resizeMode="contain" />
+              <AppImage source={{ uri }} style={styles.image} contentFit="contain" />
             </View>
           ))}
         </PagerView>

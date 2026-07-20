@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   FlatList,
   ActivityIndicator,
-  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -23,6 +22,7 @@ import { getFlagEmoji } from '../utils/flagEmoji';
 import { formatTime } from '../utils/formatTime';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
+import AppImage from '../components/AppImage';
 import EmptyState from '../components/EmptyState';
 import FollowButton from '../components/FollowButton';
 import PostDetailModal from './PostDetailModal';
@@ -85,7 +85,7 @@ export default function UserProfileScreen({ route, navigation }: any) {
     return (
       <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={() => openPostDetail(item)}>
         {item.imageURLs && item.imageURLs.length > 0 ? (
-          <Image source={{ uri: item.imageURLs[0] }} style={styles.postImage} resizeMode="cover" />
+          <AppImage source={{ uri: item.imageURLs[0] }} style={styles.postImage} contentFit="cover" />
         ) : null}
         <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>
         <Text style={styles.cardDesc} numberOfLines={2}>{item.description}</Text>
@@ -156,7 +156,7 @@ export default function UserProfileScreen({ route, navigation }: any) {
             <View style={styles.profileRow}>
               <View style={styles.avatar}>
                 {user.photoURL ? (
-                  <Image source={{ uri: user.photoURL }} style={styles.avatarImage} />
+                  <AppImage source={{ uri: user.photoURL }} style={styles.avatarImage} contentFit="cover" />
                 ) : (
                   <Text style={styles.avatarText}>{initials}</Text>
                 )}

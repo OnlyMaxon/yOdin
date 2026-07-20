@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
-  Image,
   ScrollView,
   Alert,
 } from 'react-native';
@@ -33,6 +32,7 @@ import { Typography } from '../theme/typography';
 import PostDetailModal from './PostDetailModal';
 import FollowButton from '../components/FollowButton';
 import NationFilterDrawer from '../components/NationFilterDrawer';
+import AppImage from '../components/AppImage';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
@@ -301,7 +301,7 @@ export default function FeedScreen({ navigation }: any) {
               onPress={() => navigation.navigate('UserProfile', { userId: item.authorId })}
             >
               {item.authorPhoto ? (
-                <Image source={{ uri: item.authorPhoto }} style={styles.avatarImage} />
+                <AppImage source={{ uri: item.authorPhoto }} style={styles.avatarImage} contentFit="cover" />
               ) : (
                 <Text style={styles.avatarText}>
                   {item.authorName?.charAt(0).toUpperCase()}
@@ -513,6 +513,11 @@ export default function FeedScreen({ navigation }: any) {
           onEndReachedThreshold={0.3}
           onScroll={handleScroll}
           scrollEventThrottle={16}
+          removeClippedSubviews
+          initialNumToRender={6}
+          maxToRenderPerBatch={6}
+          windowSize={9}
+          updateCellsBatchingPeriod={50}
           ListHeaderComponent={
             topQuestion && selectedNations.length === 0 && filter === 'all' ? (
               <View style={styles.qodWrap}>

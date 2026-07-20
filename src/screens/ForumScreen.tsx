@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
-  Image,
   ScrollView,
   LayoutAnimation,
   Platform,
@@ -36,6 +35,7 @@ import { Typography } from '../theme/typography';
 import { weightedSort } from '../utils/weightedSort';
 import FollowButton from '../components/FollowButton';
 import NationFilterDrawer from '../components/NationFilterDrawer';
+import AppImage from '../components/AppImage';
 import PhotoGrid from '../components/PhotoGrid';
 import VideoPreview from '../components/VideoPreview';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
@@ -285,8 +285,12 @@ export default function ForumScreen({ navigation }: any) {
     }
   }
 
+  // O(1) membership test per card instead of a per-row discussions.some() scan
+  // (that was O(n²) across the whole list on every render).
+  const storeIdSet = useMemo(() => new Set(discussions.map((d) => d.id)), [discussions]);
+
   function renderCard({ item }: { item: Discussion }) {
-    const inStore = discussions.some((d) => d.id === item.id);
+    const inStore = storeIdSet.has(item.id);
     const isSaved = inStore
       ? (item.savedBy?.includes(profile?.uid ?? '') ?? false)
       : (savedOverrides[item.id] ?? false);
@@ -308,7 +312,7 @@ export default function ForumScreen({ navigation }: any) {
           >
             <View style={styles.avatar}>
               {item.authorPhoto ? (
-                <Image source={{ uri: item.authorPhoto }} style={styles.avatarImage} />
+                <AppImage source={{ uri: item.authorPhoto }} style={styles.avatarImage} contentFit="cover" />
               ) : (
                 <Text style={styles.avatarText}>
                   {item.authorName?.charAt(0).toUpperCase()}
@@ -511,6 +515,11 @@ export default function ForumScreen({ navigation }: any) {
           onEndReachedThreshold={0.3}
           onScroll={handleScroll}
           scrollEventThrottle={16}
+          removeClippedSubviews
+          initialNumToRender={6}
+          maxToRenderPerBatch={6}
+          windowSize={9}
+          updateCellsBatchingPeriod={50}
           ListHeaderComponent={
             !isSearching && topQuestion && selectedNations.length === 0 && answerFilter === 'all' ? (
               <View style={styles.qodWrap}>

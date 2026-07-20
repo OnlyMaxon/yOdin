@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
+import AppImage from './AppImage';
 
 interface Props {
   poster?: string;
@@ -16,7 +17,7 @@ export default function VideoPreview({ poster, onPress }: Props) {
   return (
     <TouchableOpacity activeOpacity={0.9} onPress={onPress} style={styles.wrap}>
       {poster ? (
-        <Image source={{ uri: poster }} style={styles.img} resizeMode="cover" />
+        <AppImage source={{ uri: poster }} style={styles.img} contentFit="cover" />
       ) : (
         <View style={[styles.img, { backgroundColor: colors.textPrimary }]} />
       )}

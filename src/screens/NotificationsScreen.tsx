@@ -6,10 +6,10 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
-  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
+import AppImage from '../components/AppImage';
 import { useTranslation } from 'react-i18next';
 import { useNotificationStore } from '../store/useNotificationStore';
 import { markNotificationsRead, deleteReadNotifications } from '../services/notificationService';
@@ -104,7 +104,7 @@ export default function NotificationsScreen({ navigation }: any) {
       >
         <View style={styles.avatar}>
           {item.fromUserPhoto ? (
-            <Image source={{ uri: item.fromUserPhoto }} style={styles.avatarImage} />
+            <AppImage source={{ uri: item.fromUserPhoto }} style={styles.avatarImage} contentFit="cover" />
           ) : (
             <Text style={styles.avatarText}>{initials}</Text>
           )}
