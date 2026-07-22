@@ -14,7 +14,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "az.birklik.yodin"
+      "bundleIdentifier": "az.birklik.yodin.niki131"
     },
     "android": {
       "package": "az.birklik.yodin",
@@ -36,7 +36,8 @@
           "photosPermission": "Allow yOdin to access your photos to attach them to discussions and posts.",
           "isAccessMediaLocationEnabled": false
         }
-      ]
+      ],
+      "expo-localization"
     ]
   }
 }
