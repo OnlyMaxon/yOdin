@@ -83,6 +83,9 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   // slide the whole comments sheet up above it. kbOpen drops the sheet's own
   // safe-area bottom padding while lifted (it's redundant behind the keyboard).
   const kbLift = useRef(new Animated.Value(0)).current;
+  // Fade the floating card out while the keyboard is up — the lifted sheet would
+  // otherwise cover it, leaving it half-visible behind the comments.
+  const cardKbFade = useRef(new Animated.Value(1)).current;
   const [kbOpen, setKbOpen] = useState(false);
 
   useEffect(() => {
@@ -101,6 +104,9 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
 
   // Slide the comments up, which lifts the centered post above them.
   useEffect(() => {
+    // Closing the comments must also drop the keyboard — otherwise it lingers
+    // on screen after the sheet (and its input) has slid away.
+    if (!commentsOpen) Keyboard.dismiss();
     Animated.timing(commentsAnim, {
       toValue: commentsOpen ? 1 : 0,
       duration: 280,
@@ -114,20 +120,22 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
     const hideEvt = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
     const onShow = (e: any) => {
       setKbOpen(true);
-      Animated.timing(kbLift, {
-        toValue: e.endCoordinates?.height ?? 0,
-        duration: e.duration || 220,
-        useNativeDriver: true,
-      }).start();
+      Animated.parallel([
+        Animated.timing(kbLift, { toValue: e.endCoordinates?.height ?? 0, duration: e.duration || 220, useNativeDriver: true }),
+        Animated.timing(cardKbFade, { toValue: 0, duration: e.duration || 220, useNativeDriver: true }),
+      ]).start();
     };
     const onHide = (e: any) => {
       setKbOpen(false);
-      Animated.timing(kbLift, { toValue: 0, duration: e?.duration || 200, useNativeDriver: true }).start();
+      Animated.parallel([
+        Animated.timing(kbLift, { toValue: 0, duration: e?.duration || 200, useNativeDriver: true }),
+        Animated.timing(cardKbFade, { toValue: 1, duration: e?.duration || 200, useNativeDriver: true }),
+      ]).start();
     };
     const s = Keyboard.addListener(showEvt, onShow);
     const h = Keyboard.addListener(hideEvt, onHide);
     return () => { s.remove(); h.remove(); };
-  }, [kbLift]);
+  }, [kbLift, cardKbFade]);
 
   async function loadComments(id: string) {
     setLoadingComments(true);
@@ -318,11 +326,12 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
         <View style={styles.centerWrap} pointerEvents="box-none">
         {post && (
           <Animated.View
+            pointerEvents={kbOpen ? 'none' : 'auto'}
             style={[
               styles.card,
               {
                 maxHeight: cardMax,
-                opacity: cardAnim,
+                opacity: Animated.multiply(cardAnim, cardKbFade),
                 transform: [
                   { scale: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [0.96, 1] }) },
                   { translateY: cardShift },
