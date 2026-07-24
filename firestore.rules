@@ -176,7 +176,8 @@ service cloud.firestore {
     function acceptedReplyUpdate() {
       return resource.data.authorId == request.auth.uid
         && request.resource.data.diff(resource.data).affectedKeys()
-            .hasOnly(['acceptedReplyId', 'acceptedReplyText', 'acceptedReplyAuthorName'])
+            .hasOnly(['acceptedReplyId', 'acceptedReplyText', 'acceptedReplyAuthorName', 'isAnswered'])
+        && request.resource.data.isAnswered == true
         && resource.data.get('acceptedReplyId', null) == null;
     }
 

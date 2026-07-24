@@ -6,11 +6,16 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
   Alert,
+  LayoutAnimation,
+  UIManager,
+  Animated,
+  Keyboard,
 } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
@@ -37,6 +42,85 @@ import PhotoGrid from '../components/PhotoGrid';
 import VideoPlayerView from '../components/VideoPlayerView';
 import ReportSheet from '../components/ReportSheet';
 
+// Enable the collapse/expand animation for the question attachment on old-arch Android.
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
+const SWIPE_MAX = 90;
+const SWIPE_THRESHOLD = 52;
+
+// Expo Go resizes the window when the keyboard opens (composer lifts on its own),
+// but a standalone edge-to-edge Android build does not — there we must lift the
+// composer ourselves. iOS never resizes, so it always lifts manually. Lifting on
+// Android *inside* Expo Go would double-lift and leave a gap above the keyboard.
+const IS_EXPO_GO = Constants.executionEnvironment === 'storeClient';
+const LIFT_COMPOSER = Platform.OS === 'ios' || !IS_EXPO_GO;
+
+// Telegram-style swipe-to-reply: drag a message right past a threshold to reply.
+// A reply arrow fades in as you drag; the row springs back on release. Built on
+// gesture-handler Pan (runOnJS so it drives a plain RN Animated.Value — no
+// reanimated worklets/babel setup needed).
+function SwipeToReply({
+  children,
+  onReply,
+  enabled,
+}: {
+  children: React.ReactNode;
+  onReply: () => void;
+  enabled: boolean;
+}) {
+  const { colors } = useTheme();
+  const tx = useRef(new Animated.Value(0)).current;
+  const dragX = useRef(0);
+
+  const pan = Gesture.Pan()
+    .enabled(enabled)
+    .runOnJS(true)
+    .activeOffsetX(14)
+    .failOffsetY([-16, 16])
+    .onUpdate((e) => {
+      const x = Math.max(0, Math.min(e.translationX, SWIPE_MAX));
+      dragX.current = x;
+      tx.setValue(x);
+    })
+    .onEnd(() => {
+      if (dragX.current >= SWIPE_THRESHOLD) onReply();
+      dragX.current = 0;
+      Animated.spring(tx, { toValue: 0, useNativeDriver: true, bounciness: 8, speed: 18 }).start();
+    });
+
+  const iconStyle = {
+    opacity: tx.interpolate({ inputRange: [0, SWIPE_THRESHOLD], outputRange: [0, 1], extrapolate: 'clamp' as const }),
+    transform: [
+      { scale: tx.interpolate({ inputRange: [0, SWIPE_THRESHOLD], outputRange: [0.6, 1], extrapolate: 'clamp' as const }) },
+    ],
+  };
+
+  return (
+    <View>
+      <Animated.View style={[swipeStyles.icon, iconStyle]} pointerEvents="none">
+        <Ionicons name="arrow-undo" size={18} color={colors.primary} />
+      </Animated.View>
+      <GestureDetector gesture={pan}>
+        <Animated.View style={{ transform: [{ translateX: tx }] }}>{children}</Animated.View>
+      </GestureDetector>
+    </View>
+  );
+}
+
+const swipeStyles = StyleSheet.create({
+  icon: {
+    position: 'absolute',
+    left: 14,
+    top: 0,
+    bottom: 0,
+    width: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
 export default function DiscussionDetailScreen({ route, navigation }: any) {
   const { discussionId, question: questionParam } = route.params;
   const { t } = useTranslation();
@@ -56,12 +140,26 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   const [replyingTo, setReplyingTo] = useState<Reply | null>(null);
   const [highlightedId, setHighlightedId] = useState<string | null>(null);
   const [reportReply, setReportReply] = useState<Reply | null>(null);
+  // Question attachment (photo/video) can be folded away to free up chat space.
+  const [mediaCollapsed, setMediaCollapsed] = useState(false);
+  // Keyboard height, tracked manually so the composer lifts above the keyboard
+  // regardless of the native softInputMode (which we don't control under Expo Go).
+  const [kbHeight, setKbHeight] = useState(0);
   const replyBlocked = (profile?.commentBlockedUntil ?? 0) > Date.now();
   const listRef = useRef<FlatList>(null);
   const inputRef = useRef<TextInput>(null);
 
   useEffect(() => {
     loadAll();
+  }, []);
+
+  // Track the keyboard height so the composer can be lifted on iOS (Android
+  // resizes the window itself). No auto-scroll here — the list only jumps to the
+  // bottom after the user sends a message.
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', (e) => setKbHeight(e.endCoordinates.height));
+    const hide = Keyboard.addListener('keyboardDidHide', () => setKbHeight(0));
+    return () => { show.remove(); hide.remove(); };
   }, []);
 
 
@@ -133,7 +231,8 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       incrementReplyCount(discussionId);
       setText('');
       setReplyingTo(null);
-      setTimeout(() => listRef.current?.scrollToEnd({ animated: true }), 100);
+      stickToEnd.current = true;
+      scrollToBottom();
     } catch (e: any) {
       setSendError(e?.message ?? t('errors.generic'));
     } finally {
@@ -251,6 +350,23 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     navigation.navigate('UserProfile', { userId });
   }
 
+  // Telegram-style: after sending, land the new message just above the composer.
+  // Fires several times across the keyboard/layout settle window because a single
+  // scroll can run before the row (or the keyboard resize) has finished laying out
+  // — that's why the first message used to only move after the second.
+  function scrollToBottom() {
+    const jump = () => listRef.current?.scrollToEnd({ animated: true });
+    requestAnimationFrame(jump);
+    setTimeout(jump, 80);
+    setTimeout(jump, 250);
+    setTimeout(jump, 500);
+  }
+
+  // Set true right before a new message renders; the list's onContentSizeChange
+  // then scrolls to the very bottom *after* the row is laid out (a plain timeout
+  // races the render, so the first message wouldn't move until the next one).
+  const stickToEnd = useRef(false);
+
   // Jump to a quoted message and briefly flash it (Telegram-style).
   function scrollToMessage(id: string) {
     const idx = replies.findIndex((r) => r.id === id);
@@ -293,6 +409,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     const parent = item.parentReplyId ? replyById.get(item.parentReplyId) : undefined;
 
     return (
+      <SwipeToReply enabled={!isAnswered && !replyBlocked} onReply={() => startReplyTo(item)}>
       <View style={[styles.msgRow, isMe ? styles.msgRowMe : styles.msgRowOther]}>
         {!isMe && (
           <TouchableOpacity
@@ -385,16 +502,6 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
                 </TouchableOpacity>
               </>
             )}
-            {!isAnswered && (
-              <TouchableOpacity
-                style={styles.voteBtn}
-                onPress={() => startReplyTo(item)}
-                hitSlop={{ top: 6, bottom: 6, left: 6, right: 6 }}
-              >
-                <Ionicons name="arrow-undo-outline" size={14} color={colors.textSecondary} />
-                <Text style={styles.voteCount}>{t('discussion.reply')}</Text>
-              </TouchableOpacity>
-            )}
             {canAccept && (
               <TouchableOpacity
                 style={styles.acceptBtn}
@@ -408,17 +515,83 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           </View>
         </View>
       </View>
+      </SwipeToReply>
     );
   }
 
+  // Memoized so typing in the composer (which re-renders the screen on every
+  // keystroke) doesn't rebuild the question header — otherwise its expo-image
+  // photo/avatar gets a fresh source object each render and replays its fade
+  // transition, making the attached image flicker on every character.
+  const questionHeader = useMemo(() => {
+    if (!discussion) return null;
+    return (
+      <View style={[styles.questionBlock, styles.questionHeaderInList, isAnswered && styles.questionBlockAnswered]}>
+        <TouchableOpacity
+          style={styles.questionAuthorRow}
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate('UserProfile', { userId: discussion.authorId })}
+        >
+          <View style={styles.qAvatar}>
+            {discussion.authorPhoto ? (
+              <AppImage source={{ uri: discussion.authorPhoto }} style={styles.qAvatarImage} contentFit="cover" />
+            ) : (
+              <Text style={styles.qAvatarText}>
+                {discussion.authorName?.charAt(0).toUpperCase()}
+              </Text>
+            )}
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.qAuthorName}>{discussion.authorName}</Text>
+            <Text style={styles.qAuthorMeta}>
+              {getFlagEmoji(discussion.authorCountryCode)}  {discussion.authorNationality}
+            </Text>
+          </View>
+          {isAnswered && (
+            <View style={styles.answeredBadge}>
+              <Ionicons name="checkmark-circle" size={14} color="#fff" />
+              <Text style={styles.answeredBadgeText}>{t('forum.answered')}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+        <Text style={styles.questionText}>{discussion.question}</Text>
+        {(discussion.videoURL || (discussion.imageURLs && discussion.imageURLs.length > 0)) ? (
+          <View style={styles.attachBlock}>
+            <TouchableOpacity
+              style={styles.attachBtn}
+              activeOpacity={0.7}
+              onPress={() => {
+                LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+                setMediaCollapsed((v) => !v);
+              }}
+            >
+              <Ionicons name="attach" size={16} color={colors.primary} />
+              <Text style={styles.attachBtnText}>
+                {t('forum.attachments')} · {(discussion.imageURLs?.length ?? 0) + (discussion.videoURL ? 1 : 0)}
+              </Text>
+              <Ionicons name={mediaCollapsed ? 'chevron-down' : 'chevron-up'} size={16} color={colors.primary} />
+            </TouchableOpacity>
+            {!mediaCollapsed && discussion.videoURL ? (
+              <View style={styles.questionPhotos}>
+                <VideoPlayerView uri={discussion.videoURL} />
+              </View>
+            ) : null}
+            {!mediaCollapsed && discussion.imageURLs && discussion.imageURLs.length > 0 ? (
+              <View style={styles.questionPhotos}>
+                <PhotoGrid images={discussion.imageURLs} />
+              </View>
+            ) : null}
+          </View>
+        ) : null}
+      </View>
+    );
+  }, [discussion, isAnswered, styles, t, navigation, colors, mediaCollapsed]);
+
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      // The bottom tab bar is hidden on this screen, so the composer reaches the
-      // device bottom and no offset is needed. (Android uses windowSoftInputMode
-      // resize, which handles the lift on its own.)
-    >
+    // Lift the composer above the keyboard by the keyboard's height — but only
+    // where the OS doesn't resize the window itself (iOS, and standalone
+    // edge-to-edge Android). See LIFT_COMPOSER.
+    <View style={[styles.container, LIFT_COMPOSER && { paddingBottom: kbHeight }]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
           <Text style={styles.backText}>←</Text>
@@ -448,55 +621,23 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         </View>
       ) : (
         <>
-          {discussion && (
-            <View style={[styles.questionBlock, isAnswered && styles.questionBlockAnswered]}>
-              <TouchableOpacity
-                style={styles.questionAuthorRow}
-                activeOpacity={0.7}
-                onPress={() => openProfile(discussion.authorId)}
-              >
-                <View style={styles.qAvatar}>
-                  {discussion.authorPhoto ? (
-                    <AppImage source={{ uri: discussion.authorPhoto }} style={styles.qAvatarImage} contentFit="cover" />
-                  ) : (
-                    <Text style={styles.qAvatarText}>
-                      {discussion.authorName?.charAt(0).toUpperCase()}
-                    </Text>
-                  )}
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={styles.qAuthorName}>{discussion.authorName}</Text>
-                  <Text style={styles.qAuthorMeta}>
-                    {flag(discussion.authorCountryCode)}  {discussion.authorNationality}
-                  </Text>
-                </View>
-                {isAnswered && (
-                  <View style={styles.answeredBadge}>
-                    <Ionicons name="checkmark-circle" size={14} color="#fff" />
-                    <Text style={styles.answeredBadgeText}>{t('forum.answered')}</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-              <Text style={styles.questionText}>{discussion.question}</Text>
-              {discussion.videoURL ? (
-                <View style={styles.questionPhotos}>
-                  <VideoPlayerView uri={discussion.videoURL} />
-                </View>
-              ) : null}
-              {discussion.imageURLs && discussion.imageURLs.length > 0 ? (
-                <View style={styles.questionPhotos}>
-                  <PhotoGrid images={discussion.imageURLs} />
-                </View>
-              ) : null}
-            </View>
-          )}
-
           <FlatList
             ref={listRef}
+            style={styles.list}
             data={replies}
             keyExtractor={(item) => item.id}
             renderItem={renderReply}
             contentContainerStyle={styles.repliesList}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
+            onContentSizeChange={() => {
+              // Keep pinning to the bottom while "sticking" (set on send). Doesn't
+              // reset here so late layout changes (e.g. the header image loading)
+              // still land at the bottom; the user's own scroll releases it.
+              if (stickToEnd.current) listRef.current?.scrollToEnd({ animated: true });
+            }}
+            onScrollBeginDrag={() => { stickToEnd.current = false; }}
+            ListHeaderComponent={questionHeader}
             onScrollToIndexFailed={(info) => {
               listRef.current?.scrollToOffset({
                 offset: Math.max(0, info.averageItemLength * info.index),
@@ -568,7 +709,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         onClose={() => setReportReply(null)}
         onSubmit={submitReplyReport}
       />
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
@@ -602,6 +743,9 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       borderBottomWidth: 1,
       borderBottomColor: c.border,
     },
+    // Cancels the list's contentContainer padding so the question header stays
+    // full-width with its own bottom border, then scrolls up out of view.
+    questionHeaderInList: { marginHorizontal: -16, marginTop: -16, marginBottom: 6 },
     questionBlockAnswered: {
       backgroundColor: c.success + '18',
       borderBottomColor: c.success,
@@ -650,6 +794,25 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       fontWeight: Typography.fontWeightMedium,
     },
     questionPhotos: { marginTop: 12 },
+    attachBlock: { marginTop: 12 },
+    attachBtn: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      gap: 6,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 12,
+      backgroundColor: c.primaryLight,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
+    attachBtnText: {
+      fontSize: Typography.fontSizeSM,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.primary,
+    },
+    list: { flex: 1 },
     repliesList: { padding: 16, gap: 10, flexGrow: 1 },
     emptyReplies: { alignItems: 'center', paddingTop: 40 },
     emptyText: { fontSize: Typography.fontSizeMD, color: c.textSecondary },
