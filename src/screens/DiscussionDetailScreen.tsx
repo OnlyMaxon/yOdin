@@ -675,12 +675,12 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         </View>
       ) : null}
       {isAnswered ? null : replyBlocked ? (
-        <View style={styles.blockedBar}>
+        <View style={[styles.blockedBar, LIFT_COMPOSER && kbHeight > 0 && { paddingBottom: 12 }]}>
           <Ionicons name="lock-closed" size={16} color={colors.notification} />
           <Text style={styles.blockedText}>{t('moderation.blockedBanner')}</Text>
         </View>
       ) : (
-        <View style={styles.inputBar}>
+        <View style={[styles.inputBar, LIFT_COMPOSER && kbHeight > 0 && { paddingBottom: 12 }]}>
           <TextInput
             ref={inputRef}
             style={styles.input}
