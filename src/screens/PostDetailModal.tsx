@@ -10,7 +10,7 @@ import {
   FlatList,
   TextInput,
   TouchableOpacity,
-  KeyboardAvoidingView,
+  Keyboard,
   Platform,
   ActivityIndicator,
   Alert,
@@ -78,6 +78,12 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   // (sheet slid up from the bottom, card lifted above it).
   const commentsAnim = useRef(new Animated.Value(0)).current;
   const listRef = useRef<FlatList>(null);
+  // Manual keyboard lift: KeyboardAvoidingView doesn't work reliably inside a
+  // Modal on either platform, so we track the keyboard height ourselves and
+  // slide the whole comments sheet up above it. kbOpen drops the sheet's own
+  // safe-area bottom padding while lifted (it's redundant behind the keyboard).
+  const kbLift = useRef(new Animated.Value(0)).current;
+  const [kbOpen, setKbOpen] = useState(false);
 
   useEffect(() => {
     if (visible && postId) {
@@ -101,6 +107,27 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
       useNativeDriver: true,
     }).start();
   }, [commentsOpen]);
+
+  // Track the keyboard and lift the sheet by its height (see kbLift above).
+  useEffect(() => {
+    const showEvt = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+    const hideEvt = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+    const onShow = (e: any) => {
+      setKbOpen(true);
+      Animated.timing(kbLift, {
+        toValue: e.endCoordinates?.height ?? 0,
+        duration: e.duration || 220,
+        useNativeDriver: true,
+      }).start();
+    };
+    const onHide = (e: any) => {
+      setKbOpen(false);
+      Animated.timing(kbLift, { toValue: 0, duration: e?.duration || 200, useNativeDriver: true }).start();
+    };
+    const s = Keyboard.addListener(showEvt, onShow);
+    const h = Keyboard.addListener(hideEvt, onHide);
+    return () => { s.remove(); h.remove(); };
+  }, [kbLift]);
 
   async function loadComments(id: string) {
     setLoadingComments(true);
@@ -408,11 +435,8 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
         </View>
 
           {/* Comments slide up from the bottom; the centered card lifts above them */}
-          <Animated.View style={[styles.sheet, { transform: [{ translateY: sheetTranslate }] }]}>
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          >
+          <Animated.View style={[styles.sheet, { transform: [{ translateY: Animated.subtract(sheetTranslate, kbLift) }] }]}>
+          <View style={{ flex: 1 }}>
             <View style={styles.sheetHandleRow}>
               <View style={styles.sheetHandle} />
             </View>
@@ -447,7 +471,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                 <Text style={styles.blockedText}>{t('moderation.blockedBanner')}</Text>
               </View>
             ) : (
-              <View style={styles.inputBar}>
+              <View style={[styles.inputBar, kbOpen && { paddingBottom: 12 }]}>
                 <TextInput
                   style={styles.input}
                   placeholder={t('comments.placeholder')}
@@ -466,7 +490,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                 </TouchableOpacity>
               </View>
             )}
-          </KeyboardAvoidingView>
+          </View>
           </Animated.View>
       </View>
     </Modal>

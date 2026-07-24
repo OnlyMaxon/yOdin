@@ -170,7 +170,6 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
                 onChangeText={setQuestion}
                 multiline
                 maxLength={500}
-                autoFocus
                 textAlignVertical="top"
               />
               <Text style={styles.charCount}>{question.length}/500</Text>
