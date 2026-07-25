@@ -39,9 +39,9 @@ export async function createReport(data: {
 // by the onReportUpdated Cloud Function once the report is marked 'removed'.
 export async function removeReportedContent(report: Report): Promise<void> {
   if (report.targetType === 'post') {
-    await deletePost(report.targetId);
+    await deletePost(report.targetId, report.targetAuthorId);
   } else if (report.targetType === 'discussion') {
-    await deleteDiscussion(report.targetId);
+    await deleteDiscussion(report.targetId, report.targetAuthorId);
   } else if (report.targetPath) {
     await deleteDoc(doc(db, report.targetPath));
   }

@@ -108,7 +108,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
       let videoPoster = '';
       if (video) {
         try {
-          const up = await uploadPostVideo(id, video.uri, video.poster);
+          const up = await uploadPostVideo(profile.uid, id, video.uri, video.poster);
           videoURL = up.videoURL;
           videoPoster = up.videoPoster;
         } catch {
@@ -117,7 +117,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
       }
       if (images.length > 0) {
         try {
-          imageURLs = await uploadPostImages(id, images);
+          imageURLs = await uploadPostImages(profile.uid, id, images);
         } catch {
           Alert.alert(t('errors.photoUploadFailed'));
         }

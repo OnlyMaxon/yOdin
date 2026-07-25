@@ -84,7 +84,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
       let videoPoster = '';
       if (video) {
         try {
-          const up = await uploadDiscussionVideo(id, video.uri, video.poster);
+          const up = await uploadDiscussionVideo(profile.uid, id, video.uri, video.poster);
           videoURL = up.videoURL;
           videoPoster = up.videoPoster;
         } catch {
@@ -93,7 +93,7 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
       }
       if (images.length > 0) {
         try {
-          imageURLs = await uploadDiscussionImages(id, images);
+          imageURLs = await uploadDiscussionImages(profile.uid, id, images);
         } catch {
           // Photo upload failed — post the question without images rather than blocking.
         }

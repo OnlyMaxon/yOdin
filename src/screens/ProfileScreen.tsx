@@ -189,7 +189,7 @@ export default function ProfileScreen({ navigation }: any) {
     }
   }
 
-  function handleDelete(id: string) {
+  function handleDelete(id: string, authorId: string) {
     Alert.alert(
       t('deleteDiscussion.title'),
       t('deleteDiscussion.message'),
@@ -200,7 +200,7 @@ export default function ProfileScreen({ navigation }: any) {
           style: 'destructive',
           onPress: async () => {
             try {
-              await deleteDiscussion(id);
+              await deleteDiscussion(id, authorId);
               removeDiscussion(id);
               setMyDiscussions((prev) => prev.filter((d) => d.id !== id));
             } catch {
@@ -255,7 +255,7 @@ export default function ProfileScreen({ navigation }: any) {
     }
   }
 
-  function handleDeletePost(id: string) {
+  function handleDeletePost(id: string, authorId: string) {
     Alert.alert(
       t('deletePost.title'),
       t('deletePost.message'),
@@ -266,7 +266,7 @@ export default function ProfileScreen({ navigation }: any) {
           style: 'destructive',
           onPress: async () => {
             try {
-              await deletePost(id);
+              await deletePost(id, authorId);
               removePost(id);
               setMyPosts((prev) => prev.filter((p) => p.id !== id));
               setSavedPosts((prev) => prev.filter((p) => p.id !== id));
@@ -343,7 +343,7 @@ export default function ProfileScreen({ navigation }: any) {
           </Text>
           {variant === 'mine' ? (
             <TouchableOpacity
-              onPress={(e) => { e.stopPropagation(); handleDelete(item.id); }}
+              onPress={(e) => { e.stopPropagation(); handleDelete(item.id, item.authorId); }}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Ionicons name="trash-outline" size={18} color={colors.notification} />
@@ -379,7 +379,7 @@ export default function ProfileScreen({ navigation }: any) {
           </View>
           {variant === 'mine' ? (
             <TouchableOpacity
-              onPress={(e) => { e.stopPropagation(); handleDeletePost(item.id); }}
+              onPress={(e) => { e.stopPropagation(); handleDeletePost(item.id, item.authorId); }}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Ionicons name="trash-outline" size={18} color={colors.notification} />

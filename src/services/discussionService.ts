@@ -182,14 +182,15 @@ export async function acceptReply(
   });
 }
 
-export async function deleteDiscussion(discussionId: string): Promise<void> {
+export async function deleteDiscussion(discussionId: string, authorId: string): Promise<void> {
   const repliesSnap = await getDocs(collection(db, 'discussions', discussionId, 'replies'));
   const batch = writeBatch(db);
   repliesSnap.docs.forEach((replyDoc) => batch.delete(replyDoc.ref));
   batch.delete(doc(db, 'discussions', discussionId));
   await batch.commit();
-  // Clean up any attached photos from storage (best-effort).
-  deleteStorageFolder(`discussions/${discussionId}`).catch(() => {});
+  // Clean up attached media from storage (best-effort). Media lives under the
+  // author's uid-scoped folder: discussions/{authorId}/{discussionId}/…
+  deleteStorageFolder(`discussions/${authorId}/${discussionId}`).catch(() => {});
 }
 
 export { PAGE_SIZE };

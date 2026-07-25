@@ -1,6 +1,8 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
+
+    // Avatars — owner-scoped by path.
     match /avatars/{uid}/{fileName} {
       allow read: if true;
       allow write: if request.auth != null
@@ -8,28 +10,49 @@ service firebase.storage {
         && request.resource.size < 5 * 1024 * 1024
         && request.resource.contentType.matches('image/.*');
     }
-    match /posts/{postId}/{fileName} {
-      allow read: if true;
-      // create/update validate the incoming file; delete has no request.resource,
-      // so it needs its own rule — otherwise cleaning up a removed post's image
-      // would be denied (request.resource.size on a null resource fails).
-      // Images stay small (≤5 MB); a single short video may be up to 50 MB.
-      allow create, update: if request.auth != null
-        && (
-          (request.resource.contentType.matches('image/.*') && request.resource.size < 5 * 1024 * 1024)
-          || (request.resource.contentType.matches('video/.*') && request.resource.size < 50 * 1024 * 1024)
-        );
-      allow delete: if request.auth != null;
+
+    // Post media. New uploads are owner-scoped: posts/{uid}/{postId}/{file},
+    // so only the author (uid == the {owner} segment) may write — nobody else
+    // can overwrite or plant files in someone's post. The legacy two-segment
+    // path posts/{postId}/{file} stays readable so pre-existing posts' images
+    // keep loading, but takes no new writes.
+    match /posts/{owner} {
+      match /{postId}/{fileName} {
+        allow read: if true;
+        allow create, update: if request.auth != null
+          && request.auth.uid == owner
+          && (
+            (request.resource.contentType.matches('image/.*') && request.resource.size < 5 * 1024 * 1024)
+            || (request.resource.contentType.matches('video/.*') && request.resource.size < 50 * 1024 * 1024)
+          );
+        // The author cleans up their own media; a moderator may remove reported media.
+        allow delete: if request.auth != null
+          && (request.auth.uid == owner || request.auth.token.moderator == true);
+      }
+      // Legacy path (pre owner-scoping) — read only, plus best-effort cleanup.
+      match /{fileName} {
+        allow read: if true;
+        allow delete: if request.auth != null;
+      }
     }
-    match /discussions/{discussionId}/{fileName} {
-      allow read: if true;
-      // Images stay small (≤5 MB); a single short video may be up to 50 MB.
-      allow create, update: if request.auth != null
-        && (
-          (request.resource.contentType.matches('image/.*') && request.resource.size < 5 * 1024 * 1024)
-          || (request.resource.contentType.matches('video/.*') && request.resource.size < 50 * 1024 * 1024)
-        );
-      allow delete: if request.auth != null;
+
+    // Discussion media — same owner-scoped scheme as posts.
+    match /discussions/{owner} {
+      match /{discussionId}/{fileName} {
+        allow read: if true;
+        allow create, update: if request.auth != null
+          && request.auth.uid == owner
+          && (
+            (request.resource.contentType.matches('image/.*') && request.resource.size < 5 * 1024 * 1024)
+            || (request.resource.contentType.matches('video/.*') && request.resource.size < 50 * 1024 * 1024)
+          );
+        allow delete: if request.auth != null
+          && (request.auth.uid == owner || request.auth.token.moderator == true);
+      }
+      match /{fileName} {
+        allow read: if true;
+        allow delete: if request.auth != null;
+      }
     }
   }
 }

@@ -13,37 +13,43 @@ export async function uploadAvatar(uid: string, uri: string): Promise<string> {
   return uploadOne(`avatars/${uid}/${Date.now()}.jpg`, uri);
 }
 
-// Upload many already-optimized photos in parallel under the post's folder.
-export async function uploadPostImages(postId: string, uris: string[]): Promise<string[]> {
-  return Promise.all(uris.map((uri, i) => uploadOne(`posts/${postId}/${i}.jpg`, uri)));
+// Post/discussion media is stored under the author's own uid folder
+// (posts/{uid}/{postId}/…) so the Storage rules can restrict writes to the
+// owner — nobody else can overwrite or plant files in someone's post.
+
+// Upload many already-optimized photos in parallel under the author's post folder.
+export async function uploadPostImages(uid: string, postId: string, uris: string[]): Promise<string[]> {
+  return Promise.all(uris.map((uri, i) => uploadOne(`posts/${uid}/${postId}/${i}.jpg`, uri)));
 }
 
-export async function uploadDiscussionImages(discussionId: string, uris: string[]): Promise<string[]> {
-  return Promise.all(uris.map((uri, i) => uploadOne(`discussions/${discussionId}/${i}.jpg`, uri)));
+export async function uploadDiscussionImages(uid: string, discussionId: string, uris: string[]): Promise<string[]> {
+  return Promise.all(uris.map((uri, i) => uploadOne(`discussions/${uid}/${discussionId}/${i}.jpg`, uri)));
 }
 
 // Upload a post's video plus its poster still. The poster is a tiny JPEG used
 // in the feed so the (larger) video is only downloaded when the user taps play.
 export async function uploadPostVideo(
+  uid: string,
   postId: string,
   videoUri: string,
   posterUri: string,
 ): Promise<{ videoURL: string; videoPoster: string }> {
   const [videoURL, videoPoster] = await Promise.all([
-    uploadOne(`posts/${postId}/video.mp4`, videoUri, 'video/mp4'),
-    posterUri ? uploadOne(`posts/${postId}/poster.jpg`, posterUri) : Promise.resolve(''),
+    uploadOne(`posts/${uid}/${postId}/video.mp4`, videoUri, 'video/mp4'),
+    posterUri ? uploadOne(`posts/${uid}/${postId}/poster.jpg`, posterUri) : Promise.resolve(''),
   ]);
   return { videoURL, videoPoster };
 }
 
 export async function uploadDiscussionVideo(
+  uid: string,
   discussionId: string,
   videoUri: string,
   posterUri: string,
 ): Promise<{ videoURL: string; videoPoster: string }> {
   const [videoURL, videoPoster] = await Promise.all([
-    uploadOne(`discussions/${discussionId}/video.mp4`, videoUri, 'video/mp4'),
-    posterUri ? uploadOne(`discussions/${discussionId}/poster.jpg`, posterUri) : Promise.resolve(''),
+    uploadOne(`discussions/${uid}/${discussionId}/video.mp4`, videoUri, 'video/mp4'),
+    posterUri ? uploadOne(`discussions/${uid}/${discussionId}/poster.jpg`, posterUri) : Promise.resolve(''),
   ]);
   return { videoURL, videoPoster };
 }

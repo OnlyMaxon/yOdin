@@ -163,10 +163,11 @@ export async function fetchSavedPosts(uid: string): Promise<Post[]> {
   return snap.docs.map((d) => ({ id: d.id, ...d.data() } as Post));
 }
 
-export async function deletePost(postId: string): Promise<void> {
+export async function deletePost(postId: string, authorId: string): Promise<void> {
   await deleteDoc(doc(db, 'posts', postId));
-  // Remove all of the post's photos from storage (best-effort).
-  deleteStorageFolder(`posts/${postId}`).catch(() => {});
+  // Remove the post's media from storage (best-effort). Media lives under the
+  // author's uid-scoped folder: posts/{authorId}/{postId}/…
+  deleteStorageFolder(`posts/${authorId}/${postId}`).catch(() => {});
 }
 
 export { PAGE_SIZE };

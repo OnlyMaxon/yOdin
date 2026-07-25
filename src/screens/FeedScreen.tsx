@@ -209,7 +209,7 @@ export default function FeedScreen({ navigation }: any) {
     }
   }
 
-  function handleDelete(postId: string) {
+  function handleDelete(postId: string, authorId: string) {
     Alert.alert(
       t('deletePost.title'),
       t('deletePost.message'),
@@ -220,7 +220,7 @@ export default function FeedScreen({ navigation }: any) {
           style: 'destructive',
           onPress: async () => {
             try {
-              await deletePost(postId);
+              await deletePost(postId, authorId);
               removePost(postId);
             } catch {
               Alert.alert(t('errors.generic'));
@@ -398,7 +398,7 @@ export default function FeedScreen({ navigation }: any) {
           <Text style={styles.time}>{formatTime(item.createdAt, t)}</Text>
           {isOwner ? (
             <TouchableOpacity
-              onPress={() => handleDelete(item.id)}
+              onPress={() => handleDelete(item.id, item.authorId)}
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Ionicons name="trash-outline" size={18} color={colors.notification} />
