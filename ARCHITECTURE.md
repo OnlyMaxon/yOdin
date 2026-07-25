@@ -254,19 +254,18 @@ These are **intentional deferrals or accepted trade-offs**, not accidental
 bugs. Listed so nobody rediscovers them the hard way.
 
 ### Security
-- **Storage writes are not owner-scoped (top open item).** `posts/{postId}/…`
-  and `discussions/{discussionId}/…` allow any authenticated user to
-  create/overwrite files (only type/size are checked). Two vectors: overwriting
-  another author's images (vandalism) and uploading junk to arbitrary paths
-  (storage-cost spam). It's not closed yet because the upload happens *before*
-  the Firestore doc exists (id is pre-generated), so a rule can't read
-  `authorId`, and the cleanup path (`deleteStorageFolder`) runs *after* the doc
-  is deleted. **Recommended fix:** move uploads under a uid-scoped path
-  (`posts/{uid}/{postId}/…`), pass `authorId` into the delete cleanup, and make
-  `deleteStorageFolder` recurse into prefixes — plus enable **Firebase App
-  Check** to stop off-device abuse. Requires a coordinated app + rules + native
-  change and end-to-end testing (all uploads pass through it), so it is tracked
-  here rather than patched blindly.
+- **Storage writes are now owner-scoped** (implemented 2026-07-25; was the top
+  open item). Post/discussion media uploads to `posts/{uid}/{postId}/…` and
+  `discussions/{uid}/{discussionId}/…`; `storage.rules` allows create/update only
+  when `request.auth.uid ==` the `{uid}` path segment, and delete only for the
+  author or a moderator. The legacy two-segment path (`posts/{postId}/…`) is kept
+  **read-only** so pre-existing images keep loading (their media isn't cleaned on
+  delete — best-effort, negligible). Closes vandalism (overwriting another
+  author's files) and cross-user planting. **Deploy coupling:** new code writes
+  the 3-segment path that the *old* rules reject, so `firebase deploy --only
+  storage` must land with/before the code or uploads silently fail. Residual: a
+  user can still fill *their own* uid folder — full anti-abuse needs **Firebase
+  App Check** (native config; tracked in the team's Trello, not a code task here).
 - **Moderation fields are world-readable.** `users` docs are readable by any
   authenticated user and include `commentBlockedUntil` / `moderationStrikes` /
   `banCount`. Firestore has no field-level read rules; to hide ban state, move
