@@ -8,6 +8,10 @@
     "password": "密码",
     "firstName": "名字",
     "lastName": "姓氏",
+    "username": "用户名",
+    "usernameAvailable": "可用",
+    "usernameTaken": "已被占用",
+    "usernameInvalid": "3–20 个字符：a–z、0–9、_",
     "nationality": "您的国籍",
     "location": "您的所在地",
     "next": "下一步",
@@ -73,6 +77,7 @@
     "accepted": "采纳了你的回答",
     "clearRead": "清除已读",
     "joinedEvent": "is going to your event",
+    "mentioned": "提到了你",
     "contentRemoved": "Your content was removed by a moderator for violating the rules.",
     "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
   },

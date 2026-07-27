@@ -8,6 +8,10 @@
     "password": "Şifrə",
     "firstName": "Ad",
     "lastName": "Soyad",
+    "username": "İstifadəçi adı",
+    "usernameAvailable": "Boşdur",
+    "usernameTaken": "Artıq tutulub",
+    "usernameInvalid": "3–20 simvol: a–z, 0–9, _",
     "nationality": "Milliyyətiniz",
     "location": "Yeriniz",
     "next": "İrəli",
@@ -73,6 +77,7 @@
     "accepted": "cavabınızı qəbul etdi",
     "clearRead": "Oxunmuşları sil",
     "joinedEvent": "tədbirinizdə iştirak edir",
+    "mentioned": "sizi qeyd etdi",
     "contentRemoved": "Məzmununuz qaydaları pozduğu üçün moderator tərəfindən silindi.",
     "blocked": "Təkrar pozuntulara görə {{count}} gün şərh və cavab yaza bilməzsiniz."
   },

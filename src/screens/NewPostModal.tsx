@@ -21,6 +21,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { usePostStore } from '../store/usePostStore';
 import { useToastStore } from '../store/useToastStore';
 import { createPost, newPostId } from '../services/postService';
+import { notifyMentions } from '../services/notificationService';
 import { uploadPostImages, uploadPostVideo } from '../services/storageService';
 import MediaPicker, { AttachedVideo } from '../components/MediaPicker';
 import { getErrorMessage } from '../services/errorHandler';
@@ -144,6 +145,11 @@ export default function NewPostModal({ visible, onClose }: Props) {
         ...signup,
       };
       await createPost(data, id);
+      notifyMentions({
+        text: `${title} ${description}`,
+        from: { uid: profile.uid, name: `${profile.firstName} ${profile.lastName}`, photo: profile.photoURL ?? '' },
+        post: { id, title: title.trim() },
+      }).catch(() => {});
       if (filter === 'all' || filter === category) {
         prependPost({ id, ...data, createdAt: Date.now() });
       }

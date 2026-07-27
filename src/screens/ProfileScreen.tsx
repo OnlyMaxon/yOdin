@@ -22,7 +22,9 @@ import { logoutUser, updateUserProfile } from '../services/authService';
 import { uploadAvatar } from '../services/storageService';
 import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDiscussions } from '../services/discussionService';
 import { deletePost, unsavePost, fetchUserPosts, fetchSavedPosts } from '../services/postService';
-import { countFollowers } from '../services/userService';
+import { countFollowers, changeUsername } from '../services/userService';
+import { useUsernameCheck } from '../hooks/useUsernameCheck';
+import { isValidUsername, normalizeUsername } from '../utils/mentions';
 import { subscribeReports } from '../services/reportService';
 import { formatTime } from '../utils/formatTime';
 import PostDetailModal from './PostDetailModal';
@@ -109,12 +111,14 @@ export default function ProfileScreen({ navigation }: any) {
   const [editVisible, setEditVisible] = useState(false);
   const [editFirstName, setEditFirstName] = useState('');
   const [editLastName, setEditLastName] = useState('');
+  const [editUsername, setEditUsername] = useState('');
   const [editNationality, setEditNationality] = useState<Country | null>(null);
   const [editLocation, setEditLocation] = useState<Country | null>(null);
   const [editPickerFor, setEditPickerFor] = useState<'nationality' | 'location' | null>(null);
   const [editSearch, setEditSearch] = useState('');
   const [editSaving, setEditSaving] = useState(false);
   const menuAnim = useState(new Animated.Value(-MENU_W))[0];
+  const editUsernameStatus = useUsernameCheck(editUsername, profile?.username);
 
   useFocusEffect(
     useCallback(() => {
@@ -216,6 +220,7 @@ export default function ProfileScreen({ navigation }: any) {
     setMenuVisible(false);
     setEditFirstName(profile?.firstName ?? '');
     setEditLastName(profile?.lastName ?? '');
+    setEditUsername(profile?.username ?? '');
     setEditNationality(COUNTRIES.find((c) => c.code === profile?.countryCode) ?? null);
     setEditLocation(COUNTRIES.find((c) => c.name === profile?.location) ?? null);
     setEditPickerFor(null);
@@ -225,8 +230,23 @@ export default function ProfileScreen({ navigation }: any) {
 
   async function handleSaveProfile() {
     if (!profile?.uid || !editFirstName.trim() || !editLastName.trim() || !editNationality || !editLocation) return;
+    const newUsername = normalizeUsername(editUsername);
+    const usernameChanged = newUsername !== (profile.username ?? '');
+    if (usernameChanged && !isValidUsername(newUsername)) { Alert.alert(t('auth.usernameInvalid')); return; }
+    if (usernameChanged && editUsernameStatus === 'taken') { Alert.alert(t('auth.usernameTaken')); return; }
     setEditSaving(true);
     try {
+      // Claim the new @handle first (atomic release-old + claim-new). If it was
+      // just taken in the race, the batch fails → abort, nothing else changes.
+      if (usernameChanged) {
+        try {
+          await changeUsername(profile.uid, profile.username, newUsername);
+        } catch {
+          Alert.alert(t('auth.usernameTaken'));
+          setEditSaving(false);
+          return;
+        }
+      }
       const updated = {
         firstName: editFirstName.trim(),
         lastName: editLastName.trim(),
@@ -235,7 +255,7 @@ export default function ProfileScreen({ navigation }: any) {
         location: editLocation.name,
       };
       await updateUserProfile(profile.uid, updated);
-      setProfile({ ...profile, ...updated });
+      setProfile({ ...profile, ...updated, ...(usernameChanged ? { username: newUsername } : {}) });
       setEditVisible(false);
     } catch {
       Alert.alert(t('errors.generic'));
@@ -696,6 +716,28 @@ export default function ProfileScreen({ navigation }: any) {
                   autoCorrect={false}
                 />
 
+                <Text style={styles.editLabel}>{t('auth.username')}</Text>
+                <TextInput
+                  style={styles.editInput}
+                  value={editUsername}
+                  onChangeText={(v) => setEditUsername(v.toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 20))}
+                  placeholder={t('auth.username')}
+                  placeholderTextColor={colors.textSecondary}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+                {(editUsernameStatus === 'available' || editUsernameStatus === 'taken' || editUsernameStatus === 'invalid') && (
+                  <Text style={[styles.usernameHint, {
+                    color: editUsernameStatus === 'available' ? colors.success : colors.notification,
+                  }]}>
+                    {editUsernameStatus === 'available'
+                      ? t('auth.usernameAvailable')
+                      : editUsernameStatus === 'taken'
+                        ? t('auth.usernameTaken')
+                        : t('auth.usernameInvalid')}
+                  </Text>
+                )}
+
                 <Text style={styles.editLabel}>{t('editProfile.nationality')}</Text>
                 <TouchableOpacity style={styles.pickerBtn} onPress={() => { setEditSearch(''); setEditPickerFor('nationality'); }}>
                   {editNationality
@@ -716,9 +758,9 @@ export default function ProfileScreen({ navigation }: any) {
               </ScrollView>
 
               <TouchableOpacity
-                style={[styles.saveBtn, (editSaving || !editFirstName.trim() || !editLastName.trim() || !editNationality || !editLocation) && styles.saveBtnDisabled]}
+                style={[styles.saveBtn, (editSaving || !editFirstName.trim() || !editLastName.trim() || !editNationality || !editLocation || editUsernameStatus === 'taken' || editUsernameStatus === 'invalid') && styles.saveBtnDisabled]}
                 onPress={handleSaveProfile}
-                disabled={editSaving || !editFirstName.trim() || !editLastName.trim() || !editNationality || !editLocation}
+                disabled={editSaving || !editFirstName.trim() || !editLastName.trim() || !editNationality || !editLocation || editUsernameStatus === 'taken' || editUsernameStatus === 'invalid'}
               >
                 {editSaving
                   ? <ActivityIndicator color="#fff" />
@@ -1414,6 +1456,12 @@ function makeStyles(c: ColorPalette, topInset: number) {
       marginBottom: 24,
       fontSize: Typography.fontSizeMD,
       color: c.textPrimary,
+    },
+    usernameHint: {
+      fontSize: Typography.fontSizeSM,
+      marginTop: -18,
+      marginBottom: 18,
+      marginLeft: 4,
     },
     pickerBtn: {
       backgroundColor: c.surface,

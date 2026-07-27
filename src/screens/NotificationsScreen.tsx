@@ -60,14 +60,18 @@ export default function NotificationsScreen({ navigation }: any) {
   function handleNotificationPress(item: AppNotification) {
     // Moderation notices (removed/blocked) aren't tappable — the content is gone.
     if (item.type === 'removed' || item.type === 'blocked') return;
-    if (item.type === 'participant' && item.postId) {
+    // Route by what the notice points at (a post or a discussion) — covers
+    // participant, mention (either), and reply/accepted (discussion).
+    if (item.postId) {
       navigation.navigate('PostDetail', { postId: item.postId });
       return;
     }
-    navigation.navigate('DiscussionDetail', {
-      discussionId: item.discussionId,
-      question: item.discussionQuestion,
-    });
+    if (item.discussionId) {
+      navigation.navigate('DiscussionDetail', {
+        discussionId: item.discussionId,
+        question: item.discussionQuestion,
+      });
+    }
   }
 
   function renderItem({ item }: { item: AppNotification }) {
@@ -115,13 +119,15 @@ export default function NotificationsScreen({ navigation }: any) {
             {' '}{t(
               item.type === 'participant'
                 ? 'notifications.joinedEvent'
-                : item.type === 'accepted'
-                  ? 'notifications.accepted'
-                  : 'notifications.replied',
+                : item.type === 'mention'
+                  ? 'notifications.mentioned'
+                  : item.type === 'accepted'
+                    ? 'notifications.accepted'
+                    : 'notifications.replied',
             )}
           </Text>
           <Text style={styles.question} numberOfLines={2}>
-            "{item.type === 'participant' ? item.postTitle : item.discussionQuestion}"
+            "{item.postId ? item.postTitle : item.discussionQuestion}"
           </Text>
           <Text style={styles.time}>{formatTime(item.createdAt, t)}</Text>
         </View>

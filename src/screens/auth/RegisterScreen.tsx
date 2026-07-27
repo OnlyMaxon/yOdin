@@ -15,6 +15,8 @@ import { useTranslation } from 'react-i18next';
 import { registerUser, loginUser } from '../../services/authService';
 import { useAuthStore } from '../../store/useAuthStore';
 import { getErrorMessage } from '../../services/errorHandler';
+import { useUsernameCheck } from '../../hooks/useUsernameCheck';
+import { isValidUsername } from '../../utils/mentions';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../hooks/useTheme';
 import { Typography } from '../../theme/typography';
@@ -29,29 +31,35 @@ export default function RegisterScreen({ navigation, route }: any) {
   const [mode, setMode] = useState<Mode>(route?.params?.mode ?? 'register');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const setPendingEmailVerification = useAuthStore((s) => s.setPendingEmailVerification);
+  const usernameStatus = useUsernameCheck(username);
 
   async function handleSubmit() {
     setError('');
     if (!email.trim() || !password) { setError(t('errors.fillAllFields')); return; }
-    if (mode === 'register' && (!firstName.trim() || !lastName.trim())) {
-      setError(t('errors.enterName')); return;
+    if (mode === 'register') {
+      if (!firstName.trim() || !lastName.trim()) { setError(t('errors.enterName')); return; }
+      if (!isValidUsername(username)) { setError(t('auth.usernameInvalid')); return; }
+      if (usernameStatus === 'taken') { setError(t('auth.usernameTaken')); return; }
     }
     setLoading(true);
     try {
       if (mode === 'register') {
-        await registerUser(email.trim(), password, firstName.trim(), lastName.trim());
+        await registerUser(email.trim(), password, firstName.trim(), lastName.trim(), username);
         setPendingEmailVerification(true);
       } else {
         await loginUser(email.trim(), password);
       }
     } catch (e) {
-      setError(getErrorMessage(e, t));
+      if (e instanceof Error && e.message === 'username-taken') setError(t('auth.usernameTaken'));
+      else if (e instanceof Error && e.message === 'username-invalid') setError(t('auth.usernameInvalid'));
+      else setError(getErrorMessage(e, t));
     } finally {
       setLoading(false);
     }
@@ -93,6 +101,39 @@ export default function RegisterScreen({ navigation, route }: any) {
               />
             </View>
           </View>
+        )}
+
+        {mode === 'register' && (
+          <>
+            <View style={styles.inputWrap}>
+              <Ionicons name="at-outline" size={18} color={colors.textSecondary} />
+              <TextInput
+                style={styles.input}
+                placeholder={t('auth.username')}
+                placeholderTextColor={colors.textSecondary}
+                value={username}
+                onChangeText={(v) => setUsername(v.toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 20))}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              {usernameStatus === 'checking' && <ActivityIndicator size="small" color={colors.textSecondary} />}
+              {usernameStatus === 'available' && <Ionicons name="checkmark-circle" size={18} color={colors.success} />}
+              {(usernameStatus === 'taken' || usernameStatus === 'invalid') && (
+                <Ionicons name="close-circle" size={18} color={colors.notification} />
+              )}
+            </View>
+            {(usernameStatus === 'available' || usernameStatus === 'taken' || usernameStatus === 'invalid') && (
+              <Text style={[styles.usernameHint, {
+                color: usernameStatus === 'available' ? colors.success : colors.notification,
+              }]}>
+                {usernameStatus === 'available'
+                  ? t('auth.usernameAvailable')
+                  : usernameStatus === 'taken'
+                    ? t('auth.usernameTaken')
+                    : t('auth.usernameInvalid')}
+              </Text>
+            )}
+          </>
         )}
 
         <View style={styles.inputWrap}>
@@ -205,6 +246,12 @@ function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalet
       color: c.notification,
       fontSize: Typography.fontSizeSM,
       marginBottom: 12,
+    },
+    usernameHint: {
+      fontSize: Typography.fontSizeSM,
+      marginTop: -6,
+      marginBottom: 10,
+      marginLeft: 4,
     },
     btn: {
       backgroundColor: c.primary,

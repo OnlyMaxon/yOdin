@@ -31,7 +31,7 @@ import AppImage from '../components/AppImage';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
 import ReportSheet from '../components/ReportSheet';
-import { createParticipantNotification } from '../services/notificationService';
+import { createParticipantNotification, notifyMentions } from '../services/notificationService';
 import { createReport } from '../services/reportService';
 
 const SCREEN_H = Dimensions.get('window').height;
@@ -234,6 +234,11 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
         text: text.trim(),
       };
       const id = await addComment(post.id, data);
+      notifyMentions({
+        text: data.text,
+        from: { uid: profile.uid, name: `${profile.firstName} ${profile.lastName}`, photo: profile.photoURL ?? '' },
+        post: { id: post.id, title: post.title },
+      }).catch(() => {});
       setComments((prev) => [...prev, { id, ...data, createdAt: Date.now() }]);
       incrementCommentCount(post.id);
       setText('');

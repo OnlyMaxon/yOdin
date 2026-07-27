@@ -3,6 +3,11 @@ export interface User {
   email?: string;
   firstName: string;
   lastName: string;
+  // Unique @handle for mentions. Lowercase [a-z0-9_], 3–20 chars. The
+  // authoritative uniqueness/lookup lives in the `usernames/{username}` registry;
+  // this field is the denormalized display copy. Optional: legacy users may not
+  // have one until migrated.
+  username?: string;
   nationality: string;
   countryCode: string;
   location: string;
@@ -109,7 +114,7 @@ export interface Reply {
 
 export interface AppNotification {
   id: string;
-  type: 'reply' | 'accepted' | 'participant' | 'removed' | 'blocked';
+  type: 'reply' | 'accepted' | 'participant' | 'removed' | 'blocked' | 'mention';
   toUserId: string;
   fromUserId: string;
   fromUserName: string;

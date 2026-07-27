@@ -126,14 +126,14 @@ service cloud.firestore {
         // Clients may only create these types. Moderation notices (removed /
         // blocked) are written server-side by the Admin SDK, which bypasses
         // these rules — so a client can't forge a fake "you were banned" notice.
-        && request.resource.data.type in ['reply', 'accepted', 'participant']
+        && request.resource.data.type in ['reply', 'accepted', 'participant', 'mention']
         && (
           // Forum notification (reply / accepted answer).
           (request.resource.data.discussionId is string
             && request.resource.data.discussionQuestion is string
             && request.resource.data.discussionQuestion.size() <= 500)
-          // Event sign-up notification.
-          || (request.resource.data.type == 'participant'
+          // Event sign-up, or a mention that lives under a post.
+          || ((request.resource.data.type == 'participant' || request.resource.data.type == 'mention')
             && request.resource.data.postId is string
             && request.resource.data.postTitle is string
             && request.resource.data.postTitle.size() <= 100)
@@ -149,6 +149,18 @@ service cloud.firestore {
         && request.resource.data.targetId is string
         && request.resource.data.status == 'pending';
       allow read, update, delete: if isModerator();
+    }
+
+    // Username registry: usernames/{username} → { uid }. Doc id is the @handle.
+    // Public read (availability check + @mention lookup). Create-only so claiming
+    // a taken name fails atomically → uniqueness. Owner may release their own.
+    match /usernames/{username} {
+      allow read: if true;
+      allow create: if request.auth != null
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid']);
+      allow delete: if request.auth != null
+        && resource.data.uid == request.auth.uid;
     }
 
     // Moderator status is carried by a Firebase custom claim on the ID token.

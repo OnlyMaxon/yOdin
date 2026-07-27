@@ -29,7 +29,7 @@ import {
   voteReply,
   acceptReply,
 } from '../services/discussionService';
-import { createNotification } from '../services/notificationService';
+import { createNotification, notifyMentions } from '../services/notificationService';
 import { createReport } from '../services/reportService';
 import { Reply, Discussion, ReportReason } from '../types';
 import { getFlagEmoji } from '../utils/flagEmoji';
@@ -223,6 +223,12 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           discussionQuestion: discussion.question,
         });
       }
+
+      notifyMentions({
+        text: replyData.text,
+        from: { uid: profile.uid, name: `${profile.firstName} ${profile.lastName}`, photo: profile.photoURL ?? '' },
+        discussion: { id: discussionId, question: discussion.question },
+      }).catch(() => {});
 
       setReplies((prev) => [
         ...prev,

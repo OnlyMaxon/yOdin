@@ -18,6 +18,7 @@ import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
 import { useToastStore } from '../store/useToastStore';
 import { createDiscussion, newDiscussionId } from '../services/discussionService';
+import { notifyMentions } from '../services/notificationService';
 import { uploadDiscussionImages, uploadDiscussionVideo } from '../services/storageService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { getErrorMessage } from '../services/errorHandler';
@@ -110,6 +111,11 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
         ...(videoURL ? { videoURL, videoPoster } : {}),
       };
       await createDiscussion(data, id);
+      notifyMentions({
+        text: question,
+        from: { uid: profile.uid, name: `${profile.firstName} ${profile.lastName}`, photo: profile.photoURL ?? '' },
+        discussion: { id, question: question.trim() },
+      }).catch(() => {});
       prependDiscussion({ id, ...data, createdAt: Date.now(), replyCount: 0 });
       onClose();
       showToast(t('newDiscussion.published'));

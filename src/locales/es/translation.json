@@ -8,6 +8,10 @@
     "password": "Contraseña",
     "firstName": "Nombre",
     "lastName": "Apellido",
+    "username": "Nombre de usuario",
+    "usernameAvailable": "Disponible",
+    "usernameTaken": "Ya está en uso",
+    "usernameInvalid": "3–20 caracteres: a–z, 0–9, _",
     "nationality": "Tu nacionalidad",
     "location": "Tu ubicación",
     "next": "Siguiente",
@@ -73,6 +77,7 @@
     "accepted": "aceptó tu respuesta",
     "clearRead": "Borrar leídas",
     "joinedEvent": "is going to your event",
+    "mentioned": "te mencionó",
     "contentRemoved": "Your content was removed by a moderator for violating the rules.",
     "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
   },

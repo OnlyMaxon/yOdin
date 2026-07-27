@@ -13,6 +13,8 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { AppNotification } from '../types';
+import { parseMentions } from '../utils/mentions';
+import { resolveUsernames } from './userService';
 
 // Realtime subscription: keeps the unread badge and list live for as long as the
 // user is signed in. Returns an unsubscribe function.
@@ -68,6 +70,42 @@ export async function createParticipantNotification(data: {
     createdAt: serverTimestamp(),
     read: false,
   });
+}
+
+// Parse @mentions out of a freshly-written piece of text and notify each
+// mentioned user (resolved via the usernames registry). Skips the author and
+// de-dupes. Best-effort — a mention that fails to resolve/notify never blocks
+// the post/comment that triggered it. Pass exactly one of `post`/`discussion`
+// (whichever the text belongs to) so the notice links to the right place.
+export async function notifyMentions(params: {
+  text: string;
+  from: { uid: string; name: string; photo: string };
+  post?: { id: string; title: string };
+  discussion?: { id: string; question: string };
+}): Promise<void> {
+  const names = parseMentions(params.text);
+  if (names.length === 0) return;
+  const uids = (await resolveUsernames(names)).filter((uid) => uid !== params.from.uid);
+  if (uids.length === 0) return;
+
+  const target = params.post
+    ? { postId: params.post.id, postTitle: params.post.title }
+    : { discussionId: params.discussion!.id, discussionQuestion: params.discussion!.question };
+
+  await Promise.all(
+    uids.map((toUserId) =>
+      addDoc(collection(db, 'notifications'), {
+        type: 'mention',
+        toUserId,
+        fromUserId: params.from.uid,
+        fromUserName: params.from.name,
+        fromUserPhoto: params.from.photo,
+        ...target,
+        createdAt: serverTimestamp(),
+        read: false,
+      }).catch(() => {}),
+    ),
+  );
 }
 
 export async function markNotificationsRead(ids: string[]): Promise<void> {
