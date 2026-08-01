@@ -1,0 +1,73 @@
+name: iOS unsigned IPA
+
+# Builds an UNSIGNED .ipa on a GitHub-hosted macOS runner (no Mac needed).
+# Download the artifact, then sign + install it on your iPhone with SideloadLy
+# using your (free) Apple ID. Trigger manually from the Actions tab.
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 60
+    env:
+      # EXPO_PUBLIC_* are inlined into the JS bundle at build time — add these as
+      # repository secrets (Settings ▸ Secrets and variables ▸ Actions).
+      EXPO_PUBLIC_FIREBASE_API_KEY: ${{ secrets.EXPO_PUBLIC_FIREBASE_API_KEY }}
+      EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+      EXPO_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.EXPO_PUBLIC_FIREBASE_PROJECT_ID }}
+      EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+      EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+      EXPO_PUBLIC_FIREBASE_APP_ID: ${{ secrets.EXPO_PUBLIC_FIREBASE_APP_ID }}
+      EXPO_PUBLIC_ALGOLIA_APP_ID: ${{ secrets.EXPO_PUBLIC_ALGOLIA_APP_ID }}
+      EXPO_PUBLIC_ALGOLIA_SEARCH_KEY: ${{ secrets.EXPO_PUBLIC_ALGOLIA_SEARCH_KEY }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install JS dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Generate native iOS project
+        run: npx expo prebuild -p ios --no-install
+
+      - name: Install CocoaPods
+        run: cd ios && pod install
+
+      - name: Archive (unsigned)
+        run: |
+          WORKSPACE=$(ls -d ios/*.xcworkspace | head -1)
+          SCHEME=$(basename "$WORKSPACE" .xcworkspace)
+          echo "Workspace: $WORKSPACE / Scheme: $SCHEME"
+          xcodebuild \
+            -workspace "$WORKSPACE" \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath "$RUNNER_TEMP/app.xcarchive" \
+            clean archive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            ONLY_ACTIVE_ARCH=NO
+
+      - name: Package unsigned .ipa
+        run: |
+          APP=$(ls -d "$RUNNER_TEMP/app.xcarchive/Products/Applications/"*.app | head -1)
+          echo "App: $APP"
+          mkdir -p "$RUNNER_TEMP/Payload"
+          cp -R "$APP" "$RUNNER_TEMP/Payload/"
+          (cd "$RUNNER_TEMP" && zip -qry yodin-unsigned.ipa Payload)
+          ls -lh "$RUNNER_TEMP/yodin-unsigned.ipa"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yodin-ios-unsigned
+          path: ${{ runner.temp }}/yodin-unsigned.ipa
+          if-no-files-found: error
