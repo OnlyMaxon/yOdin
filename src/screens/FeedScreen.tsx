@@ -32,7 +32,10 @@ import { Typography } from '../theme/typography';
 import PostDetailModal from './PostDetailModal';
 import FollowButton from '../components/FollowButton';
 import NationFilterDrawer from '../components/NationFilterDrawer';
-import AppImage from '../components/AppImage';
+import Card from '../components/Card';
+import Avatar from '../components/Avatar';
+import Chip from '../components/Chip';
+import { Spacing } from '../theme/spacing';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
@@ -288,26 +291,16 @@ export default function FeedScreen({ navigation }: any) {
       && (item.participants?.length ?? 0) >= item.participantLimit
       && !isParticipant;
     return (
-      <TouchableOpacity
-        style={styles.card}
-        activeOpacity={0.9}
-        onPress={() => openDetail(item.id, false)}
-      >
+      <Card onPress={() => openDetail(item.id, false)}>
         <View style={styles.cardHeader}>
           <View style={styles.authorTap}>
-            <TouchableOpacity
-              style={styles.avatar}
-              activeOpacity={0.7}
+            <Avatar
+              photoURL={item.authorPhoto}
+              name={item.authorName}
+              size={44}
+              style={{ marginRight: Spacing.md }}
               onPress={() => navigation.navigate('UserProfile', { userId: item.authorId })}
-            >
-              {item.authorPhoto ? (
-                <AppImage source={{ uri: item.authorPhoto }} style={styles.avatarImage} contentFit="cover" />
-              ) : (
-                <Text style={styles.avatarText}>
-                  {item.authorName?.charAt(0).toUpperCase()}
-                </Text>
-              )}
-            </TouchableOpacity>
+            />
             <View style={styles.authorInfo}>
               <Text
                 style={styles.authorName}
@@ -412,7 +405,7 @@ export default function FeedScreen({ navigation }: any) {
             </TouchableOpacity>
           )}
         </View>
-      </TouchableOpacity>
+      </Card>
     );
   }
 
@@ -436,20 +429,14 @@ export default function FeedScreen({ navigation }: any) {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.filterRow}
         >
-          {FILTERS.map((f) => {
-            const active = filter === f;
-            return (
-              <TouchableOpacity
-                key={f}
-                style={[styles.chip, active && styles.chipActive]}
-                onPress={() => setFilter(f)}
-              >
-                <Text style={[styles.chipText, active && styles.chipTextActive]}>
-                  {f === 'all' ? t('categories.all') : t(`categories.${f}`)}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
+          {FILTERS.map((f) => (
+            <Chip
+              key={f}
+              label={f === 'all' ? t('categories.all') : t(`categories.${f}`)}
+              active={filter === f}
+              onPress={() => setFilter(f)}
+            />
+          ))}
         </ScrollView>
         <View style={styles.natRow}>
           <TouchableOpacity
@@ -664,35 +651,10 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontWeight: Typography.fontWeightMedium,
     },
     chipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
-    list: { padding: 14, gap: 14, paddingBottom: 96 },
+    list: { padding: Spacing.lg, gap: Spacing.lg, paddingBottom: 96 },
     center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center' },
-    card: {
-      backgroundColor: c.surface,
-      borderRadius: 20,
-      padding: 16,
-      shadowColor: c.primary,
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.08,
-      shadowRadius: 12,
-      elevation: 3,
-    },
     cardHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
     authorTap: { flexDirection: 'row', alignItems: 'center', flex: 1 },
-    avatar: {
-      width: 44,
-      height: 44,
-      borderRadius: 22,
-      backgroundColor: c.primaryLight,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: 12,
-    },
-    avatarText: {
-      fontSize: Typography.fontSizeLG,
-      fontWeight: Typography.fontWeightBold,
-      color: c.primary,
-    },
-    avatarImage: { width: 44, height: 44, borderRadius: 22 },
     authorInfo: { flex: 1 },
     authorName: {
       fontSize: Typography.fontSizeMD,
@@ -721,11 +683,13 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontSize: Typography.fontSizeLG,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
+      letterSpacing: -0.3,
+      lineHeight: 24,
       marginBottom: 6,
     },
     postDescription: {
       fontSize: Typography.fontSizeMD,
-      color: c.textPrimary,
+      color: c.textSecondary,
       lineHeight: 22,
       marginBottom: 12,
     },
