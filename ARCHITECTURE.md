@@ -235,13 +235,42 @@ Google Cloud Secret Manager, never on the client.
 
 ---
 
-## 10. UI conventions
+## 10. UI conventions & design system
 
-- Theming via `useTheme()` → `LightColors`/`DarkColors`; every screen builds
-  dynamic styles with `makeStyles(colors, insets…)`. High-traffic screens
-  memoize this with `useMemo` (see §11 perf note).
+**Design tokens** (`src/theme/`):
+- `colors.ts` — `LightColors` / `DarkColors` via `useTheme()`. Palette is
+  purple-brand: airy lavender-neutral ground (`#F3F0FB`), white surfaces,
+  a chosen lavender-biased secondary grey, category accents (news=primary,
+  events=coral, places=emerald, lifestyle=pink).
+- `spacing.ts` — `Spacing` (4·8·12·16·20·24·32) and `Radius` (sm/md/lg/pill).
+  Use these instead of magic numbers.
+- `typography.ts` — font sizes + weight constants.
+
+**Shared UI components** (`src/components/`) — build screens from these; don't
+re-implement per screen:
+- `Card` — standard surface (white, radius `lg`, soft brand-tinted shadow,
+  `onPress` optional). Pass `style` to override (e.g. the answered variant).
+- `Avatar` — photo or initials, any `size`, `onPress` optional.
+- `Chip` — filter pill (`active` = filled brand).
+- `EmptyState` — empty-list block.
+- Feed and Forum are the reference screens built on these; roll the same set out
+  when restyling others.
+
+**Font — Inter, via wrappers (important convention):** React 19 removed the
+`Text.defaultProps` global-font shortcut and render-patching is unsafe on the new
+architecture, so Inter is applied through drop-in wrappers:
+- **Import `Text` from `components/AppText` and `TextInput` from
+  `components/AppTextInput`, NOT from `react-native`.** They map the style's
+  `fontWeight` to the matching Inter cut (custom fonts don't derive weights).
+  New files must follow this or their text falls back to the system font.
+- Fonts load in `App.tsx` via `useFonts` (`expo-font` + `@expo-google-fonts/inter`),
+  gated before first render. Inter is a native asset → shows instantly in Expo Go,
+  but a standalone/sideload build must be **rebuilt** to include it.
+
+**Other conventions:**
+- Every screen builds dynamic styles with `makeStyles(colors, insets…)`;
+  high-traffic screens memoize with `useMemo` (see §11).
 - All user-facing text is i18n (`t(...)`); only brand strings are literal.
-- Empty states use the shared `EmptyState` component.
 - Bottom-sheet modals: rounded top, drag handle, close button, footer action
   outside the ScrollView. FlatList screens pad `paddingBottom: 96`; headers pad
   `insets.top + 12`.
