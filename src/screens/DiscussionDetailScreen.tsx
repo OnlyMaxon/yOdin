@@ -1,10 +1,8 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   FlatList,
-  TextInput,
   TouchableOpacity,
   Platform,
   ActivityIndicator,
@@ -14,6 +12,8 @@ import {
   Animated,
   Keyboard,
 } from 'react-native';
+import TextInput from '../components/AppTextInput';
+import Text from '../components/AppText';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
@@ -147,7 +147,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   const [kbHeight, setKbHeight] = useState(0);
   const replyBlocked = (profile?.commentBlockedUntil ?? 0) > Date.now();
   const listRef = useRef<FlatList>(null);
-  const inputRef = useRef<TextInput>(null);
+  const inputRef = useRef<React.ComponentRef<typeof TextInput>>(null);
 
   useEffect(() => {
     loadAll();

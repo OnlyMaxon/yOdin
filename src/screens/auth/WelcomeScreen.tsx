@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { Animated, Easing, View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import Text from '../../components/AppText';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '../../theme/typography';
 import { LightColors } from '../../theme/colors';

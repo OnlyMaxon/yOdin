@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  View,
-  Text,
-  TextInput,
+  View,
   TouchableOpacity,
   StyleSheet,
   Modal,
@@ -12,6 +10,8 @@ import {
   ActivityIndicator,
   Keyboard,
 } from 'react-native';
+import TextInput from '../components/AppTextInput';
+import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';

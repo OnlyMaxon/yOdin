@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
+  View,
   StyleSheet,
   Modal,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import Text from './AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

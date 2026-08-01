@@ -18,6 +18,13 @@ import RootNavigator from './src/navigation/RootNavigator';
 import Toast from './src/components/Toast';
 import { initTheme } from './src/store/useThemeStore';
 import { useTheme } from './src/hooks/useTheme';
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
 
 function AppContent() {
   const { isDark, colors } = useTheme();
@@ -49,6 +56,12 @@ function AppContent() {
 
 export default function App() {
   const [ready, setReady] = useState(false);
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
 
   useEffect(() => {
     Promise.all([initTheme(), initLanguage()])
@@ -56,7 +69,7 @@ export default function App() {
       .catch(() => setReady(true));
   }, []);
 
-  if (!ready) return null;
+  if (!ready || !fontsLoaded) return null;
 
   return (
     <I18nextProvider i18n={i18n}>

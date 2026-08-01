@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
-  View,
-  Text,
+  View,
   FlatList,
   StyleSheet,
   TouchableOpacity,
@@ -11,6 +10,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { DocumentSnapshot } from 'firebase/firestore';

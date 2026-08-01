@@ -1,20 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
-  Text,
+  View,
   StyleSheet,
   Modal,
   Animated,
   Dimensions,
   ScrollView,
-  FlatList,
-  TextInput,
+  FlatList,
   TouchableOpacity,
   Keyboard,
   Platform,
   ActivityIndicator,
   Alert,
 } from 'react-native';
+import TextInput from '../components/AppTextInput';
+import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';

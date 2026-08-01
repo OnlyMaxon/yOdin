@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
+  View,
   StyleSheet,
   TouchableOpacity,
   FlatList,
@@ -9,6 +8,7 @@ import {
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from 'react-native';
+import Text from './AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../hooks/useTheme';
 import AppImage from './AppImage';

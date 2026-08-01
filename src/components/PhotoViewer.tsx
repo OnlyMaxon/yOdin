@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
+  View,
   StyleSheet,
   Modal,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
+import Text from './AppText';
 import { Ionicons } from '@expo/vector-icons';
 import AppImage from './AppImage';
 import PagerView from 'react-native-pager-view';

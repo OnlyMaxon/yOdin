@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
-  View,
-  Text,
+  View,
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
+import Text from '../../components/AppText';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../hooks/useTheme';

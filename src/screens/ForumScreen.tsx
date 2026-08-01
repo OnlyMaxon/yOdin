@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import {
   Animated,
-  View,
-  Text,
+  View,
   FlatList,
-  StyleSheet,
-  TextInput,
+  StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
@@ -14,6 +12,8 @@ import {
   Platform,
   UIManager,
 } from 'react-native';
+import TextInput from '../components/AppTextInput';
+import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { DocumentSnapshot } from 'firebase/firestore';
@@ -35,7 +35,10 @@ import { Typography } from '../theme/typography';
 import { weightedSort } from '../utils/weightedSort';
 import FollowButton from '../components/FollowButton';
 import NationFilterDrawer from '../components/NationFilterDrawer';
-import AppImage from '../components/AppImage';
+import Card from '../components/Card';
+import Avatar from '../components/Avatar';
+import Chip from '../components/Chip';
+import { Spacing } from '../theme/spacing';
 import PhotoGrid from '../components/PhotoGrid';
 import VideoPreview from '../components/VideoPreview';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
@@ -299,10 +302,9 @@ export default function ForumScreen({ navigation }: any) {
     const attachCount = (item.imageURLs?.length ?? 0) + (item.videoURL ? 1 : 0);
     const attachExpanded = !!expandedAttach[item.id];
     return (
-      <TouchableOpacity
-        style={[styles.card, isAnswered && styles.cardAnswered]}
+      <Card
         onPress={() => navigation.navigate('DiscussionDetail', { discussionId: item.id, question: item.question })}
-        activeOpacity={0.85}
+        style={isAnswered ? styles.cardAnswered : undefined}
       >
         <View style={styles.cardHeader}>
           <TouchableOpacity
@@ -310,15 +312,12 @@ export default function ForumScreen({ navigation }: any) {
             activeOpacity={0.7}
             onPress={() => navigation.navigate('UserProfile', { userId: item.authorId })}
           >
-            <View style={styles.avatar}>
-              {item.authorPhoto ? (
-                <AppImage source={{ uri: item.authorPhoto }} style={styles.avatarImage} contentFit="cover" />
-              ) : (
-                <Text style={styles.avatarText}>
-                  {item.authorName?.charAt(0).toUpperCase()}
-                </Text>
-              )}
-            </View>
+            <Avatar
+              photoURL={item.authorPhoto}
+              name={item.authorName}
+              size={44}
+              style={{ marginRight: Spacing.md }}
+            />
             <View style={styles.authorInfo}>
               <Text style={styles.authorName}>{item.authorName}</Text>
               <Text style={styles.authorMeta}>
@@ -404,7 +403,7 @@ export default function ForumScreen({ navigation }: any) {
             </TouchableOpacity>
           </View>
         </View>
-      </TouchableOpacity>
+      </Card>
     );
   }
 
@@ -463,24 +462,18 @@ export default function ForumScreen({ navigation }: any) {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.natChips}
           >
-            <TouchableOpacity
-              style={[styles.natChip, selectedNations.length === 0 && styles.natChipActive]}
+            <Chip
+              label={`🌍 ${t('feed.allNations')}`}
+              active={selectedNations.length === 0}
               onPress={() => setSelectedNations([])}
-            >
-              <Text style={[styles.natChipText, selectedNations.length === 0 && styles.natChipTextActive]}>
-                🌍 {t('feed.allNations')}
-              </Text>
-            </TouchableOpacity>
+            />
             {selectedNations.map((nation) => (
-              <TouchableOpacity
+              <Chip
                 key={nation}
-                style={[styles.natChip, styles.natChipActive]}
+                label={`${COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} ${nation}  ✕`}
+                active
                 onPress={() => toggleNation(nation)}
-              >
-                <Text style={[styles.natChipText, styles.natChipTextActive]}>
-                  {COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} {nation}  ✕
-                </Text>
-              </TouchableOpacity>
+              />
             ))}
           </ScrollView>
           <TouchableOpacity
@@ -653,36 +646,8 @@ function makeStyles(c: ColorPalette, topInset: number) {
     drawerBadgeText: { color: '#fff', fontSize: 10, fontWeight: Typography.fontWeightBold },
     natChips: { gap: 8, alignItems: 'center', paddingRight: 8 },
     qodWrap: { marginBottom: 4 },
-    natChip: {
-      paddingHorizontal: 14,
-      paddingVertical: 7,
-      borderRadius: 18,
-      backgroundColor: c.background,
-      borderWidth: 1,
-      borderColor: c.border,
-    },
-    natChipActive: {
-      backgroundColor: c.primary,
-      borderColor: c.primary,
-    },
-    natChipText: {
-      fontSize: Typography.fontSizeSM,
-      color: c.textSecondary,
-      fontWeight: Typography.fontWeightMedium,
-    },
-    natChipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
-    list: { padding: 14, gap: 14, paddingBottom: 96 },
+    list: { padding: Spacing.lg, gap: Spacing.lg, paddingBottom: 96 },
     center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center' },
-    card: {
-      backgroundColor: c.surface,
-      borderRadius: 20,
-      padding: 16,
-      shadowColor: c.primary,
-      shadowOffset: { width: 0, height: 4 },
-      shadowOpacity: 0.08,
-      shadowRadius: 12,
-      elevation: 3,
-    },
     cardAnswered: {
       borderWidth: 1.5,
       borderColor: c.success,
@@ -691,21 +656,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
     cardHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
     authorTap: { flexDirection: 'row', alignItems: 'center', flex: 1 },
     headerRight: { flexDirection: 'column', alignItems: 'flex-end', gap: 6 },
-    avatar: {
-      width: 44,
-      height: 44,
-      borderRadius: 22,
-      backgroundColor: c.primaryLight,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: 12,
-    },
-    avatarText: {
-      fontSize: Typography.fontSizeLG,
-      fontWeight: Typography.fontWeightBold,
-      color: c.primary,
-    },
-    avatarImage: { width: 44, height: 44, borderRadius: 22 },
     authorInfo: { flex: 1 },
     authorName: {
       fontSize: Typography.fontSizeMD,

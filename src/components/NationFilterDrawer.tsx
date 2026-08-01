@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
-  Text,
+  View,
   StyleSheet,
   Modal,
   Animated,
   Dimensions,
-  Image,
-  TextInput,
+  Image,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import TextInput from './AppTextInput';
+import Text from './AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

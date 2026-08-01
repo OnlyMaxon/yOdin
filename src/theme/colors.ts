@@ -2,14 +2,17 @@ export type ColorPalette = typeof LightColors;
 
 export const LightColors = {
   primary: '#6C35DE',
-  primaryLight: '#EDE0FF',
+  primaryLight: '#F0E9FF',
   accent: '#FF6B6B',
   pink: '#EC4899',
-  background: '#EDE4FF',
+  // Airier ground: a faint lavender-neutral instead of the heavy #EDE4FF, so the
+  // white cards and the purple accent breathe.
+  background: '#F3F0FB',
   surface: '#FFFFFF',
-  textPrimary: '#1A1A2E',
-  textSecondary: '#6B7280',
-  border: '#DDD0F5',
+  textPrimary: '#191627',
+  // Secondary text is a chosen lavender-biased grey (not a default cool grey).
+  textSecondary: '#6C6684',
+  border: '#E7E1F5',
   success: '#10B981',
   successTint: '#ECFDF5',
   notification: '#EF4444',
@@ -23,7 +26,7 @@ export const DarkColors: ColorPalette = {
   primaryLight: '#2A1F5C',
   accent: '#FF6B6B',
   pink: '#F472B6',
-  background: '#12102A',
+  background: '#100E24',
   surface: '#1C1840',
   textPrimary: '#F0EEFF',
   textSecondary: '#9B99C0',

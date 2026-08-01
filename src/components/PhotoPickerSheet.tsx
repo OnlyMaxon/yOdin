@@ -2,7 +2,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {
   Modal,
   View,
-  Text,
   FlatList,
   Image,
   TouchableOpacity,
@@ -10,6 +9,7 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
+import Text from './AppText';
 import * as MediaLibrary from 'expo-media-library';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';

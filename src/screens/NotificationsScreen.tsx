@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import {
-  View,
-  Text,
+  View,
   FlatList,
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
+import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import AppImage from '../components/AppImage';

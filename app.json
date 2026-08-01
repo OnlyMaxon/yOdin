@@ -37,7 +37,8 @@
           "isAccessMediaLocationEnabled": false
         }
       ],
-      "expo-localization"
+      "expo-localization",
+      "expo-font"
     ]
   }
 }

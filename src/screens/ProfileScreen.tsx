@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import {
-  View,
-  Text,
+  View,
   StyleSheet,
   TouchableOpacity,
   FlatList,
@@ -11,9 +10,10 @@ import {
   Image,
   Modal,
   ScrollView,
-  Alert,
-  TextInput,
+  Alert,
 } from 'react-native';
+import TextInput from '../components/AppTextInput';
+import Text from '../components/AppText';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';

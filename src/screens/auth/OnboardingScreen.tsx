@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
+  View,
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
-  FlatList,
-  TextInput,
+  FlatList,
   Modal,
 } from 'react-native';
+import TextInput from '../../components/AppTextInput';
+import Text from '../../components/AppText';
 import { useTranslation } from 'react-i18next';
 import { auth } from '../../services/firebase';
 import { updateUserProfile, getUserProfile } from '../../services/authService';

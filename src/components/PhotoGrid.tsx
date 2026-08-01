@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, LayoutChangeEvent } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, LayoutChangeEvent } from 'react-native';
+import Text from './AppText';
 import { useTheme } from '../hooks/useTheme';
 import AppImage from './AppImage';
 import PhotoViewer from './PhotoViewer';

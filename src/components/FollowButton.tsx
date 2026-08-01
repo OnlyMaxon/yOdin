@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
+import Text from './AppText';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
 import { followUser, unfollowUser } from '../services/userService';
