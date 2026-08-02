@@ -37,9 +37,9 @@
     "resendEmail": "Reinvia email",
     "emailResent": "Inviato!",
     "continueToApp": "Continua all'app",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Verificato — continua",
+    "notVerifiedYet": "Email non ancora verificata. Apri il link nella posta, poi tocca qui.",
+    "useAnotherAccount": "Usa un altro account",
     "openEmailApp": "Apri app email",
     "sendEmail": "Invia e-mail"
   },
@@ -76,10 +76,10 @@
     "replied": "ha risposto alla tua discussione",
     "accepted": "ha accettato la tua risposta",
     "clearRead": "Elimina lette",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "parteciperà al tuo evento",
     "mentioned": "ti ha menzionato",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Il tuo contenuto è stato rimosso da un moderatore per violazione delle regole.",
+    "blocked": "Non puoi commentare o rispondere per {{count}} giorni a causa di violazioni ripetute."
   },
   "profile": {
     "title": "Profilo",
@@ -160,10 +160,10 @@
     "writeQuestion": "Scrivi la tua domanda.",
     "photoUploadFailed": "Caricamento foto fallito. Riprova.",
     "fillTitleAndDescription": "Compila argomento e descrizione.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "Il video deve durare meno di {{count}}s",
+    "videoTooLarge": "Il video è troppo grande (max 50 MB)",
+    "videoUploadFailed": "Impossibile caricare il video",
+    "selectCategory": "Scegli una categoria",
     "galleryPermission": "Abilita l'accesso alla galleria nelle Impostazioni"
   },
   "categories": {
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "Descrizione",
     "category": "Categoria",
     "post": "Pubblica",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
+    "signup": "Foglio iscrizioni",
+    "signupHint": "Gli utenti possono iscriversi sotto il post",
+    "noLimit": "Nessun limite",
+    "withLimit": "Limitato",
     "limitPlaceholder": "Max",
     "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "addMedia": "Foto / video",
+    "maxPhotos": "Fino a {{count}} foto",
     "selectPhotos": "Scegli foto",
     "done": "Fatto",
     "cancel": "Annulla",
@@ -199,9 +199,9 @@
     "ask": "Fai una domanda",
     "search": "Cerca domande",
     "nothingFound": "Nessun risultato",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Domanda del giorno",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Senza risposta",
     "attachments": "Allegati"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "Punti: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Segnala",
+    "cancel": "Annulla",
+    "sentTitle": "Grazie",
+    "sentMessage": "La tua segnalazione è stata inviata ai moderatori.",
+    "subtitle": "Perché lo segnali?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Incitamento all’odio o simboli",
+      "violence": "Violenza o organizzazioni pericolose",
+      "harassment": "Bullismo o molestie",
+      "nudity": "Nudità o attività sessuale",
+      "falseInfo": "Informazioni false",
+      "scam": "Truffa o frode",
+      "selfHarm": "Suicidio o autolesionismo",
+      "ip": "Violazione della proprietà intellettuale",
+      "other": "Altro"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
+    "title": "Segnalazioni",
+    "empty": "Nessuna segnalazione in sospeso",
+    "view": "Vedi",
+    "keep": "Mantieni",
+    "remove": "Rimuovi",
+    "removeTitle": "Rimuovere il contenuto?",
+    "removeMessage": "Il contenuto segnalato verrà eliminato definitivamente.",
     "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "typeDiscussion": "Domanda",
+    "alreadyGone": "Questo contenuto non è più disponibile.",
+    "typeComment": "Commento",
+    "typeReply": "Risposta",
+    "blockedBanner": "Sei temporaneamente bloccato dai commenti per violazioni ripetute."
   },
   "comments": {
     "title": "Commenti",
@@ -252,13 +252,13 @@
     "empty": "Ancora nessun commento. Sii il primo!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Partecipo",
+    "leaveEvent": "Esci",
+    "eventFull": "Al completo",
+    "participants": "partecipano"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Partecipanti",
+    "empty": "Ancora nessun iscritto"
   }
 }

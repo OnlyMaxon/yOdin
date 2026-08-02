@@ -37,9 +37,9 @@
     "resendEmail": "Renvoyer l'e-mail",
     "emailResent": "Envoyé !",
     "continueToApp": "Continuer vers l'app",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Vérifié — continuer",
+    "notVerifiedYet": "E-mail pas encore vérifié. Ouvre le lien dans ta boîte, puis appuie ici.",
+    "useAnotherAccount": "Utiliser un autre compte",
     "openEmailApp": "Ouvrir l'app mail",
     "sendEmail": "Envoyer l'e-mail"
   },
@@ -76,10 +76,10 @@
     "replied": "a répondu à votre discussion",
     "accepted": "a accepté votre réponse",
     "clearRead": "Effacer lues",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "participe à ton événement",
     "mentioned": "vous a mentionné",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Ton contenu a été supprimé par un modérateur pour non-respect des règles.",
+    "blocked": "Tu ne peux pas commenter ni répondre pendant {{count}} jours en raison de violations répétées."
   },
   "profile": {
     "title": "Profil",
@@ -160,10 +160,10 @@
     "writeQuestion": "Veuillez écrire votre question.",
     "photoUploadFailed": "Échec du téléchargement de la photo. Veuillez réessayer.",
     "fillTitleAndDescription": "Veuillez remplir le sujet et la description.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "La vidéo doit durer moins de {{count}}s",
+    "videoTooLarge": "La vidéo est trop lourde (max 50 Mo)",
+    "videoUploadFailed": "Échec de l’envoi de la vidéo",
+    "selectCategory": "Choisis une catégorie",
     "galleryPermission": "Autorisez l'accès à la galerie dans les Réglages"
   },
   "categories": {
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "Description",
     "category": "Catégorie",
     "post": "Publier",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
+    "signup": "Liste d’inscription",
+    "signupHint": "Les utilisateurs peuvent s’inscrire sous la publication",
+    "noLimit": "Sans limite",
+    "withLimit": "Limité",
     "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "media": "Médias",
+    "addMedia": "Photo / vidéo",
+    "maxPhotos": "Jusqu’à {{count}} photos",
     "selectPhotos": "Choisir des photos",
     "done": "Terminé",
     "cancel": "Annuler",
@@ -199,9 +199,9 @@
     "ask": "Poser une question",
     "search": "Rechercher des questions",
     "nothingFound": "Aucun résultat",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Question du jour",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Sans réponse",
     "attachments": "Pièces jointes"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "Points : {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Signaler",
+    "cancel": "Annuler",
+    "sentTitle": "Merci",
+    "sentMessage": "Ton signalement a été envoyé aux modérateurs.",
+    "subtitle": "Pourquoi le signales-tu ?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Discours haineux ou symboles",
+      "violence": "Violence ou organisations dangereuses",
+      "harassment": "Harcèlement ou intimidation",
+      "nudity": "Nudité ou activité sexuelle",
+      "falseInfo": "Fausse information",
+      "scam": "Arnaque ou fraude",
+      "selfHarm": "Suicide ou automutilation",
+      "ip": "Atteinte à la propriété intellectuelle",
+      "other": "Autre chose"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
+    "title": "Signalements",
+    "empty": "Aucun signalement en attente",
+    "view": "Voir",
+    "keep": "Garder",
+    "remove": "Supprimer",
+    "removeTitle": "Supprimer le contenu ?",
+    "removeMessage": "Le contenu signalé sera définitivement supprimé.",
+    "typePost": "Publication",
     "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "alreadyGone": "Ce contenu n’est plus disponible.",
+    "typeComment": "Commentaire",
+    "typeReply": "Réponse",
+    "blockedBanner": "Tu es temporairement bloqué pour commenter en raison de violations répétées."
   },
   "comments": {
     "title": "Commentaires",
@@ -252,13 +252,13 @@
     "empty": "Pas encore de commentaires. Soyez le premier !"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Je participe",
+    "leaveEvent": "Se retirer",
+    "eventFull": "Complet",
+    "participants": "participent"
   },
   "participants": {
     "title": "Participants",
-    "empty": "No one has signed up yet"
+    "empty": "Personne ne s’est encore inscrit"
   }
 }

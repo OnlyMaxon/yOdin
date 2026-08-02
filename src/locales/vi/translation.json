@@ -37,9 +37,9 @@
     "resendEmail": "Gửi lại email",
     "emailResent": "Đã gửi!",
     "continueToApp": "Tiếp tục vào ứng dụng",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Đã xác minh — tiếp tục",
+    "notVerifiedYet": "Email chưa được xác minh. Mở liên kết trong hộp thư, rồi chạm vào đây.",
+    "useAnotherAccount": "Dùng tài khoản khác",
     "openEmailApp": "Mở ứng dụng email",
     "sendEmail": "Gửi email"
   },
@@ -76,10 +76,10 @@
     "replied": "đã trả lời cuộc thảo luận của bạn",
     "accepted": "đã chấp nhận câu trả lời của bạn",
     "clearRead": "Xóa đã đọc",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "sẽ tham gia sự kiện của bạn",
     "mentioned": "đã nhắc đến bạn",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Nội dung của bạn đã bị người kiểm duyệt xóa vì vi phạm quy tắc.",
+    "blocked": "Bạn không thể bình luận hay trả lời trong {{count}} ngày do vi phạm nhiều lần."
   },
   "profile": {
     "title": "Hồ sơ",
@@ -160,10 +160,10 @@
     "writeQuestion": "Vui lòng viết câu hỏi của bạn.",
     "photoUploadFailed": "Tải ảnh lên thất bại. Vui lòng thử lại.",
     "fillTitleAndDescription": "Vui lòng điền chủ đề và mô tả.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "Video phải dưới {{count}}s",
+    "videoTooLarge": "Video quá lớn (tối đa 50 MB)",
+    "videoUploadFailed": "Không thể tải video lên",
+    "selectCategory": "Chọn một danh mục",
     "galleryPermission": "Bật quyền truy cập thư viện trong Cài đặt"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "Tin tức",
     "events": "Sự kiện",
     "places": "Đáng ghé thăm",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "Phong cách sống"
   },
   "newPost": {
     "title": "Bài viết mới",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "Mô tả",
     "category": "Danh mục",
     "post": "Đăng",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "Danh sách đăng ký",
+    "signupHint": "Người dùng có thể đăng ký dưới bài đăng",
+    "noLimit": "Không giới hạn",
+    "withLimit": "Giới hạn",
+    "limitPlaceholder": "Tối đa",
+    "media": "Phương tiện",
+    "addMedia": "Ảnh / video",
+    "maxPhotos": "Tối đa {{count}} ảnh",
     "selectPhotos": "Chọn ảnh",
     "done": "Xong",
     "cancel": "Hủy",
@@ -199,9 +199,9 @@
     "ask": "Đặt câu hỏi",
     "search": "Tìm câu hỏi",
     "nothingFound": "Không tìm thấy gì",
-    "questionOfDay": "Question of the day",
-    "promo": "Promo",
-    "unanswered": "Unanswered",
+    "questionOfDay": "Câu hỏi trong ngày",
+    "promo": "Khuyến mãi",
+    "unanswered": "Chưa trả lời",
     "attachments": "Tệp đính kèm"
   },
   "rank": {
@@ -209,42 +209,42 @@
     "helper": "Người trợ giúp",
     "expert": "Chuyên gia",
     "master": "Bậc thầy",
-    "guru": "Guru",
+    "guru": "Bậc thầy",
     "points": "Điểm: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Báo cáo",
+    "cancel": "Hủy",
+    "sentTitle": "Cảm ơn",
+    "sentMessage": "Báo cáo của bạn đã được gửi đến người kiểm duyệt.",
+    "subtitle": "Vì sao bạn báo cáo nội dung này?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Phát ngôn thù ghét hoặc biểu tượng",
+      "violence": "Bạo lực hoặc tổ chức nguy hiểm",
+      "harassment": "Bắt nạt hoặc quấy rối",
+      "nudity": "Ảnh khỏa thân hoặc nội dung tình dục",
+      "falseInfo": "Thông tin sai lệch",
+      "scam": "Lừa đảo",
+      "selfHarm": "Tự tử hoặc tự làm hại",
+      "ip": "Vi phạm sở hữu trí tuệ",
+      "other": "Điều gì khác"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "Báo cáo",
+    "empty": "Không có báo cáo nào đang chờ",
+    "view": "Xem",
+    "keep": "Giữ",
+    "remove": "Xóa",
+    "removeTitle": "Xóa nội dung?",
+    "removeMessage": "Thao tác này sẽ xóa vĩnh viễn nội dung bị báo cáo.",
+    "typePost": "Bài đăng",
+    "typeDiscussion": "Câu hỏi",
+    "alreadyGone": "Nội dung này không còn khả dụng.",
+    "typeComment": "Bình luận",
+    "typeReply": "Trả lời",
+    "blockedBanner": "Bạn tạm thời bị chặn bình luận do vi phạm nhiều lần."
   },
   "comments": {
     "title": "Bình luận",
@@ -252,13 +252,13 @@
     "empty": "Chưa có bình luận nào. Hãy là người đầu tiên!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Tôi tham gia",
+    "leaveEvent": "Rời khỏi",
+    "eventFull": "Đã đầy",
+    "participants": "tham gia"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Người tham gia",
+    "empty": "Chưa có ai đăng ký"
   }
 }

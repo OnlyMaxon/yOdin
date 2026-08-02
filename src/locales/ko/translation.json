@@ -37,9 +37,9 @@
     "resendEmail": "이메일 재전송",
     "emailResent": "전송됨!",
     "continueToApp": "앱으로 계속",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "확인됨 — 계속",
+    "notVerifiedYet": "이메일이 아직 확인되지 않았습니다. 받은편지함의 링크를 연 뒤 여기를 누르세요.",
+    "useAnotherAccount": "다른 계정 사용",
     "openEmailApp": "이메일 앱 열기",
     "sendEmail": "이메일 보내기"
   },
@@ -76,10 +76,10 @@
     "replied": "님이 내 토론에 답글을 달았습니다",
     "accepted": "님이 회원님의 답변을 채택했습니다",
     "clearRead": "읽은 것 삭제",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "님이 회원님의 이벤트에 참가합니다",
     "mentioned": "님이 회원님을 언급했습니다",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "규칙 위반으로 회원님의 콘텐츠가 관리자에 의해 삭제되었습니다.",
+    "blocked": "반복된 위반으로 {{count}}일 동안 댓글이나 답글을 달 수 없습니다."
   },
   "profile": {
     "title": "프로필",
@@ -160,10 +160,10 @@
     "writeQuestion": "질문을 작성해 주세요.",
     "photoUploadFailed": "사진 업로드에 실패했습니다. 다시 시도해 주세요.",
     "fillTitleAndDescription": "주제와 설명을 입력해 주세요.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "동영상은 {{count}}초 미만이어야 합니다",
+    "videoTooLarge": "동영상이 너무 큽니다 (최대 50MB)",
+    "videoUploadFailed": "동영상을 업로드하지 못했습니다",
+    "selectCategory": "카테고리를 선택하세요",
     "galleryPermission": "설정에서 갤러리 접근을 허용하세요"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "뉴스",
     "events": "이벤트",
     "places": "가볼 만한 곳",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "라이프스타일"
   },
   "newPost": {
     "title": "새 게시물",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "설명",
     "category": "카테고리",
     "post": "게시",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "참가 명단",
+    "signupHint": "사용자는 게시물 아래에서 참가할 수 있습니다",
+    "noLimit": "제한 없음",
+    "withLimit": "제한됨",
+    "limitPlaceholder": "최대",
+    "media": "미디어",
+    "addMedia": "사진 / 동영상",
+    "maxPhotos": "사진 최대 {{count}}장",
     "selectPhotos": "사진 선택",
     "done": "완료",
     "cancel": "취소",
@@ -199,9 +199,9 @@
     "ask": "질문하기",
     "search": "질문 검색",
     "nothingFound": "검색 결과 없음",
-    "questionOfDay": "Question of the day",
-    "promo": "Promo",
-    "unanswered": "Unanswered",
+    "questionOfDay": "오늘의 질문",
+    "promo": "프로모",
+    "unanswered": "미답변",
     "attachments": "첨부 파일"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "포인트: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "신고",
+    "cancel": "취소",
+    "sentTitle": "감사합니다",
+    "sentMessage": "신고가 관리자에게 전송되었습니다.",
+    "subtitle": "이것을 신고하는 이유는?",
     "reasons": {
-      "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "spam": "스팸",
+      "hate": "혐오 발언 또는 상징",
+      "violence": "폭력 또는 위험 단체",
+      "harassment": "괴롭힘 또는 희롱",
+      "nudity": "노출 또는 성적 행위",
+      "falseInfo": "허위 정보",
+      "scam": "사기 또는 스캠",
+      "selfHarm": "자살 또는 자해",
+      "ip": "지식재산권 침해",
+      "other": "기타"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "신고",
+    "empty": "대기 중인 신고 없음",
+    "view": "보기",
+    "keep": "유지",
+    "remove": "삭제",
+    "removeTitle": "콘텐츠를 삭제할까요?",
+    "removeMessage": "신고된 콘텐츠가 영구적으로 삭제됩니다.",
+    "typePost": "게시물",
+    "typeDiscussion": "질문",
+    "alreadyGone": "이 콘텐츠는 더 이상 사용할 수 없습니다.",
+    "typeComment": "댓글",
+    "typeReply": "답글",
+    "blockedBanner": "반복된 위반으로 댓글 작성이 일시적으로 차단되었습니다."
   },
   "comments": {
     "title": "댓글",
@@ -252,13 +252,13 @@
     "empty": "아직 댓글이 없습니다. 첫 댓글을 남겨보세요!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "참가할게요",
+    "leaveEvent": "나가기",
+    "eventFull": "마감",
+    "participants": "참가"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "참가자",
+    "empty": "아직 아무도 참가하지 않았습니다"
   }
 }

@@ -37,9 +37,9 @@
     "resendEmail": "Reenviar e-mail",
     "emailResent": "Enviado!",
     "continueToApp": "Continuar para o app",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Verificado — continuar",
+    "notVerifiedYet": "E-mail ainda não verificado. Abra o link na caixa de entrada e toque aqui.",
+    "useAnotherAccount": "Usar outra conta",
     "openEmailApp": "Abrir app de e-mail",
     "sendEmail": "Enviar e-mail"
   },
@@ -76,10 +76,10 @@
     "replied": "respondeu à sua discussão",
     "accepted": "aceitou sua resposta",
     "clearRead": "Limpar lidas",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "vai ao seu evento",
     "mentioned": "mencionou você",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Seu conteúdo foi removido por um moderador por violar as regras.",
+    "blocked": "Você não pode comentar ou responder por {{count}} dias devido a violações repetidas."
   },
   "profile": {
     "title": "Perfil",
@@ -160,10 +160,10 @@
     "writeQuestion": "Por favor escreva sua pergunta.",
     "photoUploadFailed": "Falha ao enviar foto. Por favor tente novamente.",
     "fillTitleAndDescription": "Preencha o tema e a descrição.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "O vídeo deve ter menos de {{count}}s",
+    "videoTooLarge": "O vídeo é muito grande (máx. 50 MB)",
+    "videoUploadFailed": "Não foi possível enviar o vídeo",
+    "selectCategory": "Escolha uma categoria",
     "galleryPermission": "Ative o acesso à galeria nas Definições"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "Notícias",
     "events": "Eventos",
     "places": "Vale a pena visitar",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "Estilo de vida"
   },
   "newPost": {
     "title": "Nova publicação",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "Descrição",
     "category": "Categoria",
     "post": "Publicar",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "Lista de inscrição",
+    "signupHint": "Usuários podem confirmar presença na publicação",
+    "noLimit": "Sem limite",
+    "withLimit": "Limitado",
+    "limitPlaceholder": "Máx",
+    "media": "Mídia",
+    "addMedia": "Foto / vídeo",
+    "maxPhotos": "Até {{count}} fotos",
     "selectPhotos": "Selecionar fotos",
     "done": "Concluído",
     "cancel": "Cancelar",
@@ -199,9 +199,9 @@
     "ask": "Fazer uma pergunta",
     "search": "Buscar perguntas",
     "nothingFound": "Nada encontrado",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Pergunta do dia",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Sem resposta",
     "attachments": "Anexos"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "Pontos: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Denunciar",
+    "cancel": "Cancelar",
+    "sentTitle": "Obrigado",
+    "sentMessage": "Sua denúncia foi enviada aos moderadores.",
+    "subtitle": "Por que você está denunciando isto?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Discurso de ódio ou símbolos",
+      "violence": "Violência ou organizações perigosas",
+      "harassment": "Bullying ou assédio",
+      "nudity": "Nudez ou atividade sexual",
+      "falseInfo": "Informação falsa",
+      "scam": "Golpe ou fraude",
+      "selfHarm": "Suicídio ou automutilação",
+      "ip": "Violação de propriedade intelectual",
+      "other": "Outra coisa"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "Denúncias",
+    "empty": "Nenhuma denúncia pendente",
+    "view": "Ver",
+    "keep": "Manter",
+    "remove": "Remover",
+    "removeTitle": "Remover conteúdo?",
+    "removeMessage": "Isso excluirá permanentemente o conteúdo denunciado.",
+    "typePost": "Publicação",
+    "typeDiscussion": "Pergunta",
+    "alreadyGone": "Este conteúdo não está mais disponível.",
+    "typeComment": "Comentário",
+    "typeReply": "Resposta",
+    "blockedBanner": "Você está temporariamente bloqueado de comentar por violações repetidas."
   },
   "comments": {
     "title": "Comentários",
@@ -252,13 +252,13 @@
     "empty": "Ainda não há comentários. Seja o primeiro!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Eu vou",
+    "leaveEvent": "Sair",
+    "eventFull": "Lotado",
+    "participants": "vão"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Participantes",
+    "empty": "Ninguém se inscreveu ainda"
   }
 }

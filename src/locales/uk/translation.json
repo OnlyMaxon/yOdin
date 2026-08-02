@@ -37,9 +37,9 @@
     "resendEmail": "Надіслати знову",
     "emailResent": "Надіслано!",
     "continueToApp": "Продовжити",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Підтверджено — далі",
+    "notVerifiedYet": "Ел. пошту ще не підтверджено. Відкрий посилання в скриньці, потім торкнись тут.",
+    "useAnotherAccount": "Використати інший акаунт",
     "openEmailApp": "Відкрити пошту",
     "sendEmail": "Надіслати листа"
   },
@@ -77,10 +77,10 @@
     "replied": "відповів на ваше обговорення",
     "accepted": "прийняв(ла) вашу відповідь",
     "clearRead": "Видалити прочитані",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "іде на твою подію",
     "mentioned": "згадав(ла) вас",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Твій вміст видалено модератором за порушення правил.",
+    "blocked": "Ти не можеш коментувати чи відповідати {{count}} днів через повторні порушення."
   },
   "profile": {
     "title": "Профіль",
@@ -161,10 +161,10 @@
     "writeQuestion": "Будь ласка, напишіть ваше запитання.",
     "photoUploadFailed": "Не вдалося завантажити фото. Спробуйте ще раз.",
     "fillTitleAndDescription": "Заповніть тему та опис.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "Відео має бути коротшим за {{count}}с",
+    "videoTooLarge": "Відео завелике (макс. 50 МБ)",
+    "videoUploadFailed": "Не вдалося завантажити відео",
+    "selectCategory": "Оберіть категорію",
     "galleryPermission": "Дозвольте доступ до галереї в налаштуваннях пристрою"
   },
   "categories": {
@@ -172,7 +172,7 @@
     "news": "Новини",
     "events": "Заходи",
     "places": "Варто відвідати",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "Стиль життя"
   },
   "newPost": {
     "title": "Новий допис",
@@ -180,14 +180,14 @@
     "descriptionPlaceholder": "Опис",
     "category": "Категорія",
     "post": "Опублікувати",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "Список запису",
+    "signupHint": "Користувачі можуть записатися під дописом",
+    "noLimit": "Без ліміту",
+    "withLimit": "Обмежено",
+    "limitPlaceholder": "Макс",
+    "media": "Медіа",
+    "addMedia": "Фото / відео",
+    "maxPhotos": "До {{count}} фото",
     "selectPhotos": "Оберіть фото",
     "done": "Готово",
     "cancel": "Скасувати",
@@ -200,9 +200,9 @@
     "ask": "Поставити запитання",
     "search": "Пошук за питаннями",
     "nothingFound": "Нічого не знайдено",
-    "questionOfDay": "Question of the day",
-    "promo": "Promo",
-    "unanswered": "Unanswered",
+    "questionOfDay": "Питання дня",
+    "promo": "Промо",
+    "unanswered": "Без відповіді",
     "attachments": "Вкладення"
   },
   "rank": {
@@ -214,38 +214,38 @@
     "points": "Бали: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Поскаржитися",
+    "cancel": "Скасувати",
+    "sentTitle": "Дякуємо",
+    "sentMessage": "Твою скаргу надіслано модераторам.",
+    "subtitle": "Чому ти це скаржиш?",
     "reasons": {
-      "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "spam": "Спам",
+      "hate": "Мова ненависті або символи",
+      "violence": "Насильство або небезпечні організації",
+      "harassment": "Цькування або переслідування",
+      "nudity": "Оголеність або сексуальний контент",
+      "falseInfo": "Неправдива інформація",
+      "scam": "Шахрайство",
+      "selfHarm": "Суїцид або самоушкодження",
+      "ip": "Порушення інтелектуальної власності",
+      "other": "Щось інше"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "Скарги",
+    "empty": "Немає скарг в очікуванні",
+    "view": "Переглянути",
+    "keep": "Залишити",
+    "remove": "Видалити",
+    "removeTitle": "Видалити вміст?",
+    "removeMessage": "Це назавжди видалить поскаржений вміст.",
+    "typePost": "Допис",
+    "typeDiscussion": "Питання",
+    "alreadyGone": "Цей вміст більше недоступний.",
+    "typeComment": "Коментар",
+    "typeReply": "Відповідь",
+    "blockedBanner": "Тебе тимчасово заблоковано в коментарях через повторні порушення."
   },
   "comments": {
     "title": "Коментарі",
@@ -253,13 +253,13 @@
     "empty": "Поки немає коментарів. Будьте першим!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Я йду",
+    "leaveEvent": "Відмовитися",
+    "eventFull": "Немає місць",
+    "participants": "іде"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Учасники",
+    "empty": "Ще ніхто не записався"
   }
 }

@@ -37,9 +37,9 @@
     "resendEmail": "Tekrar Gönder",
     "emailResent": "Gönderildi!",
     "continueToApp": "Uygulamaya Devam Et",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Doğrulandı — devam et",
+    "notVerifiedYet": "E-posta henüz doğrulanmadı. Gelen kutundaki bağlantıyı aç, sonra buraya dokun.",
+    "useAnotherAccount": "Başka hesap kullan",
     "openEmailApp": "E-Posta Uygulamasını Aç",
     "sendEmail": "E-posta gönder"
   },
@@ -76,10 +76,10 @@
     "replied": "tartışmanıza yanıt verdi",
     "accepted": "yanıtını kabul etti",
     "clearRead": "Okunanları sil",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "etkinliğine katılıyor",
     "mentioned": "senden bahsetti",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "İçeriğin, kuralları ihlal ettiği için bir moderatör tarafından kaldırıldı.",
+    "blocked": "Tekrarlanan ihlaller nedeniyle {{count}} gün boyunca yorum yapamaz veya yanıtlayamazsın."
   },
   "profile": {
     "title": "Profil",
@@ -160,10 +160,10 @@
     "writeQuestion": "Lütfen sorunuzu yazın.",
     "photoUploadFailed": "Fotoğraf yüklenemedi. Lütfen tekrar deneyin.",
     "fillTitleAndDescription": "Lütfen konu ve açıklamayı doldurun.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "Video {{count}}sn'den kısa olmalı",
+    "videoTooLarge": "Video çok büyük (en fazla 50 MB)",
+    "videoUploadFailed": "Video yüklenemedi",
+    "selectCategory": "Bir kategori seç",
     "galleryPermission": "Cihaz Ayarlarından galeri erişimine izin verin"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "Haberler",
     "events": "Etkinlikler",
     "places": "Görülmeye değer",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "Yaşam tarzı"
   },
   "newPost": {
     "title": "Yeni Gönderi",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "Açıklama",
     "category": "Kategori",
     "post": "Yayınla",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "Katılım listesi",
+    "signupHint": "Kullanıcılar gönderinin altında katılabilir",
+    "noLimit": "Sınır yok",
+    "withLimit": "Sınırlı",
+    "limitPlaceholder": "En fazla",
+    "media": "Medya",
+    "addMedia": "Fotoğraf / video",
+    "maxPhotos": "{{count}} fotoğrafa kadar",
     "selectPhotos": "Fotoğraf seçin",
     "done": "Bitti",
     "cancel": "İptal",
@@ -199,9 +199,9 @@
     "ask": "Soru Sor",
     "search": "Sorularda ara",
     "nothingFound": "Sonuç bulunamadı",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Günün sorusu",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Yanıtlanmadı",
     "attachments": "Ekler"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "Puan: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Şikayet et",
+    "cancel": "İptal",
+    "sentTitle": "Teşekkürler",
+    "sentMessage": "Şikayetin moderatörlere gönderildi.",
+    "subtitle": "Bunu neden şikayet ediyorsun?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Nefret söylemi veya semboller",
+      "violence": "Şiddet veya tehlikeli örgütler",
+      "harassment": "Zorbalık veya taciz",
+      "nudity": "Çıplaklık veya cinsel içerik",
+      "falseInfo": "Yanlış bilgi",
+      "scam": "Dolandırıcılık",
+      "selfHarm": "İntihar veya kendine zarar verme",
+      "ip": "Fikri mülkiyet ihlali",
+      "other": "Başka bir şey"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "Şikayetler",
+    "empty": "Bekleyen şikayet yok",
+    "view": "Görüntüle",
+    "keep": "Tut",
+    "remove": "Kaldır",
+    "removeTitle": "İçerik kaldırılsın mı?",
+    "removeMessage": "Bu, şikayet edilen içeriği kalıcı olarak siler.",
+    "typePost": "Gönderi",
+    "typeDiscussion": "Soru",
+    "alreadyGone": "Bu içerik artık mevcut değil.",
+    "typeComment": "Yorum",
+    "typeReply": "Yanıt",
+    "blockedBanner": "Tekrarlanan ihlaller nedeniyle geçici olarak yorum yapman engellendi."
   },
   "comments": {
     "title": "Yorumlar",
@@ -252,13 +252,13 @@
     "empty": "Henüz yorum yok. İlk sen ol!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Katılıyorum",
+    "leaveEvent": "Ayrıl",
+    "eventFull": "Doldu",
+    "participants": "katılıyor"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Katılımcılar",
+    "empty": "Henüz kimse katılmadı"
   }
 }

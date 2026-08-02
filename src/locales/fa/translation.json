@@ -37,9 +37,9 @@
     "resendEmail": "ارسال مجدد",
     "emailResent": "ارسال شد!",
     "continueToApp": "ادامه به برنامه",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "تأیید شد — ادامه",
+    "notVerifiedYet": "ایمیل هنوز تأیید نشده. لینک را در صندوق ورودی باز کن، سپس اینجا را بزن.",
+    "useAnotherAccount": "استفاده از حساب دیگر",
     "openEmailApp": "باز کردن برنامه ایمیل",
     "sendEmail": "ارسال ایمیل"
   },
@@ -76,10 +76,10 @@
     "replied": "به بحث شما پاسخ داد",
     "accepted": "پاسخ شما را پذیرفت",
     "clearRead": "حذف خوانده‌ها",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "به رویداد تو می‌آید",
     "mentioned": "شما را منشن کرد",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "محتوای تو توسط مدیر به دلیل نقض قوانین حذف شد.",
+    "blocked": "به دلیل تخلفات مکرر تا {{count}} روز نمی‌توانی نظر بدهی یا پاسخ دهی."
   },
   "profile": {
     "title": "پروفایل",
@@ -160,10 +160,10 @@
     "writeQuestion": "لطفاً سوال خود را بنویسید.",
     "photoUploadFailed": "آپلود عکس ناموفق بود. لطفاً دوباره تلاش کنید.",
     "fillTitleAndDescription": "لطفاً موضوع و توضیحات را پر کنید.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "ویدیو باید کمتر از {{count}} ثانیه باشد",
+    "videoTooLarge": "ویدیو خیلی بزرگ است (حداکثر ۵۰ مگابایت)",
+    "videoUploadFailed": "بارگذاری ویدیو ناموفق بود",
+    "selectCategory": "یک دسته انتخاب کن",
     "galleryPermission": "دسترسی به گالری را در تنظیمات دستگاه فعال کنید"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "اخبار",
     "events": "رویدادها",
     "places": "ارزش دیدن دارد",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "سبک زندگی"
   },
   "newPost": {
     "title": "پست جدید",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "توضیحات",
     "category": "دسته‌بندی",
     "post": "انتشار",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "فهرست ثبت‌نام",
+    "signupHint": "کاربران می‌توانند زیر پست ثبت‌نام کنند",
+    "noLimit": "بدون محدودیت",
+    "withLimit": "محدود",
+    "limitPlaceholder": "حداکثر",
+    "media": "رسانه",
+    "addMedia": "عکس / ویدیو",
+    "maxPhotos": "تا {{count}} عکس",
     "selectPhotos": "انتخاب عکس",
     "done": "انجام شد",
     "cancel": "لغو",
@@ -199,9 +199,9 @@
     "ask": "پرسیدن سوال",
     "search": "جستجوی سوال‌ها",
     "nothingFound": "چیزی یافت نشد",
-    "questionOfDay": "Question of the day",
-    "promo": "Promo",
-    "unanswered": "Unanswered",
+    "questionOfDay": "پرسش روز",
+    "promo": "تبلیغ",
+    "unanswered": "بی‌پاسخ",
     "attachments": "پیوست‌ها"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "امتیاز: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "گزارش",
+    "cancel": "لغو",
+    "sentTitle": "ممنون",
+    "sentMessage": "گزارش تو برای مدیران ارسال شد.",
+    "subtitle": "چرا این را گزارش می‌کنی؟",
     "reasons": {
-      "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "spam": "هرزنامه",
+      "hate": "نفرت‌پراکنی یا نمادها",
+      "violence": "خشونت یا سازمان‌های خطرناک",
+      "harassment": "قلدری یا آزار",
+      "nudity": "برهنگی یا محتوای جنسی",
+      "falseInfo": "اطلاعات نادرست",
+      "scam": "کلاهبرداری",
+      "selfHarm": "خودکشی یا خودآزاری",
+      "ip": "نقض مالکیت فکری",
+      "other": "چیز دیگر"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "گزارش‌ها",
+    "empty": "گزارشی در انتظار نیست",
+    "view": "مشاهده",
+    "keep": "نگه داشتن",
+    "remove": "حذف",
+    "removeTitle": "محتوا حذف شود؟",
+    "removeMessage": "این کار محتوای گزارش‌شده را برای همیشه حذف می‌کند.",
+    "typePost": "پست",
+    "typeDiscussion": "پرسش",
+    "alreadyGone": "این محتوا دیگر در دسترس نیست.",
+    "typeComment": "نظر",
+    "typeReply": "پاسخ",
+    "blockedBanner": "به دلیل تخلفات مکرر موقتاً از نظر دادن مسدود شده‌ای."
   },
   "comments": {
     "title": "نظرات",
@@ -252,13 +252,13 @@
     "empty": "هنوز نظری نیست. اولین نفر باشید!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "شرکت می‌کنم",
+    "leaveEvent": "انصراف",
+    "eventFull": "تکمیل",
+    "participants": "می‌آید"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "شرکت‌کنندگان",
+    "empty": "هنوز کسی ثبت‌نام نکرده"
   }
 }
