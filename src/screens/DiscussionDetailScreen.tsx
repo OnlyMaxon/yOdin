@@ -37,7 +37,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
-import AppImage from '../components/AppImage';
+import Avatar from '../components/Avatar';
 import PhotoGrid from '../components/PhotoGrid';
 import VideoPlayerView from '../components/VideoPlayerView';
 import ReportSheet from '../components/ReportSheet';
@@ -405,9 +405,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   function renderReply({ item }: { item: Reply }) {
     const isMe = item.authorId === profile?.uid;
     const isAccepted = item.id === discussion?.acceptedReplyId;
-    const isHighlighted = item.id === highlightedId;
-    const initials = item.authorName?.split(' ').map((w) => w[0]).join('').toUpperCase() ?? '?';
-    const liked = item.likes?.includes(profile?.uid ?? '') ?? false;
+    const isHighlighted = item.id === highlightedId;    const liked = item.likes?.includes(profile?.uid ?? '') ?? false;
     const disliked = item.dislikes?.includes(profile?.uid ?? '') ?? false;
     const likeCount = item.likes?.length ?? 0;
     const dislikeCount = item.dislikes?.length ?? 0;
@@ -418,17 +416,12 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       <SwipeToReply enabled={!isAnswered && !replyBlocked} onReply={() => startReplyTo(item)}>
       <View style={[styles.msgRow, isMe ? styles.msgRowMe : styles.msgRowOther]}>
         {!isMe && (
-          <TouchableOpacity
-            style={styles.msgAvatar}
-            activeOpacity={0.7}
+          <Avatar
+            photoURL={item.authorPhoto}
+            name={item.authorName}
+            size={30}
             onPress={() => openProfile(item.authorId)}
-          >
-            {item.authorPhoto ? (
-              <AppImage source={{ uri: item.authorPhoto }} style={styles.msgAvatarImage} contentFit="cover" />
-            ) : (
-              <Text style={styles.msgAvatarText}>{initials}</Text>
-            )}
-          </TouchableOpacity>
+          />
         )}
         <View style={styles.msgContent}>
           <TouchableOpacity
@@ -538,15 +531,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           activeOpacity={0.7}
           onPress={() => navigation.navigate('UserProfile', { userId: discussion.authorId })}
         >
-          <View style={styles.qAvatar}>
-            {discussion.authorPhoto ? (
-              <AppImage source={{ uri: discussion.authorPhoto }} style={styles.qAvatarImage} contentFit="cover" />
-            ) : (
-              <Text style={styles.qAvatarText}>
-                {discussion.authorName?.charAt(0).toUpperCase()}
-              </Text>
-            )}
-          </View>
+          <Avatar photoURL={discussion.authorPhoto} name={discussion.authorName} size={40} />
           <View style={{ flex: 1 }}>
             <Text style={styles.qAuthorName}>{discussion.authorName}</Text>
             <Text style={styles.qAuthorMeta}>
@@ -758,21 +743,6 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       borderBottomWidth: 1.5,
     },
     questionAuthorRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
-    qAvatar: {
-      width: 40,
-      height: 40,
-      borderRadius: 20,
-      backgroundColor: c.primaryLight,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    qAvatarText: {
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightBold,
-      color: c.primary,
-    },
-    qAvatarImage: { width: 40, height: 40, borderRadius: 20 },
-    msgAvatarImage: { width: 30, height: 30, borderRadius: 15 },
     qAuthorName: {
       fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightSemiBold,
@@ -825,19 +795,6 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     msgRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 8 },
     msgRowMe: { justifyContent: 'flex-end' },
     msgRowOther: { justifyContent: 'flex-start' },
-    msgAvatar: {
-      width: 30,
-      height: 30,
-      borderRadius: 15,
-      backgroundColor: c.primaryLight,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    msgAvatarText: {
-      fontSize: Typography.fontSizeXS,
-      fontWeight: Typography.fontWeightBold,
-      color: c.primary,
-    },
     msgContent: { maxWidth: '82%' },
     bubble: {
       borderRadius: 16,

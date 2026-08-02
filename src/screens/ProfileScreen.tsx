@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import {
-  View,
+  View,
   StyleSheet,
   TouchableOpacity,
   FlatList,
@@ -10,7 +10,7 @@ import {
   Image,
   Modal,
   ScrollView,
-  Alert,
+  Alert,
 } from 'react-native';
 import TextInput from '../components/AppTextInput';
 import Text from '../components/AppText';
@@ -44,6 +44,7 @@ import { usePostStore } from '../store/usePostStore';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import AppImage from '../components/AppImage';
+import Avatar from '../components/Avatar';
 import EmptyState from '../components/EmptyState';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -556,12 +557,11 @@ export default function ProfileScreen({ navigation }: any) {
 
         {/* User card — tap to open Edit Profile */}
         <TouchableOpacity style={styles.menuUserCard} onPress={openEditProfile} activeOpacity={0.82}>
-          <View style={styles.menuAvatarWrap}>
-            {profile?.photoURL
-              ? <AppImage source={{ uri: profile.photoURL }} style={styles.menuAvatarImg} contentFit="cover" />
-              : <Text style={styles.menuAvatarText}>{initials}</Text>
-            }
-          </View>
+          <Avatar
+            photoURL={profile?.photoURL}
+            name={profile ? `${profile.firstName} ${profile.lastName}` : ''}
+            size={48}
+          />
           <View style={styles.menuUserInfo}>
             <Text style={styles.menuUserName} numberOfLines={1}>
               {profile?.firstName} {profile?.lastName}
@@ -1212,25 +1212,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       borderRadius: 14,
       borderWidth: 1,
       borderColor: c.border,
-    },
-    menuAvatarWrap: {
-      width: 48,
-      height: 48,
-      borderRadius: 24,
-      backgroundColor: c.primaryLight,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: 0,
-    },
-    menuAvatarImg: {
-      width: 48,
-      height: 48,
-      borderRadius: 24,
-    },
-    menuAvatarText: {
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightBold,
-      color: c.primary,
     },
     menuUserInfo: {
       flex: 1,

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View,
+  View,
   StyleSheet,
   TouchableOpacity,
   FlatList,
@@ -9,7 +9,7 @@ import {
 import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import AppImage from '../components/AppImage';
+import Avatar from '../components/Avatar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { fetchFollowers, fetchFollowing } from '../services/userService';
@@ -51,20 +51,13 @@ export default function FollowListScreen({ route, navigation }: any) {
   const loading = data === null;
 
   function renderRow({ item }: { item: User }) {
-    const initials = `${item.firstName?.charAt(0) ?? ''}${item.lastName?.charAt(0) ?? ''}`.toUpperCase();
     return (
       <TouchableOpacity
         style={styles.row}
         activeOpacity={0.7}
         onPress={() => navigation.push('UserProfile', { userId: item.uid })}
       >
-        <View style={styles.avatar}>
-          {item.photoURL ? (
-            <AppImage source={{ uri: item.photoURL }} style={styles.avatarImage} contentFit="cover" />
-          ) : (
-            <Text style={styles.avatarText}>{initials}</Text>
-          )}
-        </View>
+        <Avatar photoURL={item.photoURL} name={`${item.firstName} ${item.lastName}`} size={48} />
         <View style={styles.info}>
           <Text style={styles.name} numberOfLines={1}>{item.firstName} {item.lastName}</Text>
           <Text style={styles.meta} numberOfLines={1}>
@@ -153,12 +146,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       paddingVertical: 10,
       gap: 12,
     },
-    avatar: {
-      width: 48, height: 48, borderRadius: 24,
-      backgroundColor: c.primaryLight, alignItems: 'center', justifyContent: 'center',
-    },
-    avatarImage: { width: 48, height: 48, borderRadius: 24 },
-    avatarText: { fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightBold, color: c.primary },
     info: { flex: 1 },
     name: { fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightSemiBold, color: c.textPrimary },
     meta: { fontSize: Typography.fontSizeSM, color: c.textSecondary, marginTop: 2 },

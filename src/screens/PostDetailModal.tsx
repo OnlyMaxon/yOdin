@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
+  View,
   StyleSheet,
   Modal,
   Animated,
   Dimensions,
   ScrollView,
-  FlatList,
+  FlatList,
   TouchableOpacity,
   Keyboard,
   Platform,
@@ -27,7 +27,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
-import AppImage from '../components/AppImage';
+import Avatar from '../components/Avatar';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
 import ReportSheet from '../components/ReportSheet';
@@ -270,9 +270,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
     }
   }
 
-  function renderComment({ item }: { item: PostComment }) {
-    const initials = item.authorName?.split(' ').map((w) => w[0]).join('').toUpperCase() ?? '?';
-    const isMine = item.authorId === profile?.uid;
+  function renderComment({ item }: { item: PostComment }) {    const isMine = item.authorId === profile?.uid;
     return (
       <TouchableOpacity
         style={styles.commentRow}
@@ -280,18 +278,12 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
         delayLongPress={300}
         onLongPress={!isMine ? () => setReportComment(item) : undefined}
       >
-        <TouchableOpacity
-          style={styles.commentAvatar}
-          activeOpacity={onOpenProfile ? 0.7 : 1}
-          disabled={!onOpenProfile}
-          onPress={() => item.authorId && onOpenProfile?.(item.authorId)}
-        >
-          {item.authorPhoto ? (
-            <AppImage source={{ uri: item.authorPhoto }} style={styles.commentAvatarImg} contentFit="cover" />
-          ) : (
-            <Text style={styles.commentAvatarText}>{initials}</Text>
-          )}
-        </TouchableOpacity>
+        <Avatar
+          photoURL={item.authorPhoto}
+          name={item.authorName}
+          size={36}
+          onPress={onOpenProfile ? () => item.authorId && onOpenProfile(item.authorId) : undefined}
+        />
         <View style={styles.commentBody}>
           <Text
             style={styles.commentAuthor}
@@ -352,13 +344,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                   disabled={!onOpenProfile}
                   onPress={() => post.authorId && onOpenProfile?.(post.authorId)}
                 >
-                  <View style={styles.avatar}>
-                    {post.authorPhoto ? (
-                      <AppImage source={{ uri: post.authorPhoto }} style={styles.avatarImg} contentFit="cover" />
-                    ) : (
-                      <Text style={styles.avatarText}>{post.authorName?.charAt(0).toUpperCase()}</Text>
-                    )}
-                  </View>
+                  <Avatar photoURL={post.authorPhoto} name={post.authorName} size={44} />
                   <View style={{ flex: 1 }}>
                     <Text style={styles.authorName}>{post.authorName}</Text>
                     <Text style={styles.authorMeta}>
@@ -543,12 +529,6 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     },
     cardHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
     authorTap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 12 },
-    avatar: {
-      width: 44, height: 44, borderRadius: 22,
-      backgroundColor: c.primaryLight, alignItems: 'center', justifyContent: 'center',
-    },
-    avatarImg: { width: 44, height: 44, borderRadius: 22 },
-    avatarText: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.primary },
     authorName: { fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightSemiBold, color: c.textPrimary },
     authorMeta: { fontSize: Typography.fontSizeSM, color: c.textSecondary, marginTop: 2 },
     photoWrap: { marginBottom: 12 },
@@ -616,12 +596,6 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     emptyComments: { fontSize: Typography.fontSizeMD, color: c.textSecondary, textAlign: 'center' },
     commentsList: { padding: 16, gap: 16 },
     commentRow: { flexDirection: 'row', gap: 10 },
-    commentAvatar: {
-      width: 36, height: 36, borderRadius: 18,
-      backgroundColor: c.primaryLight, alignItems: 'center', justifyContent: 'center',
-    },
-    commentAvatarImg: { width: 36, height: 36, borderRadius: 18 },
-    commentAvatarText: { fontSize: Typography.fontSizeXS, fontWeight: Typography.fontWeightBold, color: c.primary },
     commentBody: { flex: 1 },
     commentAuthor: { fontSize: Typography.fontSizeSM, fontWeight: Typography.fontWeightSemiBold, color: c.textPrimary },
     commentText: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 20, marginTop: 2 },

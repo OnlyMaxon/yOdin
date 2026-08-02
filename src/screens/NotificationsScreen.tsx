@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import {
-  View,
+  View,
   FlatList,
   StyleSheet,
   ActivityIndicator,
@@ -9,7 +9,8 @@ import {
 import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
-import AppImage from '../components/AppImage';
+import Avatar from '../components/Avatar';
+import { Spacing } from '../theme/spacing';
 import { useTranslation } from 'react-i18next';
 import { useNotificationStore } from '../store/useNotificationStore';
 import { markNotificationsRead, deleteReadNotifications } from '../services/notificationService';
@@ -74,9 +75,7 @@ export default function NotificationsScreen({ navigation }: any) {
     }
   }
 
-  function renderItem({ item }: { item: AppNotification }) {
-    const initials = item.fromUserName?.split(' ').map((w) => w[0]).join('').toUpperCase() ?? '?';
-    const isModeration = item.type === 'removed' || item.type === 'blocked';
+  function renderItem({ item }: { item: AppNotification }) {    const isModeration = item.type === 'removed' || item.type === 'blocked';
 
     if (isModeration) {
       return (
@@ -106,13 +105,12 @@ export default function NotificationsScreen({ navigation }: any) {
         onPress={() => handleNotificationPress(item)}
         activeOpacity={0.75}
       >
-        <View style={styles.avatar}>
-          {item.fromUserPhoto ? (
-            <AppImage source={{ uri: item.fromUserPhoto }} style={styles.avatarImage} contentFit="cover" />
-          ) : (
-            <Text style={styles.avatarText}>{initials}</Text>
-          )}
-        </View>
+        <Avatar
+          photoURL={item.fromUserPhoto}
+          name={item.fromUserName}
+          size={44}
+          style={{ marginRight: Spacing.md }}
+        />
         <View style={styles.content}>
           <Text style={styles.text}>
             <Text style={styles.bold}>{item.fromUserName}</Text>
@@ -227,12 +225,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       justifyContent: 'center',
       marginRight: 12,
     },
-    avatarText: {
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightBold,
-      color: c.primary,
-    },
-    avatarImage: { width: 44, height: 44, borderRadius: 22 },
     modAvatar: { backgroundColor: c.background },
     content: { flex: 1 },
     text: { fontSize: Typography.fontSizeMD, color: c.textPrimary, marginBottom: 4 },

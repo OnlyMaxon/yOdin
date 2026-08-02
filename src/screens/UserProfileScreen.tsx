@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  View,
+  View,
   StyleSheet,
   TouchableOpacity,
   FlatList,
@@ -23,6 +23,7 @@ import { formatTime } from '../utils/formatTime';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import AppImage from '../components/AppImage';
+import Avatar from '../components/Avatar';
 import EmptyState from '../components/EmptyState';
 import FollowButton from '../components/FollowButton';
 import PostDetailModal from './PostDetailModal';
@@ -125,9 +126,6 @@ export default function UserProfileScreen({ route, navigation }: any) {
 
   const data: (Post | Discussion)[] = tab === 'posts' ? posts : discussions;
   const flag = user?.countryCode ? getFlagEmoji(user.countryCode) : '🌐';
-  const initials = user
-    ? `${user.firstName?.charAt(0) ?? ''}${user.lastName?.charAt(0) ?? ''}`.toUpperCase()
-    : '?';
   const points = user?.points ?? 0;
 
   return (
@@ -154,13 +152,12 @@ export default function UserProfileScreen({ route, navigation }: any) {
         <>
           <View style={styles.header}>
             <View style={styles.profileRow}>
-              <View style={styles.avatar}>
-                {user.photoURL ? (
-                  <AppImage source={{ uri: user.photoURL }} style={styles.avatarImage} contentFit="cover" />
-                ) : (
-                  <Text style={styles.avatarText}>{initials}</Text>
-                )}
-              </View>
+              <Avatar
+                photoURL={user.photoURL}
+                name={`${user.firstName} ${user.lastName}`}
+                size={72}
+                style={{ marginRight: 20 }}
+              />
               <View style={styles.stats}>
                 <View style={styles.statItem}>
                   <Text style={styles.statNum}>{posts.length}</Text>
@@ -277,13 +274,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       borderBottomColor: c.border,
     },
     profileRow: { flexDirection: 'row', alignItems: 'center' },
-    avatar: {
-      width: 72, height: 72, borderRadius: 36,
-      backgroundColor: c.primaryLight, alignItems: 'center', justifyContent: 'center',
-      marginRight: 20,
-    },
-    avatarImage: { width: 72, height: 72, borderRadius: 36 },
-    avatarText: { fontSize: Typography.fontSizeXXL, fontWeight: Typography.fontWeightBold, color: c.primary },
     stats: { flex: 1, flexDirection: 'row', justifyContent: 'space-around' },
     statItem: { alignItems: 'center' },
     statNum: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.textPrimary },

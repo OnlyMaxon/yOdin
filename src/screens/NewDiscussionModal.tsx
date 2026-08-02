@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  View,
+  View,
   TouchableOpacity,
   StyleSheet,
   Modal,
@@ -22,7 +22,7 @@ import { notifyMentions } from '../services/notificationService';
 import { uploadDiscussionImages, uploadDiscussionVideo } from '../services/storageService';
 import { getFlagEmoji } from '../utils/flagEmoji';
 import { getErrorMessage } from '../services/errorHandler';
-import AppImage from '../components/AppImage';
+import Avatar from '../components/Avatar';
 import MediaPicker, { AttachedVideo } from '../components/MediaPicker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
@@ -126,10 +126,6 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
     }
   }
 
-  const initials = profile
-    ? `${profile.firstName?.charAt(0) ?? ''}${profile.lastName?.charAt(0) ?? ''}`
-    : '?';
-
   const flag = getFlagEmoji(profile?.countryCode ?? '');
 
   return (
@@ -154,13 +150,12 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
 
           <View style={styles.body}>
             <View style={styles.authorCol}>
-              <View style={styles.avatar}>
-                {profile?.photoURL ? (
-                  <AppImage source={{ uri: profile.photoURL }} style={styles.avatarImage} contentFit="cover" />
-                ) : (
-                  <Text style={styles.avatarText}>{initials.toUpperCase()}</Text>
-                )}
-              </View>
+              <Avatar
+                photoURL={profile?.photoURL}
+                name={profile ? `${profile.firstName} ${profile.lastName}` : ''}
+                size={48}
+                style={{ marginBottom: 6 }}
+              />
               <Text style={styles.authorName} numberOfLines={1}>
                 {profile?.firstName}
               </Text>
@@ -263,21 +258,6 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     },
     body: { flexDirection: 'row', gap: 14, marginBottom: 16 },
     authorCol: { alignItems: 'center', width: 60 },
-    avatar: {
-      width: 48,
-      height: 48,
-      borderRadius: 24,
-      backgroundColor: c.primaryLight,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: 6,
-    },
-    avatarText: {
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightBold,
-      color: c.primary,
-    },
-    avatarImage: { width: 48, height: 48, borderRadius: 24 },
     authorName: {
       fontSize: Typography.fontSizeXS,
       fontWeight: Typography.fontWeightMedium,
