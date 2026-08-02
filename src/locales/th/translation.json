@@ -37,9 +37,9 @@
     "resendEmail": "ส่งอีเมลอีกครั้ง",
     "emailResent": "ส่งแล้ว!",
     "continueToApp": "ดำเนินการต่อในแอป",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "ยืนยันแล้ว — ดำเนินการต่อ",
+    "notVerifiedYet": "ยังไม่ได้ยืนยันอีเมล เปิดลิงก์ในกล่องจดหมายแล้วแตะที่นี่",
+    "useAnotherAccount": "ใช้บัญชีอื่น",
     "openEmailApp": "เปิดแอปอีเมล",
     "sendEmail": "ส่งอีเมล"
   },
@@ -76,10 +76,10 @@
     "replied": "ตอบกลับการสนทนาของคุณ",
     "accepted": "ยอมรับคำตอบของคุณ",
     "clearRead": "ลบที่อ่านแล้ว",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "จะไปงานของคุณ",
     "mentioned": "กล่าวถึงคุณ",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "เนื้อหาของคุณถูกผู้ดูแลลบเนื่องจากละเมิดกฎ",
+    "blocked": "คุณไม่สามารถแสดงความคิดเห็นหรือตอบกลับได้ {{count}} วันเนื่องจากละเมิดซ้ำ"
   },
   "profile": {
     "title": "โปรไฟล์",
@@ -160,10 +160,10 @@
     "writeQuestion": "กรุณาเขียนคำถามของคุณ",
     "photoUploadFailed": "อัปโหลดรูปภาพล้มเหลว กรุณาลองอีกครั้ง",
     "fillTitleAndDescription": "กรุณากรอกหัวข้อและคำอธิบาย",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "วิดีโอต้องสั้นกว่า {{count}} วินาที",
+    "videoTooLarge": "วิดีโอใหญ่เกินไป (สูงสุด 50 MB)",
+    "videoUploadFailed": "อัปโหลดวิดีโอไม่สำเร็จ",
+    "selectCategory": "เลือกหมวดหมู่",
     "galleryPermission": "เปิดใช้งานการเข้าถึงแกลเลอรีในการตั้งค่า"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "ข่าว",
     "events": "กิจกรรม",
     "places": "น่าไปเยือน",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "ไลฟ์สไตล์"
   },
   "newPost": {
     "title": "โพสต์ใหม่",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "คำอธิบาย",
     "category": "หมวดหมู่",
     "post": "เผยแพร่",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "รายชื่อลงทะเบียน",
+    "signupHint": "ผู้ใช้สามารถลงชื่อใต้โพสต์ได้",
+    "noLimit": "ไม่จำกัด",
+    "withLimit": "จำกัด",
+    "limitPlaceholder": "สูงสุด",
+    "media": "สื่อ",
+    "addMedia": "รูปภาพ / วิดีโอ",
+    "maxPhotos": "สูงสุด {{count}} รูป",
     "selectPhotos": "เลือกรูปภาพ",
     "done": "เสร็จสิ้น",
     "cancel": "ยกเลิก",
@@ -199,9 +199,9 @@
     "ask": "ถามคำถาม",
     "search": "ค้นหาคำถาม",
     "nothingFound": "ไม่พบผลลัพธ์",
-    "questionOfDay": "Question of the day",
-    "promo": "Promo",
-    "unanswered": "Unanswered",
+    "questionOfDay": "คำถามประจำวัน",
+    "promo": "โปรโม",
+    "unanswered": "ยังไม่ตอบ",
     "attachments": "ไฟล์แนบ"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "คะแนน: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "รายงาน",
+    "cancel": "ยกเลิก",
+    "sentTitle": "ขอบคุณ",
+    "sentMessage": "ส่งรายงานของคุณถึงผู้ดูแลแล้ว",
+    "subtitle": "ทำไมคุณจึงรายงานสิ่งนี้?",
     "reasons": {
-      "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "spam": "สแปม",
+      "hate": "วาจาสร้างความเกลียดชังหรือสัญลักษณ์",
+      "violence": "ความรุนแรงหรือองค์กรอันตราย",
+      "harassment": "การกลั่นแกล้งหรือคุกคาม",
+      "nudity": "ภาพเปลือยหรือเนื้อหาทางเพศ",
+      "falseInfo": "ข้อมูลเท็จ",
+      "scam": "การหลอกลวงหรือฉ้อโกง",
+      "selfHarm": "การฆ่าตัวตายหรือทำร้ายตัวเอง",
+      "ip": "การละเมิดทรัพย์สินทางปัญญา",
+      "other": "อย่างอื่น"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "รายงาน",
+    "empty": "ไม่มีรายงานที่รอดำเนินการ",
+    "view": "ดู",
+    "keep": "เก็บไว้",
+    "remove": "ลบ",
+    "removeTitle": "ลบเนื้อหาหรือไม่?",
+    "removeMessage": "การดำเนินการนี้จะลบเนื้อหาที่ถูกรายงานอย่างถาวร",
+    "typePost": "โพสต์",
+    "typeDiscussion": "คำถาม",
+    "alreadyGone": "เนื้อหานี้ไม่พร้อมใช้งานอีกต่อไป",
+    "typeComment": "ความคิดเห็น",
+    "typeReply": "การตอบกลับ",
+    "blockedBanner": "คุณถูกระงับการแสดงความคิดเห็นชั่วคราวเนื่องจากละเมิดซ้ำ"
   },
   "comments": {
     "title": "ความคิดเห็น",
@@ -252,13 +252,13 @@
     "empty": "ยังไม่มีความคิดเห็น มาเป็นคนแรกกัน!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "ฉันไป",
+    "leaveEvent": "ออก",
+    "eventFull": "เต็ม",
+    "participants": "ไป"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "ผู้เข้าร่วม",
+    "empty": "ยังไม่มีใครลงชื่อ"
   }
 }

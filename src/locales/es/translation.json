@@ -37,9 +37,9 @@
     "resendEmail": "Reenviar correo",
     "emailResent": "¡Enviado!",
     "continueToApp": "Continuar a la app",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Verificado — continuar",
+    "notVerifiedYet": "Correo aún sin verificar. Abre el enlace en tu bandeja y luego toca aquí.",
+    "useAnotherAccount": "Usar otra cuenta",
     "openEmailApp": "Abrir app de correo",
     "sendEmail": "Enviar correo"
   },
@@ -76,10 +76,10 @@
     "replied": "respondió a tu discusión",
     "accepted": "aceptó tu respuesta",
     "clearRead": "Borrar leídas",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "asistirá a tu evento",
     "mentioned": "te mencionó",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Tu contenido fue eliminado por un moderador por incumplir las reglas.",
+    "blocked": "No puedes comentar ni responder durante {{count}} días por infracciones reiteradas."
   },
   "profile": {
     "title": "Perfil",
@@ -160,10 +160,10 @@
     "writeQuestion": "Por favor escribe tu pregunta.",
     "photoUploadFailed": "Error al subir la foto. Por favor intenta de nuevo.",
     "fillTitleAndDescription": "Completa el tema y la descripción.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "El vídeo debe durar menos de {{count}}s",
+    "videoTooLarge": "El vídeo es demasiado grande (máx. 50 MB)",
+    "videoUploadFailed": "No se pudo subir el vídeo",
+    "selectCategory": "Elige una categoría",
     "galleryPermission": "Activa el acceso a la galería en Ajustes"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "Noticias",
     "events": "Eventos",
     "places": "Vale la pena visitar",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "Estilo de vida"
   },
   "newPost": {
     "title": "Nueva publicación",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "Descripción",
     "category": "Categoría",
     "post": "Publicar",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "Lista de inscripción",
+    "signupHint": "Los usuarios pueden apuntarse en la publicación",
+    "noLimit": "Sin límite",
+    "withLimit": "Limitado",
+    "limitPlaceholder": "Máx",
+    "media": "Multimedia",
+    "addMedia": "Foto / vídeo",
+    "maxPhotos": "Hasta {{count}} fotos",
     "selectPhotos": "Seleccionar fotos",
     "done": "Listo",
     "cancel": "Cancelar",
@@ -199,9 +199,9 @@
     "ask": "Hacer una pregunta",
     "search": "Buscar preguntas",
     "nothingFound": "No se encontró nada",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Pregunta del día",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Sin responder",
     "attachments": "Adjuntos"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "Puntos: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Denunciar",
+    "cancel": "Cancelar",
+    "sentTitle": "Gracias",
+    "sentMessage": "Tu denuncia se ha enviado a los moderadores.",
+    "subtitle": "¿Por qué lo denuncias?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Incitación al odio o símbolos",
+      "violence": "Violencia u organizaciones peligrosas",
+      "harassment": "Acoso o intimidación",
+      "nudity": "Desnudos o actividad sexual",
+      "falseInfo": "Información falsa",
+      "scam": "Estafa o fraude",
+      "selfHarm": "Suicidio o autolesión",
+      "ip": "Infracción de propiedad intelectual",
+      "other": "Otra cosa"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "Denuncias",
+    "empty": "No hay denuncias pendientes",
+    "view": "Ver",
+    "keep": "Conservar",
+    "remove": "Eliminar",
+    "removeTitle": "¿Eliminar contenido?",
+    "removeMessage": "Esto eliminará permanentemente el contenido denunciado.",
+    "typePost": "Publicación",
+    "typeDiscussion": "Pregunta",
+    "alreadyGone": "Este contenido ya no está disponible.",
+    "typeComment": "Comentario",
+    "typeReply": "Respuesta",
+    "blockedBanner": "Estás temporalmente bloqueado para comentar por infracciones reiteradas."
   },
   "comments": {
     "title": "Comentarios",
@@ -252,13 +252,13 @@
     "empty": "Aún no hay comentarios. ¡Sé el primero!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Voy a ir",
+    "leaveEvent": "Salir",
+    "eventFull": "Completo",
+    "participants": "van"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Participantes",
+    "empty": "Nadie se ha apuntado todavía"
   }
 }

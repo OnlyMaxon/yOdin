@@ -37,14 +37,14 @@
     "resendEmail": "Wyślij ponownie",
     "emailResent": "Wysłano!",
     "continueToApp": "Przejdź do aplikacji",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Zweryfikowano — kontynuuj",
+    "notVerifiedYet": "E-mail nie został jeszcze zweryfikowany. Otwórz link w skrzynce, a potem dotknij tutaj.",
+    "useAnotherAccount": "Użyj innego konta",
     "openEmailApp": "Otwórz aplikację pocztową",
     "sendEmail": "Wyślij e-mail"
   },
   "feed": {
-    "title": "Feed",
+    "title": "Aktualności",
     "empty": "Brak dyskusji. Bądź pierwszy!",
     "replies_one": "{{count}} odpowiedź",
     "replies_few": "{{count}} odpowiedzi",
@@ -78,10 +78,10 @@
     "replied": "odpowiedział na Twoją dyskusję",
     "accepted": "zaakceptował(a) twoją odpowiedź",
     "clearRead": "Usuń przeczytane",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "wybiera się na Twoje wydarzenie",
     "mentioned": "wspomniał(a) o Tobie",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Twoja treść została usunięta przez moderatora za naruszenie zasad.",
+    "blocked": "Nie możesz komentować ani odpowiadać przez {{count}} dni z powodu powtarzających się naruszeń."
   },
   "profile": {
     "title": "Profil",
@@ -110,7 +110,7 @@
     "editProfile": "Edytuj profil",
     "language": "Język aplikacji",
     "theme": "Motyw",
-    "themeSystem": "System",
+    "themeSystem": "Systemowy",
     "themeLight": "Jasny",
     "themeDark": "Ciemny",
     "notifications": "Powiadomienia",
@@ -162,10 +162,10 @@
     "writeQuestion": "Napisz swoje pytanie.",
     "photoUploadFailed": "Nie udało się przesłać zdjęcia. Spróbuj ponownie.",
     "fillTitleAndDescription": "Wypełnij temat i opis.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "Wideo musi być krótsze niż {{count}}s",
+    "videoTooLarge": "Wideo jest za duże (maks. 50 MB)",
+    "videoUploadFailed": "Nie udało się przesłać wideo",
+    "selectCategory": "Wybierz kategorię",
     "galleryPermission": "Włącz dostęp do galerii w Ustawieniach urządzenia"
   },
   "categories": {
@@ -173,7 +173,7 @@
     "news": "Aktualności",
     "events": "Wydarzenia",
     "places": "Warto odwiedzić",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "Styl życia"
   },
   "newPost": {
     "title": "Nowy post",
@@ -181,14 +181,14 @@
     "descriptionPlaceholder": "Opis",
     "category": "Kategoria",
     "post": "Opublikuj",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "Lista zapisów",
+    "signupHint": "Użytkownicy mogą zapisać się pod postem",
+    "noLimit": "Bez limitu",
+    "withLimit": "Limit",
+    "limitPlaceholder": "Maks.",
+    "media": "Multimedia",
+    "addMedia": "Zdjęcie / wideo",
+    "maxPhotos": "Do {{count}} zdjęć",
     "selectPhotos": "Wybierz zdjęcia",
     "done": "Gotowe",
     "cancel": "Anuluj",
@@ -201,9 +201,9 @@
     "ask": "Zadaj pytanie",
     "search": "Szukaj pytań",
     "nothingFound": "Nic nie znaleziono",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Pytanie dnia",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Bez odpowiedzi",
     "attachments": "Załączniki"
   },
   "rank": {
@@ -215,38 +215,38 @@
     "points": "Punkty: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Zgłoś",
+    "cancel": "Anuluj",
+    "sentTitle": "Dziękujemy",
+    "sentMessage": "Twoje zgłoszenie zostało wysłane do moderatorów.",
+    "subtitle": "Dlaczego to zgłaszasz?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Mowa nienawiści lub symbole",
+      "violence": "Przemoc lub niebezpieczne organizacje",
+      "harassment": "Nękanie lub prześladowanie",
+      "nudity": "Nagość lub treści seksualne",
+      "falseInfo": "Fałszywe informacje",
+      "scam": "Oszustwo lub wyłudzenie",
+      "selfHarm": "Samobójstwo lub samookaleczenie",
+      "ip": "Naruszenie własności intelektualnej",
+      "other": "Coś innego"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
+    "title": "Zgłoszenia",
+    "empty": "Brak oczekujących zgłoszeń",
+    "view": "Zobacz",
+    "keep": "Zachowaj",
+    "remove": "Usuń",
+    "removeTitle": "Usunąć treść?",
+    "removeMessage": "Spowoduje to trwałe usunięcie zgłoszonej treści.",
     "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "typeDiscussion": "Pytanie",
+    "alreadyGone": "Ta treść nie jest już dostępna.",
+    "typeComment": "Komentarz",
+    "typeReply": "Odpowiedź",
+    "blockedBanner": "Masz tymczasową blokadę komentowania z powodu powtarzających się naruszeń."
   },
   "comments": {
     "title": "Komentarze",
@@ -254,13 +254,13 @@
     "empty": "Brak komentarzy. Bądź pierwszy!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Biorę udział",
+    "leaveEvent": "Rezygnuję",
+    "eventFull": "Brak miejsc",
+    "participants": "idzie"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Uczestnicy",
+    "empty": "Nikt się jeszcze nie zapisał"
   }
 }

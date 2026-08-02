@@ -37,9 +37,9 @@
     "resendEmail": "Retrimite e-mail",
     "emailResent": "Trimis!",
     "continueToApp": "Continuă în aplicație",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Verificat — continuă",
+    "notVerifiedYet": "E-mailul nu e verificat încă. Deschide linkul din inbox, apoi atinge aici.",
+    "useAnotherAccount": "Folosește alt cont",
     "openEmailApp": "Deschide aplicația de e-mail",
     "sendEmail": "Trimite e-mail"
   },
@@ -77,10 +77,10 @@
     "replied": "a răspuns la discuția ta",
     "accepted": "ți-a acceptat răspunsul",
     "clearRead": "Șterge citite",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "participă la evenimentul tău",
     "mentioned": "te-a menționat",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Conținutul tău a fost eliminat de un moderator pentru încălcarea regulilor.",
+    "blocked": "Nu poți comenta sau răspunde timp de {{count}} zile din cauza încălcărilor repetate."
   },
   "profile": {
     "title": "Profil",
@@ -161,10 +161,10 @@
     "writeQuestion": "Te rugăm să scrii întrebarea ta.",
     "photoUploadFailed": "Încărcarea fotografiei a eșuat. Te rugăm să încerci din nou.",
     "fillTitleAndDescription": "Completează subiectul și descrierea.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "Videoclipul trebuie să fie sub {{count}}s",
+    "videoTooLarge": "Videoclipul e prea mare (max. 50 MB)",
+    "videoUploadFailed": "Videoclipul nu a putut fi încărcat",
+    "selectCategory": "Alege o categorie",
     "galleryPermission": "Activați accesul la galerie în Setări"
   },
   "categories": {
@@ -172,7 +172,7 @@
     "news": "Știri",
     "events": "Evenimente",
     "places": "Merită vizitat",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "Stil de viață"
   },
   "newPost": {
     "title": "Postare nouă",
@@ -180,14 +180,14 @@
     "descriptionPlaceholder": "Descriere",
     "category": "Categorie",
     "post": "Publică",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
+    "signup": "Listă de înscriere",
+    "signupHint": "Utilizatorii se pot înscrie sub postare",
+    "noLimit": "Fără limită",
+    "withLimit": "Limitat",
     "limitPlaceholder": "Max",
     "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "addMedia": "Foto / video",
+    "maxPhotos": "Până la {{count}} poze",
     "selectPhotos": "Selectează fotografii",
     "done": "Gata",
     "cancel": "Anulează",
@@ -200,9 +200,9 @@
     "ask": "Pune o întrebare",
     "search": "Caută întrebări",
     "nothingFound": "Nu s-a găsit nimic",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Întrebarea zilei",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Fără răspuns",
     "attachments": "Atașamente"
   },
   "rank": {
@@ -214,38 +214,38 @@
     "points": "Puncte: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Raportează",
+    "cancel": "Anulează",
+    "sentTitle": "Mulțumim",
+    "sentMessage": "Raportarea ta a fost trimisă moderatorilor.",
+    "subtitle": "De ce raportezi asta?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Discurs instigator la ură sau simboluri",
+      "violence": "Violență sau organizații periculoase",
+      "harassment": "Hărțuire sau intimidare",
+      "nudity": "Nuditate sau activitate sexuală",
+      "falseInfo": "Informații false",
+      "scam": "Înșelătorie sau fraudă",
+      "selfHarm": "Suicid sau autovătămare",
+      "ip": "Încălcarea proprietății intelectuale",
+      "other": "Altceva"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "Raportări",
+    "empty": "Nicio raportare în așteptare",
+    "view": "Vezi",
+    "keep": "Păstrează",
+    "remove": "Elimină",
+    "removeTitle": "Elimini conținutul?",
+    "removeMessage": "Conținutul raportat va fi șters definitiv.",
+    "typePost": "Postare",
+    "typeDiscussion": "Întrebare",
+    "alreadyGone": "Acest conținut nu mai este disponibil.",
+    "typeComment": "Comentariu",
+    "typeReply": "Răspuns",
+    "blockedBanner": "Ești blocat temporar de la comentarii din cauza încălcărilor repetate."
   },
   "comments": {
     "title": "Comentarii",
@@ -253,13 +253,13 @@
     "empty": "Încă nu există comentarii. Fii primul!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Particip",
+    "leaveEvent": "Renunță",
+    "eventFull": "Complet",
+    "participants": "participă"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Participanți",
+    "empty": "Nimeni nu s-a înscris încă"
   }
 }

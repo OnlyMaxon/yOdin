@@ -37,9 +37,9 @@
     "resendEmail": "E-mail opnieuw sturen",
     "emailResent": "Verstuurd!",
     "continueToApp": "Doorgaan naar app",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "Geverifieerd — doorgaan",
+    "notVerifiedYet": "E-mail nog niet geverifieerd. Open de link in je inbox en tik hier.",
+    "useAnotherAccount": "Ander account gebruiken",
     "openEmailApp": "E-mailapp openen",
     "sendEmail": "E-mail verzenden"
   },
@@ -76,10 +76,10 @@
     "replied": "heeft gereageerd op jouw discussie",
     "accepted": "heeft je antwoord geaccepteerd",
     "clearRead": "Gelezen wissen",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "gaat naar je evenement",
     "mentioned": "heeft je genoemd",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "Je inhoud is door een moderator verwijderd wegens overtreding van de regels.",
+    "blocked": "Je kunt {{count}} dagen niet reageren wegens herhaalde overtredingen."
   },
   "profile": {
     "title": "Profiel",
@@ -160,10 +160,10 @@
     "writeQuestion": "Schrijf je vraag.",
     "photoUploadFailed": "Foto uploaden mislukt. Probeer het opnieuw.",
     "fillTitleAndDescription": "Vul het onderwerp en de beschrijving in.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "Video moet korter zijn dan {{count}}s",
+    "videoTooLarge": "Video is te groot (max. 50 MB)",
+    "videoUploadFailed": "Video kon niet worden geüpload",
+    "selectCategory": "Kies een categorie",
     "galleryPermission": "Schakel galerijmachtiging in via Instellingen"
   },
   "categories": {
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "Beschrijving",
     "category": "Categorie",
     "post": "Publiceren",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
+    "signup": "Aanmeldlijst",
+    "signupHint": "Gebruikers kunnen zich onder het bericht aanmelden",
+    "noLimit": "Geen limiet",
+    "withLimit": "Beperkt",
     "limitPlaceholder": "Max",
     "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "addMedia": "Foto / video",
+    "maxPhotos": "Tot {{count}} foto's",
     "selectPhotos": "Foto's kiezen",
     "done": "Klaar",
     "cancel": "Annuleren",
@@ -199,9 +199,9 @@
     "ask": "Stel een vraag",
     "search": "Vragen zoeken",
     "nothingFound": "Niets gevonden",
-    "questionOfDay": "Question of the day",
+    "questionOfDay": "Vraag van de dag",
     "promo": "Promo",
-    "unanswered": "Unanswered",
+    "unanswered": "Onbeantwoord",
     "attachments": "Bijlagen"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "Punten: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "Melden",
+    "cancel": "Annuleren",
+    "sentTitle": "Bedankt",
+    "sentMessage": "Je melding is naar de moderators gestuurd.",
+    "subtitle": "Waarom meld je dit?",
     "reasons": {
       "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "hate": "Haatzaaien of symbolen",
+      "violence": "Geweld of gevaarlijke organisaties",
+      "harassment": "Pesten of intimidatie",
+      "nudity": "Naaktheid of seksuele activiteit",
+      "falseInfo": "Onjuiste informatie",
+      "scam": "Oplichting of fraude",
+      "selfHarm": "Zelfmoord of zelfbeschadiging",
+      "ip": "Inbreuk op intellectueel eigendom",
+      "other": "Iets anders"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "Meldingen",
+    "empty": "Geen openstaande meldingen",
+    "view": "Bekijken",
+    "keep": "Behouden",
+    "remove": "Verwijderen",
+    "removeTitle": "Inhoud verwijderen?",
+    "removeMessage": "Hiermee wordt de gemelde inhoud permanent verwijderd.",
+    "typePost": "Bericht",
+    "typeDiscussion": "Vraag",
+    "alreadyGone": "Deze inhoud is niet meer beschikbaar.",
+    "typeComment": "Reactie",
+    "typeReply": "Antwoord",
+    "blockedBanner": "Je bent tijdelijk geblokkeerd voor reageren wegens herhaalde overtredingen."
   },
   "comments": {
     "title": "Reacties",
@@ -252,13 +252,13 @@
     "empty": "Nog geen reacties. Wees de eerste!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "Ik ga",
+    "leaveEvent": "Afmelden",
+    "eventFull": "Vol",
+    "participants": "gaan"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "Deelnemers",
+    "empty": "Nog niemand aangemeld"
   }
 }

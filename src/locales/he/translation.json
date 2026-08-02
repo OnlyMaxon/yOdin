@@ -37,9 +37,9 @@
     "resendEmail": "שלח שוב",
     "emailResent": "נשלח!",
     "continueToApp": "המשך לאפליקציה",
-    "iHaveVerified": "I've verified — continue",
-    "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
-    "useAnotherAccount": "Use another account",
+    "iHaveVerified": "אומת — המשך",
+    "notVerifiedYet": "האימייל עדיין לא אומת. פתח את הקישור בתיבה ואז הקש כאן.",
+    "useAnotherAccount": "השתמש בחשבון אחר",
     "openEmailApp": "פתח אפליקציית דואר",
     "sendEmail": "שלח מייל"
   },
@@ -76,10 +76,10 @@
     "replied": "הגיב לדיון שלך",
     "accepted": "אישר/ה את התשובה שלך",
     "clearRead": "נקה נקראות",
-    "joinedEvent": "is going to your event",
+    "joinedEvent": "מגיע לאירוע שלך",
     "mentioned": "הזכיר אותך",
-    "contentRemoved": "Your content was removed by a moderator for violating the rules.",
-    "blocked": "You can’t comment or reply for {{count}} days due to repeated violations."
+    "contentRemoved": "התוכן שלך הוסר על ידי מנהל בשל הפרת הכללים.",
+    "blocked": "אינך יכול להגיב או להשיב במשך {{count}} ימים עקב הפרות חוזרות."
   },
   "profile": {
     "title": "פרופיל",
@@ -160,10 +160,10 @@
     "writeQuestion": "אנא כתוב את שאלתך.",
     "photoUploadFailed": "העלאת התמונה נכשלה. אנא נסה שוב.",
     "fillTitleAndDescription": "נא למלא נושא ותיאור.",
-    "videoTooLong": "Video must be under {{count}}s",
-    "videoTooLarge": "Video is too large (max 50 MB)",
-    "videoUploadFailed": "Couldn’t upload the video",
-    "selectCategory": "Please choose a category",
+    "videoTooLong": "הסרטון חייב להיות קצר מ-{{count}} שנ'",
+    "videoTooLarge": "הסרטון גדול מדי (עד 50 MB)",
+    "videoUploadFailed": "העלאת הסרטון נכשלה",
+    "selectCategory": "בחר קטגוריה",
     "galleryPermission": "אפשר גישה לגלריה בהגדרות המכשיר"
   },
   "categories": {
@@ -171,7 +171,7 @@
     "news": "חדשות",
     "events": "אירועים",
     "places": "שווה ביקור",
-    "lifestyle": "Lifestyle"
+    "lifestyle": "סגנון חיים"
   },
   "newPost": {
     "title": "פוסט חדש",
@@ -179,14 +179,14 @@
     "descriptionPlaceholder": "תיאור",
     "category": "קטגוריה",
     "post": "פרסום",
-    "signup": "Sign-up sheet",
-    "signupHint": "People can RSVP under the post",
-    "noLimit": "No limit",
-    "withLimit": "Limited",
-    "limitPlaceholder": "Max",
-    "media": "Media",
-    "addMedia": "Photo / video",
-    "maxPhotos": "Up to {{count}} photos",
+    "signup": "רשימת הרשמה",
+    "signupHint": "משתמשים יכולים להירשם מתחת לפוסט",
+    "noLimit": "ללא הגבלה",
+    "withLimit": "מוגבל",
+    "limitPlaceholder": "מקס'",
+    "media": "מדיה",
+    "addMedia": "תמונה / וידאו",
+    "maxPhotos": "עד {{count}} תמונות",
     "selectPhotos": "בחר תמונות",
     "done": "סיום",
     "cancel": "ביטול",
@@ -199,9 +199,9 @@
     "ask": "שאלו שאלה",
     "search": "חיפוש שאלות",
     "nothingFound": "לא נמצא דבר",
-    "questionOfDay": "Question of the day",
-    "promo": "Promo",
-    "unanswered": "Unanswered",
+    "questionOfDay": "שאלת היום",
+    "promo": "קידום",
+    "unanswered": "ללא מענה",
     "attachments": "קבצים מצורפים"
   },
   "rank": {
@@ -213,38 +213,38 @@
     "points": "נקודות: {{count}}"
   },
   "report": {
-    "title": "Report",
-    "cancel": "Cancel",
-    "sentTitle": "Thank you",
-    "sentMessage": "Your report has been sent to the moderators.",
-    "subtitle": "Why are you reporting this?",
+    "title": "דווח",
+    "cancel": "ביטול",
+    "sentTitle": "תודה",
+    "sentMessage": "הדיווח שלך נשלח למנהלים.",
+    "subtitle": "למה אתה מדווח על זה?",
     "reasons": {
-      "spam": "Spam",
-      "hate": "Hate speech or symbols",
-      "violence": "Violence or dangerous organizations",
-      "harassment": "Bullying or harassment",
-      "nudity": "Nudity or sexual activity",
-      "falseInfo": "False information",
-      "scam": "Scam or fraud",
-      "selfHarm": "Suicide or self-harm",
-      "ip": "Intellectual property violation",
-      "other": "Something else"
+      "spam": "ספאם",
+      "hate": "דברי שטנה או סמלים",
+      "violence": "אלימות או ארגונים מסוכנים",
+      "harassment": "בריונות או הטרדה",
+      "nudity": "עירום או תוכן מיני",
+      "falseInfo": "מידע כוזב",
+      "scam": "הונאה או תרמית",
+      "selfHarm": "אובדנות או פגיעה עצמית",
+      "ip": "הפרת קניין רוחני",
+      "other": "משהו אחר"
     }
   },
   "moderation": {
-    "title": "Reports",
-    "empty": "No pending reports",
-    "view": "View",
-    "keep": "Keep",
-    "remove": "Remove",
-    "removeTitle": "Remove content?",
-    "removeMessage": "This will permanently delete the reported content.",
-    "typePost": "Post",
-    "typeDiscussion": "Question",
-    "alreadyGone": "This content is no longer available.",
-    "typeComment": "Comment",
-    "typeReply": "Reply",
-    "blockedBanner": "You are temporarily blocked from commenting due to repeated violations."
+    "title": "דיווחים",
+    "empty": "אין דיווחים ממתינים",
+    "view": "הצג",
+    "keep": "השאר",
+    "remove": "הסר",
+    "removeTitle": "להסיר את התוכן?",
+    "removeMessage": "פעולה זו תמחק לצמיתות את התוכן שדווח.",
+    "typePost": "פוסט",
+    "typeDiscussion": "שאלה",
+    "alreadyGone": "התוכן הזה כבר לא זמין.",
+    "typeComment": "תגובה",
+    "typeReply": "תשובה",
+    "blockedBanner": "אתה חסום זמנית מתגובות עקב הפרות חוזרות."
   },
   "comments": {
     "title": "תגובות",
@@ -252,13 +252,13 @@
     "empty": "אין עדיין תגובות. היו הראשונים!"
   },
   "post": {
-    "participate": "I'm going",
-    "leaveEvent": "Leave",
-    "eventFull": "Event full",
-    "participants": "going"
+    "participate": "אני מגיע",
+    "leaveEvent": "עזוב",
+    "eventFull": "מלא",
+    "participants": "מגיעים"
   },
   "participants": {
-    "title": "Participants",
-    "empty": "No one has signed up yet"
+    "title": "משתתפים",
+    "empty": "עדיין אף אחד לא נרשם"
   }
 }
