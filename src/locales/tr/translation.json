@@ -119,6 +119,8 @@
     "about": "yOdin Hakkında"
   },
   "editProfile": {
+    "bio": "Hakkında",
+    "bioHint": "Kendinden kısaca bahset",
     "title": "Profili Düzenle",
     "nationality": "Milliyet",
     "location": "Konum",
@@ -181,6 +183,7 @@
     "post": "Yayınla",
     "signup": "Katılım listesi",
     "signupHint": "Kullanıcılar gönderinin altında katılabilir",
+    "eventDate": "Tarih ve saat",
     "noLimit": "Sınır yok",
     "withLimit": "Sınırlı",
     "limitPlaceholder": "En fazla",

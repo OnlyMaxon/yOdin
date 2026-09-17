@@ -183,11 +183,13 @@ export default function UserProfileScreen({ route, navigation }: any) {
             </View>
 
             <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
+            {user.username ? <Text style={styles.handle}>@{user.username}</Text> : null}
             <Text style={styles.nationality}>{flag}  {user.nationality}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
               <Ionicons name="location-sharp" size={13} color={colors.textSecondary} style={{ marginRight: 4 }} />
               <Text style={styles.location}>{user.location}</Text>
             </View>
+            {user.bio ? <Text style={styles.bio}>{user.bio}</Text> : null}
             <View style={styles.rankRow}>
               <View style={styles.rankBadge}>
                 <Ionicons name="ribbon" size={12} color={colors.primary} />
@@ -281,6 +283,8 @@ function makeStyles(c: ColorPalette, topInset: number) {
     name: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.textPrimary, marginTop: 14 },
     nationality: { fontSize: Typography.fontSizeSM, color: c.textSecondary, marginTop: 2 },
     location: { fontSize: Typography.fontSizeSM, color: c.textSecondary },
+    handle: { fontSize: Typography.fontSizeSM, color: c.primary, fontWeight: Typography.fontWeightMedium, marginTop: 4 },
+    bio: { fontSize: Typography.fontSizeSM, color: c.textPrimary, lineHeight: 20, marginTop: 8 },
     rankRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
     rankBadge: {
       flexDirection: 'row', alignItems: 'center', gap: 4,

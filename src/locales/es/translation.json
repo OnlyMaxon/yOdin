@@ -119,6 +119,8 @@
     "about": "Acerca de yOdin"
   },
   "editProfile": {
+    "bio": "Biografía",
+    "bioHint": "Una línea sobre ti",
     "title": "Editar perfil",
     "nationality": "Nacionalidad",
     "location": "Ubicación",
@@ -181,6 +183,7 @@
     "post": "Publicar",
     "signup": "Lista de inscripción",
     "signupHint": "Los usuarios pueden apuntarse en la publicación",
+    "eventDate": "Fecha y hora",
     "noLimit": "Sin límite",
     "withLimit": "Limitado",
     "limitPlaceholder": "Máx",

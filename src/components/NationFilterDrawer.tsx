@@ -82,6 +82,13 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
           <View style={styles.header}>
             <Image source={require('../../assets/icon.png')} style={styles.logo} />
             <Text style={styles.appName}>yOdin</Text>
+            <TouchableOpacity
+              style={styles.closeBtn}
+              onPress={onClose}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Ionicons name="close" size={22} color={colors.textSecondary} />
+            </TouchableOpacity>
           </View>
 
           <View style={styles.searchRow}>
@@ -171,10 +178,12 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     },
     logo: { width: 36, height: 36, borderRadius: 9 },
     appName: {
+      flex: 1,
       fontSize: Typography.fontSizeXL,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
     },
+    closeBtn: { padding: 4 },
     searchRow: {
       flexDirection: 'row',
       alignItems: 'center',

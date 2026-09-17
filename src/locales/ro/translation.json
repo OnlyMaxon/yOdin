@@ -120,6 +120,8 @@
     "about": "Despre yOdin"
   },
   "editProfile": {
+    "bio": "Bio",
+    "bioHint": "O scurtă descriere",
     "title": "Editează profilul",
     "nationality": "Naționalitate",
     "location": "Locație",
@@ -182,6 +184,7 @@
     "post": "Publică",
     "signup": "Listă de înscriere",
     "signupHint": "Utilizatorii se pot înscrie sub postare",
+    "eventDate": "Data și ora",
     "noLimit": "Fără limită",
     "withLimit": "Limitat",
     "limitPlaceholder": "Max",

@@ -113,6 +113,7 @@ export default function ProfileScreen({ navigation }: any) {
   const [editFirstName, setEditFirstName] = useState('');
   const [editLastName, setEditLastName] = useState('');
   const [editUsername, setEditUsername] = useState('');
+  const [editBio, setEditBio] = useState('');
   const [editNationality, setEditNationality] = useState<Country | null>(null);
   const [editLocation, setEditLocation] = useState<Country | null>(null);
   const [editPickerFor, setEditPickerFor] = useState<'nationality' | 'location' | null>(null);
@@ -222,6 +223,7 @@ export default function ProfileScreen({ navigation }: any) {
     setEditFirstName(profile?.firstName ?? '');
     setEditLastName(profile?.lastName ?? '');
     setEditUsername(profile?.username ?? '');
+    setEditBio(profile?.bio ?? '');
     setEditNationality(COUNTRIES.find((c) => c.code === profile?.countryCode) ?? null);
     setEditLocation(COUNTRIES.find((c) => c.name === profile?.location) ?? null);
     setEditPickerFor(null);
@@ -254,6 +256,7 @@ export default function ProfileScreen({ navigation }: any) {
         nationality: editNationality.name,
         countryCode: editNationality.code,
         location: editLocation.name,
+        bio: editBio.trim(),
       };
       await updateUserProfile(profile.uid, updated);
       setProfile({ ...profile, ...updated, ...(usernameChanged ? { username: newUsername } : {}) });
@@ -473,11 +476,13 @@ export default function ProfileScreen({ navigation }: any) {
           </View>
 
           <Text style={styles.name}>{profile?.firstName} {profile?.lastName}</Text>
+          {profile?.username ? <Text style={styles.handle}>@{profile.username}</Text> : null}
           <Text style={styles.nationality}>{flag}  {profile?.nationality}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
             <Ionicons name="location-sharp" size={13} color={colors.textSecondary} style={{ marginRight: 4 }} />
             <Text style={styles.location}>{profile?.location}</Text>
           </View>
+          {profile?.bio ? <Text style={styles.bio}>{profile.bio}</Text> : null}
           <View style={styles.rankRow}>
             <View style={styles.rankBadge}>
               <Ionicons name="ribbon" size={12} color={colors.primary} />
@@ -737,6 +742,16 @@ export default function ProfileScreen({ navigation }: any) {
                         : t('auth.usernameInvalid')}
                   </Text>
                 )}
+
+                <Text style={styles.editLabel}>{t('editProfile.bio')}</Text>
+                <TextInput
+                  style={[styles.editInput, styles.editBioInput]}
+                  value={editBio}
+                  onChangeText={(v) => setEditBio(v.slice(0, 160))}
+                  placeholder={t('editProfile.bioHint')}
+                  placeholderTextColor={colors.textSecondary}
+                  multiline
+                />
 
                 <Text style={styles.editLabel}>{t('editProfile.nationality')}</Text>
                 <TouchableOpacity style={styles.pickerBtn} onPress={() => { setEditSearch(''); setEditPickerFor('nationality'); }}>
@@ -1046,6 +1061,8 @@ function makeStyles(c: ColorPalette, topInset: number) {
       marginBottom: 2,
     },
     location: { fontSize: Typography.fontSizeSM, color: c.textSecondary },
+    handle: { fontSize: Typography.fontSizeSM, color: c.primary, fontWeight: Typography.fontWeightMedium, marginBottom: 6 },
+    bio: { fontSize: Typography.fontSizeSM, color: c.textPrimary, lineHeight: 20, marginTop: 8 },
     rankRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
     rankBadge: {
       flexDirection: 'row',
@@ -1438,6 +1455,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontSize: Typography.fontSizeMD,
       color: c.textPrimary,
     },
+    editBioInput: { minHeight: 88, paddingTop: 14, textAlignVertical: 'top' },
     usernameHint: {
       fontSize: Typography.fontSizeSM,
       marginTop: -18,

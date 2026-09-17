@@ -119,6 +119,8 @@
     "about": "Tentang yOdin"
   },
   "editProfile": {
+    "bio": "Bio",
+    "bioHint": "Sedikit tentang anda",
     "title": "Edit Profil",
     "nationality": "Kewarganegaraan",
     "location": "Lokasi",
@@ -181,6 +183,7 @@
     "post": "Terbitkan",
     "signup": "Senarai kehadiran",
     "signupHint": "Pengguna boleh mendaftar di bawah kiriman",
+    "eventDate": "Tarikh & masa",
     "noLimit": "Tiada had",
     "withLimit": "Terhad",
     "limitPlaceholder": "Maks",

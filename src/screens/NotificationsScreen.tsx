@@ -75,7 +75,22 @@ export default function NotificationsScreen({ navigation }: any) {
     }
   }
 
-  function renderItem({ item }: { item: AppNotification }) {    const isModeration = item.type === 'removed' || item.type === 'blocked';
+  // Small per-type glyph that sits on the corner of the sender's avatar so the
+  // notification kind reads at a glance (reply / accepted / event / mention).
+  const typeBadge = (
+    type: AppNotification['type'],
+  ): { icon: keyof typeof Ionicons.glyphMap; color: string } | null => {
+    switch (type) {
+      case 'reply': return { icon: 'chatbubble', color: colors.primary };
+      case 'accepted': return { icon: 'checkmark', color: colors.success };
+      case 'participant': return { icon: 'calendar', color: colors.accent };
+      case 'mention': return { icon: 'at', color: colors.pink };
+      default: return null;
+    }
+  };
+
+  function renderItem({ item }: { item: AppNotification }) {
+    const isModeration = item.type === 'removed' || item.type === 'blocked';
 
     if (isModeration) {
       return (
@@ -99,18 +114,25 @@ export default function NotificationsScreen({ navigation }: any) {
       );
     }
 
+    const badge = typeBadge(item.type);
     return (
       <TouchableOpacity
         style={[styles.item, !item.read && styles.itemUnread]}
         onPress={() => handleNotificationPress(item)}
         activeOpacity={0.75}
       >
-        <Avatar
-          photoURL={item.fromUserPhoto}
-          name={item.fromUserName}
-          size={44}
-          style={{ marginRight: Spacing.md }}
-        />
+        <View style={styles.avatarWrap}>
+          <Avatar
+            photoURL={item.fromUserPhoto}
+            name={item.fromUserName}
+            size={44}
+          />
+          {badge && (
+            <View style={[styles.typeBadge, { backgroundColor: badge.color }]}>
+              <Ionicons name={badge.icon} size={11} color="#fff" />
+            </View>
+          )}
+        </View>
         <View style={styles.content}>
           <Text style={styles.text}>
             <Text style={styles.bold}>{item.fromUserName}</Text>
@@ -196,6 +218,19 @@ function makeStyles(c: ColorPalette, topInset: number) {
     backBtn: { width: 32 },
     clearBtn: { width: 32, alignItems: 'center', justifyContent: 'center' },
     center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center' },
+    avatarWrap: { marginRight: Spacing.md },
+    typeBadge: {
+      position: 'absolute',
+      right: -3,
+      bottom: -3,
+      width: 20,
+      height: 20,
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: 2,
+      borderColor: c.surface,
+    },
     item: {
       flexDirection: 'row',
       alignItems: 'flex-start',

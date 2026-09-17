@@ -119,6 +119,8 @@
     "about": "yOdin 정보"
   },
   "editProfile": {
+    "bio": "소개",
+    "bioHint": "자신을 한 줄로 소개하세요",
     "title": "프로필 편집",
     "nationality": "국적",
     "location": "위치",
@@ -181,6 +183,7 @@
     "post": "게시",
     "signup": "참가 명단",
     "signupHint": "사용자는 게시물 아래에서 참가할 수 있습니다",
+    "eventDate": "날짜 및 시간",
     "noLimit": "제한 없음",
     "withLimit": "제한됨",
     "limitPlaceholder": "최대",

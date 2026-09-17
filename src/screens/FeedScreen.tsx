@@ -38,6 +38,7 @@ import Chip from '../components/Chip';
 import { Spacing } from '../theme/spacing';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
+import EventDateBlock from '../components/EventDateBlock';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
 import EmptyState from '../components/EmptyState';
 import { weightedSort } from '../utils/weightedSort';
@@ -338,6 +339,10 @@ export default function FeedScreen({ navigation }: any) {
 
         <Text style={styles.postTitle}>{item.title}</Text>
         <Text style={styles.postDescription}>{item.description}</Text>
+
+        {item.category === 'events' && item.eventDate ? (
+          <EventDateBlock date={item.eventDate} location={item.location} />
+        ) : null}
 
         {item.signupEnabled ? (
           <View style={styles.eventRow}>

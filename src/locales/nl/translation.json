@@ -119,6 +119,8 @@
     "about": "Over yOdin"
   },
   "editProfile": {
+    "bio": "Bio",
+    "bioHint": "Een korte zin over jou",
     "title": "Profiel bewerken",
     "nationality": "Nationaliteit",
     "location": "Locatie",
@@ -181,6 +183,7 @@
     "post": "Publiceren",
     "signup": "Aanmeldlijst",
     "signupHint": "Gebruikers kunnen zich onder het bericht aanmelden",
+    "eventDate": "Datum en tijd",
     "noLimit": "Geen limiet",
     "withLimit": "Beperkt",
     "limitPlaceholder": "Max",

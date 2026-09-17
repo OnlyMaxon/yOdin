@@ -24,6 +24,7 @@ import { createPost, newPostId } from '../services/postService';
 import { notifyMentions } from '../services/notificationService';
 import { uploadPostImages, uploadPostVideo } from '../services/storageService';
 import MediaPicker, { AttachedVideo } from '../components/MediaPicker';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { getErrorMessage } from '../services/errorHandler';
 import { PostCategory, POST_CATEGORIES } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -39,7 +40,7 @@ interface Props {
 }
 
 export default function NewPostModal({ visible, onClose }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.bottom);
@@ -56,6 +57,9 @@ export default function NewPostModal({ visible, onClose }: Props) {
   const [signupEnabled, setSignupEnabled] = useState(false);
   const [limited, setLimited] = useState(false);
   const [limitText, setLimitText] = useState('');
+  // Optional event start; the picker state drives the native date/time picker.
+  const [eventDate, setEventDate] = useState<Date | null>(null);
+  const [picker, setPicker] = useState<null | 'date' | 'time'>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const slideAnim = useRef(new Animated.Value(600)).current;
@@ -70,6 +74,8 @@ export default function NewPostModal({ visible, onClose }: Props) {
       setSignupEnabled(false);
       setLimited(false);
       setLimitText('');
+      setEventDate(null);
+      setPicker(null);
       setError('');
       Animated.spring(slideAnim, {
         toValue: 0,
@@ -85,6 +91,26 @@ export default function NewPostModal({ visible, onClose }: Props) {
       }).start();
     }
   }, [visible]);
+
+  // Android shows date then time as two sequential dialogs; iOS uses one inline
+  // datetime spinner (rendered below in a small sheet). This drives the Android chain.
+  function onAndroidPicker(event: DateTimePickerEvent, selected?: Date) {
+    const step = picker;
+    if (event.type === 'dismissed' || !selected) { setPicker(null); return; }
+    setEventDate((prev) => {
+      const d = new Date(prev ?? selected);
+      if (step === 'date') d.setFullYear(selected.getFullYear(), selected.getMonth(), selected.getDate());
+      else d.setHours(selected.getHours(), selected.getMinutes(), 0, 0);
+      return d;
+    });
+    setPicker(step === 'date' ? 'time' : null);
+  }
+
+  function formatEventDateTime(d: Date) {
+    return d.toLocaleString(i18n.language, {
+      weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+    });
+  }
 
   async function handlePost() {
     if (!title.trim() || !description.trim()) {
@@ -142,6 +168,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
         imageURLs,
         ...(videoURL ? { videoURL, videoPoster } : {}),
         location: profile.location,
+        ...(category === 'events' && eventDate ? { eventDate: eventDate.getTime() } : {}),
         ...signup,
       };
       await createPost(data, id);
@@ -231,6 +258,48 @@ export default function NewPostModal({ visible, onClose }: Props) {
 
             {category === 'events' ? (
               <View style={styles.signupBlock}>
+                <TouchableOpacity style={styles.dateRow} onPress={() => setPicker('date')} activeOpacity={0.7}>
+                  <Ionicons name="calendar-outline" size={20} color={colors.primary} />
+                  <Text style={[styles.dateText, !eventDate && styles.datePlaceholder]} numberOfLines={1}>
+                    {eventDate ? formatEventDateTime(eventDate) : t('newPost.eventDate')}
+                  </Text>
+                  {eventDate ? (
+                    <TouchableOpacity onPress={() => setEventDate(null)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                      <Ionicons name="close-circle" size={18} color={colors.textSecondary} />
+                    </TouchableOpacity>
+                  ) : null}
+                </TouchableOpacity>
+
+                {picker && Platform.OS === 'android' ? (
+                  <DateTimePicker
+                    value={eventDate ?? new Date()}
+                    mode={picker}
+                    onChange={onAndroidPicker}
+                    minimumDate={new Date()}
+                  />
+                ) : null}
+
+                {Platform.OS === 'ios' ? (
+                  <Modal visible={picker !== null} transparent animationType="fade" onRequestClose={() => setPicker(null)}>
+                    <TouchableOpacity style={styles.iosPickerBackdrop} activeOpacity={1} onPress={() => setPicker(null)}>
+                      <View style={styles.iosPickerCard}>
+                        <DateTimePicker
+                          value={eventDate ?? new Date()}
+                          mode="datetime"
+                          display="spinner"
+                          onChange={(_e: DateTimePickerEvent, d?: Date) => d && setEventDate(d)}
+                          minimumDate={new Date()}
+                        />
+                        <TouchableOpacity style={styles.iosPickerDone} onPress={() => setPicker(null)}>
+                          <Text style={styles.iosPickerDoneText}>{t('newPost.done')}</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </TouchableOpacity>
+                  </Modal>
+                ) : null}
+
+                <View style={styles.dateDivider} />
+
                 <View style={styles.signupToggleRow}>
                   <View style={{ flex: 1 }}>
                     <Text style={styles.signupTitle}>{t('newPost.signup')}</Text>
@@ -426,6 +495,14 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       padding: 14,
       marginBottom: 18,
     },
+    dateRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    dateText: { flex: 1, fontSize: Typography.fontSizeMD, color: c.textPrimary, fontWeight: Typography.fontWeightMedium },
+    datePlaceholder: { color: c.textSecondary },
+    dateDivider: { height: 1, backgroundColor: c.border, marginVertical: 14 },
+    iosPickerBackdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'flex-end' },
+    iosPickerCard: { backgroundColor: c.surface, borderTopLeftRadius: 20, borderTopRightRadius: 20, paddingBottom: 8 },
+    iosPickerDone: { alignSelf: 'flex-end', paddingHorizontal: 20, paddingVertical: 12 },
+    iosPickerDoneText: { color: c.primary, fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightSemiBold },
     signupToggleRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
     signupTitle: { fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightSemiBold, color: c.textPrimary },
     signupHint: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginTop: 2 },

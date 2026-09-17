@@ -119,6 +119,8 @@
     "about": "Về yOdin"
   },
   "editProfile": {
+    "bio": "Tiểu sử",
+    "bioHint": "Đôi dòng về bạn",
     "title": "Chỉnh sửa hồ sơ",
     "nationality": "Quốc tịch",
     "location": "Vị trí",
@@ -181,6 +183,7 @@
     "post": "Đăng",
     "signup": "Danh sách đăng ký",
     "signupHint": "Người dùng có thể đăng ký dưới bài đăng",
+    "eventDate": "Ngày & giờ",
     "noLimit": "Không giới hạn",
     "withLimit": "Giới hạn",
     "limitPlaceholder": "Tối đa",

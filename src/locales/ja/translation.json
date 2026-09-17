@@ -119,6 +119,8 @@
     "about": "yOdinについて"
   },
   "editProfile": {
+    "bio": "自己紹介",
+    "bioHint": "あなたについて一言",
     "title": "プロフィールを編集",
     "nationality": "国籍",
     "location": "場所",
@@ -181,6 +183,7 @@
     "post": "投稿する",
     "signup": "参加リスト",
     "signupHint": "ユーザーは投稿の下から参加できます",
+    "eventDate": "日付と時刻",
     "noLimit": "制限なし",
     "withLimit": "制限あり",
     "limitPlaceholder": "最大",

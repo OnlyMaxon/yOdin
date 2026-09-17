@@ -8,6 +8,8 @@ export interface User {
   // this field is the denormalized display copy. Optional: legacy users may not
   // have one until migrated.
   username?: string;
+  // Optional short bio shown on the profile header.
+  bio?: string;
   nationality: string;
   countryCode: string;
   location: string;
@@ -56,6 +58,9 @@ export interface Post {
   signupEnabled?: boolean;
   participantLimit?: number | null;
   participants?: string[];
+  // Optional event start (ms timestamp). Only meaningful on `events` posts; older
+  // events created before this field simply have no date block.
+  eventDate?: number;
 }
 
 export interface PostComment {

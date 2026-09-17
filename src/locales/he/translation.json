@@ -119,6 +119,8 @@
     "about": "אודות yOdin"
   },
   "editProfile": {
+    "bio": "אודות",
+    "bioHint": "משפט קצר עליך",
     "title": "ערוך פרופיל",
     "nationality": "לאום",
     "location": "מיקום",
@@ -181,6 +183,7 @@
     "post": "פרסום",
     "signup": "רשימת הרשמה",
     "signupHint": "משתמשים יכולים להירשם מתחת לפוסט",
+    "eventDate": "תאריך ושעה",
     "noLimit": "ללא הגבלה",
     "withLimit": "מוגבל",
     "limitPlaceholder": "מקס'",

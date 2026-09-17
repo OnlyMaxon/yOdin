@@ -119,6 +119,8 @@
     "about": "เกี่ยวกับ yOdin"
   },
   "editProfile": {
+    "bio": "ประวัติ",
+    "bioHint": "บอกเล่าเกี่ยวกับคุณสั้นๆ",
     "title": "แก้ไขโปรไฟล์",
     "nationality": "สัญชาติ",
     "location": "ที่อยู่",
@@ -181,6 +183,7 @@
     "post": "เผยแพร่",
     "signup": "รายชื่อลงทะเบียน",
     "signupHint": "ผู้ใช้สามารถลงชื่อใต้โพสต์ได้",
+    "eventDate": "วันและเวลา",
     "noLimit": "ไม่จำกัด",
     "withLimit": "จำกัด",
     "limitPlaceholder": "สูงสุด",

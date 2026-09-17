@@ -123,6 +123,8 @@
     "about": "حول yOdin"
   },
   "editProfile": {
+    "bio": "نبذة",
+    "bioHint": "سطر قصير عنك",
     "title": "تعديل الملف الشخصي",
     "nationality": "الجنسية",
     "location": "الموقع",
@@ -185,6 +187,7 @@
     "post": "نشر",
     "signup": "قائمة التسجيل",
     "signupHint": "يمكن للمستخدمين التسجيل أسفل المنشور",
+    "eventDate": "التاريخ والوقت",
     "noLimit": "بلا حد",
     "withLimit": "محدود",
     "limitPlaceholder": "الحد الأقصى",

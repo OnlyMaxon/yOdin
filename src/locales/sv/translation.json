@@ -119,6 +119,8 @@
     "about": "Om yOdin"
   },
   "editProfile": {
+    "bio": "Bio",
+    "bioHint": "En kort rad om dig",
     "title": "Redigera profil",
     "nationality": "Nationalitet",
     "location": "Plats",
@@ -181,6 +183,7 @@
     "post": "Publicera",
     "signup": "Anmälningslista",
     "signupHint": "Användare kan anmäla sig under inlägget",
+    "eventDate": "Datum och tid",
     "noLimit": "Ingen gräns",
     "withLimit": "Begränsad",
     "limitPlaceholder": "Max",

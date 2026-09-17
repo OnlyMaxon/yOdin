@@ -119,6 +119,8 @@
     "about": "关于 yOdin"
   },
   "editProfile": {
+    "bio": "简介",
+    "bioHint": "简短介绍一下自己",
     "title": "编辑资料",
     "nationality": "国籍",
     "location": "位置",
@@ -181,6 +183,7 @@
     "post": "发布",
     "signup": "报名名单",
     "signupHint": "用户可在帖子下报名",
+    "eventDate": "日期和时间",
     "noLimit": "不限",
     "withLimit": "限制人数",
     "limitPlaceholder": "最多",

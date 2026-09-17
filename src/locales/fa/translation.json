@@ -119,6 +119,8 @@
     "about": "درباره yOdin"
   },
   "editProfile": {
+    "bio": "بیوگرافی",
+    "bioHint": "یک خط کوتاه درباره‌ی شما",
     "title": "ویرایش پروفایل",
     "nationality": "ملیت",
     "location": "موقعیت",
@@ -181,6 +183,7 @@
     "post": "انتشار",
     "signup": "فهرست ثبت‌نام",
     "signupHint": "کاربران می‌توانند زیر پست ثبت‌نام کنند",
+    "eventDate": "تاریخ و زمان",
     "noLimit": "بدون محدودیت",
     "withLimit": "محدود",
     "limitPlaceholder": "حداکثر",

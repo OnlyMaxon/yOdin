@@ -119,6 +119,8 @@
     "about": "yOdin haqqında"
   },
   "editProfile": {
+    "bio": "Haqqında",
+    "bioHint": "Özün haqqında qısa bir şey",
     "title": "Profili redaktə et",
     "nationality": "Milliyyət",
     "location": "Yer",
@@ -181,6 +183,7 @@
     "post": "Paylaş",
     "signup": "Qeydiyyat siyahısı",
     "signupHint": "İnsanlar postun altında qoşula bilər",
+    "eventDate": "Tarix və vaxt",
     "noLimit": "Limitsiz",
     "withLimit": "Limitli",
     "limitPlaceholder": "Maks",

@@ -5,7 +5,6 @@ import {
   Modal,
   Animated,
   Dimensions,
-  ScrollView,
   FlatList,
   TouchableOpacity,
   Keyboard,
@@ -30,12 +29,12 @@ import { Typography } from '../theme/typography';
 import Avatar from '../components/Avatar';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
+import EventDateBlock from '../components/EventDateBlock';
 import ReportSheet from '../components/ReportSheet';
 import { createParticipantNotification, notifyMentions } from '../services/notificationService';
 import { createReport } from '../services/reportService';
 
 const SCREEN_H = Dimensions.get('window').height;
-const SHEET_H = Math.round(SCREEN_H * 0.5);
 
 interface Props {
   visible: boolean;
@@ -52,7 +51,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   const { t } = useTranslation();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = makeStyles(colors, insets.bottom);
+  const styles = makeStyles(colors, insets.top, insets.bottom);
   const { profile } = useAuthStore();
   const storePost = usePostStore((s) => (postId ? s.posts.find((p) => p.id === postId) : undefined));
   const post = storePost ?? (fallbackPost && fallbackPost.id === postId ? fallbackPost : undefined);
@@ -60,7 +59,6 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   const incrementCommentCount = usePostStore((s) => s.incrementCommentCount);
   const toggleParticipant = usePostStore((s) => s.toggleParticipant);
 
-  const [commentsOpen, setCommentsOpen] = useState(false);
   const [comments, setComments] = useState<PostComment[]>([]);
   const [loadingComments, setLoadingComments] = useState(false);
   const [text, setText] = useState('');
@@ -73,74 +71,56 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   const [reportComment, setReportComment] = useState<PostComment | null>(null);
   const commentBlocked = (profile?.commentBlockedUntil ?? 0) > Date.now();
 
-  const cardAnim = useRef(new Animated.Value(0)).current; // 0 hidden → 1 shown
-  // 0 = comments closed (card centered, sheet hidden below); 1 = comments open
-  // (sheet slid up from the bottom, card lifted above it).
-  const commentsAnim = useRef(new Animated.Value(0)).current;
   const listRef = useRef<FlatList>(null);
-  // Manual keyboard lift: KeyboardAvoidingView doesn't work reliably inside a
-  // Modal on either platform, so we track the keyboard height ourselves and
-  // slide the whole comments sheet up above it. kbOpen drops the sheet's own
-  // safe-area bottom padding while lifted (it's redundant behind the keyboard).
+  const inputRef = useRef<React.ComponentRef<typeof TextInput>>(null);
+  // Entrance: the whole sheet springs up from the bottom.
+  const slideAnim = useRef(new Animated.Value(SCREEN_H)).current;
+  // Manual keyboard handling: KeyboardAvoidingView is unreliable inside a Modal,
+  // so we track the keyboard height and (a) lift the input bar above it and
+  // (b) pad the comment list's tail by the same amount so nothing hides behind
+  // it. Driven on the JS thread (non-native) because it animates layout height.
   const kbLift = useRef(new Animated.Value(0)).current;
-  // Fade the floating card out while the keyboard is up — the lifted sheet would
-  // otherwise cover it, leaving it half-visible behind the comments.
-  const cardKbFade = useRef(new Animated.Value(1)).current;
-  const [kbOpen, setKbOpen] = useState(false);
 
   useEffect(() => {
     if (visible && postId) {
-      cardAnim.setValue(0);
-      commentsAnim.setValue(startWithComments ? 1 : 0);
-      Animated.spring(cardAnim, { toValue: 1, useNativeDriver: true, tension: 60, friction: 10 }).start();
+      slideAnim.setValue(SCREEN_H);
+      Animated.spring(slideAnim, { toValue: 0, useNativeDriver: true, tension: 65, friction: 11 }).start();
       setText('');
       setComments([]);
-      loadComments(postId);
-      setCommentsOpen(!!startWithComments);
       setParticipantsVisible(false);
       setParticipants(post?.participants ?? []);
+      loadComments(postId, !!startWithComments);
     }
   }, [visible, postId]);
 
-  // Slide the comments up, which lifts the centered post above them.
-  useEffect(() => {
-    // Closing the comments must also drop the keyboard — otherwise it lingers
-    // on screen after the sheet (and its input) has slid away.
-    if (!commentsOpen) Keyboard.dismiss();
-    Animated.timing(commentsAnim, {
-      toValue: commentsOpen ? 1 : 0,
-      duration: 280,
-      useNativeDriver: true,
-    }).start();
-  }, [commentsOpen]);
-
-  // Track the keyboard and lift the sheet by its height (see kbLift above).
+  // Track the keyboard height (see kbLift above).
   useEffect(() => {
     const showEvt = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
     const hideEvt = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
     const onShow = (e: any) => {
-      setKbOpen(true);
-      Animated.parallel([
-        Animated.timing(kbLift, { toValue: e.endCoordinates?.height ?? 0, duration: e.duration || 220, useNativeDriver: true }),
-        Animated.timing(cardKbFade, { toValue: 0, duration: e.duration || 220, useNativeDriver: true }),
-      ]).start();
+      Animated.timing(kbLift, {
+        toValue: e.endCoordinates?.height ?? 0,
+        duration: e.duration || 220,
+        useNativeDriver: false,
+      }).start();
     };
     const onHide = (e: any) => {
-      setKbOpen(false);
-      Animated.parallel([
-        Animated.timing(kbLift, { toValue: 0, duration: e?.duration || 200, useNativeDriver: true }),
-        Animated.timing(cardKbFade, { toValue: 1, duration: e?.duration || 200, useNativeDriver: true }),
-      ]).start();
+      Animated.timing(kbLift, { toValue: 0, duration: e?.duration || 200, useNativeDriver: false }).start();
     };
     const s = Keyboard.addListener(showEvt, onShow);
     const h = Keyboard.addListener(hideEvt, onHide);
     return () => { s.remove(); h.remove(); };
-  }, [kbLift, cardKbFade]);
+  }, [kbLift]);
 
-  async function loadComments(id: string) {
+  async function loadComments(id: string, scrollToComments: boolean) {
     setLoadingComments(true);
     try {
-      setComments(await fetchComments(id));
+      const data = await fetchComments(id);
+      setComments(data);
+      // Opened via the comment affordance — drop the user straight at the thread.
+      if (scrollToComments && data.length > 0) {
+        setTimeout(() => listRef.current?.scrollToEnd({ animated: false }), 120);
+      }
     } catch {
       // keep empty on failure
     } finally {
@@ -270,7 +250,8 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
     }
   }
 
-  function renderComment({ item }: { item: PostComment }) {    const isMine = item.authorId === profile?.uid;
+  function renderComment({ item }: { item: PostComment }) {
+    const isMine = item.authorId === profile?.uid;
     return (
       <TouchableOpacity
         style={styles.commentRow}
@@ -299,171 +280,142 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
     );
   }
 
-  // The post sizes to its content (same as the feed card). It may grow up to
-  // most of the screen when comments are closed; when they're open it's capped
-  // to the area above the sheet and lifted there.
-  const fullH = SCREEN_H - insets.top - insets.bottom - 24;
-  const upperH = SCREEN_H - SHEET_H - insets.top - 24;
-  const cardMax = commentsOpen ? upperH : fullH;
-  const cardShift = commentsAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, -Math.round(SHEET_H / 2)],
-  });
-  const sheetTranslate = commentsAnim.interpolate({
-    inputRange: [0, 1],
-    outputRange: [SHEET_H, 0],
-  });
+  // The post itself is the list header, so it scrolls together with the comments
+  // in one continuous sheet (no more floating card + half-sheet split).
+  const postHeader = post ? (
+    <View>
+      {post.videoURL || (post.imageURLs && post.imageURLs.length > 0) ? (
+        <View style={styles.photoWrap}>
+          <MediaCarousel
+            images={post.imageURLs}
+            videoURL={post.videoURL}
+            videoPoster={post.videoPoster}
+            videoInline
+            onImagePress={() => {}}
+          />
+        </View>
+      ) : null}
+
+      <View style={styles.authorRow}>
+        <TouchableOpacity
+          style={styles.authorTap}
+          activeOpacity={onOpenProfile ? 0.7 : 1}
+          disabled={!onOpenProfile}
+          onPress={() => post.authorId && onOpenProfile?.(post.authorId)}
+        >
+          <Avatar photoURL={post.authorPhoto} name={post.authorName} size={44} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.authorName}>{post.authorName}</Text>
+            <Text style={styles.authorMeta}>
+              {getFlagEmoji(post.authorCountryCode)}  {post.authorNationality}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.postTitle}>{post.title}</Text>
+      <Text style={styles.postDescription}>{post.description}</Text>
+
+      {post.category === 'events' && post.eventDate ? (
+        <EventDateBlock date={post.eventDate} location={post.location} />
+      ) : null}
+
+      {post.signupEnabled ? (
+        <View style={styles.signupBox}>
+          <TouchableOpacity
+            style={styles.participantsRow}
+            activeOpacity={0.7}
+            onPress={() => setParticipantsVisible(true)}
+          >
+            <Ionicons name="people" size={18} color={colors.primary} />
+            <Text style={styles.participantsText}>
+              {participantCap != null ? `${participants.length} / ${participantCap}` : `${participants.length}`}
+              {'  '}{t('post.participants')}
+            </Text>
+            <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} style={{ marginLeft: 'auto' }} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.joinBtn,
+              isParticipant && styles.joinBtnLeave,
+              eventFull && styles.joinBtnDisabled,
+            ]}
+            onPress={toggleJoin}
+            disabled={joining || eventFull}
+          >
+            {joining ? (
+              <ActivityIndicator color={isParticipant ? colors.primary : '#fff'} size="small" />
+            ) : (
+              <Text style={[styles.joinBtnText, isParticipant && styles.joinBtnTextLeave]}>
+                {isParticipant ? t('post.leaveEvent') : eventFull ? t('post.eventFull') : t('post.participate')}
+              </Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      ) : null}
+
+      <View style={styles.actionBar}>
+        <TouchableOpacity style={styles.actionBtn} onPress={() => handleVote('like')}>
+          <Ionicons
+            name={liked ? 'heart' : 'heart-outline'}
+            size={22}
+            color={liked ? colors.notification : colors.textSecondary}
+          />
+          {likeCount > 0 && <Text style={styles.actionCount}>{likeCount}</Text>}
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionBtn} onPress={() => handleVote('dislike')}>
+          <Ionicons
+            name={disliked ? 'thumbs-down' : 'thumbs-down-outline'}
+            size={20}
+            color={disliked ? colors.primary : colors.textSecondary}
+          />
+          {dislikeCount > 0 && <Text style={styles.actionCount}>{dislikeCount}</Text>}
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.actionBtn} onPress={() => inputRef.current?.focus()}>
+          <Ionicons name="chatbubble-outline" size={20} color={colors.textSecondary} />
+          {commentCount > 0 && <Text style={styles.actionCount}>{commentCount}</Text>}
+        </TouchableOpacity>
+      </View>
+
+      <Text style={styles.commentsLabel}>{t('comments.title')}</Text>
+    </View>
+  ) : null;
 
   return (
     <>
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
-      <View style={styles.overlay}>
-        <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={onClose} />
+      <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose}>
+        <View style={styles.overlay}>
+          <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={onClose} />
 
-        <View style={styles.centerWrap} pointerEvents="box-none">
-        {post && (
-          <Animated.View
-            pointerEvents={kbOpen ? 'none' : 'auto'}
-            style={[
-              styles.card,
-              {
-                maxHeight: cardMax,
-                opacity: Animated.multiply(cardAnim, cardKbFade),
-                transform: [
-                  { scale: cardAnim.interpolate({ inputRange: [0, 1], outputRange: [0.96, 1] }) },
-                  { translateY: cardShift },
-                ],
-              },
-            ]}
-          >
-            <ScrollView style={{ flexShrink: 1 }} showsVerticalScrollIndicator={false} bounces={false}>
-              <View style={styles.cardHeader}>
-                <TouchableOpacity
-                  style={styles.authorTap}
-                  activeOpacity={onOpenProfile ? 0.7 : 1}
-                  disabled={!onOpenProfile}
-                  onPress={() => post.authorId && onOpenProfile?.(post.authorId)}
-                >
-                  <Avatar photoURL={post.authorPhoto} name={post.authorName} size={44} />
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.authorName}>{post.authorName}</Text>
-                    <Text style={styles.authorMeta}>
-                      {getFlagEmoji(post.authorCountryCode)}  {post.authorNationality}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-                  <Ionicons name="close" size={22} color={colors.textSecondary} />
-                </TouchableOpacity>
-              </View>
-
-              {post.videoURL || (post.imageURLs && post.imageURLs.length > 0) ? (
-                <View style={styles.photoWrap}>
-                  <MediaCarousel
-                    images={post.imageURLs}
-                    videoURL={post.videoURL}
-                    videoPoster={post.videoPoster}
-                    videoInline
-                    onImagePress={() => {}}
-                  />
-                </View>
-              ) : null}
-
-              <Text style={styles.postTitle}>{post.title}</Text>
-              <Text style={styles.postDescription}>{post.description}</Text>
-
-              {post.signupEnabled ? (
-                <View style={styles.signupBox}>
-                  <TouchableOpacity
-                    style={styles.participantsRow}
-                    activeOpacity={0.7}
-                    onPress={() => setParticipantsVisible(true)}
-                  >
-                    <Ionicons name="people" size={18} color={colors.primary} />
-                    <Text style={styles.participantsText}>
-                      {participantCap != null ? `${participants.length} / ${participantCap}` : `${participants.length}`}
-                      {'  '}{t('post.participants')}
-                    </Text>
-                    <Ionicons name="chevron-forward" size={16} color={colors.textSecondary} style={{ marginLeft: 'auto' }} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[
-                      styles.joinBtn,
-                      isParticipant && styles.joinBtnLeave,
-                      eventFull && styles.joinBtnDisabled,
-                    ]}
-                    onPress={toggleJoin}
-                    disabled={joining || eventFull}
-                  >
-                    {joining ? (
-                      <ActivityIndicator color={isParticipant ? colors.primary : '#fff'} size="small" />
-                    ) : (
-                      <Text style={[styles.joinBtnText, isParticipant && styles.joinBtnTextLeave]}>
-                        {isParticipant ? t('post.leaveEvent') : eventFull ? t('post.eventFull') : t('post.participate')}
-                      </Text>
-                    )}
-                  </TouchableOpacity>
-                </View>
-              ) : null}
-            </ScrollView>
-
-            {/* Action bar — bottom-left like / dislike / comment */}
-            <View style={styles.actionBar}>
-              <TouchableOpacity style={styles.actionBtn} onPress={() => handleVote('like')}>
-                <Ionicons
-                  name={liked ? 'heart' : 'heart-outline'}
-                  size={22}
-                  color={liked ? colors.notification : colors.textSecondary}
-                />
-                {likeCount > 0 && <Text style={styles.actionCount}>{likeCount}</Text>}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.actionBtn} onPress={() => handleVote('dislike')}>
-                <Ionicons
-                  name={disliked ? 'thumbs-down' : 'thumbs-down-outline'}
-                  size={20}
-                  color={disliked ? colors.primary : colors.textSecondary}
-                />
-                {dislikeCount > 0 && <Text style={styles.actionCount}>{dislikeCount}</Text>}
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.actionBtn} onPress={() => setCommentsOpen((v) => !v)}>
-                <Ionicons name="chatbubble-outline" size={20} color={commentsOpen ? colors.primary : colors.textSecondary} />
-                {commentCount > 0 && <Text style={styles.actionCount}>{commentCount}</Text>}
-              </TouchableOpacity>
-            </View>
-          </Animated.View>
-        )}
-        </View>
-
-          {/* Comments slide up from the bottom; the centered card lifts above them */}
-          <Animated.View style={[styles.sheet, { transform: [{ translateY: Animated.subtract(sheetTranslate, kbLift) }] }]}>
-          <View style={{ flex: 1 }}>
-            <View style={styles.sheetHandleRow}>
-              <View style={styles.sheetHandle} />
-            </View>
-            <View style={styles.sheetHeader}>
-              <Text style={styles.sheetTitle}>{t('comments.title')}</Text>
-              <TouchableOpacity onPress={() => setCommentsOpen(false)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-                <Ionicons name="chevron-down" size={22} color={colors.textSecondary} />
+          <Animated.View style={[styles.sheet, { transform: [{ translateY: slideAnim }] }]}>
+            <View style={styles.grabberRow}>
+              <View style={styles.grabber} />
+              <TouchableOpacity
+                style={styles.closeBtn}
+                onPress={onClose}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Ionicons name="close" size={22} color={colors.textSecondary} />
               </TouchableOpacity>
             </View>
 
-            {loadingComments ? (
-              <View style={styles.sheetCenter}>
-                <ActivityIndicator color={colors.primary} />
-              </View>
-            ) : (
-              <FlatList
-                ref={listRef}
-                data={comments}
-                keyExtractor={(item) => item.id}
-                renderItem={renderComment}
-                keyboardShouldPersistTaps="handled"
-                contentContainerStyle={comments.length === 0 ? styles.sheetCenter : styles.commentsList}
-                ListEmptyComponent={
-                  <Text style={styles.emptyComments}>{t('comments.empty')}</Text>
-                }
-              />
-            )}
+            <FlatList
+              ref={listRef}
+              style={styles.list}
+              data={comments}
+              keyExtractor={(item) => item.id}
+              renderItem={renderComment}
+              ListHeaderComponent={postHeader}
+              ListEmptyComponent={
+                loadingComments
+                  ? <ActivityIndicator color={colors.primary} style={{ marginTop: 20 }} />
+                  : <Text style={styles.emptyComments}>{t('comments.empty')}</Text>
+              }
+              ListFooterComponent={<Animated.View style={{ height: kbLift }} />}
+              contentContainerStyle={styles.listContent}
+              keyboardShouldPersistTaps="handled"
+              showsVerticalScrollIndicator={false}
+            />
 
             {commentBlocked ? (
               <View style={styles.blockedBar}>
@@ -471,8 +423,9 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                 <Text style={styles.blockedText}>{t('moderation.blockedBanner')}</Text>
               </View>
             ) : (
-              <View style={[styles.inputBar, kbOpen && { paddingBottom: 12 }]}>
+              <Animated.View style={[styles.inputBar, { transform: [{ translateY: Animated.multiply(kbLift, -1) }] }]}>
                 <TextInput
+                  ref={inputRef}
                   style={styles.input}
                   placeholder={t('comments.placeholder')}
                   placeholderTextColor={colors.textSecondary}
@@ -488,58 +441,70 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                 >
                   {sending ? <ActivityIndicator color="#fff" size="small" /> : <Ionicons name="arrow-up" size={22} color="#fff" />}
                 </TouchableOpacity>
-              </View>
+              </Animated.View>
             )}
-          </View>
           </Animated.View>
-      </View>
-    </Modal>
+        </View>
+      </Modal>
 
-    <EventParticipantsModal
-      visible={participantsVisible}
-      participantIds={participants}
-      onClose={() => setParticipantsVisible(false)}
-      onOpenProfile={onOpenProfile ? (uid) => { setParticipantsVisible(false); onOpenProfile(uid); } : undefined}
-    />
+      <EventParticipantsModal
+        visible={participantsVisible}
+        participantIds={participants}
+        onClose={() => setParticipantsVisible(false)}
+        onOpenProfile={onOpenProfile ? (uid) => { setParticipantsVisible(false); onOpenProfile(uid); } : undefined}
+      />
 
-    <ReportSheet
-      visible={reportComment !== null}
-      onClose={() => setReportComment(null)}
-      onSubmit={submitCommentReport}
-    />
+      <ReportSheet
+        visible={reportComment !== null}
+        onClose={() => setReportComment(null)}
+        onSubmit={submitCommentReport}
+      />
     </>
   );
 }
 
-function makeStyles(c: ColorPalette, bottomInset: number) {
+function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
   return StyleSheet.create({
     overlay: { flex: 1 },
     backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.55)' },
-    centerWrap: { ...StyleSheet.absoluteFillObject, justifyContent: 'center' },
-    card: {
-      marginHorizontal: 16,
+    sheet: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: topInset + 12,
       backgroundColor: c.surface,
-      borderRadius: 20,
-      padding: 16,
+      borderTopLeftRadius: 24,
+      borderTopRightRadius: 24,
+      overflow: 'hidden',
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 12 },
-      shadowOpacity: 0.3,
-      shadowRadius: 24,
+      shadowOffset: { width: 0, height: -4 },
+      shadowOpacity: 0.18,
+      shadowRadius: 20,
       elevation: 24,
     },
-    cardHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
+    grabberRow: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingTop: 10,
+      paddingBottom: 6,
+    },
+    grabber: { width: 40, height: 4, borderRadius: 2, backgroundColor: c.border },
+    closeBtn: { position: 'absolute', right: 12, top: 6, padding: 4 },
+    list: { flex: 1 },
+    listContent: { paddingHorizontal: 16, paddingTop: 6, paddingBottom: 16 },
+    photoWrap: { marginBottom: 14, borderRadius: 16, overflow: 'hidden' },
+    authorRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12 },
     authorTap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 12 },
     authorName: { fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightSemiBold, color: c.textPrimary },
     authorMeta: { fontSize: Typography.fontSizeSM, color: c.textSecondary, marginTop: 2 },
-    photoWrap: { marginBottom: 12 },
-    postTitle: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.textPrimary, marginBottom: 6 },
-    postDescription: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 22, marginBottom: 8 },
+    postTitle: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.textPrimary, letterSpacing: -0.3, marginBottom: 6 },
+    postDescription: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 22, marginBottom: 12 },
     signupBox: {
       backgroundColor: c.background,
       borderRadius: 14,
       padding: 12,
-      marginTop: 4,
-      marginBottom: 8,
+      marginBottom: 12,
       gap: 10,
     },
     participantsRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
@@ -558,44 +523,23 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       flexDirection: 'row',
       alignItems: 'center',
       gap: 20,
-      paddingTop: 12,
-      marginTop: 4,
+      paddingVertical: 10,
       borderTopWidth: 1,
       borderTopColor: c.border,
     },
     actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 6 },
     actionCount: { fontSize: Typography.fontSizeSM, color: c.textSecondary, fontWeight: Typography.fontWeightMedium },
-    sheet: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      bottom: 0,
-      height: SHEET_H,
-      backgroundColor: c.surface,
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: -4 },
-      shadowOpacity: 0.15,
-      shadowRadius: 16,
-      elevation: 20,
+    commentsLabel: {
+      fontSize: Typography.fontSizeSM,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.textSecondary,
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
+      marginTop: 8,
+      marginBottom: 4,
     },
-    sheetHandleRow: { alignItems: 'center', paddingTop: 10 },
-    sheetHandle: { width: 40, height: 4, borderRadius: 2, backgroundColor: c.border },
-    sheetHeader: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingHorizontal: 20,
-      paddingVertical: 12,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
-    },
-    sheetTitle: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.textPrimary },
-    sheetCenter: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', padding: 24 },
-    emptyComments: { fontSize: Typography.fontSizeMD, color: c.textSecondary, textAlign: 'center' },
-    commentsList: { padding: 16, gap: 16 },
-    commentRow: { flexDirection: 'row', gap: 10 },
+    emptyComments: { fontSize: Typography.fontSizeMD, color: c.textSecondary, textAlign: 'center', paddingVertical: 24 },
+    commentRow: { flexDirection: 'row', gap: 10, paddingVertical: 10 },
     commentBody: { flex: 1 },
     commentAuthor: { fontSize: Typography.fontSizeSM, fontWeight: Typography.fontWeightSemiBold, color: c.textPrimary },
     commentText: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 20, marginTop: 2 },
@@ -604,10 +548,11 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       flexDirection: 'row',
       alignItems: 'flex-end',
       paddingHorizontal: 16,
-      paddingVertical: 12,
+      paddingTop: 12,
       paddingBottom: Math.max(bottomInset, 12) + 12,
       borderTopWidth: 1,
       borderTopColor: c.border,
+      backgroundColor: c.surface,
       gap: 10,
     },
     input: {

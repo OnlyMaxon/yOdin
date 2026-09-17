@@ -119,6 +119,8 @@
     "about": "About yOdin"
   },
   "editProfile": {
+    "bio": "Bio",
+    "bioHint": "A short line about you",
     "title": "Edit Profile",
     "nationality": "Nationality",
     "location": "Location",
@@ -181,6 +183,7 @@
     "post": "Publish",
     "signup": "Sign-up sheet",
     "signupHint": "People can RSVP under the post",
+    "eventDate": "Date & time",
     "noLimit": "No limit",
     "withLimit": "Limited",
     "limitPlaceholder": "Max",

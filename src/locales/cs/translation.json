@@ -120,6 +120,8 @@
     "about": "O yOdin"
   },
   "editProfile": {
+    "bio": "Bio",
+    "bioHint": "Krátce o vás",
     "title": "Upravit profil",
     "nationality": "Národnost",
     "location": "Poloha",
@@ -182,6 +184,7 @@
     "post": "Zveřejnit",
     "signup": "Přihlašovací listina",
     "signupHint": "Uživatelé se mohou přihlásit pod příspěvkem",
+    "eventDate": "Datum a čas",
     "noLimit": "Bez limitu",
     "withLimit": "Omezeno",
     "limitPlaceholder": "Max",
