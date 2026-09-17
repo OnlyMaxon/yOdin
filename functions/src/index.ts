@@ -7,6 +7,11 @@ import { defineSecret } from 'firebase-functions/params';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { algoliasearch } from 'algoliasearch';
+import { setGlobalOptions } from 'firebase-functions';
+
+// Firestore lives in eur3 — keep the functions on the same continent so triggers
+// don't make a round trip to the US.
+setGlobalOptions({ region: 'europe-west1' });
 
 initializeApp();
 const db = getFirestore();

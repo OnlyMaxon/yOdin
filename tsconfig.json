@@ -1,5 +1,15 @@
 {
   "extends": "expo/tsconfig.base",
+  "exclude": [
+    "node_modules",
+    "functions",
+    "dist",
+    "android",
+    "ios",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ],
   "compilerOptions": {
     "strict": true,
     "skipLibCheck": true,
