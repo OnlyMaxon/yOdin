@@ -40,7 +40,7 @@ firestore-debug.log
 .env
 .env.local
 .env*.local
-
+yOdinDSG
 # typescript
 *.tsbuildinfo
 
