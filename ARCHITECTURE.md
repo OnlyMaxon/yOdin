@@ -143,19 +143,22 @@ A post/discussion carries **either** photos **or** one short video.
 
 ## 6. Data model (`src/types/index.ts`)
 
-- **User** — profile fields + `following[]`, `points`, and server-owned
-  moderation fields (`commentBlockedUntil`, `moderationStrikes`, `banCount`).
+- **User** — profile fields (incl. `username` @handle + optional `bio`),
+  `following[]`, `points`, and server-owned moderation fields
+  (`commentBlockedUntil`, `moderationStrikes`, `banCount`).
 - **Post** — author denormalized fields, `category`, `imageURLs[]` **or**
   `videoURL`/`videoPoster`, `likes[]`/`dislikes[]`, `commentCount`, `savedBy[]`,
-  and event RSVP (`signupEnabled`, `participantLimit`, `participants[]`).
+  and event RSVP (`signupEnabled`, `participantLimit`, `participants[]`,
+  optional `eventDate` ms timestamp).
 - **Discussion** — author fields, `question`, media, `replyCount`, `engagement`,
   `savedBy[]`, accepted-answer denormalization (`acceptedReplyId`/`Text`/
   `AuthorName`), `isAnswered`.
 - **Reply** — author fields, `text`, `likes[]`/`dislikes[]`, `parentReplyId`
   (Reddit-style threading; rendered Telegram-style as a flat stream with quote
   jumps).
-- **AppNotification** — `type: reply | accepted | participant | removed |
-  blocked`; carries the discussion or post it refers to.
+- **AppNotification** — `type: reply | accepted | participant | mention |
+  removed | blocked`; carries the discussion or post it refers to. The list
+  badges a per-type glyph on the sender's avatar.
 - **Report** — `targetType: post | discussion | comment | reply`, `targetPath`
   (for nested comment/reply removal), `reason` (one of 10), `status`.
 
@@ -239,8 +242,9 @@ Google Cloud Secret Manager, never on the client.
 
 **Design tokens** (`src/theme/`):
 - `colors.ts` — `LightColors` / `DarkColors` via `useTheme()`. Palette is
-  purple-brand: airy lavender-neutral ground (`#F3F0FB`), white surfaces,
-  a chosen lavender-biased secondary grey, category accents (news=primary,
+  **locked 1:1 to the Figma design kit** (light = its `:root`, dark = `.dark`):
+  purple-brand violet (`#6C35DE`), airy lavender ground (`#F3F0FB`), white
+  surfaces, a lavender-biased secondary grey, category accents (news=primary,
   events=coral, places=emerald, lifestyle=pink).
 - `spacing.ts` — `Spacing` (4·8·12·16·20·24·32) and `Radius` (sm/md/lg/pill).
   Use these instead of magic numbers.
@@ -253,6 +257,8 @@ re-implement per screen:
 - `Avatar` — photo or initials, any `size`, `onPress` optional.
 - `Chip` — filter pill (`active` = filled brand).
 - `EmptyState` — empty-list block.
+- `EventDateBlock` — compact day/month block + locale-formatted when/where line
+  for `events` posts carrying an `eventDate` (used by Feed + PostDetail).
 - Feed and Forum are the reference screens built on these; roll the same set out
   when restyling others.
 
@@ -274,6 +280,13 @@ architecture, so Inter is applied through drop-in wrappers:
 - Bottom-sheet modals: rounded top, drag handle, close button, footer action
   outside the ScrollView. FlatList screens pad `paddingBottom: 96`; headers pad
   `insets.top + 12`.
+- **PostDetailModal** is one tall bottom sheet: the post is the FlatList
+  `ListHeaderComponent`, comments follow in the same list, and the comment input
+  is pinned at the bottom. `KeyboardAvoidingView` is unreliable inside a Modal,
+  so the keyboard is handled manually (track its height → lift the input by it +
+  pad the list tail via an animated footer). The nation filter and the profile
+  side-menu are matching left drawers (both slide from the left, `yOdin` header
+  + close ✕).
 
 ---
 
