@@ -192,7 +192,7 @@ export default function UserProfileScreen({ route, navigation }: any) {
             {user.bio ? <Text style={styles.bio}>{user.bio}</Text> : null}
             <View style={styles.rankRow}>
               <View style={styles.rankBadge}>
-                <Ionicons name="ribbon" size={12} color={colors.primary} />
+                <Ionicons name="ribbon" size={12} color={colors.secondaryText} />
                 <Text style={styles.rankBadgeText}>{t(`rank.${getRank(points)}`)}</Text>
               </View>
               <Text style={styles.rankPoints}>{t('rank.points', { count: points })}</Text>
@@ -290,7 +290,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       flexDirection: 'row', alignItems: 'center', gap: 4,
       backgroundColor: c.primaryLight, paddingHorizontal: 8, paddingVertical: 3, borderRadius: 10,
     },
-    rankBadgeText: { fontSize: Typography.fontSizeXS, fontWeight: Typography.fontWeightSemiBold, color: c.primary },
+    rankBadgeText: { fontSize: Typography.fontSizeXS, fontWeight: Typography.fontWeightSemiBold, color: c.secondaryText },
     rankPoints: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
     followRow: { marginTop: 16, flexDirection: 'row' },
     tabs: { flexDirection: 'row', backgroundColor: c.surface, borderBottomWidth: 1, borderBottomColor: c.border },

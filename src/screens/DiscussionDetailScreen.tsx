@@ -556,11 +556,11 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
                 setMediaCollapsed((v) => !v);
               }}
             >
-              <Ionicons name="attach" size={16} color={colors.primary} />
+              <Ionicons name="attach" size={16} color={colors.secondaryText} />
               <Text style={styles.attachBtnText}>
                 {t('forum.attachments')} · {(discussion.imageURLs?.length ?? 0) + (discussion.videoURL ? 1 : 0)}
               </Text>
-              <Ionicons name={mediaCollapsed ? 'chevron-down' : 'chevron-up'} size={16} color={colors.primary} />
+              <Ionicons name={mediaCollapsed ? 'chevron-down' : 'chevron-up'} size={16} color={colors.secondaryText} />
             </TouchableOpacity>
             {!mediaCollapsed && discussion.videoURL ? (
               <View style={styles.questionPhotos}>
@@ -660,7 +660,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
       ) : null}
       {replyingTo ? (
         <View style={styles.replyingToBar}>
-          <Ionicons name="arrow-undo-outline" size={14} color={colors.primary} />
+          <Ionicons name="arrow-undo-outline" size={14} color={colors.secondaryText} />
           <Text style={styles.replyingToText} numberOfLines={1}>
             {t('discussion.replyingTo', { name: replyingTo.authorName })}
           </Text>
@@ -808,7 +808,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     attachBtnText: {
       fontSize: Typography.fontSizeSM,
       fontWeight: Typography.fontWeightSemiBold,
-      color: c.primary,
+      color: c.secondaryText,
     },
     list: { flex: 1 },
     repliesList: { padding: 16, gap: 10, flexGrow: 1 },
@@ -878,7 +878,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     quoteAuthor: {
       fontSize: Typography.fontSizeXS,
       fontWeight: Typography.fontWeightSemiBold,
-      color: c.primary,
+      color: c.secondaryText,
     },
     quoteText: {
       fontSize: Typography.fontSizeXS,
@@ -934,7 +934,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     replyingToText: {
       flex: 1,
       fontSize: Typography.fontSizeSM,
-      color: c.primary,
+      color: c.secondaryText,
       fontWeight: Typography.fontWeightMedium,
     },
     sendErrorText: {

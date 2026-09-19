@@ -351,7 +351,7 @@ export default function FeedScreen({ navigation }: any) {
               <Ionicons
                 name={isParticipant ? 'checkmark-circle' : 'people'}
                 size={16}
-                color={isParticipant ? colors.primary : '#fff'}
+                color={isParticipant ? colors.secondaryText : '#fff'}
               />
               <Text style={[styles.joinBtnText, isParticipant && styles.joinBtnTextLeave]}>
                 {isParticipant ? t('post.leaveEvent') : eventFull ? t('post.eventFull') : t('post.participate')}
@@ -447,7 +447,7 @@ export default function FeedScreen({ navigation }: any) {
             onPress={() => setDrawerOpen(true)}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
-            <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.primary : colors.textPrimary} />
+            <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.secondaryText : colors.textPrimary} />
             {selectedNations.length > 0 && (
               <View style={styles.drawerBadge}>
                 <Text style={styles.drawerBadgeText}>{selectedNations.length}</Text>
@@ -710,7 +710,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     joinBtnLeave: { backgroundColor: c.primaryLight },
     joinBtnDisabled: { opacity: 0.5 },
     joinBtnText: { color: '#fff', fontSize: Typography.fontSizeSM, fontWeight: Typography.fontWeightSemiBold },
-    joinBtnTextLeave: { color: c.primary },
+    joinBtnTextLeave: { color: c.secondaryText },
     participantsBtn: {
       flexDirection: 'row',
       alignItems: 'center',

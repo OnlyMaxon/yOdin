@@ -103,7 +103,7 @@ export default function ForumScreen({ navigation }: any) {
     : answerFilter === 'unanswered' ? 'help-circle-outline' as const
     : 'apps-outline' as const;
   const cycleColor = answerFilter === 'answered' ? colors.success
-    : answerFilter === 'unanswered' ? colors.primary
+    : answerFilter === 'unanswered' ? colors.secondaryText
     : colors.textSecondary;
 
   function cycleAnswerFilter() {
@@ -343,14 +343,14 @@ export default function ForumScreen({ navigation }: any) {
               onPress={() => toggleAttach(item.id)}
               activeOpacity={0.7}
             >
-              <Ionicons name="attach" size={16} color={colors.primary} />
+              <Ionicons name="attach" size={16} color={colors.secondaryText} />
               <Text style={styles.attachBtnText}>
                 {t('forum.attachments')} · {attachCount}
               </Text>
               <Ionicons
                 name={attachExpanded ? 'chevron-up' : 'chevron-down'}
                 size={16}
-                color={colors.primary}
+                color={colors.secondaryText}
               />
             </TouchableOpacity>
             {attachExpanded ? (
@@ -450,7 +450,7 @@ export default function ForumScreen({ navigation }: any) {
             onPress={() => setDrawerOpen(true)}
             hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
           >
-            <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.primary : colors.textPrimary} />
+            <Ionicons name="menu" size={22} color={selectedNations.length > 0 ? colors.secondaryText : colors.textPrimary} />
             {selectedNations.length > 0 && (
               <View style={styles.drawerBadge}>
                 <Text style={styles.drawerBadgeText}>{selectedNations.length}</Text>
@@ -703,7 +703,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     attachBtnText: {
       fontSize: Typography.fontSizeSM,
       fontWeight: Typography.fontWeightSemiBold,
-      color: c.primary,
+      color: c.secondaryText,
     },
     attachMedia: { marginTop: 10, gap: 8 },
     answerBox: {

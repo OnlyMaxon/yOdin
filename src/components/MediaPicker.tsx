@@ -110,7 +110,7 @@ export default function MediaPicker({ images, onChangeImages, video, onChangeVid
               <Image source={{ uri: video.poster }} style={styles.thumb} />
             ) : (
               <View style={[styles.thumb, styles.videoFallback]}>
-                <Ionicons name="videocam" size={22} color={colors.primary} />
+                <Ionicons name="videocam" size={22} color={colors.secondaryText} />
               </View>
             )}
             <View style={styles.playBadge}>
@@ -128,18 +128,18 @@ export default function MediaPicker({ images, onChangeImages, video, onChangeVid
 
         {busy ? (
           <View style={styles.addTile}>
-            <ActivityIndicator color={colors.primary} />
+            <ActivityIndicator color={colors.secondaryText} />
           </View>
         ) : (
           <>
             {canAddPhoto && (
               <TouchableOpacity style={styles.addTile} onPress={() => setSheetVisible(true)} activeOpacity={0.7}>
-                <Ionicons name="images-outline" size={24} color={colors.primary} />
+                <Ionicons name="images-outline" size={24} color={colors.secondaryText} />
               </TouchableOpacity>
             )}
             {canAddVideo && (
               <TouchableOpacity style={styles.addTile} onPress={addVideo} activeOpacity={0.7}>
-                <Ionicons name="videocam-outline" size={24} color={colors.primary} />
+                <Ionicons name="videocam-outline" size={24} color={colors.secondaryText} />
               </TouchableOpacity>
             )}
           </>

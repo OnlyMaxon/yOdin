@@ -594,14 +594,14 @@ export default function ProfileScreen({ navigation }: any) {
         <View style={styles.menuGroup}>
           <TouchableOpacity style={styles.menuItem} onPress={openEditProfile}>
             <View style={[styles.menuIconWrap, { backgroundColor: colors.primaryLight }]}>
-              <Ionicons name="person-outline" size={18} color={colors.primary} />
+              <Ionicons name="person-outline" size={18} color={colors.secondaryText} />
             </View>
             <Text style={styles.menuItemText}>{t('settings.editProfile')}</Text>
             <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={() => { setMenuVisible(false); setSavedTab('posts'); setSavedVisible(true); }}>
             <View style={[styles.menuIconWrap, { backgroundColor: colors.primaryLight }]}>
-              <Ionicons name="bookmark-outline" size={18} color={colors.primary} />
+              <Ionicons name="bookmark-outline" size={18} color={colors.secondaryText} />
             </View>
             <Text style={styles.menuItemText}>{t('profile.saved')}</Text>
             <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
@@ -1052,7 +1052,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     avatarText: {
       fontSize: Typography.fontSizeXXL,
       fontWeight: Typography.fontWeightBold,
-      color: c.primary,
+      color: c.secondaryText,
     },
     rankPill: {
       flexDirection: 'row',
@@ -1339,7 +1339,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     editAvatarInitials: {
       fontSize: 32,
       fontWeight: Typography.fontWeightBold,
-      color: c.primary,
+      color: c.secondaryText,
     },
     editAvatarCamera: {
       position: 'absolute',

@@ -69,7 +69,7 @@ export default function RegisterScreen({ navigation, route }: any) {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={22} color={colors.primary} />
+          <Ionicons name="chevron-back" size={22} color={colors.secondaryText} />
         </TouchableOpacity>
 
         <Text style={styles.title}>

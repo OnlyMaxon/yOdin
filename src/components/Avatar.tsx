@@ -31,7 +31,7 @@ export default function Avatar({ photoURL, name, size = 44, onPress, style }: Pr
     <AppImage source={{ uri: photoURL }} style={dim} contentFit="cover" />
   ) : (
     <View style={[dim, styles.center, { backgroundColor: colors.primaryLight }]}>
-      <Text style={{ color: colors.primary, fontWeight: '700', fontSize: Math.round(size * 0.4) }}>
+      <Text style={{ color: colors.secondaryText, fontWeight: '700', fontSize: Math.round(size * 0.4) }}>
         {initials}
       </Text>
     </View>

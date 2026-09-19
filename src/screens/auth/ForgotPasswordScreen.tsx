@@ -47,7 +47,7 @@ export default function ForgotPasswordScreen({ navigation }: any) {
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={22} color={colors.primary} />
+          <Ionicons name="chevron-back" size={22} color={colors.secondaryText} />
         </TouchableOpacity>
         <View style={styles.sentContent}>
           <Text style={styles.sentIcon}>📬</Text>
@@ -65,7 +65,7 @@ export default function ForgotPasswordScreen({ navigation }: any) {
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.container}>
         <TouchableOpacity style={styles.back} onPress={() => navigation.goBack()}>
-          <Ionicons name="chevron-back" size={22} color={colors.primary} />
+          <Ionicons name="chevron-back" size={22} color={colors.secondaryText} />
         </TouchableOpacity>
 
         <Text style={styles.title}>{t('auth.resetPasswordTitle')}</Text>

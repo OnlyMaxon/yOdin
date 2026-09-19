@@ -10,6 +10,9 @@ export const LightColors = {
   primary: '#6C35DE',
   // Figma --secondary: the soft violet tint used for active / highlighted rows.
   primaryLight: '#EDE8F9',
+  // Figma --secondary-foreground: text/icon colour sitting ON a secondary
+  // (primaryLight) surface. Equals primary in light; a lighter lavender in dark.
+  secondaryText: '#6C35DE',
   // Figma --muted: the quiet grey-violet fill behind inactive chips / pills.
   muted: '#E8E3F5',
   accent: '#FF6B6B',
@@ -33,6 +36,7 @@ export const LightColors = {
 export const DarkColors: ColorPalette = {
   primary: '#8B5CF6',
   primaryLight: '#2A2040',
+  secondaryText: '#C4B5F7',
   muted: '#231A3A',
   accent: '#FF6B6B',
   amber: '#F59E0B',

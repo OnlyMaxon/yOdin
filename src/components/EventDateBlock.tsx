@@ -56,11 +56,11 @@ function makeStyles(c: ColorPalette) {
       paddingVertical: 8,
       alignItems: 'center',
     },
-    day: { fontSize: 22, fontWeight: Typography.fontWeightBold, color: c.primary, lineHeight: 24 },
+    day: { fontSize: 22, fontWeight: Typography.fontWeightBold, color: c.secondaryText, lineHeight: 24 },
     month: {
       fontSize: 11,
       fontWeight: Typography.fontWeightSemiBold,
-      color: c.primary,
+      color: c.secondaryText,
       letterSpacing: 0.5,
     },
     meta: { flex: 1 },

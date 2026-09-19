@@ -123,7 +123,7 @@ export default function PhotoPickerSheet({ visible, maxSelect, onDone, onCancel 
     if (item === 'camera') {
       return (
         <TouchableOpacity style={[styles.cell, styles.cameraCell]} onPress={openCamera} activeOpacity={0.8}>
-          <Ionicons name="camera-outline" size={30} color={colors.primary} />
+          <Ionicons name="camera-outline" size={30} color={colors.secondaryText} />
         </TouchableOpacity>
       );
     }
@@ -242,7 +242,7 @@ function makeStyles(c: ColorPalette, topInset: number, _bottomInset: number) {
     cellImg: { width: CELL, height: CELL },
     selectedOverlay: {
       ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(111,66,193,0.28)',
+      backgroundColor: 'rgba(108,53,222,0.28)',
     },
     dimOverlay: {
       ...StyleSheet.absoluteFillObject,

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  View,
+  View,
   StyleSheet,
   Modal,
   Animated,
   Dimensions,
-  Image,
+  Image,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
@@ -117,7 +117,7 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
                 <Text style={[styles.name, selected.length === 0 && styles.nameActive]}>
                   {t('feed.allNations')}
                 </Text>
-                {selected.length === 0 && <Ionicons name="checkmark" size={18} color={colors.primary} style={styles.check} />}
+                {selected.length === 0 && <Ionicons name="checkmark" size={18} color={colors.secondaryText} style={styles.check} />}
               </TouchableOpacity>
             }
             renderItem={({ item }) => {
@@ -135,7 +135,7 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
                   <Ionicons
                     name={active ? 'checkbox' : 'square-outline'}
                     size={20}
-                    color={active ? colors.primary : colors.textSecondary}
+                    color={active ? colors.secondaryText : colors.textSecondary}
                     style={styles.check}
                   />
                 </TouchableOpacity>
@@ -213,7 +213,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     itemActive: { backgroundColor: c.primaryLight },
     flag: { fontSize: 22 },
     name: { flex: 1, fontSize: Typography.fontSizeMD, color: c.textPrimary },
-    nameActive: { color: c.primary, fontWeight: Typography.fontWeightSemiBold },
+    nameActive: { color: c.secondaryText, fontWeight: Typography.fontWeightSemiBold },
     check: { marginLeft: 'auto' },
   });
 }

@@ -344,7 +344,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
             disabled={joining || eventFull}
           >
             {joining ? (
-              <ActivityIndicator color={isParticipant ? colors.primary : '#fff'} size="small" />
+              <ActivityIndicator color={isParticipant ? colors.secondaryText : '#fff'} size="small" />
             ) : (
               <Text style={[styles.joinBtnText, isParticipant && styles.joinBtnTextLeave]}>
                 {isParticipant ? t('post.leaveEvent') : eventFull ? t('post.eventFull') : t('post.participate')}
@@ -529,7 +529,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     joinBtnLeave: { backgroundColor: c.primaryLight },
     joinBtnDisabled: { opacity: 0.5 },
     joinBtnText: { color: '#fff', fontSize: Typography.fontSizeMD, fontWeight: Typography.fontWeightSemiBold },
-    joinBtnTextLeave: { color: c.primary },
+    joinBtnTextLeave: { color: c.secondaryText },
     actionBar: {
       flexDirection: 'row',
       alignItems: 'center',

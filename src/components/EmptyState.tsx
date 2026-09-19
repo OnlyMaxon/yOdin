@@ -22,7 +22,7 @@ export default function EmptyState({ icon, text, topOffset = 80 }: Props) {
   return (
     <View style={[styles.wrap, { paddingTop: topOffset }]}>
       <View style={styles.iconCircle}>
-        <Ionicons name={icon} size={38} color={colors.primary} />
+        <Ionicons name={icon} size={38} color={colors.secondaryText} />
       </View>
       <Text style={styles.text}>{text}</Text>
     </View>
