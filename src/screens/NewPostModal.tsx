@@ -30,18 +30,10 @@ import { PostCategory, POST_CATEGORIES } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
+import { CATEGORY_META } from '../theme/categoryMeta';
 import { Typography } from '../theme/typography';
 
 const MAX_PHOTOS = 10;
-
-// Per-category emoji + accent (matches the Figma design kit): the selected chip
-// fills with its own colour instead of a single brand violet.
-const CATEGORY_META: Record<PostCategory, { emoji: string; color: string }> = {
-  news: { emoji: '📰', color: '#4F46E5' },
-  events: { emoji: '🎉', color: '#FF6B6B' },
-  places: { emoji: '📍', color: '#10B981' },
-  lifestyle: { emoji: '✨', color: '#F59E0B' },
-};
 
 interface Props {
   visible: boolean;

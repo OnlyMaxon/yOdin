@@ -484,13 +484,24 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       elevation: 24,
     },
     grabberRow: {
+      height: 44,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingTop: 10,
-      paddingBottom: 6,
     },
     grabber: { width: 40, height: 4, borderRadius: 2, backgroundColor: c.border },
-    closeBtn: { position: 'absolute', right: 12, top: 6, padding: 4 },
+    // Circular button, sized and vertically centred inside the 44px header so it
+    // never spills below the row and gets covered by the post photo underneath.
+    closeBtn: {
+      position: 'absolute',
+      right: 12,
+      top: 6,
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: c.muted,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     list: { flex: 1 },
     listContent: { paddingHorizontal: 16, paddingTop: 6, paddingBottom: 16 },
     photoWrap: { marginBottom: 14, borderRadius: 16, overflow: 'hidden' },

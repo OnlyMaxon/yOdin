@@ -7,6 +7,8 @@ export const LightColors = {
   primary: '#6C35DE',
   // Figma --secondary: the soft violet tint used for active / highlighted rows.
   primaryLight: '#EDE8F9',
+  // Figma --muted: the quiet grey-violet fill behind inactive chips / pills.
+  muted: '#E8E3F5',
   accent: '#FF6B6B',
   pink: '#EC4899',
   background: '#F3F0FB',
@@ -26,6 +28,7 @@ export const LightColors = {
 export const DarkColors: ColorPalette = {
   primary: '#8B5CF6',
   primaryLight: '#2A2040',
+  muted: '#231A3A',
   accent: '#FF6B6B',
   pink: '#F472B6',
   background: '#0F0A1E',

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
-  View,
+  View,
   FlatList,
   StyleSheet,
   TouchableOpacity,
@@ -35,6 +35,7 @@ import NationFilterDrawer from '../components/NationFilterDrawer';
 import Card from '../components/Card';
 import Avatar from '../components/Avatar';
 import Chip from '../components/Chip';
+import { CATEGORY_META } from '../theme/categoryMeta';
 import { Spacing } from '../theme/spacing';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
@@ -438,6 +439,8 @@ export default function FeedScreen({ navigation }: any) {
             <Chip
               key={f}
               label={f === 'all' ? t('categories.all') : t(`categories.${f}`)}
+              emoji={f === 'all' ? undefined : CATEGORY_META[f].emoji}
+              color={f === 'all' ? undefined : CATEGORY_META[f].color}
               active={filter === f}
               onPress={() => setFilter(f)}
             />
@@ -592,7 +595,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     headerTitle: {
       fontSize: Typography.fontSizeXL,
       fontWeight: Typography.fontWeightBold,
-      color: c.primary,
+      color: c.textPrimary,
     },
     filterBar: {
       backgroundColor: c.surface,
@@ -642,9 +645,9 @@ function makeStyles(c: ColorPalette, topInset: number) {
       paddingHorizontal: 14,
       paddingVertical: 7,
       borderRadius: 18,
-      backgroundColor: c.background,
+      backgroundColor: c.muted,
       borderWidth: 1,
-      borderColor: c.border,
+      borderColor: 'transparent',
     },
     chipActive: {
       backgroundColor: c.primary,

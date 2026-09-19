@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import {
   Animated,
-  View,
+  View,
   FlatList,
-  StyleSheet,
+  StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
@@ -579,7 +579,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     headerTitle: {
       fontSize: Typography.fontSizeXL,
       fontWeight: Typography.fontWeightBold,
-      color: c.primary,
+      color: c.textPrimary,
     },
     headerSearch: {
       flex: 1,

@@ -9,11 +9,17 @@ interface Props {
   label: string;
   active?: boolean;
   onPress?: () => void;
+  // Optional leading emoji (Figma category chips).
+  emoji?: string;
+  // Active-state fill; defaults to the brand primary when omitted.
+  color?: string;
 }
 
-// Filter / selector pill. Active = filled brand; inactive = quiet outlined.
-export default function Chip({ label, active, onPress }: Props) {
+// Filter / selector pill. Active = filled accent; inactive = quiet muted fill
+// (Figma --muted), no border, matching the design kit.
+export default function Chip({ label, active, onPress, emoji, color }: Props) {
   const { colors } = useTheme();
+  const activeColor = color ?? colors.primary;
   return (
     <TouchableOpacity
       activeOpacity={0.8}
@@ -21,8 +27,8 @@ export default function Chip({ label, active, onPress }: Props) {
       style={[
         styles.chip,
         {
-          backgroundColor: active ? colors.primary : colors.background,
-          borderColor: active ? colors.primary : colors.border,
+          backgroundColor: active ? activeColor : colors.muted,
+          borderColor: active ? activeColor : 'transparent',
         },
       ]}
     >
@@ -35,7 +41,7 @@ export default function Chip({ label, active, onPress }: Props) {
           },
         ]}
       >
-        {label}
+        {emoji ? `${emoji} ` : ''}{label}
       </Text>
     </TouchableOpacity>
   );
