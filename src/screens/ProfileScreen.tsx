@@ -14,7 +14,6 @@ import {
 } from 'react-native';
 import TextInput from '../components/AppTextInput';
 import Text from '../components/AppText';
-import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
@@ -27,6 +26,8 @@ import { useUsernameCheck } from '../hooks/useUsernameCheck';
 import { isValidUsername, normalizeUsername } from '../utils/mentions';
 import { subscribeReports } from '../services/reportService';
 import { formatTime } from '../utils/formatTime';
+import { optimizeImage } from '../utils/imageOptimize';
+import PhotoPickerSheet, { PickedAsset } from '../components/PhotoPickerSheet';
 import PostDetailModal from './PostDetailModal';
 import { setAppLanguage } from '../services/i18n';
 import type { AppLang } from '../services/i18n';
@@ -105,6 +106,7 @@ export default function ProfileScreen({ navigation }: any) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [photoError, setPhotoError] = useState('');
+  const [avatarSheetVisible, setAvatarSheetVisible] = useState(false);
   const [langModal, setLangModal] = useState(false);
   const [langSearch, setLangSearch] = useState('');
   const [themeModal, setThemeModal] = useState(false);
@@ -168,24 +170,20 @@ export default function ProfileScreen({ navigation }: any) {
     }
   }
 
-  async function handlePickPhoto() {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') return;
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['images'],
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.7,
-    });
-
-    if (result.canceled || !result.assets[0]) return;
-    if (!profile?.uid) return;
+  // Avatar picking goes through the app's own PhotoPickerSheet (same grid used
+  // for post media) rather than the OS picker + its dated square-crop sheet.
+  // The photo is downscaled by optimizeImage and rendered contentFit="cover",
+  // so any aspect ratio fills the circle without a crop step.
+  async function handleAvatarPicked(picked: PickedAsset[]) {
+    setAvatarSheetVisible(false);
+    const asset = picked[0];
+    if (!asset || !profile?.uid) return;
 
     setUploadingPhoto(true);
     setPhotoError('');
     try {
-      const url = await uploadAvatar(profile.uid, result.assets[0].uri);
+      const optimized = await optimizeImage(asset.uri, asset.width || undefined, asset.height || undefined);
+      const url = await uploadAvatar(profile.uid, optimized);
       await updateUserProfile(profile.uid, { photoURL: url });
       setProfile({ ...profile, photoURL: url });
     } catch {
@@ -428,6 +426,18 @@ export default function ProfileScreen({ navigation }: any) {
     );
   }
 
+  // Rendered next to whichever surface is on top: a Modal only shows when it
+  // sits in the visible tree, so the picker goes inside the edit sheet while
+  // that's open and at the screen root otherwise.
+  const avatarSheet = (
+    <PhotoPickerSheet
+      visible={avatarSheetVisible}
+      maxSelect={1}
+      onDone={handleAvatarPicked}
+      onCancel={() => setAvatarSheetVisible(false)}
+    />
+  );
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -441,7 +451,7 @@ export default function ProfileScreen({ navigation }: any) {
 
         <View style={styles.profileContent}>
           <View style={styles.headerTopRow}>
-            <TouchableOpacity onPress={handlePickPhoto} disabled={uploadingPhoto}>
+            <TouchableOpacity onPress={() => setAvatarSheetVisible(true)} disabled={uploadingPhoto}>
               <View style={styles.avatar}>
                 {profile?.photoURL ? (
                   <AppImage source={{ uri: profile.photoURL }} style={styles.avatarImage} contentFit="cover" />
@@ -684,7 +694,7 @@ export default function ProfileScreen({ navigation }: any) {
 
               {/* Avatar */}
               <View style={styles.editAvatarSection}>
-                <TouchableOpacity onPress={handlePickPhoto} disabled={uploadingPhoto} activeOpacity={0.8}>
+                <TouchableOpacity onPress={() => setAvatarSheetVisible(true)} disabled={uploadingPhoto} activeOpacity={0.8}>
                   <View style={styles.editAvatarWrap}>
                     {profile?.photoURL
                       ? <AppImage source={{ uri: profile.photoURL }} style={styles.editAvatarImg} contentFit="cover" />
@@ -835,6 +845,7 @@ export default function ProfileScreen({ navigation }: any) {
               />
             </>
           )}
+          {editVisible ? avatarSheet : null}
         </View>
       </Modal>
 
@@ -989,6 +1000,8 @@ export default function ProfileScreen({ navigation }: any) {
           setTimeout(() => navigation.navigate('UserProfile', { userId }), 250);
         }}
       />
+
+      {!editVisible ? avatarSheet : null}
     </View>
   );
 }
