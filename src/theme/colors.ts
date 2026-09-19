@@ -1,8 +1,11 @@
+import { PostCategory } from '../types';
+
 export type ColorPalette = typeof LightColors;
 
 // Palette locked to the Figma design kit (yOdin Social App UI Kit) 1:1.
-// Light = index.css :root, Dark = index.css .dark. Brand accents: violet
-// (primary), coral (accent), emerald (success).
+// Light = index.css :root, Dark = index.css .dark. Brand accents mirror the kit's
+// DesignSystem tokens: violet (primary), coral (accent), emerald (success),
+// amber (lifestyle / warning).
 export const LightColors = {
   primary: '#6C35DE',
   // Figma --secondary: the soft violet tint used for active / highlighted rows.
@@ -10,6 +13,7 @@ export const LightColors = {
   // Figma --muted: the quiet grey-violet fill behind inactive chips / pills.
   muted: '#E8E3F5',
   accent: '#FF6B6B',
+  amber: '#F59E0B',
   pink: '#EC4899',
   background: '#F3F0FB',
   surface: '#FFFFFF',
@@ -22,7 +26,8 @@ export const LightColors = {
   notification: '#EF4444',
   tabBar: '#FFFFFF',
   tabBarActive: '#6C35DE',
-  tabBarInactive: '#9CA3AF',
+  // Figma nav bar: inactive tabs use --muted-foreground, not a neutral grey.
+  tabBarInactive: '#7B6FA0',
 };
 
 export const DarkColors: ColorPalette = {
@@ -30,6 +35,7 @@ export const DarkColors: ColorPalette = {
   primaryLight: '#2A2040',
   muted: '#231A3A',
   accent: '#FF6B6B',
+  amber: '#F59E0B',
   pink: '#F472B6',
   background: '#0F0A1E',
   surface: '#1C1530',
@@ -41,5 +47,16 @@ export const DarkColors: ColorPalette = {
   notification: '#EF4444',
   tabBar: '#1C1530',
   tabBarActive: '#8B5CF6',
-  tabBarInactive: '#6B7280',
+  tabBarInactive: '#9B8FC4',
+};
+
+// Per-category emoji + accent colour, mirroring the Figma DesignSystem badge
+// config (news = indigo, events = coral, places = emerald, lifestyle = amber).
+// Shared by the Feed filter chips, the Feed/PostDetail category badges, and the
+// New Post creation chips so every category surface stays in sync.
+export const CATEGORY_META: Record<PostCategory, { emoji: string; color: string }> = {
+  news: { emoji: '📰', color: '#4F46E5' },
+  events: { emoji: '🎉', color: '#FF6B6B' },
+  places: { emoji: '📍', color: '#10B981' },
+  lifestyle: { emoji: '✨', color: '#F59E0B' },
 };

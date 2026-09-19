@@ -29,8 +29,7 @@ import { getErrorMessage } from '../services/errorHandler';
 import { PostCategory, POST_CATEGORIES } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
-import { ColorPalette } from '../theme/colors';
-import { CATEGORY_META } from '../theme/categoryMeta';
+import { ColorPalette, CATEGORY_META } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
 const MAX_PHOTOS = 10;

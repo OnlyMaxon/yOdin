@@ -35,7 +35,7 @@ import NationFilterDrawer from '../components/NationFilterDrawer';
 import Card from '../components/Card';
 import Avatar from '../components/Avatar';
 import Chip from '../components/Chip';
-import { CATEGORY_META } from '../theme/categoryMeta';
+import { CATEGORY_META } from '../theme/colors';
 import { Spacing } from '../theme/spacing';
 import MediaCarousel from '../components/MediaCarousel';
 import EventParticipantsModal from '../components/EventParticipantsModal';
@@ -236,14 +236,9 @@ export default function FeedScreen({ navigation }: any) {
     );
   }
 
+  // Category accent — matches the Figma badge palette (see CATEGORY_META).
   function categoryColor(category: PostCategory): string {
-    switch (category) {
-      case 'news': return colors.primary;
-      case 'events': return colors.accent;
-      case 'places': return colors.success;
-      case 'lifestyle': return colors.pink;
-      default: return colors.textSecondary;
-    }
+    return CATEGORY_META[category]?.color ?? colors.textSecondary;
   }
 
   async function handleJoinEvent(item: Post) {

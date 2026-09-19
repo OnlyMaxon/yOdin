@@ -8,6 +8,7 @@ import Text from '../components/AppText';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { useNotificationStore } from '../store/useNotificationStore';
@@ -104,12 +105,19 @@ function TabBar({
       {state.routes.slice(0, mid).map((route, i) => renderTab(route, i))}
       <View style={styles.centerWrap}>
         <TouchableOpacity
-          style={[styles.centerBtn, !canCreate && styles.centerBtnDisabled]}
           onPress={() => onCreate(activeRoute)}
           disabled={!canCreate}
           activeOpacity={0.85}
         >
-          <Ionicons name="add" size={30} color={canCreate ? '#fff' : colors.tabBarInactive} />
+          <LinearGradient
+            // Figma nav bar: 135° violet → light-violet gradient on the create button.
+            colors={canCreate ? ['#6C35DE', '#8B5CF6'] : [colors.border, colors.border]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[styles.centerBtn, !canCreate && styles.centerBtnDisabled]}
+          >
+            <Ionicons name="add" size={30} color={canCreate ? '#fff' : colors.tabBarInactive} />
+          </LinearGradient>
         </TouchableOpacity>
       </View>
       {state.routes.slice(mid).map((route, i) => renderTab(route, mid + i))}
@@ -211,7 +219,8 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       minWidth: 16,
       height: 16,
       borderRadius: 8,
-      backgroundColor: c.notification,
+      // Figma nav bar unread badge = coral, not the error red.
+      backgroundColor: c.accent,
       alignItems: 'center',
       justifyContent: 'center',
       paddingHorizontal: 3,
