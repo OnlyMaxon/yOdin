@@ -453,19 +453,19 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
             )}
             {parent && (
               <TouchableOpacity
-                style={[styles.quote, isMe && styles.quoteMe]}
+                style={[styles.quote, isMe && !isAccepted && styles.quoteMe]}
                 onPress={() => scrollToMessage(parent.id)}
                 activeOpacity={0.7}
               >
-                <Text style={[styles.quoteAuthor, isMe && styles.quoteTextMe]} numberOfLines={1}>
+                <Text style={[styles.quoteAuthor, isMe && !isAccepted && styles.quoteTextMe]} numberOfLines={1}>
                   {parent.authorName}
                 </Text>
-                <Text style={[styles.quoteText, isMe && styles.quoteTextMe]} numberOfLines={1}>
+                <Text style={[styles.quoteText, isMe && !isAccepted && styles.quoteTextMe]} numberOfLines={1}>
                   {parent.text}
                 </Text>
               </TouchableOpacity>
             )}
-            <Text style={[styles.msgText, isMe && styles.msgTextMe]}>{item.text}</Text>
+            <Text style={[styles.msgText, isMe && !isAccepted && styles.msgTextMe]}>{item.text}</Text>
           </TouchableOpacity>
 
           <View style={[styles.msgActions, isMe ? styles.msgActionsMe : styles.msgActionsOther]}>
@@ -584,14 +584,21 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
     // edge-to-edge Android). See LIFT_COMPOSER.
     <View style={[styles.container, LIFT_COMPOSER && { paddingBottom: kbHeight }]}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
-          <Text style={styles.backText}>←</Text>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconCircle}>
+          <Ionicons name="chevron-back" size={20} color={colors.textPrimary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle} numberOfLines={1}>{t('discussion.title')}</Text>
-        <TouchableOpacity onPress={handleSave} style={styles.saveBtn}>
+        <View style={styles.headerCenter}>
+          <Text style={styles.headerTitle} numberOfLines={1}>
+            {discussion?.question ?? questionParam ?? t('discussion.title')}
+          </Text>
+          {!loading ? (
+            <Text style={styles.headerSubtitle}>{t('feed.replies', { count: replies.length })}</Text>
+          ) : null}
+        </View>
+        <TouchableOpacity onPress={handleSave} style={styles.iconCircle}>
           <Ionicons
             name={isSaved ? 'bookmark' : 'bookmark-outline'}
-            size={22}
+            size={18}
             color={isSaved ? colors.primary : colors.textSecondary}
           />
         </TouchableOpacity>
@@ -599,7 +606,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
 
       {loading ? (
         <>
-          <View style={styles.questionBlock}>
+          <View style={[styles.questionBlock, { margin: 16 }]}>
             <Text style={styles.questionText}>{questionParam}</Text>
           </View>
           <View style={styles.center}>
@@ -718,29 +725,44 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       borderBottomColor: c.border,
       gap: 12,
     },
-    backBtn: { padding: 4 },
-    backText: { fontSize: 24, color: c.textPrimary },
+    iconCircle: {
+      width: 36,
+      height: 36,
+      borderRadius: 18,
+      backgroundColor: c.muted,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    headerCenter: { flex: 1 },
     headerTitle: {
-      fontSize: Typography.fontSizeLG,
+      fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
-      flex: 1,
     },
-    saveBtn: { padding: 4 },
+    headerSubtitle: {
+      fontSize: Typography.fontSizeXS,
+      color: c.textSecondary,
+      marginTop: 1,
+    },
     center: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     questionBlock: {
       backgroundColor: c.surface,
-      padding: 20,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
+      padding: 16,
+      borderRadius: 20,
+      borderWidth: 1.5,
+      borderColor: c.primary + '2E',
+      shadowColor: c.primary,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.08,
+      shadowRadius: 16,
+      elevation: 2,
     },
-    // Cancels the list's contentContainer padding so the question header stays
-    // full-width with its own bottom border, then scrolls up out of view.
-    questionHeaderInList: { marginHorizontal: -16, marginTop: -16, marginBottom: 6 },
+    // The pinned question is a card inside the list (Figma) — it scrolls with the
+    // thread and keeps a small gap above the first reply.
+    questionHeaderInList: { marginTop: 4, marginBottom: 8 },
     questionBlockAnswered: {
-      backgroundColor: c.success + '18',
-      borderBottomColor: c.success,
-      borderBottomWidth: 1.5,
+      backgroundColor: c.successTint,
+      borderColor: c.success,
     },
     questionAuthorRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 12, gap: 12 },
     qAuthorName: {
@@ -797,9 +819,9 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     msgRowOther: { justifyContent: 'flex-start' },
     msgContent: { maxWidth: '82%' },
     bubble: {
-      borderRadius: 16,
-      paddingVertical: 8,
-      paddingHorizontal: 12,
+      borderRadius: 18,
+      paddingVertical: 9,
+      paddingHorizontal: 13,
     },
     bubbleOther: {
       backgroundColor: c.surface,
@@ -814,6 +836,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       alignSelf: 'flex-end',
     },
     bubbleAccepted: {
+      backgroundColor: c.successTint,
       borderColor: c.success,
       borderWidth: 1.5,
     },
@@ -934,9 +957,9 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     },
     input: {
       flex: 1,
-      backgroundColor: c.background,
-      borderWidth: 1.5,
-      borderColor: c.border,
+      backgroundColor: c.muted,
+      borderWidth: 1,
+      borderColor: 'transparent',
       borderRadius: 20,
       paddingHorizontal: 16,
       paddingVertical: 10,
