@@ -72,6 +72,12 @@
     "published": "Вопрос опубликован"
   },
   "notifications": {
+    "filterAll": "Все",
+    "filterUnread": "Непрочитанные",
+    "filterReplies": "Ответы",
+    "filterMentions": "Упоминания",
+    "filterEvents": "События",
+    "unreadCount": "{{count}} непрочит.",
     "title": "Уведомления",
     "empty": "Уведомлений пока нет",
     "replied": "ответил на вашу дискуссию",

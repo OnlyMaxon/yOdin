@@ -71,6 +71,12 @@
     "published": "เผยแพร่คำถามแล้ว"
   },
   "notifications": {
+    "filterAll": "ทั้งหมด",
+    "filterUnread": "ยังไม่อ่าน",
+    "filterReplies": "การตอบกลับ",
+    "filterMentions": "การกล่าวถึง",
+    "filterEvents": "กิจกรรม",
+    "unreadCount": "{{count}} ยังไม่อ่าน",
     "title": "การแจ้งเตือน",
     "empty": "ยังไม่มีการแจ้งเตือน",
     "replied": "ตอบกลับการสนทนาของคุณ",

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
-  View,
+  View,
   TouchableOpacity,
   StyleSheet,
   Modal,
@@ -33,6 +33,15 @@ import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
 const MAX_PHOTOS = 10;
+
+// Per-category emoji + accent (matches the Figma design kit): the selected chip
+// fills with its own colour instead of a single brand violet.
+const CATEGORY_META: Record<PostCategory, { emoji: string; color: string }> = {
+  news: { emoji: '📰', color: '#4F46E5' },
+  events: { emoji: '🎉', color: '#FF6B6B' },
+  places: { emoji: '📍', color: '#10B981' },
+  lifestyle: { emoji: '✨', color: '#F59E0B' },
+};
 
 interface Props {
   visible: boolean;
@@ -202,20 +211,59 @@ export default function NewPostModal({ visible, onClose }: Props) {
         <Animated.View style={[styles.sheet, { transform: [{ translateY: slideAnim }] }]}>
           <View style={styles.handle} />
 
+          {/* Header: Cancel · New Post · Publish (Figma) */}
           <View style={styles.header}>
+            <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 6, right: 10 }}>
+              <Text style={styles.cancelText}>{t('newPost.cancel')}</Text>
+            </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('newPost.title')}</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-              <Ionicons name="close" size={18} color={colors.textSecondary} />
+            <TouchableOpacity
+              style={[styles.publishPill, !canPost && styles.publishPillDisabled]}
+              onPress={handlePost}
+              disabled={!canPost}
+            >
+              {loading
+                ? <ActivityIndicator color="#fff" size="small" />
+                : <Text style={styles.publishPillText}>{t('newPost.post')}</Text>
+              }
             </TouchableOpacity>
           </View>
 
           <View style={styles.divider} />
+
+          {error ? (
+            <View style={styles.errorRow}>
+              <Ionicons name="alert-circle-outline" size={14} color={colors.notification} />
+              <Text style={styles.error}>{error}</Text>
+            </View>
+          ) : null}
 
           <ScrollView
             style={styles.scrollArea}
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
           >
+            <Text style={styles.sectionLabel}>{t('newPost.category')}</Text>
+            <View style={styles.categoryRow}>
+              {POST_CATEGORIES.map((cat) => {
+                const active = category === cat;
+                const meta = CATEGORY_META[cat];
+                return (
+                  <TouchableOpacity
+                    key={cat}
+                    style={[styles.categoryChip, active && { backgroundColor: meta.color, borderColor: meta.color }]}
+                    onPress={() => setCategory(cat)}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.categoryEmoji}>{meta.emoji}</Text>
+                    <Text style={[styles.categoryChipText, active && styles.categoryChipTextActive]}>
+                      {t(`categories.${cat}`)}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+
             <TextInput
               style={styles.titleInput}
               placeholder={t('newPost.topicPlaceholder')}
@@ -238,26 +286,8 @@ export default function NewPostModal({ visible, onClose }: Props) {
             />
             <Text style={styles.charCount}>{description.length}/1000</Text>
 
-            <Text style={styles.sectionLabel}>{t('newPost.category')}</Text>
-            <View style={styles.categoryRow}>
-              {POST_CATEGORIES.map((cat) => {
-                const active = category === cat;
-                return (
-                  <TouchableOpacity
-                    key={cat}
-                    style={[styles.categoryChip, active && styles.categoryChipActive]}
-                    onPress={() => setCategory(cat)}
-                  >
-                    <Text style={[styles.categoryChipText, active && styles.categoryChipTextActive]}>
-                      {t(`categories.${cat}`)}
-                    </Text>
-                  </TouchableOpacity>
-                );
-              })}
-            </View>
-
             {category === 'events' ? (
-              <View style={styles.signupBlock}>
+              <View style={[styles.signupBlock, signupEnabled && styles.signupBlockActive]}>
                 <TouchableOpacity style={styles.dateRow} onPress={() => setPicker('date')} activeOpacity={0.7}>
                   <Ionicons name="calendar-outline" size={20} color={colors.primary} />
                   <Text style={[styles.dateText, !eventDate && styles.datePlaceholder]} numberOfLines={1}>
@@ -302,13 +332,13 @@ export default function NewPostModal({ visible, onClose }: Props) {
 
                 <View style={styles.signupToggleRow}>
                   <View style={{ flex: 1 }}>
-                    <Text style={styles.signupTitle}>{t('newPost.signup')}</Text>
+                    <Text style={styles.signupTitle}>🎉  {t('newPost.signup')}</Text>
                     <Text style={styles.signupHint}>{t('newPost.signupHint')}</Text>
                   </View>
                   <Switch
                     value={signupEnabled}
                     onValueChange={setSignupEnabled}
-                    trackColor={{ false: colors.border, true: colors.primary }}
+                    trackColor={{ false: colors.border, true: colors.accent }}
                     thumbColor="#fff"
                   />
                 </View>
@@ -357,26 +387,9 @@ export default function NewPostModal({ visible, onClose }: Props) {
                 maxPhotos={MAX_PHOTOS}
               />
             </View>
-          </ScrollView>
 
-          <View style={styles.footer}>
-            {error ? (
-              <View style={styles.errorRow}>
-                <Ionicons name="alert-circle-outline" size={14} color={colors.notification} />
-                <Text style={styles.error}>{error}</Text>
-              </View>
-            ) : null}
-            <TouchableOpacity
-              style={[styles.postBtn, !canPost && styles.postBtnDisabled]}
-              onPress={handlePost}
-              disabled={loading}
-            >
-              {loading
-                ? <ActivityIndicator color="#fff" />
-                : <Text style={styles.postBtnText}>{t('newPost.post')}</Text>
-              }
-            </TouchableOpacity>
-          </View>
+            <View style={{ height: 8 }} />
+          </ScrollView>
         </Animated.View>
       </KeyboardAvoidingView>
     </Modal>
@@ -389,12 +402,12 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.4)' },
     sheet: {
       backgroundColor: c.surface,
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
+      borderTopLeftRadius: 28,
+      borderTopRightRadius: 28,
       paddingHorizontal: 20,
-      paddingBottom: Math.max(bottomInset, 16) + 24,
+      paddingBottom: Math.max(bottomInset, 16) + 20,
       paddingTop: 12,
-      maxHeight: '88%',
+      maxHeight: '90%',
     },
     handle: {
       width: 40,
@@ -402,31 +415,46 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       backgroundColor: c.border,
       borderRadius: 2,
       alignSelf: 'center',
-      marginBottom: 16,
+      marginBottom: 14,
     },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingBottom: 16,
+      paddingBottom: 14,
     },
+    cancelText: { fontSize: Typography.fontSizeMD, color: c.textSecondary, fontWeight: Typography.fontWeightMedium },
     headerTitle: {
-      fontSize: Typography.fontSizeLG,
+      fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
     },
-    closeBtn: {
-      width: 32,
-      height: 32,
-      borderRadius: 16,
-      backgroundColor: c.background,
+    publishPill: {
+      minWidth: 84,
+      paddingHorizontal: 18,
+      paddingVertical: 9,
+      borderRadius: 20,
+      backgroundColor: c.primary,
       alignItems: 'center',
       justifyContent: 'center',
     },
+    publishPillDisabled: { backgroundColor: c.border },
+    publishPillText: { color: '#fff', fontSize: Typography.fontSizeSM, fontWeight: Typography.fontWeightBold },
     divider: {
       height: 1,
       backgroundColor: c.border,
       marginBottom: 16,
+    },
+    errorRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      marginBottom: 12,
+    },
+    error: {
+      color: c.notification,
+      fontSize: Typography.fontSizeSM,
+      flex: 1,
     },
     scrollArea: { flexShrink: 1 },
     titleInput: {
@@ -470,17 +498,17 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     },
     categoryRow: { flexDirection: 'row', gap: 8, marginBottom: 18, flexWrap: 'wrap' },
     categoryChip: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
       paddingHorizontal: 14,
       paddingVertical: 8,
-      borderRadius: 18,
+      borderRadius: 20,
       backgroundColor: c.background,
       borderWidth: 1,
       borderColor: c.border,
     },
-    categoryChipActive: {
-      backgroundColor: c.primary,
-      borderColor: c.primary,
-    },
+    categoryEmoji: { fontSize: 14 },
     categoryChipText: {
       fontSize: Typography.fontSizeSM,
       color: c.textSecondary,
@@ -489,12 +517,13 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
     categoryChipTextActive: { color: '#fff', fontWeight: Typography.fontWeightSemiBold },
     signupBlock: {
       backgroundColor: c.background,
-      borderWidth: 1,
+      borderWidth: 1.5,
       borderColor: c.border,
-      borderRadius: 14,
+      borderRadius: 16,
       padding: 14,
       marginBottom: 18,
     },
+    signupBlockActive: { borderColor: c.accent },
     dateRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
     dateText: { flex: 1, fontSize: Typography.fontSizeMD, color: c.textPrimary, fontWeight: Typography.fontWeightMedium },
     datePlaceholder: { color: c.textSecondary },
@@ -531,33 +560,5 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       textAlign: 'center',
     },
     photoWrapper: { marginBottom: 8 },
-    footer: {
-      paddingTop: 14,
-      borderTopWidth: 1,
-      borderTopColor: c.border,
-      gap: 10,
-    },
-    errorRow: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 6,
-    },
-    error: {
-      color: c.notification,
-      fontSize: Typography.fontSizeSM,
-      flex: 1,
-    },
-    postBtn: {
-      backgroundColor: c.primary,
-      borderRadius: 16,
-      paddingVertical: 16,
-      alignItems: 'center',
-    },
-    postBtnDisabled: { opacity: 0.4 },
-    postBtnText: {
-      color: '#fff',
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightSemiBold,
-    },
   });
 }

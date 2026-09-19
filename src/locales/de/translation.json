@@ -71,6 +71,12 @@
     "published": "Frage veröffentlicht"
   },
   "notifications": {
+    "filterAll": "Alle",
+    "filterUnread": "Ungelesen",
+    "filterReplies": "Antworten",
+    "filterMentions": "Erwähnungen",
+    "filterEvents": "Events",
+    "unreadCount": "{{count}} ungelesen",
     "title": "Benachrichtigungen",
     "empty": "Noch keine Benachrichtigungen",
     "replied": "hat auf deine Diskussion geantwortet",

@@ -71,6 +71,12 @@
     "published": "प्रश्न प्रकाशित हुआ"
   },
   "notifications": {
+    "filterAll": "सभी",
+    "filterUnread": "अपठित",
+    "filterReplies": "जवाब",
+    "filterMentions": "उल्लेख",
+    "filterEvents": "इवेंट",
+    "unreadCount": "{{count}} अपठित",
     "title": "सूचनाएं",
     "empty": "अभी कोई सूचना नहीं",
     "replied": "ने आपकी चर्चा का जवाब दिया",

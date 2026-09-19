@@ -388,12 +388,17 @@ export default function ProfileScreen({ navigation }: any) {
   function renderPostCard(item: Post, variant: 'mine' | 'saved') {
     return (
       <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={() => openPostDetail(item)}>
-        {item.imageURLs && item.imageURLs.length > 0 ? (
-          <AppImage source={{ uri: item.imageURLs[0] }} style={styles.postCardImage} contentFit="cover" />
-        ) : null}
-        <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>
-        <Text style={styles.cardDesc} numberOfLines={2}>{item.description}</Text>
-        <View style={styles.cardFooter}>
+        <View style={styles.postCardRow}>
+          {item.imageURLs && item.imageURLs.length > 0 ? (
+            <AppImage source={{ uri: item.imageURLs[0] }} style={styles.postThumb} contentFit="cover" />
+          ) : (
+            <View style={[styles.postThumb, styles.postThumbEmpty]}>
+              <Ionicons name="document-text-outline" size={22} color={colors.textSecondary} />
+            </View>
+          )}
+          <View style={styles.postCardBody}>
+            <Text style={styles.cardTitle} numberOfLines={2}>{item.title}</Text>
+            <View style={styles.cardFooter}>
           <View style={styles.postMetaRow}>
             <Ionicons name="heart-outline" size={14} color={colors.textSecondary} />
             <Text style={styles.cardMetaMuted}>{item.likes?.length ?? 0}</Text>
@@ -416,6 +421,8 @@ export default function ProfileScreen({ navigation }: any) {
               <Ionicons name="bookmark" size={18} color={colors.primary} />
             </TouchableOpacity>
           )}
+            </View>
+          </View>
         </View>
       </TouchableOpacity>
     );
@@ -451,27 +458,11 @@ export default function ProfileScreen({ navigation }: any) {
                 </View>
               </View>
             </TouchableOpacity>
-            <View style={styles.stats}>
-              <View style={styles.statItem}>
-                <Text style={styles.statNum}>{myPosts.length}</Text>
-                <Text style={styles.statLabel}>{t('profile.posts')}</Text>
-              </View>
-              <TouchableOpacity
-                style={styles.statItem}
-                activeOpacity={0.7}
-                onPress={() => profile?.uid && navigation.navigate('FollowList', { userId: profile.uid, initialTab: 'followers' })}
-              >
-                <Text style={styles.statNum}>{followersCount}</Text>
-                <Text style={styles.statLabel}>{t('profile.followers')}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.statItem}
-                activeOpacity={0.7}
-                onPress={() => profile?.uid && navigation.navigate('FollowList', { userId: profile.uid, initialTab: 'following' })}
-              >
-                <Text style={styles.statNum}>{profile?.following?.length ?? 0}</Text>
-                <Text style={styles.statLabel}>{t('profile.followingCount')}</Text>
-              </TouchableOpacity>
+            <View style={styles.rankPill}>
+              <Ionicons name="ribbon" size={14} color="#fff" />
+              <Text style={styles.rankPillText} numberOfLines={1}>
+                {t(`rank.${rankKey}`)} · {t('rank.points', { count: points })}
+              </Text>
             </View>
           </View>
 
@@ -483,12 +474,30 @@ export default function ProfileScreen({ navigation }: any) {
             <Text style={styles.location}>{profile?.location}</Text>
           </View>
           {profile?.bio ? <Text style={styles.bio}>{profile.bio}</Text> : null}
-          <View style={styles.rankRow}>
-            <View style={styles.rankBadge}>
-              <Ionicons name="ribbon" size={12} color={colors.primary} />
-              <Text style={styles.rankBadgeText}>{t(`rank.${rankKey}`)}</Text>
+
+          <View style={styles.statsCard}>
+            <View style={styles.statItem}>
+              <Text style={styles.statNum}>{myPosts.length}</Text>
+              <Text style={styles.statLabel}>{t('profile.posts')}</Text>
             </View>
-            <Text style={styles.rankPoints}>{t('rank.points', { count: points })}</Text>
+            <View style={styles.statDivider} />
+            <TouchableOpacity
+              style={styles.statItem}
+              activeOpacity={0.7}
+              onPress={() => profile?.uid && navigation.navigate('FollowList', { userId: profile.uid, initialTab: 'followers' })}
+            >
+              <Text style={styles.statNum}>{followersCount}</Text>
+              <Text style={styles.statLabel}>{t('profile.followers')}</Text>
+            </TouchableOpacity>
+            <View style={styles.statDivider} />
+            <TouchableOpacity
+              style={styles.statItem}
+              activeOpacity={0.7}
+              onPress={() => profile?.uid && navigation.navigate('FollowList', { userId: profile.uid, initialTab: 'following' })}
+            >
+              <Text style={styles.statNum}>{profile?.following?.length ?? 0}</Text>
+              <Text style={styles.statLabel}>{t('profile.followingCount')}</Text>
+            </TouchableOpacity>
           </View>
           {photoError ? <Text style={styles.photoError}>{photoError}</Text> : null}
         </View>
@@ -1045,8 +1054,29 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontWeight: Typography.fontWeightBold,
       color: c.primary,
     },
-    stats: { flex: 1, flexDirection: 'row', justifyContent: 'space-around' },
-    statItem: { alignItems: 'center' },
+    rankPill: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 6,
+      backgroundColor: c.primary,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 16,
+      maxWidth: 190,
+    },
+    rankPillText: { color: '#fff', fontSize: Typography.fontSizeXS, fontWeight: Typography.fontWeightBold, flexShrink: 1 },
+    statsCard: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: c.surface,
+      borderWidth: 1,
+      borderColor: c.border,
+      borderRadius: 16,
+      paddingVertical: 14,
+      marginTop: 14,
+    },
+    statItem: { flex: 1, alignItems: 'center' },
+    statDivider: { width: 1, height: 30, backgroundColor: c.border },
     statNum: { fontSize: Typography.fontSizeLG, fontWeight: Typography.fontWeightBold, color: c.textPrimary },
     statLabel: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginTop: 2 },
     name: {
@@ -1063,22 +1093,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
     location: { fontSize: Typography.fontSizeSM, color: c.textSecondary },
     handle: { fontSize: Typography.fontSizeSM, color: c.primary, fontWeight: Typography.fontWeightMedium, marginBottom: 6 },
     bio: { fontSize: Typography.fontSizeSM, color: c.textPrimary, lineHeight: 20, marginTop: 8 },
-    rankRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 8 },
-    rankBadge: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 4,
-      backgroundColor: c.primaryLight,
-      paddingHorizontal: 8,
-      paddingVertical: 3,
-      borderRadius: 10,
-    },
-    rankBadgeText: {
-      fontSize: Typography.fontSizeXS,
-      fontWeight: Typography.fontWeightSemiBold,
-      color: c.primary,
-    },
-    rankPoints: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
     photoError: {
       fontSize: Typography.fontSizeXS,
       color: c.notification,
@@ -1086,24 +1100,27 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     tabs: {
       flexDirection: 'row',
-      backgroundColor: c.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
+      gap: 8,
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      backgroundColor: c.background,
     },
     tab: {
       flex: 1,
-      paddingVertical: 14,
+      paddingVertical: 10,
       alignItems: 'center',
-      borderBottomWidth: 2,
-      borderBottomColor: 'transparent',
+      borderRadius: 12,
+      backgroundColor: c.surface,
+      borderWidth: 1,
+      borderColor: c.border,
     },
-    tabActive: { borderBottomColor: c.primary },
+    tabActive: { backgroundColor: c.primary, borderColor: c.primary },
     tabText: {
       fontSize: Typography.fontSizeSM,
-      fontWeight: Typography.fontWeightMedium,
+      fontWeight: Typography.fontWeightSemiBold,
       color: c.textSecondary,
     },
-    tabTextActive: { color: c.primary, fontWeight: Typography.fontWeightSemiBold },
+    tabTextActive: { color: '#fff' },
     center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center' },
     avatarImage: {
       width: 80,
@@ -1157,18 +1174,10 @@ function makeStyles(c: ColorPalette, topInset: number) {
       color: c.textPrimary,
       marginBottom: 4,
     },
-    cardDesc: {
-      fontSize: Typography.fontSizeSM,
-      color: c.textSecondary,
-      lineHeight: 20,
-    },
-    postCardImage: {
-      width: '100%',
-      height: 140,
-      borderRadius: 10,
-      marginBottom: 10,
-      backgroundColor: c.background,
-    },
+    postCardRow: { flexDirection: 'row', gap: 12 },
+    postThumb: { width: 76, height: 76, borderRadius: 12, backgroundColor: c.background },
+    postThumbEmpty: { alignItems: 'center', justifyContent: 'center' },
+    postCardBody: { flex: 1, justifyContent: 'space-between', minHeight: 76 },
     postMetaRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
     cardMetaMuted: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
     cardTime: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginLeft: 12 },

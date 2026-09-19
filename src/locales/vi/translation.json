@@ -71,6 +71,12 @@
     "published": "Đã đăng câu hỏi"
   },
   "notifications": {
+    "filterAll": "Tất cả",
+    "filterUnread": "Chưa đọc",
+    "filterReplies": "Trả lời",
+    "filterMentions": "Nhắc đến",
+    "filterEvents": "Sự kiện",
+    "unreadCount": "{{count}} chưa đọc",
     "title": "Thông báo",
     "empty": "Chưa có thông báo nào",
     "replied": "đã trả lời cuộc thảo luận của bạn",

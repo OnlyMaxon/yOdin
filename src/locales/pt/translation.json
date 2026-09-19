@@ -71,6 +71,12 @@
     "published": "Pergunta publicada"
   },
   "notifications": {
+    "filterAll": "Tudo",
+    "filterUnread": "Não lidas",
+    "filterReplies": "Respostas",
+    "filterMentions": "Menções",
+    "filterEvents": "Eventos",
+    "unreadCount": "{{count}} não lidas",
     "title": "Notificações",
     "empty": "Nenhuma notificação ainda",
     "replied": "respondeu à sua discussão",

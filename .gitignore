@@ -41,6 +41,12 @@ firestore-debug.log
 .env.local
 .env*.local
 yOdinDSG
+
+# graphify (generated knowledge graph — local dev aid, regenerated per machine)
+graphify-out/
+*.graphify-bak
+
+
 # typescript
 *.tsbuildinfo
 

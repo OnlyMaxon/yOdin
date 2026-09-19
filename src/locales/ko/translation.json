@@ -71,6 +71,12 @@
     "published": "질문이 게시되었습니다"
   },
   "notifications": {
+    "filterAll": "전체",
+    "filterUnread": "안 읽음",
+    "filterReplies": "답글",
+    "filterMentions": "멘션",
+    "filterEvents": "이벤트",
+    "unreadCount": "읽지 않음 {{count}}개",
     "title": "알림",
     "empty": "아직 알림이 없습니다",
     "replied": "님이 내 토론에 답글을 달았습니다",

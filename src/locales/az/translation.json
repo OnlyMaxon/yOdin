@@ -71,6 +71,12 @@
     "published": "Sual dərc edildi"
   },
   "notifications": {
+    "filterAll": "Hamısı",
+    "filterUnread": "Oxunmamış",
+    "filterReplies": "Cavablar",
+    "filterMentions": "Qeydlər",
+    "filterEvents": "Tədbirlər",
+    "unreadCount": "{{count}} oxunmamış",
     "title": "Bildirişlər",
     "empty": "Hələ bildiriş yoxdur",
     "replied": "müzakirənizə cavab verdi",

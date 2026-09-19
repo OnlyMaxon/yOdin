@@ -71,6 +71,12 @@
     "published": "问题已发布"
   },
   "notifications": {
+    "filterAll": "全部",
+    "filterUnread": "未读",
+    "filterReplies": "回复",
+    "filterMentions": "提及",
+    "filterEvents": "活动",
+    "unreadCount": "{{count}} 条未读",
     "title": "通知",
     "empty": "暂无通知",
     "replied": "回复了您的讨论",

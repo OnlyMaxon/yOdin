@@ -71,6 +71,12 @@
     "published": "Soalan diterbitkan"
   },
   "notifications": {
+    "filterAll": "Semua",
+    "filterUnread": "Belum dibaca",
+    "filterReplies": "Balasan",
+    "filterMentions": "Sebutan",
+    "filterEvents": "Acara",
+    "unreadCount": "{{count}} belum dibaca",
     "title": "Pemberitahuan",
     "empty": "Tiada pemberitahuan lagi",
     "replied": "membalas perbincangan anda",

@@ -72,6 +72,12 @@
     "published": "Otázka byla zveřejněna"
   },
   "notifications": {
+    "filterAll": "Vše",
+    "filterUnread": "Nepřečtené",
+    "filterReplies": "Odpovědi",
+    "filterMentions": "Zmínky",
+    "filterEvents": "Události",
+    "unreadCount": "{{count}} nepřečtených",
     "title": "Oznámení",
     "empty": "Zatím žádná oznámení",
     "replied": "odpověděl na vaši diskusi",

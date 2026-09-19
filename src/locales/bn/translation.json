@@ -71,6 +71,12 @@
     "published": "প্রশ্ন প্রকাশিত হয়েছে"
   },
   "notifications": {
+    "filterAll": "সব",
+    "filterUnread": "অপঠিত",
+    "filterReplies": "উত্তর",
+    "filterMentions": "উল্লেখ",
+    "filterEvents": "ইভেন্ট",
+    "unreadCount": "{{count}}টি অপঠিত",
     "title": "বিজ্ঞপ্তি",
     "empty": "এখনও কোনো বিজ্ঞপ্তি নেই",
     "replied": "আপনার আলোচনায় উত্তর দিয়েছেন",

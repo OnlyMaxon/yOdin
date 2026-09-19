@@ -140,9 +140,19 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
           <View style={styles.handle} />
 
           <View style={styles.header}>
+            <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 6, right: 10 }}>
+              <Text style={styles.cancelText}>{t('newPost.cancel')}</Text>
+            </TouchableOpacity>
             <Text style={styles.headerTitle}>{t('newDiscussion.title')}</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
-              <Ionicons name="close" size={18} color={colors.textSecondary} />
+            <TouchableOpacity
+              style={[styles.publishPill, (!question.trim() || loading) && styles.publishPillDisabled]}
+              onPress={handlePost}
+              disabled={!question.trim() || loading}
+            >
+              {loading
+                ? <ActivityIndicator color="#fff" size="small" />
+                : <Text style={styles.publishPillText}>{t('newDiscussion.post')}</Text>
+              }
             </TouchableOpacity>
           </View>
 
@@ -194,17 +204,6 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
               <Text style={styles.error}>{error}</Text>
             </View>
           ) : null}
-
-          <TouchableOpacity
-            style={[styles.postBtn, (!question.trim() || loading) && styles.postBtnDisabled]}
-            onPress={handlePost}
-            disabled={!question.trim() || loading}
-          >
-            {loading
-              ? <ActivityIndicator color="#fff" />
-              : <Text style={styles.postBtnText}>{t('newDiscussion.post')}</Text>
-            }
-          </TouchableOpacity>
         </Animated.View>
       </KeyboardAvoidingView>
     </Modal>
@@ -239,18 +238,22 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       paddingBottom: 16,
     },
     headerTitle: {
-      fontSize: Typography.fontSizeLG,
+      fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightBold,
       color: c.textPrimary,
     },
-    closeBtn: {
-      width: 32,
-      height: 32,
-      borderRadius: 16,
-      backgroundColor: c.background,
+    cancelText: { fontSize: Typography.fontSizeMD, color: c.textSecondary, fontWeight: Typography.fontWeightMedium },
+    publishPill: {
+      minWidth: 84,
+      paddingHorizontal: 18,
+      paddingVertical: 9,
+      borderRadius: 20,
+      backgroundColor: c.primary,
       alignItems: 'center',
       justifyContent: 'center',
     },
+    publishPillDisabled: { backgroundColor: c.border },
+    publishPillText: { color: '#fff', fontSize: Typography.fontSizeSM, fontWeight: Typography.fontWeightBold },
     divider: {
       height: 1,
       backgroundColor: c.border,
@@ -307,18 +310,6 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       color: c.notification,
       fontSize: Typography.fontSizeSM,
       flex: 1,
-    },
-    postBtn: {
-      backgroundColor: c.primary,
-      borderRadius: 16,
-      paddingVertical: 16,
-      alignItems: 'center',
-    },
-    postBtnDisabled: { opacity: 0.4 },
-    postBtnText: {
-      color: '#fff',
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightSemiBold,
     },
   });
 }

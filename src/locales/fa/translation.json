@@ -71,6 +71,12 @@
     "published": "سؤال منتشر شد"
   },
   "notifications": {
+    "filterAll": "همه",
+    "filterUnread": "خوانده‌نشده",
+    "filterReplies": "پاسخ‌ها",
+    "filterMentions": "اشاره‌ها",
+    "filterEvents": "رویدادها",
+    "unreadCount": "{{count}} خوانده‌نشده",
     "title": "اعلان‌ها",
     "empty": "هنوز اعلانی نیست",
     "replied": "به بحث شما پاسخ داد",

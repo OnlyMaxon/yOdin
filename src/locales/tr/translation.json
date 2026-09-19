@@ -71,6 +71,12 @@
     "published": "Soru yayınlandı"
   },
   "notifications": {
+    "filterAll": "Tümü",
+    "filterUnread": "Okunmamış",
+    "filterReplies": "Yanıtlar",
+    "filterMentions": "Bahsetmeler",
+    "filterEvents": "Etkinlikler",
+    "unreadCount": "{{count}} okunmamış",
     "title": "Bildirimler",
     "empty": "Henüz bildirim yok",
     "replied": "tartışmanıza yanıt verdi",

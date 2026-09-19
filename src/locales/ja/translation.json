@@ -71,6 +71,12 @@
     "published": "質問を公開しました"
   },
   "notifications": {
+    "filterAll": "すべて",
+    "filterUnread": "未読",
+    "filterReplies": "返信",
+    "filterMentions": "メンション",
+    "filterEvents": "イベント",
+    "unreadCount": "未読 {{count}} 件",
     "title": "通知",
     "empty": "まだ通知はありません",
     "replied": "があなたのディスカッションに返信しました",

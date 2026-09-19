@@ -1,5 +1,29 @@
 {
   "enabledPlugins": {
     "expo@claude-plugins-official": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/calil/AppData/Local/Python/pythoncore-3.14-64/Scripts/graphify.EXE hook-guard search",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "C:/Users/calil/AppData/Local/Python/pythoncore-3.14-64/Scripts/graphify.EXE hook-guard read",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }

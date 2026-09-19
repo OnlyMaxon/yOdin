@@ -72,6 +72,12 @@
     "published": "Întrebare publicată"
   },
   "notifications": {
+    "filterAll": "Toate",
+    "filterUnread": "Necitite",
+    "filterReplies": "Răspunsuri",
+    "filterMentions": "Mențiuni",
+    "filterEvents": "Evenimente",
+    "unreadCount": "{{count}} necitite",
     "title": "Notificări",
     "empty": "Nicio notificare încă",
     "replied": "a răspuns la discuția ta",

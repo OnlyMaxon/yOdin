@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
   FlatList,
+  ScrollView,
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
@@ -10,6 +11,7 @@ import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect } from '@react-navigation/native';
 import Avatar from '../components/Avatar';
+import Chip from '../components/Chip';
 import { Spacing } from '../theme/spacing';
 import { useTranslation } from 'react-i18next';
 import { useNotificationStore } from '../store/useNotificationStore';
@@ -22,6 +24,15 @@ import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import EmptyState from '../components/EmptyState';
 
+type Filter = 'all' | 'unread' | 'reply' | 'mention' | 'participant';
+const FILTERS: { id: Filter; key: string }[] = [
+  { id: 'all', key: 'filterAll' },
+  { id: 'unread', key: 'filterUnread' },
+  { id: 'reply', key: 'filterReplies' },
+  { id: 'mention', key: 'filterMentions' },
+  { id: 'participant', key: 'filterEvents' },
+];
+
 export default function NotificationsScreen({ navigation }: any) {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -33,6 +44,7 @@ export default function NotificationsScreen({ navigation }: any) {
   const loaded = useNotificationStore((s) => s.loaded);
   const removeNotifications = useNotificationStore((s) => s.removeNotifications);
   const [clearingRead, setClearingRead] = useState(false);
+  const [filter, setFilter] = useState<Filter>('all');
 
   useFocusEffect(
     useCallback(() => {
@@ -89,13 +101,18 @@ export default function NotificationsScreen({ navigation }: any) {
     }
   };
 
+  const unreadCount = notifications.filter((n) => !n.read).length;
+  const filtered = notifications.filter((n) =>
+    filter === 'all' ? true : filter === 'unread' ? !n.read : n.type === filter,
+  );
+
   function renderItem({ item }: { item: AppNotification }) {
     const isModeration = item.type === 'removed' || item.type === 'blocked';
 
     if (isModeration) {
       return (
-        <View style={[styles.item, !item.read && styles.itemUnread]}>
-          <View style={[styles.avatar, styles.modAvatar]}>
+        <View style={[styles.row, !item.read && styles.rowUnread]}>
+          <View style={[styles.avatarWrap, styles.modAvatar]}>
             <Ionicons name="shield-outline" size={22} color={colors.notification} />
           </View>
           <View style={styles.content}>
@@ -105,7 +122,7 @@ export default function NotificationsScreen({ navigation }: any) {
                 : t('notifications.contentRemoved')}
             </Text>
             {item.contentSnippet ? (
-              <Text style={styles.question} numberOfLines={2}>"{item.contentSnippet}"</Text>
+              <Text style={styles.detail} numberOfLines={1}>"{item.contentSnippet}"</Text>
             ) : null}
             <Text style={styles.time}>{formatTime(item.createdAt, t)}</Text>
           </View>
@@ -117,16 +134,12 @@ export default function NotificationsScreen({ navigation }: any) {
     const badge = typeBadge(item.type);
     return (
       <TouchableOpacity
-        style={[styles.item, !item.read && styles.itemUnread]}
+        style={[styles.row, !item.read && styles.rowUnread]}
         onPress={() => handleNotificationPress(item)}
-        activeOpacity={0.75}
+        activeOpacity={0.7}
       >
         <View style={styles.avatarWrap}>
-          <Avatar
-            photoURL={item.fromUserPhoto}
-            name={item.fromUserName}
-            size={44}
-          />
+          <Avatar photoURL={item.fromUserPhoto} name={item.fromUserName} size={46} />
           {badge && (
             <View style={[styles.typeBadge, { backgroundColor: badge.color }]}>
               <Ionicons name={badge.icon} size={11} color="#fff" />
@@ -146,10 +159,10 @@ export default function NotificationsScreen({ navigation }: any) {
                     : 'notifications.replied',
             )}
           </Text>
-          <Text style={styles.question} numberOfLines={2}>
+          <Text style={styles.detail} numberOfLines={1}>
             "{item.postId ? item.postTitle : item.discussionQuestion}"
           </Text>
-          <Text style={styles.time}>{formatTime(item.createdAt, t)}</Text>
+          <Text style={[styles.time, !item.read && styles.timeUnread]}>{formatTime(item.createdAt, t)}</Text>
         </View>
         {!item.read && <View style={styles.dot} />}
       </TouchableOpacity>
@@ -159,22 +172,40 @@ export default function NotificationsScreen({ navigation }: any) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>{t('notifications.title')}</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.headerTitle}>{t('notifications.title')}</Text>
+          {unreadCount > 0 ? (
+            <Text style={styles.headerSub}>{t('notifications.unreadCount', { count: unreadCount })}</Text>
+          ) : null}
+        </View>
         {loaded && notifications.some((n) => n.read) ? (
-          <TouchableOpacity
-            onPress={handleClearRead}
-            style={styles.clearBtn}
-            disabled={clearingRead}
-          >
+          <TouchableOpacity onPress={handleClearRead} style={styles.clearBtn} disabled={clearingRead}>
             {clearingRead
               ? <ActivityIndicator size="small" color={colors.textSecondary} />
               : <Ionicons name="trash-outline" size={20} color={colors.textSecondary} />
             }
           </TouchableOpacity>
-        ) : (
-          <View style={styles.backBtn} />
-        )}
+        ) : null}
       </View>
+
+      {loaded && notifications.length > 0 ? (
+        <View style={styles.filterBar}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.filterContent}
+          >
+            {FILTERS.map((f) => (
+              <Chip
+                key={f.id}
+                label={t(`notifications.${f.key}`)}
+                active={filter === f.id}
+                onPress={() => setFilter(f.id)}
+              />
+            ))}
+          </ScrollView>
+        </View>
+      ) : null}
 
       {!loaded ? (
         <View style={styles.center}>
@@ -182,10 +213,11 @@ export default function NotificationsScreen({ navigation }: any) {
         </View>
       ) : (
         <FlatList
-          data={notifications}
+          data={filtered}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
-          contentContainerStyle={notifications.length === 0 ? styles.center : { paddingTop: 8, paddingBottom: 96 }}
+          ItemSeparatorComponent={() => <View style={styles.divider} />}
+          contentContainerStyle={filtered.length === 0 ? styles.center : { paddingBottom: 96 }}
           ListEmptyComponent={
             <EmptyState icon="notifications-outline" text={t('notifications.empty')} />
           }
@@ -201,24 +233,40 @@ function makeStyles(c: ColorPalette, topInset: number) {
     container: { flex: 1, backgroundColor: c.background },
     header: {
       paddingHorizontal: 20,
-      paddingTop: topInset + 12,
-      paddingBottom: 16,
-      backgroundColor: c.surface,
-      borderBottomWidth: 1,
-      borderBottomColor: c.border,
+      paddingTop: topInset + 10,
+      paddingBottom: 10,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
     },
     headerTitle: {
-      fontSize: Typography.fontSizeXL,
+      fontSize: Typography.fontSizeXXL,
       fontWeight: Typography.fontWeightBold,
-      color: c.primary,
+      color: c.textPrimary,
+      letterSpacing: -0.4,
     },
-    backBtn: { width: 32 },
-    clearBtn: { width: 32, alignItems: 'center', justifyContent: 'center' },
+    headerSub: { fontSize: Typography.fontSizeSM, color: c.textSecondary, marginTop: 2 },
+    clearBtn: { width: 36, height: 36, alignItems: 'center', justifyContent: 'center' },
+    filterBar: { paddingBottom: 8 },
+    filterContent: { gap: 8, paddingHorizontal: 20 },
     center: { flexGrow: 1, alignItems: 'center', justifyContent: 'center' },
-    avatarWrap: { marginRight: Spacing.md },
+    divider: { height: StyleSheet.hairlineWidth, backgroundColor: c.border, marginLeft: 78 },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      paddingHorizontal: 20,
+      paddingVertical: 14,
+      gap: 12,
+      backgroundColor: c.background,
+    },
+    rowUnread: { backgroundColor: c.primaryLight },
+    avatarWrap: { width: 46, height: 46 },
+    modAvatar: {
+      borderRadius: 23,
+      backgroundColor: c.surface,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     typeBadge: {
       position: 'absolute',
       right: -3,
@@ -229,48 +277,14 @@ function makeStyles(c: ColorPalette, topInset: number) {
       alignItems: 'center',
       justifyContent: 'center',
       borderWidth: 2,
-      borderColor: c.surface,
+      borderColor: c.background,
     },
-    item: {
-      flexDirection: 'row',
-      alignItems: 'flex-start',
-      paddingHorizontal: 16,
-      paddingVertical: 14,
-      marginHorizontal: 14,
-      marginVertical: 5,
-      borderRadius: 18,
-      backgroundColor: c.surface,
-      shadowColor: c.primary,
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.07,
-      shadowRadius: 10,
-      elevation: 2,
-    },
-    itemUnread: {
-      borderLeftWidth: 3,
-      borderLeftColor: c.primary,
-      backgroundColor: c.primaryLight,
-    },
-    avatar: {
-      width: 44,
-      height: 44,
-      borderRadius: 22,
-      backgroundColor: c.primaryLight,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginRight: 12,
-    },
-    modAvatar: { backgroundColor: c.background },
     content: { flex: 1 },
-    text: { fontSize: Typography.fontSizeMD, color: c.textPrimary, marginBottom: 4 },
+    text: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 20 },
     bold: { fontWeight: Typography.fontWeightSemiBold },
-    question: {
-      fontSize: Typography.fontSizeSM,
-      color: c.textSecondary,
-      fontStyle: 'italic',
-      marginBottom: 4,
-    },
-    time: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
+    detail: { fontSize: Typography.fontSizeSM, color: c.textSecondary, marginTop: 2 },
+    time: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginTop: 4 },
+    timeUnread: { color: c.primary, fontWeight: Typography.fontWeightMedium },
     dot: {
       width: 8,
       height: 8,

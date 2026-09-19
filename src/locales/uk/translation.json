@@ -72,6 +72,12 @@
     "published": "Питання опубліковано"
   },
   "notifications": {
+    "filterAll": "Усі",
+    "filterUnread": "Непрочитані",
+    "filterReplies": "Відповіді",
+    "filterMentions": "Згадки",
+    "filterEvents": "Події",
+    "unreadCount": "{{count}} непрочитаних",
     "title": "Сповіщення",
     "empty": "Ще немає сповіщень",
     "replied": "відповів на ваше обговорення",

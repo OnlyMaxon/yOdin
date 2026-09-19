@@ -71,6 +71,12 @@
     "published": "Vraag geplaatst"
   },
   "notifications": {
+    "filterAll": "Alles",
+    "filterUnread": "Ongelezen",
+    "filterReplies": "Reacties",
+    "filterMentions": "Vermeldingen",
+    "filterEvents": "Evenementen",
+    "unreadCount": "{{count}} ongelezen",
     "title": "Meldingen",
     "empty": "Nog geen meldingen",
     "replied": "heeft gereageerd op jouw discussie",

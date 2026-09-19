@@ -71,6 +71,12 @@
     "published": "השאלה פורסמה"
   },
   "notifications": {
+    "filterAll": "הכול",
+    "filterUnread": "לא נקראו",
+    "filterReplies": "תגובות",
+    "filterMentions": "אזכורים",
+    "filterEvents": "אירועים",
+    "unreadCount": "{{count}} לא נקראו",
     "title": "התראות",
     "empty": "עדיין אין התראות",
     "replied": "הגיב לדיון שלך",

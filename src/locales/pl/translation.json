@@ -73,6 +73,12 @@
     "published": "Pytanie opublikowane"
   },
   "notifications": {
+    "filterAll": "Wszystko",
+    "filterUnread": "Nieprzeczytane",
+    "filterReplies": "Odpowiedzi",
+    "filterMentions": "Wzmianki",
+    "filterEvents": "Wydarzenia",
+    "unreadCount": "{{count}} nieprzeczytane",
     "title": "Powiadomienia",
     "empty": "Brak powiadomień",
     "replied": "odpowiedział na Twoją dyskusję",

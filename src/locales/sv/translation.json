@@ -71,6 +71,12 @@
     "published": "Frågan publicerad"
   },
   "notifications": {
+    "filterAll": "Alla",
+    "filterUnread": "Olästa",
+    "filterReplies": "Svar",
+    "filterMentions": "Omnämnanden",
+    "filterEvents": "Evenemang",
+    "unreadCount": "{{count}} olästa",
     "title": "Aviseringar",
     "empty": "Inga aviseringar än",
     "replied": "svarade på din diskussion",
