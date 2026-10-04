@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 import { logoutUser, updateUserProfile, deleteOwnAccount, getUserProfile } from '../services/authService';
 import { useBlockStore } from '../store/useBlockStore';
-import { TERMS_URL } from '../config/links';
+import { TERMS_URL, PRIVACY_URL } from '../config/links';
 import { uploadAvatar } from '../services/storageService';
 import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDiscussions } from '../services/discussionService';
 import { deletePost, unsavePost, fetchUserPosts, fetchSavedPosts } from '../services/postService';
@@ -113,7 +113,6 @@ export default function ProfileScreen({ navigation }: any) {
   const [langModal, setLangModal] = useState(false);
   const [langSearch, setLangSearch] = useState('');
   const [themeModal, setThemeModal] = useState(false);
-  const [privacyModal, setPrivacyModal] = useState(false);
   const [blockedModal, setBlockedModal] = useState(false);
   const [blockedProfiles, setBlockedProfiles] = useState<User[]>([]);
   const [blockedLoading, setBlockedLoading] = useState(false);
@@ -717,12 +716,16 @@ export default function ProfileScreen({ navigation }: any) {
             <Text style={styles.menuItemText}>{t('settings.theme')}</Text>
             <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={() => { setMenuVisible(false); setPrivacyModal(true); }}>
+          {/* Opens the published policy, not an in-app summary: the summary went
+              stale against the real document (it predated Algolia and the
+              post-deletion email hash), and Play expects the policy itself to be
+              reachable from inside the app. */}
+          <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={() => Linking.openURL(PRIVACY_URL)}>
             <View style={[styles.menuIconWrap, { backgroundColor: colors.success + '18' }]}>
               <Ionicons name="shield-checkmark-outline" size={18} color={colors.success} />
             </View>
             <Text style={styles.menuItemText}>{t('settings.privacy')}</Text>
-            <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
+            <Ionicons name="open-outline" size={15} color={colors.textSecondary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => Linking.openURL(TERMS_URL)}>
             <View style={[styles.menuIconWrap, { backgroundColor: colors.primary + '18' }]}>
@@ -1006,21 +1009,6 @@ export default function ProfileScreen({ navigation }: any) {
             ))}
           </View>
         </TouchableOpacity>
-      </Modal>
-
-      {/* Privacy */}
-      <Modal visible={privacyModal} transparent animationType="slide" onRequestClose={() => setPrivacyModal(false)}>
-        <View style={styles.privacySheet}>
-          <View style={styles.privacyHeader}>
-            <Text style={styles.privacyTitle}>{t('settings.privacy')}</Text>
-            <TouchableOpacity onPress={() => setPrivacyModal(false)}>
-              <Text style={styles.privacyClose}>✕</Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView contentContainerStyle={styles.privacyBody}>
-            <Text style={styles.privacyText}>{t('settings.privacyText')}</Text>
-          </ScrollView>
-        </View>
       </Modal>
 
       {/* Blocked accounts */}

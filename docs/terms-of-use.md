@@ -6,15 +6,17 @@ permalink: /terms-of-use/
 
 # Terms of Use
 
-**Last updated:** 26 September 2026
+**Last updated:** 4 October 2026
 
 These terms are the agreement between you and **Jalil Orujli**, Chmielna 69,
 Warsaw, Poland — the operator of the yOdin mobile app (Android package
-`app.yodin`). Contact: **[hello@onlymaxon.com](mailto:hello@onlymaxon.com)**.
+`app.yodin`), built by the OnlyMaxon studio. The app is distributed on Google
+Play by **EA DIGITAL GROUP, MMC**.
+Contact: **[hello@onlymaxon.com](mailto:hello@onlymaxon.com)**.
 
 By creating an account you accept these terms. If you do not accept them, do not
 use the App. How your data is handled is described separately in the
-[privacy policy](/yOdin/privacy-policy/).
+[privacy policy](https://onlymaxon.com/apps/yodin/privacy/).
 
 ---
 
@@ -107,7 +109,7 @@ section 3, report it, so it stops reaching everybody else too.
 
 You can delete your account at any time in **Profile → Settings → Delete
 account**. What is deleted and what remains is set out on the
-[account deletion page](/yOdin/delete-account/).
+[account deletion page](https://onlymaxon.com/apps/yodin/delete-account/).
 
 The short version: your profile, your own posts and discussions and their media
 go. Replies and comments you left under other people's content stay so those

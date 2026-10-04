@@ -123,7 +123,6 @@
     "themeDark": "Ciemny",
     "notifications": "Powiadomienia",
     "privacy": "Prywatność",
-    "privacyText": "yOdin zbiera tylko dane, które podajesz: imię i nazwisko, narodowość, lokalizację i zdjęcie profilowe. Te informacje służą wyłącznie do personalizacji Twojego feeda i wyświetlania Twojej tożsamości w dyskusjach.\n\nTwoje dane są bezpiecznie przechowywane w Firebase i nigdy nie są sprzedawane ani udostępniane stronom trzecim.\n\nMożesz w każdej chwili usunąć konto i wszystkie powiązane dane: Profil → Ustawienia → Usuń konto.",
     "restartTitle": "Wymagany restart",
     "restartMessage": "Zamknij i otwórz ponownie aplikację, aby zastosować nowy kierunek układu.",
     "about": "O yOdin"

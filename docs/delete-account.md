@@ -11,7 +11,7 @@ permalink: /delete-account/
 **Contact:** [hello@onlymaxon.com](mailto:hello@onlymaxon.com)
 
 This page explains how to delete your yOdin account and what happens to your
-data. See also the [privacy policy](/yOdin/privacy-policy/).
+data. See also the [privacy policy](https://onlymaxon.com/apps/yodin/privacy/).
 
 ---
 

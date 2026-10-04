@@ -300,10 +300,24 @@ visibility but leaves the follows broken.
 
 ### Public documents
 
-`docs/` is published as a GitHub Pages site (`docs/_config.yml` + a
-self-contained layout, no theme gem, light and dark): the privacy policy, the
-account-deletion page Play links to, and the terms of use. Their URLs live in one
-place, `src/config/links.ts`, because the app links to all three.
+`docs/` holds the Markdown source of the three legal documents: the privacy
+policy, the account-deletion page Play links to, and the terms of use. It also
+carries a GitHub Pages setup (`docs/_config.yml` + a self-contained layout, no
+theme gem, light and dark) which can render them.
+
+**The published copies the app and the store listing point at live on the
+studio's own domain** — `onlymaxon.com/apps/yodin/{privacy,terms,delete-account}/`
+— so the URLs match the Play developer account that publishes yOdin. Their URLs
+live in one place, `src/config/links.ts`. Note the path segments differ from the
+Markdown filenames (`/privacy/`, not `/privacy-policy/`). Because the published
+pages and `docs/` are two copies, **a change to either has to be mirrored to the
+other**; `docs/` is the source of truth for wording.
+
+In the app: the terms are linked from the signup gate and from Profile ▸
+Settings, and the privacy policy from Profile ▸ Settings. Settings deliberately
+links the *published policy* rather than an in-app summary — the old summary had
+gone stale against the real document (it predated Algolia and the post-deletion
+email hash) and a stale summary that contradicts the policy is worse than none.
 `play-store-listing.md` is excluded from the build — it is internal working copy.
 Jekyll only renders Markdown that carries front matter; without it the file is
 served as raw text.
@@ -364,9 +378,20 @@ Write key, `EMAIL_HASH_KEY`) live in Secret Manager, never on the client.
 **Design tokens** (`src/theme/`):
 - `colors.ts` — `LightColors` / `DarkColors` via `useTheme()`. Palette is
   **locked 1:1 to the Figma design kit** (light = its `:root`, dark = `.dark`):
-  purple-brand violet (`#6C35DE`), airy lavender ground (`#F3F0FB`), white
-  surfaces, a lavender-biased secondary grey, category accents (news=primary,
-  events=coral, places=emerald, lifestyle=pink).
+  brand violet (`#6C35DE` / `#8B5CF6`), airy lavender ground (`#F3F0FB`), white
+  surfaces, and the kit's full token set — `primaryLight` (= its `--secondary`),
+  `muted` (quiet fill behind inactive chips, pills and the chat composer),
+  `secondaryText` (= `--secondary-foreground`: the text/icon colour on a
+  `primaryLight` surface — equals `primary` in light, a lighter lavender
+  `#C4B5F7` in dark), `textSecondary` (= `--muted-foreground`, which also colours
+  inactive tab-bar items).
+- `CATEGORY_META` also lives in `colors.ts` (not a separate file): per-category
+  emoji + accent mirroring the kit's badge palette — news `#4F46E5`, events
+  coral, places emerald, lifestyle amber `#F59E0B`. Feed filter chips, feed/detail
+  category badges and the New Post chips all read it, so the four surfaces cannot
+  drift apart.
+- The nav bar's centre "+" is an `expo-linear-gradient` 135° violet ramp, as in
+  the kit; its unread badge is coral, not the error red.
 - `spacing.ts` — `Spacing` (4·8·12·16·20·24·32) and `Radius` (sm/md/lg/pill).
   Use these instead of magic numbers.
 - `typography.ts` — font sizes + weight constants.
@@ -437,11 +462,17 @@ bugs. Listed so nobody rediscovers them the hard way.
 - App Check / Google Sign-In are deferred (need a dev build).
 - **Terms of Use are consented to once, at registration.** Play requires
   acceptance *before* a user can create content, so the gate sits on the signup
-  button rather than on the first post. The document lives on the Pages site, not
-  in the app, which keeps it editable without an app update but means it needs
-  network to read. If the terms change materially, there is currently no
-  mechanism to ask existing users to accept the new version — announcing it in
-  the app, as §8 of the terms promises, is a manual job for now.
+  button rather than on the first post. The document is hosted, not bundled,
+  which keeps it editable without an app update but means it needs network to
+  read. The acceptance **is recorded** — `users/{uid}.acceptedTermsAt` +
+  `acceptedTermsVersion` (from `TERMS_VERSION` in `config/links.ts`), so there is
+  an answer to "who agreed to what" rather than only a disabled button. Two
+  residuals: the fields are client-written like every other profile field, so
+  they are an audit record rather than tamper-proof evidence; and if the terms
+  change materially there is still no flow to re-ask existing users — bump
+  `TERMS_VERSION`, then announcing it in the app (as §8 of the terms promises) is
+  a manual job. The privacy policy is **notice, not consent**, so it is linked
+  beside the checkbox rather than gated behind it.
 - **The block list is private, the ban-evasion hash is not reversible, but
   neither hides the obvious.** A blocked person can infer the block from
   content disappearing; a banned person can register with a fresh address. Both

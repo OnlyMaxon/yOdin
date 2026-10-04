@@ -228,10 +228,29 @@ Pulsuzdur. E-poçtla qeydiyyatdan keçin və qoşulun.
 ### Tags
 community, forum, expat, questions and answers, events, local news
 
+### Who is who (keep these roles straight — they are deliberately not the same)
+- **Play developer account (publisher, shown on the store page):**
+  **EA DIGITAL GROUP, MMC** — apt. 50, 145 Samad Vurgun Str., Sumgait 5000,
+  Azerbaijan. Google displays the verified name and address of this account.
+- **Operator / data controller (named in the privacy policy and terms):**
+  **Jalil Orujli**, Chmielna 69, Warsaw, Poland. This is an establishment in the
+  EU, so the GDPR applies under Art. 3(1) and **no Art. 27 EU representative is
+  required** — which it would be if the controller sat outside the EEA.
+- **OnlyMaxon** — the studio credit. A brand, not a legal entity, so it is never
+  named as the controller.
+
+Publisher and controller differing is lawful (one distributes, the other decides
+how data is processed), but it does look like a mismatch at a glance. Both
+documents therefore state the Play distributor explicitly, so a reviewer can see
+the relationship instead of guessing.
+
 ### Contact details
-- Email: **[SUPPORT EMAIL]**
-- Website: **[WEBSITE URL]** (optional)
-- Privacy policy: **[HOSTED URL OF docs/privacy-policy.md]**
+- Email: **hello@onlymaxon.com**
+- Website: **https://onlymaxon.com/apps/yodin/**
+- Privacy policy: **https://onlymaxon.com/apps/yodin/privacy/**
+- Terms of use: **https://onlymaxon.com/apps/yodin/terms/**
+- Account deletion (Data safety ▸ "Data deletion URL"):
+  **https://onlymaxon.com/apps/yodin/delete-account/**
 
 ### Data safety — declare these
 

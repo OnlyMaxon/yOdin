@@ -13,6 +13,7 @@ import { doc, setDoc, getDoc, writeBatch } from 'firebase/firestore';
 import { auth, db, functions } from './firebase';
 import { User } from '../types';
 import { normalizeUsername, isValidUsername } from '../utils/mentions';
+import { TERMS_VERSION } from '../config/links';
 
 export async function registerUser(
   email: string,
@@ -50,6 +51,10 @@ export async function registerUser(
       languages: [],
       points: 0,
       createdAt: Date.now(),
+      // The signup gate blocks the button until the terms are accepted; record
+      // that it happened and against which revision (see TERMS_VERSION).
+      acceptedTermsAt: Date.now(),
+      acceptedTermsVersion: TERMS_VERSION,
     });
     batch.set(doc(db, 'usernames', uname), { uid: user.uid });
     await batch.commit();

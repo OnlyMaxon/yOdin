@@ -18,7 +18,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { getErrorMessage } from '../../services/errorHandler';
 import { useUsernameCheck } from '../../hooks/useUsernameCheck';
 import { isValidUsername } from '../../utils/mentions';
-import { TERMS_URL } from '../../config/links';
+import { TERMS_URL, PRIVACY_URL } from '../../config/links';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../hooks/useTheme';
 import { Typography } from '../../theme/typography';
@@ -193,9 +193,18 @@ export default function RegisterScreen({ navigation, route }: any) {
               </View>
               <Text style={styles.termsText}>{t('terms.acceptLabel')}</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
-              <Text style={styles.termsLink}>{t('terms.open')}</Text>
-            </TouchableOpacity>
+            {/* The checkbox is consent to the terms. The privacy policy is
+                notice, not something to consent to — so it sits beside the
+                terms as a link the user can read before signing up, which is
+                what Play and the GDPR's transparency duty expect. */}
+            <View style={styles.termsLinks}>
+              <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
+                <Text style={styles.termsLink}>{t('terms.open')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_URL)}>
+                <Text style={styles.termsLink}>{t('settings.privacy')}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         )}
 
@@ -285,11 +294,12 @@ function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalet
     },
     checkboxOn: { backgroundColor: c.primary, borderColor: c.primary },
     termsText: { flex: 1, fontSize: Typography.fontSizeSM, color: c.textPrimary },
+    // Indented to line up under the checkbox label, not the checkbox itself.
+    termsLinks: { flexDirection: 'row', gap: 18, marginLeft: 32 },
     termsLink: {
       fontSize: Typography.fontSizeSM,
       color: c.primary,
       textDecorationLine: 'underline',
-      marginLeft: 32,
     },
     usernameHint: {
       fontSize: Typography.fontSizeSM,
