@@ -41,7 +41,9 @@
     "notVerifiedYet": "Email not verified yet. Open the link in your inbox, then tap here.",
     "useAnotherAccount": "Use another account",
     "openEmailApp": "Open Email App",
-    "sendEmail": "Send Email"
+    "sendEmail": "Send Email",
+    "registrationBlockedTitle": "Registration unavailable",
+    "registrationBlocked": "This email address can't be used to register right now. If you think this is a mistake, write to hello@onlymaxon.com."
   },
   "feed": {
     "title": "Feed",
@@ -119,7 +121,7 @@
     "themeDark": "Dark",
     "notifications": "Notifications",
     "privacy": "Privacy",
-    "privacyText": "yOdin collects only the data you provide: your name, nationality, location, and profile photo. This information is used solely to personalise your feed and show your identity in discussions.\n\nYour data is stored securely in Firebase and is never sold or shared with third parties.\n\nYou can delete your account and all associated data at any time by contacting support.",
+    "privacyText": "yOdin collects only the data you provide: your name, nationality, location, and profile photo. This information is used solely to personalise your feed and show your identity in discussions.\n\nYour data is stored securely in Firebase and is never sold or shared with third parties.\n\nYou can delete your account and all associated data at any time in Profile → Settings → Delete account.",
     "restartTitle": "Restart required",
     "restartMessage": "Close and reopen the app to apply the new layout direction.",
     "about": "About yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Participants",
     "empty": "No one has signed up yet"
+  },
+  "common": {
+    "deletedAccount": "Deleted account"
+  },
+  "deleteAccount": {
+    "title": "Delete account",
+    "message": "This cannot be undone. Your profile, your posts and discussions, and your photos and videos will be permanently deleted.",
+    "kept": "Replies and comments you left under other people's content stay so those discussions still make sense, but they will no longer carry your name.",
+    "password": "Confirm with your password",
+    "passwordPlaceholder": "Your password",
+    "confirm": "Delete permanently",
+    "cancel": "Cancel",
+    "wrongPassword": "Wrong password.",
+    "tooManyRequests": "Too many attempts. Try again later.",
+    "failed": "Could not delete the account. Please try again."
+  },
+  "block": {
+    "listTitle": "Blocked accounts",
+    "listEmpty": "You haven't blocked anyone.",
+    "block": "Block",
+    "unblock": "Unblock",
+    "cancel": "Cancel",
+    "confirmTitle": "Block {{name}}?",
+    "confirmMessage": "They won't be able to reply in your discussions, comment on your posts, or mention you. You'll stop seeing each other's content, and you'll both stop following each other.",
+    "blockedTitle": "You blocked this account",
+    "blockedExplainer": "Their posts and replies are hidden from you, and they can't reach you. Unblock to see their profile again.",
+    "failedTitle": "Something went wrong",
+    "failed": "Could not update the block. Please try again."
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "acceptLabel": "I accept the Terms of Use",
+    "open": "Open the Terms of Use",
+    "required": "Please accept the Terms of Use to continue."
   }
 }

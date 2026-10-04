@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Alert } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, signOut, User } from 'firebase/auth';
 import * as SplashScreen from 'expo-splash-screen';
 import { auth } from '../services/firebase';
 import { getUserProfile } from '../services/authService';
 import { useAuthStore } from '../store/useAuthStore';
+import { useBlockStore } from '../store/useBlockStore';
 import { isModerator } from '../config/moderation';
+import i18n from '../services/i18n';
 import { LightColors } from '../theme/colors';
 import AuthNavigator from './AuthNavigator';
 import TabNavigator from './TabNavigator';
@@ -31,7 +33,21 @@ export default function RootNavigator() {
       setIsModerator(false);
     }
     // Refresh so a just-clicked verification link is reflected.
-    try { await user.reload(); } catch { /* offline — fall through to gate */ }
+    try {
+      await user.reload();
+    } catch (e) {
+      // A signup that the server rejected (re-registering after a ban) loses its
+      // Auth record while this app still holds the session. Reloading then fails
+      // permanently, and without this the user would sit on the verification
+      // screen forever with no way back.
+      const code = (e as { code?: string })?.code ?? '';
+      if (code.includes('user-not-found') || code.includes('user-disabled') || code.includes('user-token-expired')) {
+        await signOut(auth).catch(() => {});
+        Alert.alert(i18n.t('auth.registrationBlockedTitle'), i18n.t('auth.registrationBlocked'));
+        return;
+      }
+      /* offline — fall through to the gate */
+    }
     if (!user.emailVerified) {
       setPendingEmailVerification(true);
       setAppState('emailVerification');
@@ -40,6 +56,9 @@ export default function RootNavigator() {
     setPendingEmailVerification(false);
     const p = await getUserProfile(user.uid);
     setProfile(p);
+    // Load the block lists before the first list renders, so blocked content
+    // never flashes on screen and then disappears.
+    await useBlockStore.getState().load(user.uid);
     setAppState(p?.nationality ? 'main' : 'onboarding');
   }, []);
 
@@ -52,6 +71,9 @@ export default function RootNavigator() {
         if (!user) {
           setIsModerator(false);
           setPendingEmailVerification(false);
+          // Block lists are personal; the next person to sign in on this device
+          // must not inherit them.
+          useBlockStore.getState().reset();
           setAppState('auth');
           return;
         }

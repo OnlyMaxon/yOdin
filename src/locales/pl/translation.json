@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-mail nie został jeszcze zweryfikowany. Otwórz link w skrzynce, a potem dotknij tutaj.",
     "useAnotherAccount": "Użyj innego konta",
     "openEmailApp": "Otwórz aplikację pocztową",
-    "sendEmail": "Wyślij e-mail"
+    "sendEmail": "Wyślij e-mail",
+    "registrationBlockedTitle": "Rejestracja niedostępna",
+    "registrationBlocked": "Tego adresu e-mail nie można teraz użyć do rejestracji. Jeśli to pomyłka, napisz na hello@onlymaxon.com."
   },
   "feed": {
     "title": "Aktualności",
@@ -121,7 +123,7 @@
     "themeDark": "Ciemny",
     "notifications": "Powiadomienia",
     "privacy": "Prywatność",
-    "privacyText": "yOdin zbiera tylko dane, które podajesz: imię i nazwisko, narodowość, lokalizację i zdjęcie profilowe. Te informacje służą wyłącznie do personalizacji Twojego feeda i wyświetlania Twojej tożsamości w dyskusjach.\n\nTwoje dane są bezpiecznie przechowywane w Firebase i nigdy nie są sprzedawane ani udostępniane stronom trzecim.\n\nMożesz usunąć swoje konto i wszystkie powiązane dane w dowolnym momencie, kontaktując się z pomocą techniczną.",
+    "privacyText": "yOdin zbiera tylko dane, które podajesz: imię i nazwisko, narodowość, lokalizację i zdjęcie profilowe. Te informacje służą wyłącznie do personalizacji Twojego feeda i wyświetlania Twojej tożsamości w dyskusjach.\n\nTwoje dane są bezpiecznie przechowywane w Firebase i nigdy nie są sprzedawane ani udostępniane stronom trzecim.\n\nMożesz w każdej chwili usunąć konto i wszystkie powiązane dane: Profil → Ustawienia → Usuń konto.",
     "restartTitle": "Wymagany restart",
     "restartMessage": "Zamknij i otwórz ponownie aplikację, aby zastosować nowy kierunek układu.",
     "about": "O yOdin"
@@ -271,5 +273,39 @@
   "participants": {
     "title": "Uczestnicy",
     "empty": "Nikt się jeszcze nie zapisał"
+  },
+  "common": {
+    "deletedAccount": "Usunięte konto"
+  },
+  "deleteAccount": {
+    "title": "Usuń konto",
+    "message": "Tej operacji nie można cofnąć. Twój profil, posty i dyskusje oraz zdjęcia i filmy zostaną trwale usunięte.",
+    "kept": "Odpowiedzi i komentarze pozostawione pod treściami innych osób pozostaną, aby dyskusje nadal miały sens, ale nie będą już podpisane Twoim imieniem.",
+    "password": "Potwierdź hasłem",
+    "passwordPlaceholder": "Twoje hasło",
+    "confirm": "Usuń trwale",
+    "cancel": "Anuluj",
+    "wrongPassword": "Nieprawidłowe hasło.",
+    "tooManyRequests": "Zbyt wiele prób. Spróbuj później.",
+    "failed": "Nie udało się usunąć konta. Spróbuj ponownie."
+  },
+  "block": {
+    "listTitle": "Zablokowane konta",
+    "listEmpty": "Nikogo nie zablokowałeś.",
+    "block": "Zablokuj",
+    "unblock": "Odblokuj",
+    "cancel": "Anuluj",
+    "confirmTitle": "Zablokować {{name}}?",
+    "confirmMessage": "Ta osoba nie będzie mogła odpowiadać w Twoich dyskusjach, komentować Twoich postów ani Cię wspominać. Przestaniecie widzieć swoje treści, a obserwacje w obie strony zostaną przerwane.",
+    "blockedTitle": "Zablokowałeś to konto",
+    "blockedExplainer": "Posty i odpowiedzi tej osoby są dla Ciebie ukryte i nie może się z Tobą skontaktować. Odblokuj, aby znowu zobaczyć profil.",
+    "failedTitle": "Coś poszło nie tak",
+    "failed": "Nie udało się zmienić blokady. Spróbuj ponownie."
+  },
+  "terms": {
+    "title": "Warunki korzystania",
+    "acceptLabel": "Akceptuję warunki korzystania",
+    "open": "Otwórz warunki korzystania",
+    "required": "Zaakceptuj warunki korzystania, aby kontynuować."
   }
 }

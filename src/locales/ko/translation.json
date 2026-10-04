@@ -41,7 +41,9 @@
     "notVerifiedYet": "이메일이 아직 확인되지 않았습니다. 받은편지함의 링크를 연 뒤 여기를 누르세요.",
     "useAnotherAccount": "다른 계정 사용",
     "openEmailApp": "이메일 앱 열기",
-    "sendEmail": "이메일 보내기"
+    "sendEmail": "이메일 보내기",
+    "registrationBlockedTitle": "가입할 수 없습니다",
+    "registrationBlocked": "이 이메일 주소로는 현재 가입할 수 없습니다. 오류라고 생각되면 hello@onlymaxon.com 으로 문의해 주세요."
   },
   "feed": {
     "title": "피드",
@@ -119,7 +121,7 @@
     "themeDark": "다크",
     "notifications": "알림",
     "privacy": "개인정보",
-    "privacyText": "yOdin은 귀하가 제공하는 데이터만 수집합니다: 이름, 국적, 위치 및 프로필 사진. 이 정보는 피드를 개인화하고 토론에서 귀하의 신원을 표시하는 데만 사용됩니다.\n\n귀하의 데이터는 Firebase에 안전하게 저장되며 제3자에게 판매하거나 공유하지 않습니다.\n\n지원팀에 연락하여 언제든지 계정과 모든 관련 데이터를 삭제할 수 있습니다.",
+    "privacyText": "yOdin은 귀하가 제공하는 데이터만 수집합니다: 이름, 국적, 위치 및 프로필 사진. 이 정보는 피드를 개인화하고 토론에서 귀하의 신원을 표시하는 데만 사용됩니다.\n\n귀하의 데이터는 Firebase에 안전하게 저장되며 제3자에게 판매하거나 공유하지 않습니다.\n\n프로필 → 설정 → 계정 삭제에서 언제든지 계정과 관련된 모든 데이터를 삭제할 수 있습니다.",
     "restartTitle": "재시작 필요",
     "restartMessage": "새 레이아웃 방향을 적용하려면 앱을 닫고 다시 여세요.",
     "about": "yOdin 정보"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "참가자",
     "empty": "아직 아무도 참가하지 않았습니다"
+  },
+  "common": {
+    "deletedAccount": "삭제된 계정"
+  },
+  "deleteAccount": {
+    "title": "계정 삭제",
+    "message": "이 작업은 되돌릴 수 없습니다. 프로필, 게시물과 토론, 사진과 동영상이 영구적으로 삭제됩니다.",
+    "kept": "다른 사람의 게시물에 남긴 답변과 댓글은 토론의 맥락이 유지되도록 남지만, 이름은 더 이상 표시되지 않습니다.",
+    "password": "비밀번호로 확인",
+    "passwordPlaceholder": "비밀번호",
+    "confirm": "영구 삭제",
+    "cancel": "취소",
+    "wrongPassword": "비밀번호가 올바르지 않습니다.",
+    "tooManyRequests": "시도 횟수가 너무 많습니다. 나중에 다시 시도해 주세요.",
+    "failed": "계정을 삭제하지 못했습니다. 다시 시도해 주세요."
+  },
+  "block": {
+    "listTitle": "차단한 계정",
+    "listEmpty": "아직 아무도 차단하지 않았습니다.",
+    "block": "차단",
+    "unblock": "차단 해제",
+    "cancel": "취소",
+    "confirmTitle": "{{name}} 님을 차단할까요?",
+    "confirmMessage": "이 사람은 내 토론에 답변하거나, 내 게시물에 댓글을 달거나, 나를 언급할 수 없게 됩니다. 서로의 콘텐츠가 보이지 않게 되고 양쪽 팔로우도 해제됩니다.",
+    "blockedTitle": "이 계정을 차단했습니다",
+    "blockedExplainer": "이 사람의 게시물과 답변은 숨겨지며, 나에게 연락할 수 없습니다. 프로필을 다시 보려면 차단을 해제하세요.",
+    "failedTitle": "문제가 발생했습니다",
+    "failed": "차단을 변경하지 못했습니다. 다시 시도해 주세요."
+  },
+  "terms": {
+    "title": "이용약관",
+    "acceptLabel": "이용약관에 동의합니다",
+    "open": "이용약관 열기",
+    "required": "계속하려면 이용약관에 동의해 주세요."
   }
 }

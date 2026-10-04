@@ -33,6 +33,7 @@ import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import { weightedSort } from '../utils/weightedSort';
+import { useWithoutBlocked } from '../hooks/useWithoutBlocked';
 import FollowButton from '../components/FollowButton';
 import NationFilterDrawer from '../components/NationFilterDrawer';
 import Card from '../components/Card';
@@ -378,9 +379,9 @@ export default function ForumScreen({ navigation }: any) {
               <Text style={styles.answerLabel}>{t('discussion.acceptedAnswer')}</Text>
             </View>
             <Text style={styles.answerText} numberOfLines={3}>{item.acceptedReplyText}</Text>
-            {item.acceptedReplyAuthorName ? (
-              <Text style={styles.answerAuthor}>— {item.acceptedReplyAuthorName}</Text>
-            ) : null}
+            <Text style={styles.answerAuthor}>
+              — {item.acceptedReplyAuthorName || t('common.deletedAccount')}
+            </Text>
           </View>
         ) : null}
         <View style={styles.cardFooter}>
@@ -407,7 +408,10 @@ export default function ForumScreen({ navigation }: any) {
     );
   }
 
-  const visibleList = isSearching ? searchResults : discussions;
+  const visibleList = useWithoutBlocked(
+    isSearching ? searchResults : discussions,
+    (d) => d.authorId,
+  );
 
 
   return (

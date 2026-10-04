@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-mailul nu e verificat încă. Deschide linkul din inbox, apoi atinge aici.",
     "useAnotherAccount": "Folosește alt cont",
     "openEmailApp": "Deschide aplicația de e-mail",
-    "sendEmail": "Trimite e-mail"
+    "sendEmail": "Trimite e-mail",
+    "registrationBlockedTitle": "Înregistrare indisponibilă",
+    "registrationBlocked": "Această adresă de e-mail nu poate fi folosită acum pentru înregistrare. Dacă e o greșeală, scrie la hello@onlymaxon.com."
   },
   "feed": {
     "title": "Flux",
@@ -120,7 +122,7 @@
     "themeDark": "Întunecat",
     "notifications": "Notificări",
     "privacy": "Confidențialitate",
-    "privacyText": "yOdin colectează doar datele pe care le furnizezi: numele, naționalitatea, locația și fotografia de profil. Aceste informații sunt utilizate exclusiv pentru a-ți personaliza fluxul și a-ți afișa identitatea în discuții.\n\nDatele tale sunt stocate în siguranță în Firebase și nu sunt niciodată vândute sau partajate cu terți.\n\nPoți șterge contul și toate datele asociate în orice moment contactând echipa de suport.",
+    "privacyText": "yOdin colectează doar datele pe care le furnizezi: numele, naționalitatea, locația și fotografia de profil. Aceste informații sunt utilizate exclusiv pentru a-ți personaliza fluxul și a-ți afișa identitatea în discuții.\n\nDatele tale sunt stocate în siguranță în Firebase și nu sunt niciodată vândute sau partajate cu terți.\n\nPoți șterge contul și toate datele asociate oricând: Profil → Setări → Șterge contul.",
     "restartTitle": "Repornire necesară",
     "restartMessage": "Închideți și redeschideți aplicația pentru a aplica noua direcție a aspectului.",
     "about": "Despre yOdin"
@@ -270,5 +272,39 @@
   "participants": {
     "title": "Participanți",
     "empty": "Nimeni nu s-a înscris încă"
+  },
+  "common": {
+    "deletedAccount": "Cont șters"
+  },
+  "deleteAccount": {
+    "title": "Șterge contul",
+    "message": "Această acțiune nu poate fi anulată. Profilul tău, postările și discuțiile tale, fotografiile și videoclipurile vor fi șterse definitiv.",
+    "kept": "Răspunsurile și comentariile lăsate sub conținutul altora rămân, ca discuțiile să aibă în continuare sens, dar nu vor mai purta numele tău.",
+    "password": "Confirmă cu parola ta",
+    "passwordPlaceholder": "Parola ta",
+    "confirm": "Șterge definitiv",
+    "cancel": "Anulează",
+    "wrongPassword": "Parolă incorectă.",
+    "tooManyRequests": "Prea multe încercări. Încearcă mai târziu.",
+    "failed": "Contul nu a putut fi șters. Încearcă din nou."
+  },
+  "block": {
+    "listTitle": "Conturi blocate",
+    "listEmpty": "Nu ai blocat pe nimeni.",
+    "block": "Blochează",
+    "unblock": "Deblochează",
+    "cancel": "Anulează",
+    "confirmTitle": "Blochezi {{name}}?",
+    "confirmMessage": "Această persoană nu va mai putea răspunde în discuțiile tale, comenta postările tale sau să te menționeze. Nu veți mai vedea conținutul celuilalt, iar abonările în ambele sensuri vor fi oprite.",
+    "blockedTitle": "Ai blocat acest cont",
+    "blockedExplainer": "Postările și răspunsurile lui sunt ascunse pentru tine, iar el nu te poate contacta. Deblochează pentru a vedea din nou profilul.",
+    "failedTitle": "Ceva n-a mers bine",
+    "failed": "Blocarea nu a putut fi actualizată. Încearcă din nou."
+  },
+  "terms": {
+    "title": "Termeni de utilizare",
+    "acceptLabel": "Accept termenii de utilizare",
+    "open": "Deschide termenii de utilizare",
+    "required": "Acceptă termenii de utilizare pentru a continua."
   }
 }

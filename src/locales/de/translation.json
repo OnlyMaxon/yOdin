@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-Mail noch nicht bestätigt. Öffne den Link in deinem Postfach und tippe dann hier.",
     "useAnotherAccount": "Anderes Konto verwenden",
     "openEmailApp": "E-Mail-App öffnen",
-    "sendEmail": "E-Mail senden"
+    "sendEmail": "E-Mail senden",
+    "registrationBlockedTitle": "Registrierung nicht möglich",
+    "registrationBlocked": "Mit dieser E-Mail-Adresse ist derzeit keine Registrierung möglich. Wenn das ein Fehler ist, schreib an hello@onlymaxon.com."
   },
   "feed": {
     "title": "Feed",
@@ -119,7 +121,7 @@
     "themeDark": "Dunkel",
     "notifications": "Benachrichtigungen",
     "privacy": "Datenschutz",
-    "privacyText": "yOdin erfasst nur die Daten, die Sie angeben: Ihren Namen, Ihre Nationalität, Ihren Standort und Ihr Profilfoto. Diese Informationen werden ausschließlich dazu verwendet, Ihren Feed zu personalisieren und Ihre Identität in Diskussionen anzuzeigen.\n\nIhre Daten werden sicher in Firebase gespeichert und niemals an Dritte verkauft oder weitergegeben.\n\nSie können Ihr Konto und alle zugehörigen Daten jederzeit durch Kontaktaufnahme mit dem Support löschen.",
+    "privacyText": "yOdin erfasst nur die Daten, die Sie angeben: Ihren Namen, Ihre Nationalität, Ihren Standort und Ihr Profilfoto. Diese Informationen werden ausschließlich dazu verwendet, Ihren Feed zu personalisieren und Ihre Identität in Diskussionen anzuzeigen.\n\nIhre Daten werden sicher in Firebase gespeichert und niemals an Dritte verkauft oder weitergegeben.\n\nSie können Ihr Konto und alle zugehörigen Daten jederzeit löschen: Profil → Einstellungen → Konto löschen.",
     "restartTitle": "Neustart erforderlich",
     "restartMessage": "Schließen und öffnen Sie die App erneut, um die neue Layoutrichtung anzuwenden.",
     "about": "Über yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Teilnehmer",
     "empty": "Noch niemand hat sich angemeldet"
+  },
+  "common": {
+    "deletedAccount": "Gelöschtes Konto"
+  },
+  "deleteAccount": {
+    "title": "Konto löschen",
+    "message": "Dieser Schritt lässt sich nicht rückgängig machen. Dein Profil, deine Beiträge und Diskussionen sowie deine Fotos und Videos werden endgültig gelöscht.",
+    "kept": "Antworten und Kommentare unter Inhalten anderer bleiben erhalten, damit die Diskussionen verständlich bleiben – aber ohne deinen Namen.",
+    "password": "Mit deinem Passwort bestätigen",
+    "passwordPlaceholder": "Dein Passwort",
+    "confirm": "Endgültig löschen",
+    "cancel": "Abbrechen",
+    "wrongPassword": "Falsches Passwort.",
+    "tooManyRequests": "Zu viele Versuche. Bitte später erneut versuchen.",
+    "failed": "Das Konto konnte nicht gelöscht werden. Bitte versuche es erneut."
+  },
+  "block": {
+    "listTitle": "Blockierte Konten",
+    "listEmpty": "Du hast niemanden blockiert.",
+    "block": "Blockieren",
+    "unblock": "Blockierung aufheben",
+    "cancel": "Abbrechen",
+    "confirmTitle": "{{name}} blockieren?",
+    "confirmMessage": "Diese Person kann dann nicht mehr in deinen Diskussionen antworten, deine Beiträge kommentieren oder dich erwähnen. Ihr seht die Inhalte des anderen nicht mehr, und beide Folgen werden beendet.",
+    "blockedTitle": "Du hast dieses Konto blockiert",
+    "blockedExplainer": "Beiträge und Antworten dieser Person sind für dich ausgeblendet, und sie kann dich nicht erreichen. Hebe die Blockierung auf, um das Profil wieder zu sehen.",
+    "failedTitle": "Etwas ist schiefgelaufen",
+    "failed": "Die Blockierung konnte nicht geändert werden. Bitte versuche es erneut."
+  },
+  "terms": {
+    "title": "Nutzungsbedingungen",
+    "acceptLabel": "Ich akzeptiere die Nutzungsbedingungen",
+    "open": "Nutzungsbedingungen öffnen",
+    "required": "Bitte akzeptiere die Nutzungsbedingungen, um fortzufahren."
   }
 }

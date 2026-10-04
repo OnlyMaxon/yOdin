@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import {
   View,
+  Linking,
   StyleSheet,
   TouchableOpacity,
   FlatList,
@@ -17,7 +18,9 @@ import Text from '../components/AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
-import { logoutUser, updateUserProfile } from '../services/authService';
+import { logoutUser, updateUserProfile, deleteOwnAccount, getUserProfile } from '../services/authService';
+import { useBlockStore } from '../store/useBlockStore';
+import { TERMS_URL } from '../config/links';
 import { uploadAvatar } from '../services/storageService';
 import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDiscussions } from '../services/discussionService';
 import { deletePost, unsavePost, fetchUserPosts, fetchSavedPosts } from '../services/postService';
@@ -37,7 +40,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useAuthStore } from '../store/useAuthStore';
 import { useFeedStore } from '../store/useFeedStore';
 import { useNotificationStore } from '../store/useNotificationStore';
-import { Discussion, Post } from '../types';
+import { Discussion, Post, User } from '../types';
 import { COUNTRIES, Country } from '../data/countries';
 import { getRank } from '../utils/rank';
 import { getFlagEmoji } from '../utils/flagEmoji';
@@ -111,6 +114,12 @@ export default function ProfileScreen({ navigation }: any) {
   const [langSearch, setLangSearch] = useState('');
   const [themeModal, setThemeModal] = useState(false);
   const [privacyModal, setPrivacyModal] = useState(false);
+  const [blockedModal, setBlockedModal] = useState(false);
+  const [blockedProfiles, setBlockedProfiles] = useState<User[]>([]);
+  const [blockedLoading, setBlockedLoading] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleting, setDeleting] = useState(false);
   const [editVisible, setEditVisible] = useState(false);
   const [editFirstName, setEditFirstName] = useState('');
   const [editLastName, setEditLastName] = useState('');
@@ -322,13 +331,66 @@ export default function ProfileScreen({ navigation }: any) {
     }
   }
 
-  async function handleLogout() {
+  // The block list holds uids; the list screen needs people, so their profiles
+  // are fetched when it opens rather than kept in the store.
+  async function openBlockedList() {
     setMenuVisible(false);
-    await logoutUser();
+    setBlockedModal(true);
+    setBlockedLoading(true);
+    const ids = useBlockStore.getState().blocked;
+    const people = await Promise.all(ids.map((id) => getUserProfile(id).catch(() => null)));
+    setBlockedProfiles(people.filter((p): p is User => p !== null));
+    setBlockedLoading(false);
+  }
+
+  async function handleUnblock(uid: string) {
+    if (!profile?.uid) return;
+    setBlockedProfiles((prev) => prev.filter((p) => p.uid !== uid));
+    try {
+      await useBlockStore.getState().unblock(profile.uid, uid);
+    } catch {
+      Alert.alert(t('block.failedTitle'), t('block.failed'));
+      openBlockedList();
+    }
+  }
+
+  // Signing out and deleting leave the same stale caches behind.
+  function clearSession() {
     reset();
     useFeedStore.setState({ discussions: [], hasMore: true, isLoading: false });
     usePostStore.setState({ posts: [], hasMore: true, isLoading: false, filter: 'all' });
     useNotificationStore.getState().setNotifications([]);
+    useBlockStore.getState().reset();
+  }
+
+  async function handleLogout() {
+    setMenuVisible(false);
+    await logoutUser();
+    clearSession();
+  }
+
+  async function handleDeleteAccount() {
+    if (!deletePassword || deleting) return;
+    setDeleting(true);
+    try {
+      await deleteOwnAccount(deletePassword);
+      setDeleteModal(false);
+      setMenuVisible(false);
+      clearSession();
+    } catch (e) {
+      const code = (e as { code?: string })?.code ?? '';
+      // Firebase reports a wrong password as invalid-credential on newer SDKs.
+      const message =
+        code.includes('wrong-password') || code.includes('invalid-credential')
+          ? t('deleteAccount.wrongPassword')
+          : code.includes('too-many-requests')
+            ? t('deleteAccount.tooManyRequests')
+            : t('deleteAccount.failed');
+      Alert.alert(t('deleteAccount.title'), message);
+    } finally {
+      setDeleting(false);
+      setDeletePassword('');
+    }
   }
 
   const flag = profile?.countryCode ? getFlagEmoji(profile.countryCode) : '🌐';
@@ -662,6 +724,20 @@ export default function ProfileScreen({ navigation }: any) {
             <Text style={styles.menuItemText}>{t('settings.privacy')}</Text>
             <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
           </TouchableOpacity>
+          <TouchableOpacity style={styles.menuItem} onPress={() => Linking.openURL(TERMS_URL)}>
+            <View style={[styles.menuIconWrap, { backgroundColor: colors.primary + '18' }]}>
+              <Ionicons name="document-text-outline" size={18} color={colors.primary} />
+            </View>
+            <Text style={styles.menuItemText}>{t('terms.title')}</Text>
+            <Ionicons name="open-outline" size={15} color={colors.textSecondary} />
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={openBlockedList}>
+            <View style={[styles.menuIconWrap, { backgroundColor: colors.textSecondary + '18' }]}>
+              <Ionicons name="hand-left-outline" size={18} color={colors.textSecondary} />
+            </View>
+            <Text style={styles.menuItemText}>{t('block.listTitle')}</Text>
+            <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
+          </TouchableOpacity>
         </View>
 
         <View style={{ flex: 1 }} />
@@ -674,6 +750,17 @@ export default function ProfileScreen({ navigation }: any) {
             </View>
             <Text style={[styles.menuItemText, { color: colors.notification }]}>
               {t('profile.logout')}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.menuItem, styles.menuItemLast]}
+            onPress={() => { setMenuVisible(false); setDeletePassword(''); setDeleteModal(true); }}
+          >
+            <View style={[styles.menuIconWrap, { backgroundColor: colors.notification + '18' }]}>
+              <Ionicons name="trash-outline" size={18} color={colors.notification} />
+            </View>
+            <Text style={[styles.menuItemText, { color: colors.notification }]}>
+              {t('deleteAccount.title')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -932,6 +1019,89 @@ export default function ProfileScreen({ navigation }: any) {
           </View>
           <ScrollView contentContainerStyle={styles.privacyBody}>
             <Text style={styles.privacyText}>{t('settings.privacyText')}</Text>
+          </ScrollView>
+        </View>
+      </Modal>
+
+      {/* Blocked accounts */}
+      <Modal visible={blockedModal} transparent animationType="slide" onRequestClose={() => setBlockedModal(false)}>
+        <View style={styles.privacySheet}>
+          <View style={styles.privacyHeader}>
+            <Text style={styles.privacyTitle}>{t('block.listTitle')}</Text>
+            <TouchableOpacity onPress={() => setBlockedModal(false)}>
+              <Text style={styles.privacyClose}>✕</Text>
+            </TouchableOpacity>
+          </View>
+          {blockedLoading ? (
+            <ActivityIndicator style={{ marginTop: 32 }} color={colors.primary} />
+          ) : (
+            <FlatList
+              data={blockedProfiles}
+              keyExtractor={(item) => item.uid}
+              contentContainerStyle={blockedProfiles.length === 0 ? { flex: 1 } : { padding: 16, gap: 8 }}
+              ListEmptyComponent={
+                <EmptyState icon="hand-left-outline" text={t('block.listEmpty')} topOffset={60} />
+              }
+              renderItem={({ item }) => (
+                <View style={styles.blockedRow}>
+                  <Avatar photoURL={item.photoURL} name={`${item.firstName} ${item.lastName}`} size={40} />
+                  <View style={{ flex: 1 }}>
+                    <Text style={styles.blockedName}>{item.firstName} {item.lastName}</Text>
+                    {item.username ? <Text style={styles.blockedHandle}>@{item.username}</Text> : null}
+                  </View>
+                  <TouchableOpacity style={styles.unblockChip} onPress={() => handleUnblock(item.uid)}>
+                    <Text style={styles.unblockChipText}>{t('block.unblock')}</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+            />
+          )}
+        </View>
+      </Modal>
+
+      {/* Delete account */}
+      <Modal visible={deleteModal} transparent animationType="slide" onRequestClose={() => setDeleteModal(false)}>
+        <View style={styles.privacySheet}>
+          <View style={styles.privacyHeader}>
+            <Text style={styles.privacyTitle}>{t('deleteAccount.title')}</Text>
+            <TouchableOpacity onPress={() => setDeleteModal(false)} disabled={deleting}>
+              <Text style={styles.privacyClose}>✕</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView contentContainerStyle={styles.privacyBody} keyboardShouldPersistTaps="handled">
+            <View style={styles.deleteWarning}>
+              <Ionicons name="warning-outline" size={20} color={colors.notification} />
+              <Text style={styles.deleteWarningText}>{t('deleteAccount.message')}</Text>
+            </View>
+            <Text style={styles.privacyText}>{t('deleteAccount.kept')}</Text>
+
+            <Text style={[styles.editLabel, { marginTop: 28 }]}>{t('deleteAccount.password')}</Text>
+            <TextInput
+              style={styles.editInput}
+              value={deletePassword}
+              onChangeText={setDeletePassword}
+              placeholder={t('deleteAccount.passwordPlaceholder')}
+              placeholderTextColor={colors.textSecondary}
+              secureTextEntry
+              autoCapitalize="none"
+              autoComplete="current-password"
+              editable={!deleting}
+            />
+
+            <TouchableOpacity
+              style={[styles.deleteButton, (!deletePassword || deleting) && styles.deleteButtonDisabled]}
+              onPress={handleDeleteAccount}
+              disabled={!deletePassword || deleting}
+            >
+              {deleting ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.deleteButtonText}>{t('deleteAccount.confirm')}</Text>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setDeleteModal(false)} disabled={deleting}>
+              <Text style={styles.deleteCancelText}>{t('deleteAccount.cancel')}</Text>
+            </TouchableOpacity>
           </ScrollView>
         </View>
       </Modal>
@@ -1429,6 +1599,69 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     privacyClose: { fontSize: 20, color: c.textSecondary, padding: 4 },
     privacyBody: { padding: 24 },
+    blockedRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12,
+      backgroundColor: c.surface,
+      borderRadius: 14,
+      borderWidth: 1,
+      borderColor: c.border,
+      padding: 12,
+    },
+    blockedName: {
+      fontSize: Typography.fontSizeMD,
+      fontWeight: Typography.fontWeightSemiBold,
+      color: c.textPrimary,
+    },
+    blockedHandle: { fontSize: Typography.fontSizeSM, color: c.textSecondary },
+    unblockChip: {
+      borderWidth: 1.5,
+      borderColor: c.primary,
+      borderRadius: 999,
+      paddingVertical: 7,
+      paddingHorizontal: 14,
+    },
+    unblockChipText: {
+      color: c.primary,
+      fontSize: Typography.fontSizeSM,
+      fontWeight: Typography.fontWeightSemiBold,
+    },
+    deleteWarning: {
+      flexDirection: 'row',
+      gap: 12,
+      alignItems: 'flex-start',
+      backgroundColor: c.notification + '14',
+      borderRadius: 14,
+      padding: 16,
+      marginBottom: 16,
+    },
+    deleteWarningText: {
+      flex: 1,
+      fontSize: Typography.fontSizeMD,
+      color: c.textPrimary,
+      lineHeight: 22,
+    },
+    deleteButton: {
+      backgroundColor: c.notification,
+      borderRadius: 14,
+      paddingVertical: 16,
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: 54,
+    },
+    deleteButtonDisabled: { opacity: 0.5 },
+    deleteButtonText: {
+      color: '#fff',
+      fontSize: Typography.fontSizeMD,
+      fontWeight: Typography.fontWeightSemiBold,
+    },
+    deleteCancelText: {
+      textAlign: 'center',
+      paddingVertical: 16,
+      fontSize: Typography.fontSizeMD,
+      color: c.textSecondary,
+    },
     privacyText: {
       fontSize: Typography.fontSizeMD,
       color: c.textSecondary,

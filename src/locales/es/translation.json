@@ -41,7 +41,9 @@
     "notVerifiedYet": "Correo aún sin verificar. Abre el enlace en tu bandeja y luego toca aquí.",
     "useAnotherAccount": "Usar otra cuenta",
     "openEmailApp": "Abrir app de correo",
-    "sendEmail": "Enviar correo"
+    "sendEmail": "Enviar correo",
+    "registrationBlockedTitle": "Registro no disponible",
+    "registrationBlocked": "Esta dirección de correo no puede usarse para registrarse en este momento. Si crees que es un error, escribe a hello@onlymaxon.com."
   },
   "feed": {
     "title": "Inicio",
@@ -119,7 +121,7 @@
     "themeDark": "Oscuro",
     "notifications": "Notificaciones",
     "privacy": "Privacidad",
-    "privacyText": "yOdin recopila únicamente los datos que usted proporciona: nombre, nacionalidad, ubicación y foto de perfil. Esta información se utiliza exclusivamente para personalizar su feed y mostrar su identidad en los debates.\n\nSus datos se almacenan de forma segura en Firebase y nunca se venden ni se comparten con terceros.\n\nPuede eliminar su cuenta y todos los datos asociados en cualquier momento contactando con el soporte.",
+    "privacyText": "yOdin recopila únicamente los datos que usted proporciona: nombre, nacionalidad, ubicación y foto de perfil. Esta información se utiliza exclusivamente para personalizar su feed y mostrar su identidad en los debates.\n\nSus datos se almacenan de forma segura en Firebase y nunca se venden ni se comparten con terceros.\n\nPuedes eliminar tu cuenta y todos los datos asociados en cualquier momento: Perfil → Ajustes → Eliminar cuenta.",
     "restartTitle": "Reinicio necesario",
     "restartMessage": "Cierra y vuelve a abrir la app para aplicar la nueva dirección de diseño.",
     "about": "Acerca de yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Participantes",
     "empty": "Nadie se ha apuntado todavía"
+  },
+  "common": {
+    "deletedAccount": "Cuenta eliminada"
+  },
+  "deleteAccount": {
+    "title": "Eliminar cuenta",
+    "message": "Esta acción no se puede deshacer. Tu perfil, tus publicaciones y debates, y tus fotos y vídeos se eliminarán de forma permanente.",
+    "kept": "Las respuestas y los comentarios que dejaste en el contenido de otras personas se mantienen para que esos debates sigan teniendo sentido, pero ya no llevarán tu nombre.",
+    "password": "Confirma con tu contraseña",
+    "passwordPlaceholder": "Tu contraseña",
+    "confirm": "Eliminar definitivamente",
+    "cancel": "Cancelar",
+    "wrongPassword": "Contraseña incorrecta.",
+    "tooManyRequests": "Demasiados intentos. Inténtalo más tarde.",
+    "failed": "No se pudo eliminar la cuenta. Inténtalo de nuevo."
+  },
+  "block": {
+    "listTitle": "Cuentas bloqueadas",
+    "listEmpty": "No has bloqueado a nadie.",
+    "block": "Bloquear",
+    "unblock": "Desbloquear",
+    "cancel": "Cancelar",
+    "confirmTitle": "¿Bloquear a {{name}}?",
+    "confirmMessage": "Esta persona no podrá responder en tus debates, comentar tus publicaciones ni mencionarte. Dejaréis de ver el contenido del otro y se romperán los seguimientos en ambos sentidos.",
+    "blockedTitle": "Has bloqueado esta cuenta",
+    "blockedExplainer": "Sus publicaciones y respuestas están ocultas para ti, y no puede contactarte. Desbloquéala para volver a ver su perfil.",
+    "failedTitle": "Algo salió mal",
+    "failed": "No se pudo actualizar el bloqueo. Inténtalo de nuevo."
+  },
+  "terms": {
+    "title": "Condiciones de uso",
+    "acceptLabel": "Acepto las condiciones de uso",
+    "open": "Abrir las condiciones de uso",
+    "required": "Acepta las condiciones de uso para continuar."
   }
 }

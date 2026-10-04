@@ -18,6 +18,24 @@ service cloud.firestore {
       // Points are awarded exclusively by the onDiscussionUpdated Cloud Function
       // (Admin SDK), which bypasses these rules. There is deliberately NO client
       // path to mutate points — the old "+1 by anyone" rule was farmable.
+
+      // Who this user blocked. Private to the owner: nobody gets to enumerate
+      // someone else's block list, least of all the people on it. Enforcement
+      // still works because rules evaluate get()/exists() with full access.
+      match /blocked/{blockedId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow create, delete: if request.auth != null
+          && request.auth.uid == userId
+          && blockedId != request.auth.uid;
+      }
+
+      // The same edge from the other side, written only by the mirroring Cloud
+      // Function. Without it a blocked person's app has no way to hide the
+      // blocker's content — it cannot read the blocker's private list.
+      match /blockedBy/{blockerId} {
+        allow read: if request.auth != null && request.auth.uid == userId;
+        allow write: if false;
+      }
     }
 
     // Posts — location-scoped event feed cards.
@@ -56,6 +74,7 @@ service cloud.firestore {
         allow create: if request.auth != null
           && isVerified()
           && notBlocked()
+          && !hasBlockedMe(get(/databases/$(database)/documents/posts/$(postId)).data.authorId)
           && request.resource.data.authorId == request.auth.uid
           && request.resource.data.text is string
           && request.resource.data.text.size() > 0
@@ -98,7 +117,8 @@ service cloud.firestore {
           && request.resource.data.text.size() <= 1000
           // Once the question author accepts an answer the thread is closed —
           // no further replies (enforced here so it can't be bypassed via API).
-          && get(/databases/$(database)/documents/discussions/$(discussionId)).data.get('acceptedReplyId', null) == null;
+          && get(/databases/$(database)/documents/discussions/$(discussionId)).data.get('acceptedReplyId', null) == null
+          && !hasBlockedMe(get(/databases/$(database)/documents/discussions/$(discussionId)).data.authorId);
         // Votes: users may only add/remove their own UID in likes/dislikes
         allow update: if request.auth != null
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'dislikes'])
@@ -120,6 +140,7 @@ service cloud.firestore {
         && resource.data.toUserId == request.auth.uid;
       allow create: if request.auth != null
         && request.resource.data.fromUserId == request.auth.uid
+        && !hasBlockedMe(request.resource.data.toUserId)
         && request.resource.data.toUserId is string
         && request.resource.data.fromUserName is string
         && request.resource.data.fromUserName.size() <= 100
@@ -161,6 +182,20 @@ service cloud.firestore {
         && request.resource.data.keys().hasOnly(['uid']);
       allow delete: if request.auth != null
         && resource.data.uid == request.auth.uid;
+    }
+
+    // Keyed hashes of rule-breakers' emails, kept for a year after they delete
+    // their account so they can't re-register straight away. Server-only: the
+    // account-deletion functions read and write them through the Admin SDK.
+    match /blockedEmails/{hash} {
+      allow read, write: if false;
+    }
+
+    // True when `uid` has blocked the signed-in user. Blocking is not just a
+    // visual filter: someone you blocked cannot answer in your discussions,
+    // comment on your posts, or reach you with a mention.
+    function hasBlockedMe(uid) {
+      return exists(/databases/$(database)/documents/users/$(uid)/blocked/$(request.auth.uid));
     }
 
     // Moderator status is carried by a Firebase custom claim on the ID token.

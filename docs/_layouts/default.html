@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title | default: site.title }}</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --text: #18132a;
+    --dim: #6b6385;
+    --rule: #e2dcf3;
+    --accent: #6c35de;
+    --code-bg: #f4f1fc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0f0a1e;
+      --text: #f0ecf9;
+      --dim: #9b8fc4;
+      --rule: #2e2248;
+      --accent: #a78bfa;
+      --code-bg: #221a38;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 46rem; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+  h1 { font-size: 2rem; line-height: 1.15; letter-spacing: -.02em; margin: 0 0 1.5rem; }
+  h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
+  h3 { font-size: 1.0625rem; margin: 1.75rem 0 .5rem; }
+  p, li { color: var(--text); }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  strong { font-weight: 600; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+  code {
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: .1em .35em;
+    font-size: .875em;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  .table-wrap { overflow-x: auto; margin: 1.25rem 0; }
+  table { border-collapse: collapse; width: 100%; font-size: .9375rem; }
+  th, td { text-align: left; padding: .55rem .7rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-weight: 600; color: var(--dim); font-size: .8125rem; text-transform: uppercase; letter-spacing: .04em; }
+  footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); color: var(--dim); font-size: .875rem; }
+</style>
+</head>
+<body>
+<main>
+  {{ content }}
+  <footer>yOdin · <a href="https://github.com/nikitashep/yOdin">github.com/nikitashep/yOdin</a></footer>
+</main>
+<script>
+  // Markdown tables need a scroll container so narrow screens don't scroll the page sideways.
+  document.querySelectorAll('table').forEach(function (t) {
+    if (t.parentElement.classList.contains('table-wrap')) return;
+    var w = document.createElement('div');
+    w.className = 'table-wrap';
+    t.parentNode.insertBefore(w, t);
+    w.appendChild(t);
+  });
+</script>
+</body>
+</html>

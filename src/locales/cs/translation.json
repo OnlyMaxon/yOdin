@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-mail zatím není ověřen. Otevři odkaz ve schránce a pak klepni sem.",
     "useAnotherAccount": "Použít jiný účet",
     "openEmailApp": "Otevřít e-mailovou aplikaci",
-    "sendEmail": "Odeslat e-mail"
+    "sendEmail": "Odeslat e-mail",
+    "registrationBlockedTitle": "Registrace není dostupná",
+    "registrationBlocked": "Tuto e-mailovou adresu teď nelze použít k registraci. Pokud jde o omyl, napiš na hello@onlymaxon.com."
   },
   "feed": {
     "title": "Přehled",
@@ -120,7 +122,7 @@
     "themeDark": "Tmavý",
     "notifications": "Oznámení",
     "privacy": "Soukromí",
-    "privacyText": "yOdin shromažďuje pouze údaje, které poskytnete: vaše jméno, národnost, polohu a profilovou fotografii. Tyto informace jsou používány výhradně k přizpůsobení vašeho feedu a zobrazení vaší identity v diskusích.\n\nVaše data jsou bezpečně uložena ve Firebase a nikdy nejsou prodávána ani sdílena s třetími stranami.\n\nSvůj účet a všechna přidružená data můžete kdykoli smazat kontaktováním podpory.",
+    "privacyText": "yOdin shromažďuje pouze údaje, které poskytnete: vaše jméno, národnost, polohu a profilovou fotografii. Tyto informace jsou používány výhradně k přizpůsobení vašeho feedu a zobrazení vaší identity v diskusích.\n\nVaše data jsou bezpečně uložena ve Firebase a nikdy nejsou prodávána ani sdílena s třetími stranami.\n\nÚčet a všechna související data můžeš kdykoli smazat: Profil → Nastavení → Smazat účet.",
     "restartTitle": "Vyžadováno restartování",
     "restartMessage": "Zavřete a znovu otevřete aplikaci pro použití nového směru rozvržení.",
     "about": "O yOdin"
@@ -270,5 +272,39 @@
   "participants": {
     "title": "Účastníci",
     "empty": "Zatím se nikdo nepřihlásil"
+  },
+  "common": {
+    "deletedAccount": "Smazaný účet"
+  },
+  "deleteAccount": {
+    "title": "Smazat účet",
+    "message": "Tuto akci nelze vrátit zpět. Tvůj profil, příspěvky a diskuze i fotky a videa budou trvale smazány.",
+    "kept": "Odpovědi a komentáře, které jsi napsal pod obsahem ostatních, zůstanou, aby diskuze dávaly smysl, ale už nebudou nést tvoje jméno.",
+    "password": "Potvrď heslem",
+    "passwordPlaceholder": "Tvoje heslo",
+    "confirm": "Trvale smazat",
+    "cancel": "Zrušit",
+    "wrongPassword": "Nesprávné heslo.",
+    "tooManyRequests": "Příliš mnoho pokusů. Zkus to později.",
+    "failed": "Účet se nepodařilo smazat. Zkus to prosím znovu."
+  },
+  "block": {
+    "listTitle": "Zablokované účty",
+    "listEmpty": "Nikoho jsi nezablokoval.",
+    "block": "Zablokovat",
+    "unblock": "Odblokovat",
+    "cancel": "Zrušit",
+    "confirmTitle": "Zablokovat {{name}}?",
+    "confirmMessage": "Tento člověk nebude moct odpovídat ve tvých diskuzích, komentovat tvé příspěvky ani tě zmiňovat. Přestanete vidět obsah toho druhého a sledování v obou směrech se zruší.",
+    "blockedTitle": "Tento účet jsi zablokoval",
+    "blockedExplainer": "Jeho příspěvky a odpovědi jsou pro tebe skryté a nemůže se k tobě dostat. Odblokuj ho, aby ses znovu dostal na profil.",
+    "failedTitle": "Něco se pokazilo",
+    "failed": "Blokování se nepodařilo změnit. Zkus to prosím znovu."
+  },
+  "terms": {
+    "title": "Podmínky použití",
+    "acceptLabel": "Přijímám podmínky použití",
+    "open": "Otevřít podmínky použití",
+    "required": "Pro pokračování přijmi podmínky použití."
   }
 }

@@ -1,0 +1,6 @@
+title: yOdin
+description: Legal documents for the yOdin mobile app
+# No theme gem: the layout in _layouts/default.html is self-contained, so the
+# rendered pages do not depend on a remote theme that could change under us.
+exclude:
+  - play-store-listing.md

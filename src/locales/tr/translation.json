@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-posta henüz doğrulanmadı. Gelen kutundaki bağlantıyı aç, sonra buraya dokun.",
     "useAnotherAccount": "Başka hesap kullan",
     "openEmailApp": "E-Posta Uygulamasını Aç",
-    "sendEmail": "E-posta gönder"
+    "sendEmail": "E-posta gönder",
+    "registrationBlockedTitle": "Kayıt kullanılamıyor",
+    "registrationBlocked": "Bu e-posta adresiyle şu anda kayıt olunamıyor. Bunun bir hata olduğunu düşünüyorsanız hello@onlymaxon.com adresine yazın."
   },
   "feed": {
     "title": "Akış",
@@ -119,7 +121,7 @@
     "themeDark": "Koyu",
     "notifications": "Bildirimler",
     "privacy": "Gizlilik",
-    "privacyText": "yOdin yalnızca sağladığınız verileri toplar: adınız, milliyetiniz, konumunuz ve profil fotoğrafınız. Bu bilgiler yalnızca akışınızı kişiselleştirmek ve tartışmalardaki kimliğinizi göstermek için kullanılır.\n\nVerileriniz Firebase'de güvenli bir şekilde saklanır ve hiçbir zaman üçüncü taraflarla satılmaz veya paylaşılmaz.\n\nDestek ekibiyle iletişime geçerek hesabınızı ve tüm ilgili verileri istediğiniz zaman silebilirsiniz.",
+    "privacyText": "yOdin yalnızca sağladığınız verileri toplar: adınız, milliyetiniz, konumunuz ve profil fotoğrafınız. Bu bilgiler yalnızca akışınızı kişiselleştirmek ve tartışmalardaki kimliğinizi göstermek için kullanılır.\n\nVerileriniz Firebase'de güvenli bir şekilde saklanır ve hiçbir zaman üçüncü taraflarla satılmaz veya paylaşılmaz.\n\nHesabınızı ve ilgili tüm verileri istediğiniz zaman silebilirsiniz: Profil → Ayarlar → Hesabı sil.",
     "restartTitle": "Yeniden başlatma gerekiyor",
     "restartMessage": "Yeni düzen yönünü uygulamak için uygulamayı kapatıp yeniden açın.",
     "about": "yOdin Hakkında"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Katılımcılar",
     "empty": "Henüz kimse katılmadı"
+  },
+  "common": {
+    "deletedAccount": "Silinmiş hesap"
+  },
+  "deleteAccount": {
+    "title": "Hesabı sil",
+    "message": "Bu işlem geri alınamaz. Profiliniz, gönderileriniz ve tartışmalarınız, fotoğraf ve videolarınız kalıcı olarak silinecek.",
+    "kept": "Başkalarının içeriklerine yazdığınız yanıtlar ve yorumlar, tartışmalar anlamını kaybetmesin diye kalır; ancak artık adınızı taşımaz.",
+    "password": "Parolanızla onaylayın",
+    "passwordPlaceholder": "Parolanız",
+    "confirm": "Kalıcı olarak sil",
+    "cancel": "İptal",
+    "wrongPassword": "Parola yanlış.",
+    "tooManyRequests": "Çok fazla deneme. Daha sonra tekrar deneyin.",
+    "failed": "Hesap silinemedi. Lütfen tekrar deneyin."
+  },
+  "block": {
+    "listTitle": "Engellenen hesaplar",
+    "listEmpty": "Kimseyi engellemediniz.",
+    "block": "Engelle",
+    "unblock": "Engeli kaldır",
+    "cancel": "İptal",
+    "confirmTitle": "{{name}} engellensin mi?",
+    "confirmMessage": "Bu kişi tartışmalarınızda yanıt veremez, gönderilerinize yorum yapamaz ve sizden bahsedemez. Birbirinizin içeriklerini görmeyi bırakırsınız ve iki yöndeki takipler sona erer.",
+    "blockedTitle": "Bu hesabı engellediniz",
+    "blockedExplainer": "Gönderileri ve yanıtları sizden gizli, size ulaşamıyor. Profili yeniden görmek için engeli kaldırın.",
+    "failedTitle": "Bir şeyler ters gitti",
+    "failed": "Engelleme güncellenemedi. Lütfen tekrar deneyin."
+  },
+  "terms": {
+    "title": "Kullanım koşulları",
+    "acceptLabel": "Kullanım koşullarını kabul ediyorum",
+    "open": "Kullanım koşullarını aç",
+    "required": "Devam etmek için kullanım koşullarını kabul edin."
   }
 }

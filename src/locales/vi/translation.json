@@ -41,7 +41,9 @@
     "notVerifiedYet": "Email chưa được xác minh. Mở liên kết trong hộp thư, rồi chạm vào đây.",
     "useAnotherAccount": "Dùng tài khoản khác",
     "openEmailApp": "Mở ứng dụng email",
-    "sendEmail": "Gửi email"
+    "sendEmail": "Gửi email",
+    "registrationBlockedTitle": "Không thể đăng ký",
+    "registrationBlocked": "Địa chỉ email này hiện không thể dùng để đăng ký. Nếu bạn cho rằng đây là nhầm lẫn, hãy viết tới hello@onlymaxon.com."
   },
   "feed": {
     "title": "Bảng tin",
@@ -119,7 +121,7 @@
     "themeDark": "Tối",
     "notifications": "Thông báo",
     "privacy": "Quyền riêng tư",
-    "privacyText": "yOdin chỉ thu thập dữ liệu bạn cung cấp: tên, quốc tịch, vị trí và ảnh đại diện của bạn. Thông tin này chỉ được sử dụng để cá nhân hóa nguồn cấp dữ liệu và hiển thị danh tính của bạn trong các cuộc thảo luận.\n\nDữ liệu của bạn được lưu trữ an toàn trong Firebase và không bao giờ được bán hoặc chia sẻ với bên thứ ba.\n\nBạn có thể xóa tài khoản và tất cả dữ liệu liên quan bất kỳ lúc nào bằng cách liên hệ với bộ phận hỗ trợ.",
+    "privacyText": "yOdin chỉ thu thập dữ liệu bạn cung cấp: tên, quốc tịch, vị trí và ảnh đại diện của bạn. Thông tin này chỉ được sử dụng để cá nhân hóa nguồn cấp dữ liệu và hiển thị danh tính của bạn trong các cuộc thảo luận.\n\nDữ liệu của bạn được lưu trữ an toàn trong Firebase và không bao giờ được bán hoặc chia sẻ với bên thứ ba.\n\nBạn có thể xóa tài khoản và mọi dữ liệu liên quan bất cứ lúc nào: Hồ sơ → Cài đặt → Xóa tài khoản.",
     "restartTitle": "Cần khởi động lại",
     "restartMessage": "Đóng và mở lại ứng dụng để áp dụng hướng bố cục mới.",
     "about": "Về yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Người tham gia",
     "empty": "Chưa có ai đăng ký"
+  },
+  "common": {
+    "deletedAccount": "Tài khoản đã xóa"
+  },
+  "deleteAccount": {
+    "title": "Xóa tài khoản",
+    "message": "Hành động này không thể hoàn tác. Hồ sơ, bài đăng và thảo luận, ảnh và video của bạn sẽ bị xóa vĩnh viễn.",
+    "kept": "Các câu trả lời và bình luận bạn để lại dưới nội dung của người khác vẫn được giữ để cuộc thảo luận còn ý nghĩa, nhưng sẽ không còn hiện tên bạn.",
+    "password": "Xác nhận bằng mật khẩu",
+    "passwordPlaceholder": "Mật khẩu của bạn",
+    "confirm": "Xóa vĩnh viễn",
+    "cancel": "Hủy",
+    "wrongPassword": "Mật khẩu không đúng.",
+    "tooManyRequests": "Quá nhiều lần thử. Vui lòng thử lại sau.",
+    "failed": "Không thể xóa tài khoản. Vui lòng thử lại."
+  },
+  "block": {
+    "listTitle": "Tài khoản đã chặn",
+    "listEmpty": "Bạn chưa chặn ai.",
+    "block": "Chặn",
+    "unblock": "Bỏ chặn",
+    "cancel": "Hủy",
+    "confirmTitle": "Chặn {{name}}?",
+    "confirmMessage": "Người này sẽ không thể trả lời trong thảo luận của bạn, bình luận bài đăng của bạn hay nhắc đến bạn. Hai bên sẽ không còn thấy nội dung của nhau, và việc theo dõi hai chiều sẽ bị hủy.",
+    "blockedTitle": "Bạn đã chặn tài khoản này",
+    "blockedExplainer": "Bài đăng và câu trả lời của họ bị ẩn với bạn, và họ không thể liên hệ với bạn. Bỏ chặn để xem lại hồ sơ.",
+    "failedTitle": "Đã xảy ra lỗi",
+    "failed": "Không thể cập nhật trạng thái chặn. Vui lòng thử lại."
+  },
+  "terms": {
+    "title": "Điều khoản sử dụng",
+    "acceptLabel": "Tôi đồng ý với điều khoản sử dụng",
+    "open": "Mở điều khoản sử dụng",
+    "required": "Vui lòng đồng ý với điều khoản sử dụng để tiếp tục."
   }
 }

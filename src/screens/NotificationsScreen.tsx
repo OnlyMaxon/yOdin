@@ -23,6 +23,8 @@ import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import EmptyState from '../components/EmptyState';
+import { isDeletedAuthor } from '../utils/author';
+import { useWithoutBlocked } from '../hooks/useWithoutBlocked';
 
 type Filter = 'all' | 'unread' | 'reply' | 'mention' | 'participant';
 const FILTERS: { id: Filter; key: string }[] = [
@@ -41,6 +43,7 @@ export default function NotificationsScreen({ navigation }: any) {
   // Data comes from the global realtime subscription (set up in TabNavigator);
   // this screen only renders it and marks items read when viewed.
   const notifications = useNotificationStore((s) => s.notifications);
+  // Someone you blocked should not reach you through a notification either.
   const loaded = useNotificationStore((s) => s.loaded);
   const removeNotifications = useNotificationStore((s) => s.removeNotifications);
   const [clearingRead, setClearingRead] = useState(false);
@@ -105,6 +108,8 @@ export default function NotificationsScreen({ navigation }: any) {
   const filtered = notifications.filter((n) =>
     filter === 'all' ? true : filter === 'unread' ? !n.read : n.type === filter,
   );
+  // Someone you blocked should not reach you through a notification either.
+  const visible = useWithoutBlocked(filtered, (n) => n.fromUserId);
 
   function renderItem({ item }: { item: AppNotification }) {
     const isModeration = item.type === 'removed' || item.type === 'blocked';
@@ -148,7 +153,9 @@ export default function NotificationsScreen({ navigation }: any) {
         </View>
         <View style={styles.content}>
           <Text style={styles.text}>
-            <Text style={styles.bold}>{item.fromUserName}</Text>
+            <Text style={styles.bold}>
+              {isDeletedAuthor(item.fromUserId) ? t('common.deletedAccount') : item.fromUserName}
+            </Text>
             {' '}{t(
               item.type === 'participant'
                 ? 'notifications.joinedEvent'
@@ -213,11 +220,11 @@ export default function NotificationsScreen({ navigation }: any) {
         </View>
       ) : (
         <FlatList
-          data={filtered}
+          data={visible}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
           ItemSeparatorComponent={() => <View style={styles.divider} />}
-          contentContainerStyle={filtered.length === 0 ? styles.center : { paddingBottom: 96 }}
+          contentContainerStyle={visible.length === 0 ? styles.center : { paddingBottom: 96 }}
           ListEmptyComponent={
             <EmptyState icon="notifications-outline" text={t('notifications.empty')} />
           }

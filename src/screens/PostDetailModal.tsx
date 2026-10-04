@@ -33,6 +33,8 @@ import EventDateBlock from '../components/EventDateBlock';
 import ReportSheet from '../components/ReportSheet';
 import { createParticipantNotification, notifyMentions } from '../services/notificationService';
 import { createReport } from '../services/reportService';
+import { isDeletedAuthor } from '../utils/author';
+import { useWithoutBlocked } from '../hooks/useWithoutBlocked';
 
 const SCREEN_H = Dimensions.get('window').height;
 
@@ -60,6 +62,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   const toggleParticipant = usePostStore((s) => s.toggleParticipant);
 
   const [comments, setComments] = useState<PostComment[]>([]);
+  const visibleComments = useWithoutBlocked(comments, (c) => c.authorId);
   const [loadingComments, setLoadingComments] = useState(false);
   const [text, setText] = useState('');
   const [sending, setSending] = useState(false);
@@ -263,15 +266,21 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
           photoURL={item.authorPhoto}
           name={item.authorName}
           size={36}
-          onPress={onOpenProfile ? () => item.authorId && onOpenProfile(item.authorId) : undefined}
+          onPress={
+            onOpenProfile && !isDeletedAuthor(item.authorId)
+              ? () => item.authorId && onOpenProfile(item.authorId)
+              : undefined
+          }
         />
         <View style={styles.commentBody}>
           <Text
             style={styles.commentAuthor}
-            onPress={() => item.authorId && onOpenProfile?.(item.authorId)}
+            onPress={isDeletedAuthor(item.authorId) ? undefined : () => item.authorId && onOpenProfile?.(item.authorId)}
             suppressHighlighting
           >
-            {item.authorName}  {getFlagEmoji(item.authorCountryCode)}
+            {isDeletedAuthor(item.authorId)
+              ? t('common.deletedAccount')
+              : `${item.authorName}  ${getFlagEmoji(item.authorCountryCode)}`}
           </Text>
           <Text style={styles.commentText}>{item.text}</Text>
           <Text style={styles.commentTime}>{formatTime(item.createdAt, t)}</Text>
@@ -402,7 +411,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
             <FlatList
               ref={listRef}
               style={styles.list}
-              data={comments}
+              data={visibleComments}
               keyExtractor={(item) => item.id}
               renderItem={renderComment}
               ListHeaderComponent={postHeader}

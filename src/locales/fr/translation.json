@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-mail pas encore vérifié. Ouvre le lien dans ta boîte, puis appuie ici.",
     "useAnotherAccount": "Utiliser un autre compte",
     "openEmailApp": "Ouvrir l'app mail",
-    "sendEmail": "Envoyer l'e-mail"
+    "sendEmail": "Envoyer l'e-mail",
+    "registrationBlockedTitle": "Inscription indisponible",
+    "registrationBlocked": "Cette adresse e-mail ne peut pas être utilisée pour s'inscrire actuellement. Si vous pensez qu'il s'agit d'une erreur, écrivez à hello@onlymaxon.com."
   },
   "feed": {
     "title": "Fil",
@@ -119,7 +121,7 @@
     "themeDark": "Sombre",
     "notifications": "Notifications",
     "privacy": "Confidentialité",
-    "privacyText": "yOdin collecte uniquement les données que vous fournissez : votre nom, nationalité, localisation et photo de profil. Ces informations sont utilisées uniquement pour personnaliser votre fil d'actualité et afficher votre identité dans les discussions.\n\nVos données sont stockées en toute sécurité dans Firebase et ne sont jamais vendues ni partagées avec des tiers.\n\nVous pouvez supprimer votre compte et toutes les données associées à tout moment en contactant le support.",
+    "privacyText": "yOdin collecte uniquement les données que vous fournissez : votre nom, nationalité, localisation et photo de profil. Ces informations sont utilisées uniquement pour personnaliser votre fil d'actualité et afficher votre identité dans les discussions.\n\nVos données sont stockées en toute sécurité dans Firebase et ne sont jamais vendues ni partagées avec des tiers.\n\nVous pouvez supprimer votre compte et toutes les données associées à tout moment : Profil → Paramètres → Supprimer le compte.",
     "restartTitle": "Redémarrage requis",
     "restartMessage": "Fermez et rouvrez l'application pour appliquer la nouvelle direction.",
     "about": "À propos de yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Participants",
     "empty": "Personne ne s’est encore inscrit"
+  },
+  "common": {
+    "deletedAccount": "Compte supprimé"
+  },
+  "deleteAccount": {
+    "title": "Supprimer le compte",
+    "message": "Cette action est irréversible. Votre profil, vos publications et discussions, vos photos et vidéos seront définitivement supprimés.",
+    "kept": "Les réponses et commentaires que vous avez laissés sous le contenu d'autres personnes restent, afin que ces discussions gardent leur sens, mais ils ne porteront plus votre nom.",
+    "password": "Confirmez avec votre mot de passe",
+    "passwordPlaceholder": "Votre mot de passe",
+    "confirm": "Supprimer définitivement",
+    "cancel": "Annuler",
+    "wrongPassword": "Mot de passe incorrect.",
+    "tooManyRequests": "Trop de tentatives. Réessayez plus tard.",
+    "failed": "Impossible de supprimer le compte. Veuillez réessayer."
+  },
+  "block": {
+    "listTitle": "Comptes bloqués",
+    "listEmpty": "Vous n'avez bloqué personne.",
+    "block": "Bloquer",
+    "unblock": "Débloquer",
+    "cancel": "Annuler",
+    "confirmTitle": "Bloquer {{name}} ?",
+    "confirmMessage": "Cette personne ne pourra plus répondre dans vos discussions, commenter vos publications ni vous mentionner. Vous cesserez de voir le contenu de l'autre, et les abonnements des deux côtés seront rompus.",
+    "blockedTitle": "Vous avez bloqué ce compte",
+    "blockedExplainer": "Ses publications et réponses vous sont masquées, et elle ne peut pas vous joindre. Débloquez-la pour revoir son profil.",
+    "failedTitle": "Une erreur est survenue",
+    "failed": "Impossible de modifier le blocage. Veuillez réessayer."
+  },
+  "terms": {
+    "title": "Conditions d'utilisation",
+    "acceptLabel": "J'accepte les conditions d'utilisation",
+    "open": "Ouvrir les conditions d'utilisation",
+    "required": "Veuillez accepter les conditions d'utilisation pour continuer."
   }
 }

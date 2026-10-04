@@ -41,7 +41,9 @@
     "notVerifiedYet": "Email hələ təsdiqlənməyib. Məktubdakı linkə keçin, sonra buraya toxunun.",
     "useAnotherAccount": "Başqa hesabla daxil ol",
     "openEmailApp": "Poçtu aç",
-    "sendEmail": "E-poçt göndər"
+    "sendEmail": "E-poçt göndər",
+    "registrationBlockedTitle": "Qeydiyyat mümkün deyil",
+    "registrationBlocked": "Bu e-poçt ünvanı ilə hazırda qeydiyyatdan keçmək olmur. Bunun səhv olduğunu düşünürsünüzsə, hello@onlymaxon.com ünvanına yazın."
   },
   "feed": {
     "title": "Lent",
@@ -119,7 +121,7 @@
     "themeDark": "Qaranlıq",
     "notifications": "Bildirişlər",
     "privacy": "Məxfilik",
-    "privacyText": "yOdin yalnız sizin təqdim etdiyiniz məlumatları toplayır: adınız, milliyyətiniz, yeriniz və profil şəkliniz. Bu məlumatlar yalnız lentinizi fərdiləşdirmək və müzakirələrdə şəxsiyyətinizi göstərmək üçün istifadə olunur.\n\nMəlumatlarınız Firebase-də etibarlı şəkildə saxlanılır və heç vaxt üçüncü tərəflərə satılmır və ya paylaşılmır.\n\nİstənilən vaxt dəstəklə əlaqə saxlayaraq hesabınızı və bütün əlaqəli məlumatları silə bilərsiniz.",
+    "privacyText": "yOdin yalnız sizin təqdim etdiyiniz məlumatları toplayır: adınız, milliyyətiniz, yeriniz və profil şəkliniz. Bu məlumatlar yalnız lentinizi fərdiləşdirmək və müzakirələrdə şəxsiyyətinizi göstərmək üçün istifadə olunur.\n\nMəlumatlarınız Firebase-də etibarlı şəkildə saxlanılır və heç vaxt üçüncü tərəflərə satılmır və ya paylaşılmır.\n\nHesabınızı və bütün əlaqəli məlumatları istədiyiniz vaxt silə bilərsiniz: Profil → Parametrlər → Hesabı sil.",
     "restartTitle": "Yenidən başlatmaq lazımdır",
     "restartMessage": "Yeni düzülüş istiqamətini tətbiq etmək üçün tətbiqi bağlayıb yenidən açın.",
     "about": "yOdin haqqında"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "İştirakçılar",
     "empty": "Hələ heç kim qoşulmayıb"
+  },
+  "common": {
+    "deletedAccount": "Silinmiş hesab"
+  },
+  "deleteAccount": {
+    "title": "Hesabı sil",
+    "message": "Bu əməliyyat geri qaytarıla bilməz. Profiliniz, paylaşımlarınız və müzakirələriniz, foto və videolarınız həmişəlik silinəcək.",
+    "kept": "Başqalarının materiallarına yazdığınız cavablar və şərhlər qalacaq ki, müzakirələr mənasını itirməsin, lakin adınız orada görünməyəcək.",
+    "password": "Parolla təsdiqləyin",
+    "passwordPlaceholder": "Parolunuz",
+    "confirm": "Həmişəlik sil",
+    "cancel": "Ləğv et",
+    "wrongPassword": "Parol yanlışdır.",
+    "tooManyRequests": "Çox cəhd edildi. Daha sonra yenidən yoxlayın.",
+    "failed": "Hesabı silmək mümkün olmadı. Yenidən cəhd edin."
+  },
+  "block": {
+    "listTitle": "Bloklanmış hesablar",
+    "listEmpty": "Heç kəsi bloklamamısınız.",
+    "block": "Blokla",
+    "unblock": "Bloku aç",
+    "cancel": "Ləğv et",
+    "confirmTitle": "{{name}} bloklansın?",
+    "confirmMessage": "Bu şəxs müzakirələrinizdə cavab yaza, paylaşımlarınızı şərh edə və sizi qeyd edə bilməyəcək. Bir-birinizin materiallarını görməyəcəksiniz, hər iki tərəfdəki izləmələr də dayandırılacaq.",
+    "blockedTitle": "Bu hesabı bloklamısınız",
+    "blockedExplainer": "Onun paylaşımları və cavabları sizdən gizlədilib, o sizinlə əlaqə saxlaya bilmir. Profili yenidən görmək üçün bloku açın.",
+    "failedTitle": "Nəsə səhv getdi",
+    "failed": "Bloku dəyişmək mümkün olmadı. Yenidən cəhd edin."
+  },
+  "terms": {
+    "title": "İstifadə şərtləri",
+    "acceptLabel": "İstifadə şərtlərini qəbul edirəm",
+    "open": "İstifadə şərtlərini aç",
+    "required": "Davam etmək üçün istifadə şərtlərini qəbul edin."
   }
 }

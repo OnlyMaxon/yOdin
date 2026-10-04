@@ -41,7 +41,9 @@
     "notVerifiedYet": "Email belum diverifikasi. Buka tautan di kotak masuk, lalu ketuk di sini.",
     "useAnotherAccount": "Gunakan akun lain",
     "openEmailApp": "Buka Aplikasi Email",
-    "sendEmail": "Kirim email"
+    "sendEmail": "Kirim email",
+    "registrationBlockedTitle": "Pendaftaran tidak tersedia",
+    "registrationBlocked": "Alamat email ini tidak bisa digunakan untuk mendaftar saat ini. Jika menurutmu ini keliru, tulis ke hello@onlymaxon.com."
   },
   "feed": {
     "title": "Beranda",
@@ -119,7 +121,7 @@
     "themeDark": "Gelap",
     "notifications": "Notifikasi",
     "privacy": "Privasi",
-    "privacyText": "yOdin hanya mengumpulkan data yang Anda berikan: nama, kebangsaan, lokasi, dan foto profil Anda. Informasi ini digunakan semata-mata untuk mempersonalisasi feed Anda dan menampilkan identitas Anda dalam diskusi.\n\nData Anda disimpan dengan aman di Firebase dan tidak pernah dijual atau dibagikan kepada pihak ketiga.\n\nAnda dapat menghapus akun dan semua data terkait kapan saja dengan menghubungi dukungan.",
+    "privacyText": "yOdin hanya mengumpulkan data yang Anda berikan: nama, kebangsaan, lokasi, dan foto profil Anda. Informasi ini digunakan semata-mata untuk mempersonalisasi feed Anda dan menampilkan identitas Anda dalam diskusi.\n\nData Anda disimpan dengan aman di Firebase dan tidak pernah dijual atau dibagikan kepada pihak ketiga.\n\nKamu bisa menghapus akun dan semua data terkait kapan saja: Profil → Pengaturan → Hapus akun.",
     "restartTitle": "Perlu restart",
     "restartMessage": "Tutup dan buka kembali aplikasi untuk menerapkan arah tata letak baru.",
     "about": "Tentang yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Peserta",
     "empty": "Belum ada yang mendaftar"
+  },
+  "common": {
+    "deletedAccount": "Akun dihapus"
+  },
+  "deleteAccount": {
+    "title": "Hapus akun",
+    "message": "Tindakan ini tidak bisa dibatalkan. Profil, postingan dan diskusi, serta foto dan video kamu akan dihapus permanen.",
+    "kept": "Balasan dan komentar yang kamu tinggalkan di konten orang lain tetap ada agar diskusinya masih masuk akal, tetapi tidak lagi mencantumkan namamu.",
+    "password": "Konfirmasi dengan kata sandi",
+    "passwordPlaceholder": "Kata sandi kamu",
+    "confirm": "Hapus permanen",
+    "cancel": "Batal",
+    "wrongPassword": "Kata sandi salah.",
+    "tooManyRequests": "Terlalu banyak percobaan. Coba lagi nanti.",
+    "failed": "Akun tidak dapat dihapus. Silakan coba lagi."
+  },
+  "block": {
+    "listTitle": "Akun yang diblokir",
+    "listEmpty": "Kamu belum memblokir siapa pun.",
+    "block": "Blokir",
+    "unblock": "Buka blokir",
+    "cancel": "Batal",
+    "confirmTitle": "Blokir {{name}}?",
+    "confirmMessage": "Orang ini tidak akan bisa membalas di diskusimu, mengomentari postinganmu, atau menyebutmu. Kalian berhenti melihat konten satu sama lain, dan saling berhenti mengikuti.",
+    "blockedTitle": "Kamu memblokir akun ini",
+    "blockedExplainer": "Postingan dan balasannya disembunyikan darimu, dan dia tidak bisa menghubungimu. Buka blokir untuk melihat profilnya lagi.",
+    "failedTitle": "Terjadi kesalahan",
+    "failed": "Blokir tidak dapat diperbarui. Silakan coba lagi."
+  },
+  "terms": {
+    "title": "Ketentuan penggunaan",
+    "acceptLabel": "Saya menerima ketentuan penggunaan",
+    "open": "Buka ketentuan penggunaan",
+    "required": "Terima ketentuan penggunaan untuk melanjutkan."
   }
 }

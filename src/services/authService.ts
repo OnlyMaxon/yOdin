@@ -5,9 +5,12 @@ import {
   updateProfile,
   sendPasswordResetEmail,
   sendEmailVerification,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
 } from 'firebase/auth';
+import { httpsCallable } from 'firebase/functions';
 import { doc, setDoc, getDoc, writeBatch } from 'firebase/firestore';
-import { auth, db } from './firebase';
+import { auth, db, functions } from './firebase';
 import { User } from '../types';
 import { normalizeUsername, isValidUsername } from '../utils/mentions';
 
@@ -81,4 +84,19 @@ export async function resetPassword(email: string): Promise<void> {
 export async function resendVerificationEmail(): Promise<void> {
   const user = auth.currentUser;
   if (user) await sendEmailVerification(user);
+}
+
+// Deleting an account is a server job: it spans other people's documents, media
+// in two buckets and the Auth record, and a client that closed midway would
+// leave the account half removed. The password is re-entered first — the
+// function refuses tokens older than five minutes, so this step can't be
+// skipped by calling it directly from a signed-in phone.
+export async function deleteOwnAccount(password: string): Promise<void> {
+  const user = auth.currentUser;
+  if (!user?.email) throw new Error('not-signed-in');
+  await reauthenticateWithCredential(user, EmailAuthProvider.credential(user.email, password));
+  await httpsCallable(functions, 'deleteAccount')();
+  // The Auth record is already gone; this just clears the local session so the
+  // app doesn't sit on a dead token.
+  await signOut(auth).catch(() => {});
 }

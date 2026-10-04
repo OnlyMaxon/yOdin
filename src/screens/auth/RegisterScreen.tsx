@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   View,
+  Linking,
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
@@ -17,6 +18,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import { getErrorMessage } from '../../services/errorHandler';
 import { useUsernameCheck } from '../../hooks/useUsernameCheck';
 import { isValidUsername } from '../../utils/mentions';
+import { TERMS_URL } from '../../config/links';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../hooks/useTheme';
 import { Typography } from '../../theme/typography';
@@ -37,6 +39,9 @@ export default function RegisterScreen({ navigation, route }: any) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  // Play requires the terms to be accepted before a user can create content, so
+  // the gate is on registration rather than on the first post.
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const setPendingEmailVerification = useAuthStore((s) => s.setPendingEmailVerification);
   const usernameStatus = useUsernameCheck(username);
 
@@ -47,6 +52,7 @@ export default function RegisterScreen({ navigation, route }: any) {
       if (!firstName.trim() || !lastName.trim()) { setError(t('errors.enterName')); return; }
       if (!isValidUsername(username)) { setError(t('auth.usernameInvalid')); return; }
       if (usernameStatus === 'taken') { setError(t('auth.usernameTaken')); return; }
+      if (!acceptedTerms) { setError(t('terms.required')); return; }
     }
     setLoading(true);
     try {
@@ -174,12 +180,31 @@ export default function RegisterScreen({ navigation, route }: any) {
           </TouchableOpacity>
         )}
 
+        {mode === 'register' && (
+          <View style={styles.termsBlock}>
+            <TouchableOpacity
+              style={styles.termsRow}
+              onPress={() => setAcceptedTerms(!acceptedTerms)}
+              accessibilityRole="checkbox"
+              accessibilityState={{ checked: acceptedTerms }}
+            >
+              <View style={[styles.checkbox, acceptedTerms && styles.checkboxOn]}>
+                {acceptedTerms && <Ionicons name="checkmark" size={14} color="#fff" />}
+              </View>
+              <Text style={styles.termsText}>{t('terms.acceptLabel')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
+              <Text style={styles.termsLink}>{t('terms.open')}</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
         <TouchableOpacity
-          style={[styles.btn, loading && styles.btnDisabled]}
+          style={[styles.btn, (loading || (mode === 'register' && !acceptedTerms)) && styles.btnDisabled]}
           onPress={handleSubmit}
-          disabled={loading}
+          disabled={loading || (mode === 'register' && !acceptedTerms)}
         >
           {loading
             ? <ActivityIndicator color="#fff" />
@@ -246,6 +271,25 @@ function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalet
       color: c.notification,
       fontSize: Typography.fontSizeSM,
       marginBottom: 12,
+    },
+    termsBlock: { marginBottom: 16, gap: 6 },
+    termsRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+    checkbox: {
+      width: 22,
+      height: 22,
+      borderRadius: 6,
+      borderWidth: 1.5,
+      borderColor: c.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    checkboxOn: { backgroundColor: c.primary, borderColor: c.primary },
+    termsText: { flex: 1, fontSize: Typography.fontSizeSM, color: c.textPrimary },
+    termsLink: {
+      fontSize: Typography.fontSizeSM,
+      color: c.primary,
+      textDecorationLine: 'underline',
+      marginLeft: 32,
     },
     usernameHint: {
       fontSize: Typography.fontSizeSM,

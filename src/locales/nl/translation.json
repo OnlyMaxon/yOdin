@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-mail nog niet geverifieerd. Open de link in je inbox en tik hier.",
     "useAnotherAccount": "Ander account gebruiken",
     "openEmailApp": "E-mailapp openen",
-    "sendEmail": "E-mail verzenden"
+    "sendEmail": "E-mail verzenden",
+    "registrationBlockedTitle": "Registratie niet beschikbaar",
+    "registrationBlocked": "Met dit e-mailadres kun je je op dit moment niet registreren. Denk je dat dit een vergissing is, mail dan naar hello@onlymaxon.com."
   },
   "feed": {
     "title": "Feed",
@@ -119,7 +121,7 @@
     "themeDark": "Donker",
     "notifications": "Meldingen",
     "privacy": "Privacy",
-    "privacyText": "yOdin verzamelt alleen de gegevens die u verstrekt: uw naam, nationaliteit, locatie en profielfoto. Deze informatie wordt uitsluitend gebruikt om uw feed te personaliseren en uw identiteit in discussies te tonen.\n\nUw gegevens worden veilig opgeslagen in Firebase en worden nooit verkocht of gedeeld met derden.\n\nU kunt uw account en alle bijbehorende gegevens op elk moment verwijderen door contact op te nemen met de ondersteuning.",
+    "privacyText": "yOdin verzamelt alleen de gegevens die u verstrekt: uw naam, nationaliteit, locatie en profielfoto. Deze informatie wordt uitsluitend gebruikt om uw feed te personaliseren en uw identiteit in discussies te tonen.\n\nUw gegevens worden veilig opgeslagen in Firebase en worden nooit verkocht of gedeeld met derden.\n\nJe kunt je account en alle bijbehorende gegevens op elk moment verwijderen: Profiel → Instellingen → Account verwijderen.",
     "restartTitle": "Herstart vereist",
     "restartMessage": "Sluit de app en open hem opnieuw om de nieuwe lay-outrichting toe te passen.",
     "about": "Over yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Deelnemers",
     "empty": "Nog niemand aangemeld"
+  },
+  "common": {
+    "deletedAccount": "Verwijderd account"
+  },
+  "deleteAccount": {
+    "title": "Account verwijderen",
+    "message": "Dit kan niet ongedaan worden gemaakt. Je profiel, je berichten en discussies, en je foto's en video's worden definitief verwijderd.",
+    "kept": "Reacties en opmerkingen die je bij content van anderen hebt achtergelaten blijven staan, zodat die discussies te volgen blijven, maar zonder jouw naam.",
+    "password": "Bevestig met je wachtwoord",
+    "passwordPlaceholder": "Je wachtwoord",
+    "confirm": "Definitief verwijderen",
+    "cancel": "Annuleren",
+    "wrongPassword": "Onjuist wachtwoord.",
+    "tooManyRequests": "Te veel pogingen. Probeer het later opnieuw.",
+    "failed": "Het account kon niet worden verwijderd. Probeer het opnieuw."
+  },
+  "block": {
+    "listTitle": "Geblokkeerde accounts",
+    "listEmpty": "Je hebt niemand geblokkeerd.",
+    "block": "Blokkeren",
+    "unblock": "Deblokkeren",
+    "cancel": "Annuleren",
+    "confirmTitle": "{{name}} blokkeren?",
+    "confirmMessage": "Deze persoon kan niet meer reageren in jouw discussies, jouw berichten becommentariëren of je noemen. Jullie zien elkaars content niet meer en beide volgrelaties worden verbroken.",
+    "blockedTitle": "Je hebt dit account geblokkeerd",
+    "blockedExplainer": "Hun berichten en reacties zijn voor jou verborgen en ze kunnen je niet bereiken. Deblokkeer om het profiel weer te zien.",
+    "failedTitle": "Er ging iets mis",
+    "failed": "De blokkering kon niet worden bijgewerkt. Probeer het opnieuw."
+  },
+  "terms": {
+    "title": "Gebruiksvoorwaarden",
+    "acceptLabel": "Ik accepteer de gebruiksvoorwaarden",
+    "open": "Gebruiksvoorwaarden openen",
+    "required": "Accepteer de gebruiksvoorwaarden om door te gaan."
   }
 }

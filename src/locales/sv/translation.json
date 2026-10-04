@@ -41,7 +41,9 @@
     "notVerifiedYet": "E-post inte verifierad ännu. Öppna länken i inkorgen och tryck sedan här.",
     "useAnotherAccount": "Använd ett annat konto",
     "openEmailApp": "Öppna e-postapp",
-    "sendEmail": "Skicka e-post"
+    "sendEmail": "Skicka e-post",
+    "registrationBlockedTitle": "Registrering är inte tillgänglig",
+    "registrationBlocked": "Den här e-postadressen kan inte användas för registrering just nu. Om du tror att det är ett misstag, skriv till hello@onlymaxon.com."
   },
   "feed": {
     "title": "Flöde",
@@ -119,7 +121,7 @@
     "themeDark": "Mörkt",
     "notifications": "Aviseringar",
     "privacy": "Integritet",
-    "privacyText": "yOdin samlar bara in data som du tillhandahåller: ditt namn, nationalitet, plats och profilfoto. Denna information används enbart för att anpassa ditt flöde och visa din identitet i diskussioner.\n\nDina uppgifter lagras säkert i Firebase och säljs eller delas aldrig med tredje part.\n\nDu kan när som helst radera ditt konto och alla tillhörande data genom att kontakta supporten.",
+    "privacyText": "yOdin samlar bara in data som du tillhandahåller: ditt namn, nationalitet, plats och profilfoto. Denna information används enbart för att anpassa ditt flöde och visa din identitet i diskussioner.\n\nDina uppgifter lagras säkert i Firebase och säljs eller delas aldrig med tredje part.\n\nDu kan radera ditt konto och alla tillhörande uppgifter när som helst: Profil → Inställningar → Radera konto.",
     "restartTitle": "Omstart krävs",
     "restartMessage": "Stäng och öppna appen igen för att tillämpa den nya layoutriktningen.",
     "about": "Om yOdin"
@@ -269,5 +271,39 @@
   "participants": {
     "title": "Deltagare",
     "empty": "Ingen har anmält sig ännu"
+  },
+  "common": {
+    "deletedAccount": "Raderat konto"
+  },
+  "deleteAccount": {
+    "title": "Radera konto",
+    "message": "Detta går inte att ångra. Din profil, dina inlägg och diskussioner samt dina foton och videor raderas permanent.",
+    "kept": "Svar och kommentarer du lämnat under andras innehåll blir kvar så att diskussionerna fortfarande går att följa, men de visar inte längre ditt namn.",
+    "password": "Bekräfta med ditt lösenord",
+    "passwordPlaceholder": "Ditt lösenord",
+    "confirm": "Radera permanent",
+    "cancel": "Avbryt",
+    "wrongPassword": "Fel lösenord.",
+    "tooManyRequests": "För många försök. Försök igen senare.",
+    "failed": "Kontot kunde inte raderas. Försök igen."
+  },
+  "block": {
+    "listTitle": "Blockerade konton",
+    "listEmpty": "Du har inte blockerat någon.",
+    "block": "Blockera",
+    "unblock": "Avblockera",
+    "cancel": "Avbryt",
+    "confirmTitle": "Blockera {{name}}?",
+    "confirmMessage": "Personen kan inte längre svara i dina diskussioner, kommentera dina inlägg eller nämna dig. Ni slutar se varandras innehåll och båda följningarna avslutas.",
+    "blockedTitle": "Du har blockerat det här kontot",
+    "blockedExplainer": "Personens inlägg och svar är dolda för dig, och hen når dig inte. Avblockera för att se profilen igen.",
+    "failedTitle": "Något gick fel",
+    "failed": "Det gick inte att uppdatera blockeringen. Försök igen."
+  },
+  "terms": {
+    "title": "Användarvillkor",
+    "acceptLabel": "Jag godkänner användarvillkoren",
+    "open": "Öppna användarvillkoren",
+    "required": "Godkänn användarvillkoren för att fortsätta."
   }
 }

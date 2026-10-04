@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  Alert,
   View,
   StyleSheet,
   TouchableOpacity,
@@ -26,6 +27,7 @@ import AppImage from '../components/AppImage';
 import Avatar from '../components/Avatar';
 import EmptyState from '../components/EmptyState';
 import FollowButton from '../components/FollowButton';
+import { useBlockStore } from '../store/useBlockStore';
 import PostDetailModal from './PostDetailModal';
 
 export default function UserProfileScreen({ route, navigation }: any) {
@@ -46,7 +48,44 @@ export default function UserProfileScreen({ route, navigation }: any) {
   const [detailVisible, setDetailVisible] = useState(false);
   const followedAtLoad = useRef(false);
 
+  const blockedByMe = useBlockStore((st) => st.blocked.includes(userId));
+  const blockAction = useBlockStore((st) => st.block);
+  const unblockAction = useBlockStore((st) => st.unblock);
+
   const isMe = myProfile?.uid === userId;
+
+  // Blocking is destructive enough to deserve a confirmation, and the
+  // consequences are not obvious — so they are spelled out, not implied.
+  function confirmBlock() {
+    Alert.alert(
+      t('block.confirmTitle', { name: user?.firstName ?? '' }),
+      t('block.confirmMessage'),
+      [
+        { text: t('block.cancel'), style: 'cancel' },
+        {
+          text: t('block.block'),
+          style: 'destructive',
+          onPress: async () => {
+            if (!myProfile?.uid) return;
+            try {
+              await blockAction(myProfile.uid, userId);
+            } catch {
+              Alert.alert(t('block.failedTitle'), t('block.failed'));
+            }
+          },
+        },
+      ],
+    );
+  }
+
+  async function handleUnblock() {
+    if (!myProfile?.uid) return;
+    try {
+      await unblockAction(myProfile.uid, userId);
+    } catch {
+      Alert.alert(t('block.failedTitle'), t('block.failed'));
+    }
+  }
 
   useEffect(() => {
     let active = true;
@@ -200,7 +239,23 @@ export default function UserProfileScreen({ route, navigation }: any) {
 
             {!isMe && (
               <View style={styles.followRow}>
-                <FollowButton targetUid={userId} large />
+                {blockedByMe ? (
+                  <TouchableOpacity style={styles.unblockButton} onPress={handleUnblock}>
+                    <Ionicons name="lock-open-outline" size={16} color={colors.primary} />
+                    <Text style={styles.unblockText}>{t('block.unblock')}</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <>
+                    <FollowButton targetUid={userId} large />
+                    <TouchableOpacity
+                      style={styles.moreButton}
+                      onPress={confirmBlock}
+                      accessibilityLabel={t('block.block')}
+                    >
+                      <Ionicons name="ellipsis-horizontal" size={18} color={colors.textSecondary} />
+                    </TouchableOpacity>
+                  </>
+                )}
               </View>
             )}
           </View>
@@ -214,6 +269,13 @@ export default function UserProfileScreen({ route, navigation }: any) {
             </TouchableOpacity>
           </View>
 
+          {blockedByMe ? (
+            <View style={styles.blockedBox}>
+              <Ionicons name="hand-left-outline" size={32} color={colors.textSecondary} />
+              <Text style={styles.blockedTitle}>{t('block.blockedTitle')}</Text>
+              <Text style={styles.blockedText}>{t('block.blockedExplainer')}</Text>
+            </View>
+          ) : (
           <FlatList
             data={data}
             keyExtractor={(item) => item.id}
@@ -229,6 +291,7 @@ export default function UserProfileScreen({ route, navigation }: any) {
               />
             }
           />
+          )}
         </>
       )}
 
@@ -248,6 +311,30 @@ export default function UserProfileScreen({ route, navigation }: any) {
 
 function makeStyles(c: ColorPalette, topInset: number) {
   return StyleSheet.create({
+    moreButton: {
+      width: 44,
+      height: 44,
+      borderRadius: 22,
+      borderWidth: 1,
+      borderColor: c.border,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginLeft: 10,
+    },
+    unblockButton: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      borderWidth: 1.5,
+      borderColor: c.primary,
+      borderRadius: 14,
+      paddingVertical: 12,
+      paddingHorizontal: 20,
+    },
+    unblockText: { color: c.primary, fontWeight: '600' },
+    blockedBox: { alignItems: 'center', gap: 10, padding: 32, paddingTop: 56 },
+    blockedTitle: { fontSize: 17, fontWeight: '600', color: c.textPrimary, textAlign: 'center' },
+    blockedText: { fontSize: 14, color: c.textSecondary, textAlign: 'center', lineHeight: 20 },
     container: { flex: 1, backgroundColor: c.background },
     topBar: {
       flexDirection: 'row',
@@ -292,7 +379,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     rankBadgeText: { fontSize: Typography.fontSizeXS, fontWeight: Typography.fontWeightSemiBold, color: c.secondaryText },
     rankPoints: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
-    followRow: { marginTop: 16, flexDirection: 'row' },
+    followRow: { marginTop: 16, flexDirection: 'row', alignItems: 'center' },
     tabs: { flexDirection: 'row', backgroundColor: c.surface, borderBottomWidth: 1, borderBottomColor: c.border },
     tab: { flex: 1, paddingVertical: 14, alignItems: 'center', borderBottomWidth: 2, borderBottomColor: 'transparent' },
     tabActive: { borderBottomColor: c.primary },

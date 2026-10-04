@@ -14,16 +14,21 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "az.birklik.yodin"
+      "bundleIdentifier": "app.yodin"
     },
     "android": {
-      "package": "az.birklik.yodin",
+      "package": "app.yodin",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6C35DE"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -39,7 +44,8 @@
       ],
       "expo-localization",
       "expo-font",
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      "./plugins/withReleaseSigning"
     ]
   }
 }

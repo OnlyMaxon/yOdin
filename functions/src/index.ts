@@ -8,6 +8,7 @@ import { initializeApp } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { algoliasearch } from 'algoliasearch';
 import { setGlobalOptions } from 'firebase-functions';
+import { DELETED_ID } from './accountDeletion';
 
 // Firestore lives in eur3 — keep the functions on the same continent so triggers
 // don't make a round trip to the US.
@@ -130,6 +131,12 @@ export const onDiscussionUpdated = onDocumentUpdated(
       }
     }
 
+    // Account deletion blanks the accepted answer's author without touching
+    // acceptedReplyId, so the name has to sync on its own as well.
+    if (before.acceptedReplyAuthorName !== after.acceptedReplyAuthorName) {
+      updates.acceptedReplyAuthorName = after.acceptedReplyAuthorName ?? '';
+    }
+
     if (Object.keys(updates).length === 0) return;
 
     await getClient().partialUpdateObject({
@@ -231,7 +238,9 @@ export const onReportUpdated = onDocumentUpdated('reports/{reportId}', async (ev
   if (before.status === after.status || after.status !== 'removed') return;
 
   const authorId: string | undefined = after.targetAuthorId;
-  if (!authorId) return;
+  // Content left by a deleted account can still be removed, but there is
+  // nobody left to notify or strike.
+  if (!authorId || authorId === DELETED_ID) return;
   const snippet = String(after.targetTitle ?? '').slice(0, 140);
 
   // 1) Tell the author their content was removed.
@@ -296,3 +305,6 @@ export const onReplyUpdated = onDocumentUpdated(
       .catch(() => {});
   },
 );
+
+export { deleteAccount, onUserProfileCreated } from './accountDeletion';
+export { onBlockCreated, onBlockDeleted } from './blocking';

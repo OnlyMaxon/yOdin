@@ -6,6 +6,7 @@ import { getReactNativePersistence } from '@firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
+import { getFunctions } from 'firebase/functions';
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -29,4 +30,7 @@ export const auth = isNew
 
 export const db = getFirestore(app);
 export const storage = getStorage(app);
+// Callable functions are pinned to the region they are deployed in; the
+// default (us-central1) would simply 404 here.
+export const functions = getFunctions(app, 'europe-west1');
 export default app;

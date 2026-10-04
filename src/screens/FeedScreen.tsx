@@ -43,6 +43,7 @@ import EventDateBlock from '../components/EventDateBlock';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
 import EmptyState from '../components/EmptyState';
 import { weightedSort } from '../utils/weightedSort';
+import { useWithoutBlocked } from '../hooks/useWithoutBlocked';
 import { COUNTRIES } from '../data/countries';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
@@ -54,6 +55,7 @@ export default function FeedScreen({ navigation }: any) {
   const styles = useMemo(() => makeStyles(colors, insets.top), [colors, insets.top]);
   const { profile } = useAuthStore();
   const { posts, filter, setFilter, setPosts, appendPosts, setLoading, isLoading, setHasMore, hasMore, removePost, setPostVote, togglePostSaved, toggleParticipant } = usePostStore();
+  const visiblePosts = useWithoutBlocked(posts, (p) => p.authorId);
   const [refreshing, setRefreshing] = useState(false);
   const [lastDoc, setLastDoc] = useState<DocumentSnapshot | null>(null);
   const [error, setError] = useState('');
@@ -494,7 +496,7 @@ export default function FeedScreen({ navigation }: any) {
       ) : (
         <FlatList
           ref={listRef}
-          data={posts}
+          data={visiblePosts}
           keyExtractor={(item) => item.id}
           renderItem={renderCard}
           contentContainerStyle={posts.length === 0 ? styles.center : styles.list}
