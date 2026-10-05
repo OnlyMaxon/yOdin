@@ -170,7 +170,7 @@
     "photoUploadFailed": "Det gick inte att ladda upp bilden. Försök igen.",
     "fillTitleAndDescription": "Fyll i ämne och beskrivning.",
     "videoTooLong": "Videon måste vara kortare än {{count}}s",
-    "videoTooLarge": "Videon är för stor (max 50 MB)",
+    "videoTooLarge": "Videon är för stor (max {{count}} MB)",
     "videoUploadFailed": "Det gick inte att ladda upp videon",
     "selectCategory": "Välj en kategori",
     "galleryPermission": "Aktivera galleriåtkomst i Inställningar"

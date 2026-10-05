@@ -174,7 +174,7 @@
     "photoUploadFailed": "فشل رفع الصورة. يرجى المحاولة مرة أخرى.",
     "fillTitleAndDescription": "يرجى ملء الموضوع والوصف.",
     "videoTooLong": "يجب أن يكون الفيديو أقل من {{count}} ثانية",
-    "videoTooLarge": "الفيديو كبير جدًا (بحد أقصى 50 ميغابايت)",
+    "videoTooLarge": "الفيديو كبير جدًا (بحد أقصى {{count}} ميغابايت)",
     "videoUploadFailed": "تعذّر رفع الفيديو",
     "selectCategory": "اختر فئة",
     "galleryPermission": "فعّل الوصول إلى الصور في إعدادات الجهاز"

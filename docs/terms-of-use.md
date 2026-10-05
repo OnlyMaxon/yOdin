@@ -22,9 +22,8 @@ use the App. How your data is handled is described separately in the
 
 ## 1. Who may use yOdin
 
-You must be at least **13 years old**, and old enough to consent to data
-processing where you live if that age is higher. One person, one account. You
-are responsible for what happens under your account, so keep your password to
+You must be at least **18 years old**. One person, one account. You are
+responsible for what happens under your account, so keep your password to
 yourself.
 
 We may refuse or remove an account that breaks these terms.

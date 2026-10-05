@@ -170,7 +170,7 @@
     "photoUploadFailed": "อัปโหลดรูปภาพล้มเหลว กรุณาลองอีกครั้ง",
     "fillTitleAndDescription": "กรุณากรอกหัวข้อและคำอธิบาย",
     "videoTooLong": "วิดีโอต้องสั้นกว่า {{count}} วินาที",
-    "videoTooLarge": "วิดีโอใหญ่เกินไป (สูงสุด 50 MB)",
+    "videoTooLarge": "วิดีโอใหญ่เกินไป (สูงสุด {{count}} MB)",
     "videoUploadFailed": "อัปโหลดวิดีโอไม่สำเร็จ",
     "selectCategory": "เลือกหมวดหมู่",
     "galleryPermission": "เปิดใช้งานการเข้าถึงแกลเลอรีในการตั้งค่า"

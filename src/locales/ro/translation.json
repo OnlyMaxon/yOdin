@@ -171,7 +171,7 @@
     "photoUploadFailed": "Încărcarea fotografiei a eșuat. Te rugăm să încerci din nou.",
     "fillTitleAndDescription": "Completează subiectul și descrierea.",
     "videoTooLong": "Videoclipul trebuie să fie sub {{count}}s",
-    "videoTooLarge": "Videoclipul e prea mare (max. 50 MB)",
+    "videoTooLarge": "Videoclipul e prea mare (max. {{count}} MB)",
     "videoUploadFailed": "Videoclipul nu a putut fi încărcat",
     "selectCategory": "Alege o categorie",
     "galleryPermission": "Activați accesul la galerie în Setări"

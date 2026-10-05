@@ -72,7 +72,9 @@ export default function ForgotPasswordScreen({ navigation }: any) {
         <Text style={styles.subtitle}>{t('auth.resetPasswordSubtitle')}</Text>
 
         <View style={styles.inputWrap}>
-          <Ionicons name="mail-outline" size={18} color={colors.textSecondary} />
+          <View style={styles.fieldIcon}>
+            <Ionicons name="mail-outline" size={17} color={colors.secondaryText} />
+          </View>
           <TextInput
             style={styles.input}
             placeholder={t('auth.email')}
@@ -138,11 +140,23 @@ function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalet
       borderWidth: 1.5,
       borderColor: c.border,
       borderRadius: 14,
-      paddingHorizontal: 16,
+      paddingLeft: 10,
+      paddingRight: 16,
       flexDirection: 'row',
       alignItems: 'center',
       gap: 10,
       marginBottom: 12,
+    },
+    // Each field's glyph sits in a soft brand-tinted chip instead of floating as
+    // a thin grey outline. Same pattern as the profile menu rows, so the auth
+    // screens stop looking like an unstyled system form.
+    fieldIcon: {
+      width: 32,
+      height: 32,
+      borderRadius: 10,
+      backgroundColor: c.primaryLight,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     input: {
       flex: 1,

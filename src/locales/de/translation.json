@@ -170,7 +170,7 @@
     "photoUploadFailed": "Foto-Upload fehlgeschlagen. Bitte versuche es erneut.",
     "fillTitleAndDescription": "Bitte Thema und Beschreibung ausfüllen.",
     "videoTooLong": "Video muss kürzer als {{count}}s sein",
-    "videoTooLarge": "Video ist zu groß (max. 50 MB)",
+    "videoTooLarge": "Video ist zu groß (max. {{count}} MB)",
     "videoUploadFailed": "Video konnte nicht hochgeladen werden",
     "selectCategory": "Bitte wähle eine Kategorie",
     "galleryPermission": "Galerie-Zugriff in den Einstellungen aktivieren"

@@ -171,7 +171,7 @@
     "photoUploadFailed": "Не вдалося завантажити фото. Спробуйте ще раз.",
     "fillTitleAndDescription": "Заповніть тему та опис.",
     "videoTooLong": "Відео має бути коротшим за {{count}}с",
-    "videoTooLarge": "Відео завелике (макс. 50 МБ)",
+    "videoTooLarge": "Відео завелике (макс. {{count}} МБ)",
     "videoUploadFailed": "Не вдалося завантажити відео",
     "selectCategory": "Оберіть категорію",
     "galleryPermission": "Дозвольте доступ до галереї в налаштуваннях пристрою"

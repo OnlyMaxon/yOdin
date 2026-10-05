@@ -170,7 +170,7 @@
     "photoUploadFailed": "Foto uploaden mislukt. Probeer het opnieuw.",
     "fillTitleAndDescription": "Vul het onderwerp en de beschrijving in.",
     "videoTooLong": "Video moet korter zijn dan {{count}}s",
-    "videoTooLarge": "Video is te groot (max. 50 MB)",
+    "videoTooLarge": "Video is te groot (max. {{count}} MB)",
     "videoUploadFailed": "Video kon niet worden geüpload",
     "selectCategory": "Kies een categorie",
     "galleryPermission": "Schakel galerijmachtiging in via Instellingen"

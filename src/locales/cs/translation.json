@@ -171,7 +171,7 @@
     "photoUploadFailed": "Nahrávání fotografie se nezdařilo. Zkuste to prosím znovu.",
     "fillTitleAndDescription": "Vyplňte téma a popis.",
     "videoTooLong": "Video musí být kratší než {{count}}s",
-    "videoTooLarge": "Video je příliš velké (max. 50 MB)",
+    "videoTooLarge": "Video je příliš velké (max. {{count}} MB)",
     "videoUploadFailed": "Video se nepodařilo nahrát",
     "selectCategory": "Vyber kategorii",
     "galleryPermission": "Povolte přístup ke galerii v Nastavení"

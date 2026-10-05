@@ -172,7 +172,7 @@
     "photoUploadFailed": "Nie udało się przesłać zdjęcia. Spróbuj ponownie.",
     "fillTitleAndDescription": "Wypełnij temat i opis.",
     "videoTooLong": "Wideo musi być krótsze niż {{count}}s",
-    "videoTooLarge": "Wideo jest za duże (maks. 50 MB)",
+    "videoTooLarge": "Wideo jest za duże (maks. {{count}} MB)",
     "videoUploadFailed": "Nie udało się przesłać wideo",
     "selectCategory": "Wybierz kategorię",
     "galleryPermission": "Włącz dostęp do galerii w Ustawieniach urządzenia"

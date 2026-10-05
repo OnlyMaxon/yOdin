@@ -170,7 +170,7 @@
     "photoUploadFailed": "Şəkil yüklənmədi. Yenidən cəhd edin.",
     "fillTitleAndDescription": "Mövzu və təsviri doldurun.",
     "videoTooLong": "Video {{count}} saniyədən qısa olmalıdır",
-    "videoTooLarge": "Video çox böyükdür (maks. 50 MB)",
+    "videoTooLarge": "Video çox böyükdür (maks. {{count}} MB)",
     "videoUploadFailed": "Video yüklənmədi",
     "selectCategory": "Kateqoriya seçin",
     "galleryPermission": "Cihaz parametrlərindən qalereya girişinə icazə verin"

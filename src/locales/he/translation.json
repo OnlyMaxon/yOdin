@@ -170,7 +170,7 @@
     "photoUploadFailed": "העלאת התמונה נכשלה. אנא נסה שוב.",
     "fillTitleAndDescription": "נא למלא נושא ותיאור.",
     "videoTooLong": "הסרטון חייב להיות קצר מ-{{count}} שנ'",
-    "videoTooLarge": "הסרטון גדול מדי (עד 50 MB)",
+    "videoTooLarge": "הסרטון גדול מדי (עד {{count}} MB)",
     "videoUploadFailed": "העלאת הסרטון נכשלה",
     "selectCategory": "בחר קטגוריה",
     "galleryPermission": "אפשר גישה לגלריה בהגדרות המכשיר"

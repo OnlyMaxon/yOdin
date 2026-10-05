@@ -170,7 +170,7 @@
     "photoUploadFailed": "사진 업로드에 실패했습니다. 다시 시도해 주세요.",
     "fillTitleAndDescription": "주제와 설명을 입력해 주세요.",
     "videoTooLong": "동영상은 {{count}}초 미만이어야 합니다",
-    "videoTooLarge": "동영상이 너무 큽니다 (최대 50MB)",
+    "videoTooLarge": "동영상이 너무 큽니다 (최대 {{count}}MB)",
     "videoUploadFailed": "동영상을 업로드하지 못했습니다",
     "selectCategory": "카테고리를 선택하세요",
     "galleryPermission": "설정에서 갤러리 접근을 허용하세요"

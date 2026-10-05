@@ -170,7 +170,7 @@
     "photoUploadFailed": "Gagal mengunggah foto. Silakan coba lagi.",
     "fillTitleAndDescription": "Harap isi topik dan deskripsi.",
     "videoTooLong": "Video harus di bawah {{count}}s",
-    "videoTooLarge": "Video terlalu besar (maks. 50 MB)",
+    "videoTooLarge": "Video terlalu besar (maks. {{count}} MB)",
     "videoUploadFailed": "Gagal mengunggah video",
     "selectCategory": "Pilih kategori",
     "galleryPermission": "Aktifkan akses galeri di Pengaturan"

@@ -170,7 +170,7 @@
     "photoUploadFailed": "آپلود عکس ناموفق بود. لطفاً دوباره تلاش کنید.",
     "fillTitleAndDescription": "لطفاً موضوع و توضیحات را پر کنید.",
     "videoTooLong": "ویدیو باید کمتر از {{count}} ثانیه باشد",
-    "videoTooLarge": "ویدیو خیلی بزرگ است (حداکثر ۵۰ مگابایت)",
+    "videoTooLarge": "ویدیو خیلی بزرگ است (حداکثر {{count}} مگابایت)",
     "videoUploadFailed": "بارگذاری ویدیو ناموفق بود",
     "selectCategory": "یک دسته انتخاب کن",
     "galleryPermission": "دسترسی به گالری را در تنظیمات دستگاه فعال کنید"

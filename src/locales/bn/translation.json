@@ -170,7 +170,7 @@
     "photoUploadFailed": "ছবি আপলোড ব্যর্থ। আবার চেষ্টা করুন।",
     "fillTitleAndDescription": "অনুগ্রহ করে বিষয় ও বিবরণ পূরণ করুন।",
     "videoTooLong": "ভিডিও {{count}}সেকেন্ডের কম হতে হবে",
-    "videoTooLarge": "ভিডিওটি খুব বড় (সর্বোচ্চ ৫০ MB)",
+    "videoTooLarge": "ভিডিওটি খুব বড় (সর্বোচ্চ {{count}} MB)",
     "videoUploadFailed": "ভিডিও আপলোড করা যায়নি",
     "selectCategory": "একটি বিভাগ বাছুন",
     "galleryPermission": "সেটিংসে গ্যালারি অ্যাক্সেস চালু করুন"

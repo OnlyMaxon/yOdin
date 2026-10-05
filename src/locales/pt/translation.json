@@ -170,7 +170,7 @@
     "photoUploadFailed": "Falha ao enviar foto. Por favor tente novamente.",
     "fillTitleAndDescription": "Preencha o tema e a descrição.",
     "videoTooLong": "O vídeo deve ter menos de {{count}}s",
-    "videoTooLarge": "O vídeo é muito grande (máx. 50 MB)",
+    "videoTooLarge": "O vídeo é muito grande (máx. {{count}} MB)",
     "videoUploadFailed": "Não foi possível enviar o vídeo",
     "selectCategory": "Escolha uma categoria",
     "galleryPermission": "Ative o acesso à galeria nas Definições"

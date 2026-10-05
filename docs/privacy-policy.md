@@ -240,10 +240,10 @@ published at
 
 ## 9. Children
 
-yOdin is not intended for children under 13, and we do not knowingly collect
-data from them. If you believe a child under 13 has created an account, contact
-us at **hello@onlymaxon.com** and we will remove it. Where local law sets a higher
-minimum age for consent to data processing, that age applies instead.
+yOdin is for adults: you must be at least 18 years old to create an account. The
+App is not directed at children or teenagers, and we do not knowingly collect
+data from them. If you believe someone under 18 has created an account, contact
+us at **hello@onlymaxon.com** and we will remove it.
 
 ---
 

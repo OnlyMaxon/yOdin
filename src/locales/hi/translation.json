@@ -170,7 +170,7 @@
     "photoUploadFailed": "फ़ोटो अपलोड विफल। कृपया पुनः प्रयास करें।",
     "fillTitleAndDescription": "कृपया विषय और विवरण भरें।",
     "videoTooLong": "वीडियो {{count}}से कम का होना चाहिए",
-    "videoTooLarge": "वीडियो बहुत बड़ा है (अधिकतम 50 MB)",
+    "videoTooLarge": "वीडियो बहुत बड़ा है (अधिकतम {{count}} MB)",
     "videoUploadFailed": "वीडियो अपलोड नहीं हो सका",
     "selectCategory": "एक श्रेणी चुनें",
     "galleryPermission": "सेटिंग्स में गैलरी एक्सेस सक्षम करें"

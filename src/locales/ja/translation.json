@@ -170,7 +170,7 @@
     "photoUploadFailed": "写真のアップロードに失敗しました。もう一度お試しください。",
     "fillTitleAndDescription": "トピックと説明を入力してください。",
     "videoTooLong": "動画は{{count}}秒未満にしてください",
-    "videoTooLarge": "動画が大きすぎます（最大50MB）",
+    "videoTooLarge": "動画が大きすぎます（最大{{count}}MB）",
     "videoUploadFailed": "動画をアップロードできませんでした",
     "selectCategory": "カテゴリを選択",
     "galleryPermission": "設定でギャラリーへのアクセスを許可してください"

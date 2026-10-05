@@ -37,7 +37,7 @@ it as accepted and the discussion closes, so the next person finds the answer
 instead of the argument.
 
 A feed that is actually about your city
-Posts are organised into News, Events, Places and Lifestyle. Filter the feed by
+Posts are organised into News, Events, Worth Visiting and Lifestyle. Filter by
 nationality and country to see what matters to your community, not a global
 noise stream.
 
@@ -71,8 +71,9 @@ time. The rules are enforced, not decorative.
 PRIVACY
 
 yOdin does not track your location, does not run analytics, and carries no
-advertising SDKs. The country and city on your profile are text you type
-yourself. We do not sell your data.
+advertising SDKs. Your nationality and country of residence are picked from a
+list — the app has no city field and never reads your device location. We do not
+sell your data.
 
 Free to use. Sign up with an email address and join in.
 ```
@@ -109,7 +110,8 @@ yOdin — приложение для тех, кто живёт вдали от 
 закроется, и следующий человек найдёт решение, а не спор.
 
 Лента о вашем городе
-Публикации разделены на «Новости», «События», «Места» и «Жизнь». Фильтруйте
+Публикации разделены на «Новости», «Мероприятия», «Стоит посетить» и
+«Лайфстайл». Фильтруйте
 ленту по национальности и стране, чтобы видеть то, что важно вашему сообществу,
 а не общий шум.
 
@@ -121,7 +123,7 @@ yOdin — приложение для тех, кто живёт вдали от 
 начиная разговор с нуля.
 
 Профили, которые хочется читать
-Имя, @никнейм, описание, национальность, языки и город. Подписывайтесь на тех,
+Имя, @никнейм, описание, национальность, языки и страна. Подписывайтесь на тех,
 чьим ответам доверяете, и получайте баллы, когда сообщество считает ваши ответы
 полезными.
 
@@ -142,8 +144,8 @@ yOdin — приложение для тех, кто живёт вдали от 
 КОНФИДЕНЦИАЛЬНОСТЬ
 
 yOdin не отслеживает геолокацию, не собирает аналитику и не содержит рекламных
-SDK. Страна и город в профиле — это текст, который вы вводите сами. Мы не
-продаём ваши данные.
+SDK. Национальность и страна проживания выбираются из списка — поля города нет,
+а к геолокации устройства приложение не обращается. Мы не продаём ваши данные.
 
 Бесплатно. Зарегистрируйтесь по email и присоединяйтесь.
 ```
@@ -180,7 +182,8 @@ yoldan keçmiş insanlar verir. Cavab probleminizi həll edəndə onu qəbul edi
 kimi işarələyin — müzakirə bağlanır və növbəti adam mübahisəni yox, həlli tapır.
 
 Şəhəriniz haqqında lent
-Paylaşımlar «Xəbərlər», «Tədbirlər», «Yerlər» və «Həyat» bölmələrinə ayrılıb.
+Paylaşımlar «Xəbərlər», «Tədbirlər», «Görməyə dəyər» və «Həyat tərzi»
+bölmələrinə ayrılıb.
 Lenti millət və ölkə üzrə süzün ki, ümumi səs-küyü deyil, icmanız üçün vacib
 olanı görəsiniz.
 
@@ -213,7 +216,8 @@ alır. Qaydalar burada işləyir.
 MƏXFİLİK
 
 yOdin məkanınızı izləmir, analitika toplamır və reklam SDK-ları daşımır.
-Profildəki ölkə və şəhər özünüzün yazdığı mətndir. Məlumatlarınızı satmırıq.
+Millətiniz və yaşadığınız ölkə siyahıdan seçilir — tətbiqdə şəhər sahəsi yoxdur
+və cihazınızın məkanı heç vaxt oxunmur. Məlumatlarınızı satmırıq.
 
 Pulsuzdur. E-poçtla qeydiyyatdan keçin və qoşulun.
 ```
@@ -264,7 +268,7 @@ Collected **and** linked to the user's identity:
 | Photos | Yes | No | App functionality (user content) |
 | Videos | Yes | No | App functionality (user content) |
 | Other user-generated content | Yes | No | App functionality |
-| Other info (nationality, country, city, bio, languages) | Yes | No | App functionality |
+| Other info (nationality, country of residence, bio, languages) | Yes | No | App functionality |
 
 Answer **No** to: precise/approximate location, financial info, health, contacts,
 calendar, app activity analytics, crash logs, advertising ID, device IDs.
@@ -284,7 +288,13 @@ Other answers:
   by the community rules and enforced through moderation)
 
 ### Target audience
-13+ (no child-directed content, no ads)
+**18+ only** — no child-directed content, no ads. Declared this way deliberately:
+the app is a Social-category app with open user-generated content, and admitting
+13–17-year-olds pulls in Play's child-safety requirements for social apps (a
+published child-safety policy, a CSAE contact, extra review). The real audience
+is adults who have moved abroad, so 18+ is both the honest answer and the lighter
+compliance path. The terms (§1) and the privacy policy (§9) state the same 18
+minimum — keep all three in step if this ever changes.
 
 ### Ads
 Contains ads: **No**

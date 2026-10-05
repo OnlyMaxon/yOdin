@@ -63,7 +63,10 @@ export default function WelcomeScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.brand}>FROM yODIN</Text>
+      {/* Studio credit. A brand name, so it stays literal rather than going
+          through i18n — it reads the same in every language. Was "FROM yODIN",
+          which said nothing: this is the yOdin app. */}
+      <Text style={styles.brand}>FROM ONLYMAXON STUDIO</Text>
     </View>
   );
 }

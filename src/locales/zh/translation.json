@@ -170,7 +170,7 @@
     "photoUploadFailed": "照片上传失败，请重试。",
     "fillTitleAndDescription": "请填写主题和描述。",
     "videoTooLong": "视频时长需少于 {{count}} 秒",
-    "videoTooLarge": "视频过大（最大 50 MB）",
+    "videoTooLarge": "视频过大（最大 {{count}} MB）",
     "videoUploadFailed": "视频上传失败",
     "selectCategory": "请选择分类",
     "galleryPermission": "在设置中启用相册访问权限"

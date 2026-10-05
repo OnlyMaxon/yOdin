@@ -170,7 +170,7 @@
     "photoUploadFailed": "Tải ảnh lên thất bại. Vui lòng thử lại.",
     "fillTitleAndDescription": "Vui lòng điền chủ đề và mô tả.",
     "videoTooLong": "Video phải dưới {{count}}s",
-    "videoTooLarge": "Video quá lớn (tối đa 50 MB)",
+    "videoTooLarge": "Video quá lớn (tối đa {{count}} MB)",
     "videoUploadFailed": "Không thể tải video lên",
     "selectCategory": "Chọn một danh mục",
     "galleryPermission": "Bật quyền truy cập thư viện trong Cài đặt"

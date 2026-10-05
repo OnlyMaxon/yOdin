@@ -170,7 +170,7 @@
     "photoUploadFailed": "Caricamento foto fallito. Riprova.",
     "fillTitleAndDescription": "Compila argomento e descrizione.",
     "videoTooLong": "Il video deve durare meno di {{count}}s",
-    "videoTooLarge": "Il video è troppo grande (max 50 MB)",
+    "videoTooLarge": "Il video è troppo grande (max {{count}} MB)",
     "videoUploadFailed": "Impossibile caricare il video",
     "selectCategory": "Scegli una categoria",
     "galleryPermission": "Abilita l'accesso alla galleria nelle Impostazioni"
