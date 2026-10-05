@@ -6,7 +6,7 @@ permalink: /terms-of-use/
 
 # Terms of Use
 
-**Last updated:** 4 October 2026
+**Last updated:** 5 October 2026
 
 These terms are the agreement between you and **Jalil Orujli**, Chmielna 69,
 Warsaw, Poland — the operator of the yOdin mobile app (Android package
@@ -53,7 +53,7 @@ not post, send or upload:
 | **Hate speech or symbols** | Attacks on people for nationality, ethnicity, religion, gender, sexual orientation, disability, or similar |
 | **Violence or dangerous organisations** | Threats, glorification of violence, promoting violent or extremist groups. Real violent imagery is not allowed regardless of the category you post it in, including News |
 | **Bullying or harassment** | Targeting a person, pile-ons, unwanted repeated contact |
-| **Nudity or sexual activity** | Sexual content and explicit nudity. Sexual content involving minors is reported to the authorities and ends the account permanently |
+| **Nudity or sexual activity** | Sexual content and explicit nudity. Child sexual abuse and exploitation (CSAE) is absolutely prohibited: it is removed, the account is terminated permanently and the case is reported to the authorities — see our [Child Safety Standards](https://onlymaxon.com/apps/yodin/child-safety-standards/) |
 | **False information** | Fabricated claims presented as fact, especially about health, safety or elections |
 | **Scam or fraud** | Fake offers, phishing, financial schemes, impersonation |
 | **Suicide or self-harm** | Encouraging or instructing self-harm |
@@ -79,9 +79,11 @@ Enforcement escalates rather than jumping to a ban:
 2. **Comment restriction.** Every fifth confirmed removal suspends your ability
    to comment and reply: **3 days**, then **7 days**, then **30 days** for each
    further round. Reading and posting are unaffected.
-3. **Account termination.** Severe cases — sexual content involving minors,
+3. **Account termination.** Severe cases — child sexual abuse and exploitation,
    credible threats, coordinated fraud — end the account immediately, without
-   the steps above.
+   the steps above. How we handle child safety reports specifically, and who to
+   contact about them, is set out in our
+   [Child Safety Standards](https://onlymaxon.com/apps/yodin/child-safety-standards/).
 
 If an account with removals or restrictions is deleted, we keep a one-way hash
 of its email address for a year so the same mailbox cannot immediately register

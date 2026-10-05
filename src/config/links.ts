@@ -14,6 +14,13 @@ export const DELETE_ACCOUNT_URL = `${SITE}/delete-account/`;
 
 // Which published revision of the terms the signup gate is accepting. Stored
 // with each new profile (`User.acceptedTermsVersion`) so we can tell who agreed
-// to what. Bump this whenever the published terms change materially — and keep
-// it equal to the "Last updated" date on the published page.
+// to what.
+//
+// Bump only on a **material** change — one that alters what a user is agreeing
+// to — because bumping means shipping a new build and, eventually, re-asking
+// existing users. Clarifications and added cross-references do not count: the
+// page's "Last updated" date moves, this constant does not. It last moved for
+// the 2026-10-04 revision (operator, jurisdiction, 18+ minimum age); the
+// 2026-10-05 edit only spelled out the existing CSAE prohibition and linked the
+// Child Safety Standards, so it stayed put.
 export const TERMS_VERSION = '2026-10-04';
