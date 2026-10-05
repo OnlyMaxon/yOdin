@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "app.yodin",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6C35DE"
@@ -40,7 +40,8 @@
         "expo-media-library",
         {
           "photosPermission": "Allow yOdin to access your photos to attach them to discussions and posts.",
-          "isAccessMediaLocationEnabled": false
+          "isAccessMediaLocationEnabled": false,
+          "granularPermissions": ["photo", "video"]
         }
       ],
       "expo-localization",
