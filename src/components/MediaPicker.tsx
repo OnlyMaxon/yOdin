@@ -60,13 +60,25 @@ export default function MediaPicker({ images, onChangeImages, video, onChangeVid
 
   async function addVideo() {
     if (busy) return;
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') return;
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['videos'],
-      ...videoPickerOptions,
-    });
-    if (result.canceled || result.assets.length === 0) return;
+    let result: ImagePicker.ImagePickerResult;
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        // Returning silently here made the button look dead. On Android 12 and
+        // older this is the branch that fires when the storage permission is
+        // missing from the manifest.
+        Alert.alert(t('errors.galleryPermission'));
+        return;
+      }
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['videos'],
+        ...videoPickerOptions,
+      });
+    } catch (e) {
+      Alert.alert(t('errors.generic'), e instanceof Error ? e.message : undefined);
+      return;
+    }
+    if (result.canceled || !result.assets?.length) return;
     setBusy(true);
     try {
       const v = await processVideoAsset(result.assets[0]);
