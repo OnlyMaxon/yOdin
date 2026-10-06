@@ -39,7 +39,7 @@ Discussions
 Ask anything — paperwork, housing, work, everyday life. Replies come from people who have dealt with the same thing. When an answer solves your problem, mark it as accepted and the discussion closes, so the next person finds the answer instead of the argument.
 
 A feed for your community
-Posts are organised into News, Events, Places and Lifestyle. Filter the feed by nationality to see what matters to your community instead of a global noise stream.
+Posts are organised into News, Events, Worth Visiting and Lifestyle. Filter the feed by nationality to see what matters to your community instead of a global noise stream.
 
 Events with RSVP
 See what is happening nearby, say whether you are coming, and see who else will be there.
@@ -61,7 +61,7 @@ Every post, discussion, comment and reply can be reported. Reports are reviewed 
 
 PRIVACY
 
-yOdin does not track your location, runs no analytics, and carries no advertising SDKs or advertising identifiers. Nationality and country of residence are picked from a list — the app never reads your device location, and there is no city or address field. We do not sell your data.
+yOdin does not track your location, runs no analytics, and carries no advertising SDKs or advertising identifiers. Nationality and country of residence are picked from a list — the app never reads your device location, and there is no city or address field. GIFs in comments are served by GIPHY. We do not sell your data.
 
 You can delete your account and its data at any time: open Profile, tap the menu button at the top right, and choose Delete account.
 
@@ -97,7 +97,7 @@ yOdin — приложение для тех, кто живёт вдали от 
 Спрашивайте о чём угодно — документы, жильё, работа, быт. Отвечают те, кто уже прошёл через это. Когда ответ решает вопрос, отметьте его принятым — обсуждение закроется, и следующий человек найдёт решение, а не спор.
 
 Лента вашего сообщества
-Публикации разделены на «Новости», «События», «Места» и «Жизнь». Фильтруйте ленту по национальности, чтобы видеть то, что важно вашему сообществу, а не общий шум.
+Публикации разделены на «Новости», «Мероприятия», «Стоит посетить» и «Лайфстайл». Фильтруйте ленту по национальности, чтобы видеть то, что важно вашему сообществу, а не общий шум.
 
 События с записью
 Смотрите, что происходит рядом, отмечайте, что придёте, и смотрите, кто ещё будет.
@@ -119,7 +119,7 @@ yOdin — приложение для тех, кто живёт вдали от 
 
 КОНФИДЕНЦИАЛЬНОСТЬ
 
-yOdin не отслеживает геолокацию, не собирает аналитику и не содержит рекламных SDK и рекламных идентификаторов. Национальность и страна проживания выбираются из списка — приложение не читает местоположение устройства, и в нём нет поля города или адреса. Мы не продаём ваши данные.
+yOdin не отслеживает геолокацию, не собирает аналитику и не содержит рекламных SDK и рекламных идентификаторов. Национальность и страна проживания выбираются из списка — приложение не читает местоположение устройства, и в нём нет поля города или адреса. Гифки в комментариях отдаёт GIPHY. Мы не продаём ваши данные.
 
 Аккаунт и его данные можно удалить в любой момент: откройте «Профиль», нажмите кнопку меню справа вверху и выберите «Удалить аккаунт».
 
@@ -155,7 +155,7 @@ Müzakirələr
 İstənilən mövzuda soruşun — sənədlər, mənzil, iş, gündəlik həyat. Cavabları eyni yoldan keçmiş insanlar verir. Cavab probleminizi həll edəndə onu qəbul edilmiş kimi işarələyin — müzakirə bağlanır və növbəti adam mübahisəni yox, həlli tapır.
 
 İcmanız üçün lent
-Paylaşımlar «Xəbərlər», «Tədbirlər», «Yerlər» və «Həyat» bölmələrinə ayrılıb. Lenti millət üzrə süzün ki, ümumi səs-küyü deyil, icmanız üçün vacib olanı görəsiniz.
+Paylaşımlar «Xəbərlər», «Tədbirlər», «Görməyə dəyər» və «Həyat tərzi» bölmələrinə ayrılıb. Lenti millət üzrə süzün ki, ümumi səs-küyü deyil, icmanız üçün vacib olanı görəsiniz.
 
 Qeydiyyatla tədbirlər
 Yaxınlıqda nə baş verdiyini görün, gələcəyinizi bildirin və kimin iştirak edəcəyini öyrənin.
@@ -177,7 +177,7 @@ Hər paylaşım, müzakirə, şərh və cavab barədə şikayət etmək olar. Ş
 
 MƏXFİLİK
 
-yOdin məkanınızı izləmir, analitika toplamır, reklam SDK-ları və reklam identifikatorları daşımır. Millət və yaşadığınız ölkə siyahıdan seçilir — tətbiq cihazınızın məkanını heç vaxt oxumur, şəhər və ünvan sahəsi yoxdur. Məlumatlarınızı satmırıq.
+yOdin məkanınızı izləmir, analitika toplamır, reklam SDK-ları və reklam identifikatorları daşımır. Millət və yaşadığınız ölkə siyahıdan seçilir — tətbiq cihazınızın məkanını heç vaxt oxumur, şəhər və ünvan sahəsi yoxdur. Şərhlərdəki GIF-ləri GIPHY təqdim edir. Məlumatlarınızı satmırıq.
 
 Hesabınızı və məlumatlarınızı istədiyiniz vaxt silə bilərsiniz: «Profil» bölməsini açın, yuxarı sağdaki menyu düyməsinə toxunun və «Hesabı sil» seçin.
 
@@ -211,11 +211,29 @@ the in-app account deletion path.
 ### Tags
 community, forum, expat, questions and answers, events, local news
 
+### Who is who (keep these roles straight — they are deliberately not the same)
+- **Play developer account (publisher, shown on the store page):**
+  **EA DIGITAL GROUP, MMC** — apt. 50, 145 Samad Vurgun Str., Sumgait 5000,
+  Azerbaijan. Google displays the verified name and address of this account.
+- **Operator / data controller (named in the privacy policy and terms):**
+  **Jalil Orujli**, Chmielna 69, Warsaw, Poland. This is an establishment in the
+  EU, so the GDPR applies under Art. 3(1) and **no Art. 27 EU representative is
+  required** — which it would be if the controller sat outside the EEA.
+- **OnlyMaxon** — the studio credit. A brand, not a legal entity, so it is never
+  named as the controller.
+
+Publisher and controller differing is lawful (one distributes, the other decides
+how data is processed), but it does look like a mismatch at a glance. Both
+documents therefore state the Play distributor explicitly, so a reviewer can see
+the relationship instead of guessing.
+
 ### Contact details
 - Email: **hello@onlymaxon.com**
-- Privacy policy: **https://nikitashep.github.io/yOdin/privacy-policy/**
-- Terms of use: **https://nikitashep.github.io/yOdin/terms-of-use/**
-- Account deletion: **https://nikitashep.github.io/yOdin/delete-account/**
+- Website: **https://onlymaxon.com/apps/yodin/**
+- Privacy policy: **https://onlymaxon.com/apps/yodin/privacy/**
+- Terms of use: **https://onlymaxon.com/apps/yodin/terms/**
+- Account deletion (Data safety ▸ "Data deletion URL"):
+  **https://onlymaxon.com/apps/yodin/delete-account/**
 
 ### Data safety — declare these
 
@@ -252,7 +270,13 @@ Other answers:
 - Shares the user's precise current physical location with other users: **No**
 
 ### Target audience
-13+ (no child-directed content, no ads)
+**18+ only** — no child-directed content, no ads. Declared this way deliberately:
+the app is a Social-category app with open user-generated content, and admitting
+13–17-year-olds pulls in Play's child-safety requirements for social apps (a
+published child-safety policy, a CSAE contact, extra review). The real audience
+is adults who have moved abroad, so 18+ is both the honest answer and the lighter
+compliance path. The terms (§1) and the privacy policy (§9) state the same 18
+minimum — keep all three in step if this ever changes.
 
 ### Ads
 Contains ads: **No**

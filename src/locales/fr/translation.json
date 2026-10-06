@@ -121,7 +121,6 @@
     "themeDark": "Sombre",
     "notifications": "Notifications",
     "privacy": "Confidentialité",
-    "privacyText": "yOdin collecte uniquement les données que vous fournissez : votre nom, nationalité, localisation et photo de profil. Ces informations sont utilisées uniquement pour personnaliser votre fil d'actualité et afficher votre identité dans les discussions.\n\nVos données sont stockées en toute sécurité dans Firebase et ne sont jamais vendues ni partagées avec des tiers.\n\nVous pouvez supprimer votre compte et toutes les données associées à tout moment : Profil → Paramètres → Supprimer le compte.",
     "restartTitle": "Redémarrage requis",
     "restartMessage": "Fermez et rouvrez l'application pour appliquer la nouvelle direction.",
     "about": "À propos de yOdin"
@@ -171,7 +170,7 @@
     "photoUploadFailed": "Échec du téléchargement de la photo. Veuillez réessayer.",
     "fillTitleAndDescription": "Veuillez remplir le sujet et la description.",
     "videoTooLong": "La vidéo doit durer moins de {{count}}s",
-    "videoTooLarge": "La vidéo est trop lourde (max 50 Mo)",
+    "videoTooLarge": "La vidéo est trop lourde (max {{count}} Mo)",
     "videoUploadFailed": "Échec de l’envoi de la vidéo",
     "selectCategory": "Choisis une catégorie",
     "galleryPermission": "Autorisez l'accès à la galerie dans les Réglages"

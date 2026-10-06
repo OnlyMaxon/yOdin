@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 import { logoutUser, updateUserProfile, deleteOwnAccount, getUserProfile } from '../services/authService';
 import { useBlockStore } from '../store/useBlockStore';
-import { TERMS_URL } from '../config/links';
+import { TERMS_URL, PRIVACY_URL } from '../config/links';
 import { uploadAvatar } from '../services/storageService';
 import { deleteDiscussion, unsaveDiscussion, fetchUserDiscussions, fetchSavedDiscussions } from '../services/discussionService';
 import { deletePost, unsavePost, fetchUserPosts, fetchSavedPosts } from '../services/postService';
@@ -113,7 +113,6 @@ export default function ProfileScreen({ navigation }: any) {
   const [langModal, setLangModal] = useState(false);
   const [langSearch, setLangSearch] = useState('');
   const [themeModal, setThemeModal] = useState(false);
-  const [privacyModal, setPrivacyModal] = useState(false);
   const [blockedModal, setBlockedModal] = useState(false);
   const [blockedProfiles, setBlockedProfiles] = useState<User[]>([]);
   const [blockedLoading, setBlockedLoading] = useState(false);
@@ -402,6 +401,16 @@ export default function ProfileScreen({ navigation }: any) {
   const points = profile?.points ?? 0;
   const rankKey = getRank(points);
 
+  // Named once so the header pill and its disabled state can't drift apart.
+  const editSaveDisabled =
+    editSaving ||
+    !editFirstName.trim() ||
+    !editLastName.trim() ||
+    !editNationality ||
+    !editLocation ||
+    editUsernameStatus === 'taken' ||
+    editUsernameStatus === 'invalid';
+
   const mainData: (Post | Discussion)[] = tab === 'posts' ? myPosts : myDiscussions;
 
   const themeOptions: { value: ThemePreference; label: string; icon: React.ComponentProps<typeof Ionicons>['name'] }[] = [
@@ -641,16 +650,14 @@ export default function ProfileScreen({ navigation }: any) {
           </TouchableOpacity>
         </View>
 
-        {/* Everything below the brand header scrolls. The menu is taller than a
-            phone screen once the moderator group is present, and even without it
-            the last row sat half off the bottom edge -- Delete account, which is
-            exactly the row Play expects a user to be able to reach.
-            flexGrow keeps the spacer below working, so the logout group still
-            sits at the bottom whenever the content does fit. */}
+        {/* Everything below the brand header scrolls: the item list grew past a
+            short screen and Log out / Delete account fell off the bottom with no
+            way to reach them. flexGrow keeps the spacer working — the actions
+            still sit at the bottom when there is room, and scroll when not. */}
         <ScrollView
-          style={styles.menuScroll}
-          contentContainerStyle={styles.menuScrollBody}
-          showsVerticalScrollIndicator
+          style={{ flex: 1 }}
+          contentContainerStyle={styles.menuScroll}
+          showsVerticalScrollIndicator={false}
         >
         {/* User card — tap to open Edit Profile */}
         <TouchableOpacity style={styles.menuUserCard} onPress={openEditProfile} activeOpacity={0.82}>
@@ -728,12 +735,16 @@ export default function ProfileScreen({ navigation }: any) {
             <Text style={styles.menuItemText}>{t('settings.theme')}</Text>
             <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={() => { setMenuVisible(false); setPrivacyModal(true); }}>
+          {/* Opens the published policy, not an in-app summary: the summary went
+              stale against the real document (it predated Algolia and the
+              post-deletion email hash), and Play expects the policy itself to be
+              reachable from inside the app. */}
+          <TouchableOpacity style={[styles.menuItem, styles.menuItemLast]} onPress={() => Linking.openURL(PRIVACY_URL)}>
             <View style={[styles.menuIconWrap, { backgroundColor: colors.success + '18' }]}>
               <Ionicons name="shield-checkmark-outline" size={18} color={colors.success} />
             </View>
             <Text style={styles.menuItemText}>{t('settings.privacy')}</Text>
-            <Ionicons name="chevron-forward" size={15} color={colors.textSecondary} />
+            <Ionicons name="open-outline" size={15} color={colors.textSecondary} />
           </TouchableOpacity>
           <TouchableOpacity style={styles.menuItem} onPress={() => Linking.openURL(TERMS_URL)}>
             <View style={[styles.menuIconWrap, { backgroundColor: colors.primary + '18' }]}>
@@ -783,12 +794,26 @@ export default function ProfileScreen({ navigation }: any) {
         <View style={styles.editSheet}>
           {editPickerFor === null ? (
             <>
+              {/* Save lives in the header, not pinned under the form: the
+                  keyboard used to sit on top of a bottom button, so the user had
+                  to dismiss it before saving. Up here it is always reachable, and
+                  it matches the Cancel / Title / action-pill header the New Post
+                  and New Discussion sheets already use. */}
               <View style={styles.editHeader}>
-                <TouchableOpacity onPress={() => setEditVisible(false)}>
+                <TouchableOpacity onPress={() => setEditVisible(false)} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                   <Ionicons name="close" size={24} color={colors.textSecondary} />
                 </TouchableOpacity>
                 <Text style={styles.editTitle}>{t('editProfile.title')}</Text>
-                <View style={{ width: 24 }} />
+                <TouchableOpacity
+                  style={[styles.savePill, editSaveDisabled && styles.savePillDisabled]}
+                  onPress={handleSaveProfile}
+                  disabled={editSaveDisabled}
+                >
+                  {editSaving
+                    ? <ActivityIndicator color="#fff" size="small" />
+                    : <Text style={styles.savePillText}>{t('editProfile.save')}</Text>
+                  }
+                </TouchableOpacity>
               </View>
 
               {/* Avatar */}
@@ -817,6 +842,7 @@ export default function ProfileScreen({ navigation }: any) {
                 style={{ flex: 1 }}
                 contentContainerStyle={styles.editBody}
                 keyboardShouldPersistTaps="handled"
+                keyboardDismissMode="interactive"
                 showsVerticalScrollIndicator={false}
               >
                 <Text style={styles.editLabel}>{t('auth.firstName')}</Text>
@@ -889,17 +915,6 @@ export default function ProfileScreen({ navigation }: any) {
                   <Ionicons name="chevron-forward" size={18} color={colors.textSecondary} />
                 </TouchableOpacity>
               </ScrollView>
-
-              <TouchableOpacity
-                style={[styles.saveBtn, (editSaving || !editFirstName.trim() || !editLastName.trim() || !editNationality || !editLocation || editUsernameStatus === 'taken' || editUsernameStatus === 'invalid') && styles.saveBtnDisabled]}
-                onPress={handleSaveProfile}
-                disabled={editSaving || !editFirstName.trim() || !editLastName.trim() || !editNationality || !editLocation || editUsernameStatus === 'taken' || editUsernameStatus === 'invalid'}
-              >
-                {editSaving
-                  ? <ActivityIndicator color="#fff" />
-                  : <Text style={styles.saveBtnText}>{t('editProfile.save')}</Text>
-                }
-              </TouchableOpacity>
             </>
           ) : (
             <>
@@ -1020,21 +1035,6 @@ export default function ProfileScreen({ navigation }: any) {
             ))}
           </View>
         </TouchableOpacity>
-      </Modal>
-
-      {/* Privacy */}
-      <Modal visible={privacyModal} transparent animationType="slide" onRequestClose={() => setPrivacyModal(false)} statusBarTranslucent navigationBarTranslucent>
-        <View style={styles.privacySheet}>
-          <View style={styles.privacyHeader}>
-            <Text style={styles.privacyTitle}>{t('settings.privacy')}</Text>
-            <TouchableOpacity onPress={() => setPrivacyModal(false)}>
-              <Text style={styles.privacyClose}>✕</Text>
-            </TouchableOpacity>
-          </View>
-          <ScrollView contentContainerStyle={styles.privacyBody}>
-            <Text style={styles.privacyText}>{t('settings.privacyText')}</Text>
-          </ScrollView>
-        </View>
       </Modal>
 
       {/* Blocked accounts */}
@@ -1400,10 +1400,6 @@ function makeStyles(c: ColorPalette, topInset: number) {
       elevation: 10,
       flexDirection: 'column',
     },
-    menuScroll: { flex: 1 },
-    // flexGrow, not flex: the body is allowed to outgrow the screen and scroll,
-    // while a short menu still stretches so the spacer can push logout down.
-    menuScrollBody: { flexGrow: 1 },
     menuBrand: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -1469,6 +1465,9 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontSize: Typography.fontSizeXS,
       color: c.textSecondary,
     },
+    // flexGrow, not flex: the body may outgrow the screen and scroll, while a
+    // short menu still stretches so the spacer can push logout to the bottom.
+    menuScroll: { flexGrow: 1 },
     menuGroup: {
       marginHorizontal: 16,
       marginTop: 12,
@@ -1710,7 +1709,9 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     editBody: {
       padding: 24,
-      paddingBottom: 32,
+      // Deep tail so the last fields can still scroll clear of the keyboard —
+      // the sheet has no KeyboardAvoidingView (unreliable inside a Modal).
+      paddingBottom: 220,
     },
     editLabel: {
       fontSize: Typography.fontSizeXS,
@@ -1752,20 +1753,17 @@ function makeStyles(c: ColorPalette, topInset: number) {
     },
     pickerValue: { fontSize: Typography.fontSizeMD, color: c.textPrimary, flex: 1 },
     pickerPlaceholder: { fontSize: Typography.fontSizeMD, color: c.textSecondary, flex: 1 },
-    saveBtn: {
+    savePill: {
+      minWidth: 80,
+      paddingHorizontal: 18,
+      paddingVertical: 9,
+      borderRadius: 20,
       backgroundColor: c.primary,
-      borderRadius: 16,
-      paddingVertical: 16,
       alignItems: 'center',
-      margin: 24,
-      marginTop: 0,
+      justifyContent: 'center',
     },
-    saveBtnDisabled: { opacity: 0.5 },
-    saveBtnText: {
-      color: '#fff',
-      fontSize: Typography.fontSizeMD,
-      fontWeight: Typography.fontWeightSemiBold,
-    },
+    savePillDisabled: { backgroundColor: c.border },
+    savePillText: { color: '#fff', fontSize: Typography.fontSizeSM, fontWeight: Typography.fontWeightBold },
     editSearch: {
       marginHorizontal: 16,
       marginVertical: 12,

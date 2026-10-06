@@ -121,7 +121,6 @@
     "themeDark": "Dunkel",
     "notifications": "Benachrichtigungen",
     "privacy": "Datenschutz",
-    "privacyText": "yOdin erfasst nur die Daten, die Sie angeben: Ihren Namen, Ihre Nationalität, Ihren Standort und Ihr Profilfoto. Diese Informationen werden ausschließlich dazu verwendet, Ihren Feed zu personalisieren und Ihre Identität in Diskussionen anzuzeigen.\n\nIhre Daten werden sicher in Firebase gespeichert und niemals an Dritte verkauft oder weitergegeben.\n\nSie können Ihr Konto und alle zugehörigen Daten jederzeit löschen: Profil → Einstellungen → Konto löschen.",
     "restartTitle": "Neustart erforderlich",
     "restartMessage": "Schließen und öffnen Sie die App erneut, um die neue Layoutrichtung anzuwenden.",
     "about": "Über yOdin"
@@ -171,7 +170,7 @@
     "photoUploadFailed": "Foto-Upload fehlgeschlagen. Bitte versuche es erneut.",
     "fillTitleAndDescription": "Bitte Thema und Beschreibung ausfüllen.",
     "videoTooLong": "Video muss kürzer als {{count}}s sein",
-    "videoTooLarge": "Video ist zu groß (max. 50 MB)",
+    "videoTooLarge": "Video ist zu groß (max. {{count}} MB)",
     "videoUploadFailed": "Video konnte nicht hochgeladen werden",
     "selectCategory": "Bitte wähle eine Kategorie",
     "galleryPermission": "Galerie-Zugriff in den Einstellungen aktivieren"

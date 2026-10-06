@@ -23,7 +23,7 @@ service firebase.storage {
           && request.auth.uid == owner
           && (
             (request.resource.contentType.matches('image/.*') && request.resource.size < 5 * 1024 * 1024)
-            || (request.resource.contentType.matches('video/.*') && request.resource.size < 50 * 1024 * 1024)
+            || (request.resource.contentType.matches('video/.*') && request.resource.size < 20 * 1024 * 1024)
           );
         // The author cleans up their own media; a moderator may remove reported media.
         allow delete: if request.auth != null
@@ -44,7 +44,7 @@ service firebase.storage {
           && request.auth.uid == owner
           && (
             (request.resource.contentType.matches('image/.*') && request.resource.size < 5 * 1024 * 1024)
-            || (request.resource.contentType.matches('video/.*') && request.resource.size < 50 * 1024 * 1024)
+            || (request.resource.contentType.matches('video/.*') && request.resource.size < 20 * 1024 * 1024)
           );
         allow delete: if request.auth != null
           && (request.auth.uid == owner || request.auth.token.moderator == true);

@@ -122,7 +122,6 @@
     "themeDark": "Tmavý",
     "notifications": "Oznámení",
     "privacy": "Soukromí",
-    "privacyText": "yOdin shromažďuje pouze údaje, které poskytnete: vaše jméno, národnost, polohu a profilovou fotografii. Tyto informace jsou používány výhradně k přizpůsobení vašeho feedu a zobrazení vaší identity v diskusích.\n\nVaše data jsou bezpečně uložena ve Firebase a nikdy nejsou prodávána ani sdílena s třetími stranami.\n\nÚčet a všechna související data můžeš kdykoli smazat: Profil → Nastavení → Smazat účet.",
     "restartTitle": "Vyžadováno restartování",
     "restartMessage": "Zavřete a znovu otevřete aplikaci pro použití nového směru rozvržení.",
     "about": "O yOdin"
@@ -172,7 +171,7 @@
     "photoUploadFailed": "Nahrávání fotografie se nezdařilo. Zkuste to prosím znovu.",
     "fillTitleAndDescription": "Vyplňte téma a popis.",
     "videoTooLong": "Video musí být kratší než {{count}}s",
-    "videoTooLarge": "Video je příliš velké (max. 50 MB)",
+    "videoTooLarge": "Video je příliš velké (max. {{count}} MB)",
     "videoUploadFailed": "Video se nepodařilo nahrát",
     "selectCategory": "Vyber kategorii",
     "galleryPermission": "Povolte přístup ke galerii v Nastavení"

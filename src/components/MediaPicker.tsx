@@ -14,7 +14,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { optimizeImage } from '../utils/imageOptimize';
-import { processVideoAsset, videoPickerOptions, VideoPickError, MAX_VIDEO_DURATION_S } from '../utils/pickVideo';
+import { processVideoAsset, videoPickerOptions, VideoPickError } from '../utils/pickVideo';
 import PhotoPickerSheet, { PickedAsset } from './PhotoPickerSheet';
 
 export interface AttachedVideo {
@@ -63,10 +63,10 @@ export default function MediaPicker({ images, onChangeImages, video, onChangeVid
     let result: ImagePicker.ImagePickerResult;
     try {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      // Say why nothing happened: returning silently here made the video tile
+      // look like a dead button. Below API 33 this is also the branch that fires
+      // when the storage permission is missing from the manifest.
       if (status !== 'granted') {
-        // Returning silently here made the button look dead. On Android 12 and
-        // older this is the branch that fires when the storage permission is
-        // missing from the manifest.
         Alert.alert(t('errors.galleryPermission'));
         return;
       }
@@ -84,7 +84,7 @@ export default function MediaPicker({ images, onChangeImages, video, onChangeVid
       const v = await processVideoAsset(result.assets[0]);
       onChangeVideo({ uri: v.uri, poster: v.poster });
     } catch (e) {
-      if (e instanceof VideoPickError) Alert.alert(t(e.key, { count: MAX_VIDEO_DURATION_S }));
+      if (e instanceof VideoPickError) Alert.alert(t(e.key, e.params));
       else Alert.alert(t('errors.generic'));
     } finally {
       setBusy(false);

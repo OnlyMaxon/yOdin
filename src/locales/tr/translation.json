@@ -121,7 +121,6 @@
     "themeDark": "Koyu",
     "notifications": "Bildirimler",
     "privacy": "Gizlilik",
-    "privacyText": "yOdin yalnızca sağladığınız verileri toplar: adınız, milliyetiniz, konumunuz ve profil fotoğrafınız. Bu bilgiler yalnızca akışınızı kişiselleştirmek ve tartışmalardaki kimliğinizi göstermek için kullanılır.\n\nVerileriniz Firebase'de güvenli bir şekilde saklanır ve hiçbir zaman üçüncü taraflarla satılmaz veya paylaşılmaz.\n\nHesabınızı ve ilgili tüm verileri istediğiniz zaman silebilirsiniz: Profil → Ayarlar → Hesabı sil.",
     "restartTitle": "Yeniden başlatma gerekiyor",
     "restartMessage": "Yeni düzen yönünü uygulamak için uygulamayı kapatıp yeniden açın.",
     "about": "yOdin Hakkında"
@@ -171,7 +170,7 @@
     "photoUploadFailed": "Fotoğraf yüklenemedi. Lütfen tekrar deneyin.",
     "fillTitleAndDescription": "Lütfen konu ve açıklamayı doldurun.",
     "videoTooLong": "Video {{count}}sn'den kısa olmalı",
-    "videoTooLarge": "Video çok büyük (en fazla 50 MB)",
+    "videoTooLarge": "Video çok büyük (en fazla {{count}} MB)",
     "videoUploadFailed": "Video yüklenemedi",
     "selectCategory": "Bir kategori seç",
     "galleryPermission": "Cihaz Ayarlarından galeri erişimine izin verin"

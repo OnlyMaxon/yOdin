@@ -109,7 +109,7 @@ App
 - `TAB_BAR_HEIGHT = 64` (`constants/layout.ts`); all FlatList content screens
   pad `paddingBottom: 96` to clear it.
 - **Screen prop types are currently `navigation: any` / `route: any`.** This is
-  a known typing gap (see §12).
+  a known typing gap (see §13).
 
 ---
 
@@ -142,8 +142,8 @@ App
 ### Media pipeline
 `PhotoPickerSheet` (expo-media-library grid + system camera) → `optimizeImage`
 (downscale longest side to 1280px, JPEG q0.6) → `uploadPostImages` /
-`uploadDiscussionImages`. Video: system picker → `processVideoAsset` (≤60s,
-≤50 MB, generates a small poster) → `uploadPostVideo` / `uploadDiscussionVideo`.
+`uploadDiscussionImages`. Video: system picker → `processVideoAsset` (≤30s,
+≤20 MB, generates a small poster) → `uploadPostVideo` / `uploadDiscussionVideo`.
 A post/discussion carries **either** photos **or** one short video.
 
 ---
@@ -202,7 +202,7 @@ Two layers:
 
 > Known limitation: `weightedSort` re-ranks **within each 15-item page**, while
 > the server paginates by `feedScore`. So personalization only reorders inside a
-> page, and cross-page order can look inconsistent. See §12.
+> page, and cross-page order can look inconsistent. See §13.
 
 `engagement` (replies + reply votes) also selects the "Question of the day"
 (`fetchTopQuestion`).
@@ -300,10 +300,42 @@ visibility but leaves the follows broken.
 
 ### Public documents
 
-`docs/` is published as a GitHub Pages site (`docs/_config.yml` + a
-self-contained layout, no theme gem, light and dark): the privacy policy, the
-account-deletion page Play links to, and the terms of use. Their URLs live in one
-place, `src/config/links.ts`, because the app links to all three.
+`docs/` holds the Markdown source of the **four** legal documents: the privacy
+policy, the account-deletion page Play links to, the terms of use, and the child
+safety standards. It also carries a GitHub Pages setup (`docs/_config.yml` + a
+self-contained layout, no theme gem, light and dark) which can render them.
+
+**The published copies the app and the store listing point at live on the
+studio's own domain** —
+`onlymaxon.com/apps/yodin/{privacy,terms,delete-account,child-safety-standards}/`
+— rather than a contributor's personal GitHub Pages, where they used to sit. The
+first three URLs live in one place, `src/config/links.ts`; the fourth is only
+referenced from the published terms and from the Play declaration, so the app
+does not link it. Note the path segments differ from the Markdown filenames
+(`/privacy/`, not `/privacy-policy/`). Because the published pages and `docs/`
+are two copies, **a change to either has to be mirrored to the other**; `docs/`
+is the source of truth for wording.
+
+**`child-safety-standards.md` exists because Play rejected the app without it.**
+The Child Safety Standards policy applies to every app in the Social category and
+is **not** waived by declaring an 18+ target audience — that assumption cost one
+review cycle. Google validates the document itself, so it must stay a plain HTML
+page (never a PDF), load without errors, name the app or the developer exactly as
+the store listing shows them, explicitly prohibit CSAE, and carry a child-safety
+point of contact. The Play declaration repeats the same URL and contact, so the
+two must not drift apart.
+
+`TERMS_VERSION` in `config/links.ts` bumps only on a **material** change to the
+terms, not on every edit: bumping means a new build and eventually re-asking
+existing users to accept. The published page's "Last updated" date moves freely;
+the constant does not. (The 2026-10-05 edit, which spelled out the existing CSAE
+prohibition and linked the standards, deliberately left it at `2026-10-04`.)
+
+In the app: the terms are linked from the signup gate and from Profile ▸
+Settings, and the privacy policy from Profile ▸ Settings. Settings deliberately
+links the *published policy* rather than an in-app summary — the old summary had
+gone stale against the real document (it predated Algolia and the post-deletion
+email hash) and a stale summary that contradicts the policy is worse than none.
 `play-store-listing.md` is excluded from the build — it is internal working copy.
 Jekyll only renders Markdown that carries front matter; without it the file is
 served as raw text.
@@ -364,9 +396,20 @@ Write key, `EMAIL_HASH_KEY`) live in Secret Manager, never on the client.
 **Design tokens** (`src/theme/`):
 - `colors.ts` — `LightColors` / `DarkColors` via `useTheme()`. Palette is
   **locked 1:1 to the Figma design kit** (light = its `:root`, dark = `.dark`):
-  purple-brand violet (`#6C35DE`), airy lavender ground (`#F3F0FB`), white
-  surfaces, a lavender-biased secondary grey, category accents (news=primary,
-  events=coral, places=emerald, lifestyle=pink).
+  brand violet (`#6C35DE` / `#8B5CF6`), airy lavender ground (`#F3F0FB`), white
+  surfaces, and the kit's full token set — `primaryLight` (= its `--secondary`),
+  `muted` (quiet fill behind inactive chips, pills and the chat composer),
+  `secondaryText` (= `--secondary-foreground`: the text/icon colour on a
+  `primaryLight` surface — equals `primary` in light, a lighter lavender
+  `#C4B5F7` in dark), `textSecondary` (= `--muted-foreground`, which also colours
+  inactive tab-bar items).
+- `CATEGORY_META` also lives in `colors.ts` (not a separate file): per-category
+  emoji + accent mirroring the kit's badge palette — news `#4F46E5`, events
+  coral, places emerald, lifestyle amber `#F59E0B`. Feed filter chips, feed/detail
+  category badges and the New Post chips all read it, so the four surfaces cannot
+  drift apart.
+- The nav bar's centre "+" is an `expo-linear-gradient` 135° violet ramp, as in
+  the kit; its unread badge is coral, not the error red.
 - `spacing.ts` — `Spacing` (4·8·12·16·20·24·32) and `Radius` (sm/md/lg/pill).
   Use these instead of magic numbers.
 - `typography.ts` — font sizes + weight constants.
@@ -396,7 +439,7 @@ architecture, so Inter is applied through drop-in wrappers:
 
 **Other conventions:**
 - Every screen builds dynamic styles with `makeStyles(colors, insets…)`;
-  high-traffic screens memoize with `useMemo` (see §12).
+  high-traffic screens memoize with `useMemo` (see §13).
 - All user-facing text is i18n (`t(...)`); only brand strings are literal.
 - Bottom-sheet modals: rounded top, drag handle, close button, footer action
   outside the ScrollView. FlatList screens pad `paddingBottom: 96`; headers pad
@@ -411,10 +454,72 @@ architecture, so Inter is applied through drop-in wrappers:
 
 ---
 
-## 12. Known limitations & open items
+## 12. Shipping to Google Play
+
+There is **no Android CI**: `.github/workflows/` only builds an unsigned iOS
+`.ipa` for sideloading. The Play artifact is built locally.
+
+```
+export JAVA_HOME="C:/Program Files/Android/Android Studio/jbr"   # JDK 21
+export ANDROID_HOME="D:/Android"
+npx expo prebuild -p android --no-install
+sh android/gradlew -p android bundleRelease --console=plain --no-daemon
+```
+
+The upload keystore lives **outside the repo** (`D:\keystores\`), and
+`plugins/withReleaseSigning.js` re-injects the signing config into
+`android/app/build.gradle` on every prebuild by reading `YODIN_UPLOAD_*`
+properties from the user-level `gradle.properties`. On a machine without those
+properties the build silently falls back to the debug key — which Play rejects —
+so **verify the signature, never the exit code**:
+
+```
+jarsigner -verify …/app-release.aab     # expect "jar verified"
+```
+
+Traps that cost real time here, all learned the hard way:
+- The **system JDK is 26**; the Android Gradle Plugin cannot use it. Android
+  Studio's bundled JBR (21) works. Always set `JAVA_HOME`.
+- The project's `org.gradle.jvmargs` is 2 GB, which dies as *"Could not receive a
+  message from the daemon"*. Raised to 6 GB in the **user-level**
+  `gradle.properties` — user-level wins over project-level and survives prebuild
+  wiping `android/`.
+- **Never pipe `gradlew` through `tail`**: the pipeline's exit code becomes
+  tail's, so a failed build reports success and the log is truncated.
+- `android.versionCode` must be incremented for every upload; it is declared
+  explicitly in `app.json` rather than left to default.
+- Unzipping the AAB and grepping `base/assets/index.android.bundle` is the
+  cheapest way to confirm a build actually picked up the latest JS and that the
+  `EXPO_PUBLIC_*` config was inlined — a missing `.env` ships a dead app.
+
+`store-assets/` holds the Play listing graphics (icon 512², feature graphic
+1024×500, four phone screenshots) with the raw device captures under
+`store-assets/source/`. `docs/play-store-listing.md` is the copy-paste source for
+the listing text and the Data safety / content-rating answers; it is excluded
+from the Pages build because it is an internal working document.
+
+---
+
+## 13. Known limitations & open items
 
 These are **intentional deferrals or accepted trade-offs**, not accidental
 bugs. Listed so nobody rediscovers them the hard way.
+
+### Cost & abuse surface
+- **Video is capped at 30s / 20 MB**, enforced twice: `utils/pickVideo.ts` on the
+  client and `storage.rules` on the server — change both or the cap is cosmetic.
+  Storage is cheap; **download bandwidth is the real cost**, which is why the feed
+  renders only `videoPoster` and fetches the clip on tap. The limits halved
+  (from 60s / 50 MB) once that was worked through. The numbers live in code and
+  are interpolated into the error strings, so the 27 locales never quote a stale
+  figure. There is **no budget alarm** in Google Cloud yet — that is the real
+  backstop and it is still an open item.
+- `expo-media-library` pulls in `READ_MEDIA_VIDEO` and `READ_MEDIA_AUDIO`
+  wholesale, but only images are read through it (the custom grid); video goes
+  through the system picker, which needs no broad permission on Android 13+.
+  Blocking the two unused permissions would shrink the Play declaration, but the
+  video path calls `requestMediaLibraryPermissionsAsync()` and bails on denial,
+  so it needs an Android device to verify before anyone touches it.
 
 ### Security
 - **Storage writes are now owner-scoped** (implemented 2026-07-25; was the top
@@ -437,11 +542,17 @@ bugs. Listed so nobody rediscovers them the hard way.
 - App Check / Google Sign-In are deferred (need a dev build).
 - **Terms of Use are consented to once, at registration.** Play requires
   acceptance *before* a user can create content, so the gate sits on the signup
-  button rather than on the first post. The document lives on the Pages site, not
-  in the app, which keeps it editable without an app update but means it needs
-  network to read. If the terms change materially, there is currently no
-  mechanism to ask existing users to accept the new version — announcing it in
-  the app, as §8 of the terms promises, is a manual job for now.
+  button rather than on the first post. The document is hosted, not bundled,
+  which keeps it editable without an app update but means it needs network to
+  read. The acceptance **is recorded** — `users/{uid}.acceptedTermsAt` +
+  `acceptedTermsVersion` (from `TERMS_VERSION` in `config/links.ts`), so there is
+  an answer to "who agreed to what" rather than only a disabled button. Two
+  residuals: the fields are client-written like every other profile field, so
+  they are an audit record rather than tamper-proof evidence; and if the terms
+  change materially there is still no flow to re-ask existing users — bump
+  `TERMS_VERSION`, then announcing it in the app (as §8 of the terms promises) is
+  a manual job. The privacy policy is **notice, not consent**, so it is linked
+  beside the checkbox rather than gated behind it.
 - **The block list is private, the ban-evasion hash is not reversible, but
   neither hides the obvious.** A blocked person can infer the block from
   content disappearing; a banned person can register with a fresh address. Both
@@ -489,7 +600,7 @@ bugs. Listed so nobody rediscovers them the hard way.
 
 ---
 
-## 13. Contributors
+## 14. Contributors
 
 - **OnlyMaxon** — original author, `main`.
 - **nikitashep** — feature PRs (media, moderation, filters, attachments, …).

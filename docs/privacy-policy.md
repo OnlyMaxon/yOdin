@@ -7,15 +7,19 @@ permalink: /privacy-policy/
 # Privacy Policy for yOdin
 
 **Last updated:** 6 October 2026
-**Effective date:** 20 September 2026
+**Effective date:** 4 October 2026
 
 yOdin ("the App", "we", "us") is operated by **Jalil Orujli**, Chmielna 69,
-Warsaw, Poland. This policy explains what personal data the App collects, why,
-and what rights you have. Contact us any time at **hello@onlymaxon.com**.
+Warsaw, Poland, who is the controller of the personal data described here. The
+App is built by the OnlyMaxon studio and distributed on Google Play by
+**EA DIGITAL GROUP, MMC**. This policy explains what personal data the App
+collects, why, and what rights you have. Contact us any time at
+**hello@onlymaxon.com**.
 
 By creating an account you agree to this policy and to the
-[terms of use](/yOdin/terms-of-use/), which set out the community rules and what
-happens when they are broken. If you do not agree, please do not use the App.
+[terms of use](https://onlymaxon.com/apps/yodin/terms/), which set out the
+community rules and what happens when they are broken. If you do not agree,
+please do not use the App.
 
 ---
 
@@ -152,9 +156,12 @@ GIPHY's strictest content rating.
 
 ### 5.3 International transfers
 
-Firebase, Algolia and GIPHY may process data on servers outside your country, including
-in the European Union and the United States. Such transfers rely on the
-Standard Contractual Clauses approved by the European Commission.
+The App's database, files and server logic are hosted in the **European Union**
+(Google Cloud's `eur3` multi-region and `europe-west1`), and we are established
+in Poland. Firebase, Algolia and GIPHY may nevertheless process data on servers
+outside your country, including in the European Union and the United States;
+those transfers rely on the Standard Contractual Clauses approved by the
+European Commission.
 
 ---
 
@@ -238,16 +245,16 @@ identify you. Section 7 lists this and everything else that outlives an account.
 If you no longer have the App installed, email us from your registered address
 and we will delete the account for you. Step-by-step instructions are also
 published at
-[nikitashep.github.io/yOdin/delete-account](https://nikitashep.github.io/yOdin/delete-account/).
+[onlymaxon.com/apps/yodin/delete-account](https://onlymaxon.com/apps/yodin/delete-account/).
 
 ---
 
 ## 9. Children
 
-yOdin is not intended for children under 13, and we do not knowingly collect
-data from them. If you believe a child under 13 has created an account, contact
-us at **hello@onlymaxon.com** and we will remove it. Where local law sets a higher
-minimum age for consent to data processing, that age applies instead.
+yOdin is for adults: you must be at least 18 years old to create an account. The
+App is not directed at children or teenagers, and we do not knowingly collect
+data from them. If you believe someone under 18 has created an account, contact
+us at **hello@onlymaxon.com** and we will remove it.
 
 ---
 

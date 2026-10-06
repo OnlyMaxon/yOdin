@@ -121,7 +121,6 @@
     "themeDark": "Donker",
     "notifications": "Meldingen",
     "privacy": "Privacy",
-    "privacyText": "yOdin verzamelt alleen de gegevens die u verstrekt: uw naam, nationaliteit, locatie en profielfoto. Deze informatie wordt uitsluitend gebruikt om uw feed te personaliseren en uw identiteit in discussies te tonen.\n\nUw gegevens worden veilig opgeslagen in Firebase en worden nooit verkocht of gedeeld met derden.\n\nJe kunt je account en alle bijbehorende gegevens op elk moment verwijderen: Profiel → Instellingen → Account verwijderen.",
     "restartTitle": "Herstart vereist",
     "restartMessage": "Sluit de app en open hem opnieuw om de nieuwe lay-outrichting toe te passen.",
     "about": "Over yOdin"
@@ -171,7 +170,7 @@
     "photoUploadFailed": "Foto uploaden mislukt. Probeer het opnieuw.",
     "fillTitleAndDescription": "Vul het onderwerp en de beschrijving in.",
     "videoTooLong": "Video moet korter zijn dan {{count}}s",
-    "videoTooLarge": "Video is te groot (max. 50 MB)",
+    "videoTooLarge": "Video is te groot (max. {{count}} MB)",
     "videoUploadFailed": "Video kon niet worden geüpload",
     "selectCategory": "Kies een categorie",
     "galleryPermission": "Schakel galerijmachtiging in via Instellingen"

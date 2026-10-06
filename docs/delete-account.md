@@ -6,12 +6,14 @@ permalink: /delete-account/
 
 # Delete your yOdin account
 
+**Last updated:** 4 October 2026
+
 **App:** yOdin (`app.yodin`)
 **Developer:** Jalil Orujli, Chmielna 69, Warsaw, Poland
 **Contact:** [hello@onlymaxon.com](mailto:hello@onlymaxon.com)
 
 This page explains how to delete your yOdin account and what happens to your
-data. See also the [privacy policy](/yOdin/privacy-policy/).
+data. See also the [privacy policy](https://onlymaxon.com/apps/yodin/privacy/).
 
 ---
 

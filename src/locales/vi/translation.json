@@ -121,7 +121,6 @@
     "themeDark": "Tối",
     "notifications": "Thông báo",
     "privacy": "Quyền riêng tư",
-    "privacyText": "yOdin chỉ thu thập dữ liệu bạn cung cấp: tên, quốc tịch, vị trí và ảnh đại diện của bạn. Thông tin này chỉ được sử dụng để cá nhân hóa nguồn cấp dữ liệu và hiển thị danh tính của bạn trong các cuộc thảo luận.\n\nDữ liệu của bạn được lưu trữ an toàn trong Firebase và không bao giờ được bán hoặc chia sẻ với bên thứ ba.\n\nBạn có thể xóa tài khoản và mọi dữ liệu liên quan bất cứ lúc nào: Hồ sơ → Cài đặt → Xóa tài khoản.",
     "restartTitle": "Cần khởi động lại",
     "restartMessage": "Đóng và mở lại ứng dụng để áp dụng hướng bố cục mới.",
     "about": "Về yOdin"
@@ -171,7 +170,7 @@
     "photoUploadFailed": "Tải ảnh lên thất bại. Vui lòng thử lại.",
     "fillTitleAndDescription": "Vui lòng điền chủ đề và mô tả.",
     "videoTooLong": "Video phải dưới {{count}}s",
-    "videoTooLarge": "Video quá lớn (tối đa 50 MB)",
+    "videoTooLarge": "Video quá lớn (tối đa {{count}} MB)",
     "videoUploadFailed": "Không thể tải video lên",
     "selectCategory": "Chọn một danh mục",
     "galleryPermission": "Bật quyền truy cập thư viện trong Cài đặt"

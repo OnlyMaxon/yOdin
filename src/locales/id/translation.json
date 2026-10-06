@@ -121,7 +121,6 @@
     "themeDark": "Gelap",
     "notifications": "Notifikasi",
     "privacy": "Privasi",
-    "privacyText": "yOdin hanya mengumpulkan data yang Anda berikan: nama, kebangsaan, lokasi, dan foto profil Anda. Informasi ini digunakan semata-mata untuk mempersonalisasi feed Anda dan menampilkan identitas Anda dalam diskusi.\n\nData Anda disimpan dengan aman di Firebase dan tidak pernah dijual atau dibagikan kepada pihak ketiga.\n\nKamu bisa menghapus akun dan semua data terkait kapan saja: Profil → Pengaturan → Hapus akun.",
     "restartTitle": "Perlu restart",
     "restartMessage": "Tutup dan buka kembali aplikasi untuk menerapkan arah tata letak baru.",
     "about": "Tentang yOdin"
@@ -171,7 +170,7 @@
     "photoUploadFailed": "Gagal mengunggah foto. Silakan coba lagi.",
     "fillTitleAndDescription": "Harap isi topik dan deskripsi.",
     "videoTooLong": "Video harus di bawah {{count}}s",
-    "videoTooLarge": "Video terlalu besar (maks. 50 MB)",
+    "videoTooLarge": "Video terlalu besar (maks. {{count}} MB)",
     "videoUploadFailed": "Gagal mengunggah video",
     "selectCategory": "Pilih kategori",
     "galleryPermission": "Aktifkan akses galeri di Pengaturan"

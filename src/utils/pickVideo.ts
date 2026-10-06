@@ -5,8 +5,13 @@ import { optimizeImage } from './imageOptimize';
 // Keep clips short — this is the single biggest lever on stored size and load
 // time. 60s at the medium export preset lands around 5–15 MB; the hard ceiling
 // below rejects anything heavier so storage stays predictable.
-export const MAX_VIDEO_DURATION_S = 60;
-const MAX_VIDEO_BYTES = 50 * 1024 * 1024;
+// Download bandwidth, not storage, is what a video actually costs: the feed only
+// fetches the poster, but every tap on play pulls the whole clip. Halving the
+// ceiling halves the worst case, and 30s is ample for a community post.
+// `storage.rules` enforces the same byte ceiling server-side — change both.
+export const MAX_VIDEO_DURATION_S = 30;
+export const MAX_VIDEO_MB = 20;
+const MAX_VIDEO_BYTES = MAX_VIDEO_MB * 1024 * 1024;
 
 export interface PickedVideo {
   uri: string;
@@ -15,8 +20,11 @@ export interface PickedVideo {
 }
 
 // Raised with a translation key so the caller can show a localized message.
+// Carries its own interpolation values: the two messages quote different
+// numbers (seconds vs megabytes), so a single shared `count` at the call site
+// would put the duration into the size message.
 export class VideoPickError extends Error {
-  constructor(public key: string) {
+  constructor(public key: string, public params?: Record<string, unknown>) {
     super(key);
   }
 }
@@ -37,10 +45,10 @@ export async function processVideoAsset(
 
   // videoMaxDuration only caps in-app recording, not library picks — enforce it.
   if (durationMs > (MAX_VIDEO_DURATION_S + 1) * 1000) {
-    throw new VideoPickError('errors.videoTooLong');
+    throw new VideoPickError('errors.videoTooLong', { count: MAX_VIDEO_DURATION_S });
   }
   if ((asset.fileSize ?? 0) > MAX_VIDEO_BYTES) {
-    throw new VideoPickError('errors.videoTooLarge');
+    throw new VideoPickError('errors.videoTooLarge', { count: MAX_VIDEO_MB });
   }
 
   // A small still from the first frame — shown in the feed so the video bytes
