@@ -104,9 +104,24 @@ export async function addComment(
   return ref.id;
 }
 
+// Like / unlike a comment. Mirrors votePost: one uid in or out of the array,
+// which is exactly what the security rule permits.
+export async function likeComment(
+  postId: string,
+  commentId: string,
+  userId: string,
+  liked: boolean,
+): Promise<void> {
+  await updateDoc(doc(db, 'posts', postId, 'comments', commentId), {
+    likes: liked ? arrayRemove(userId) : arrayUnion(userId),
+  });
+}
+
 export async function fetchComments(postId: string): Promise<PostComment[]> {
   const snap = await getDocs(
-    query(collection(db, 'posts', postId, 'comments'), orderBy('createdAt', 'asc')),
+    // Newest first: the comment thread reads top-down from the latest, and a
+    // freshly posted comment lands at the top where the author is looking.
+    query(collection(db, 'posts', postId, 'comments'), orderBy('createdAt', 'desc')),
   );
   return snap.docs.map((d) => ({ id: d.id, ...d.data() } as PostComment));
 }
