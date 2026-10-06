@@ -19,8 +19,10 @@ data. See also the [privacy policy](/yOdin/privacy-policy/).
 
 1. Open **yOdin** and sign in.
 2. Go to the **Profile** tab.
-3. Open **Settings** (the menu button in the top corner).
-4. Tap **Delete account**.
+3. Tap the **menu button (☰)** in the top right corner of the purple banner. A
+   panel slides in from the side.
+4. At the bottom of that panel, tap **Delete account** — it is the last item,
+   directly below **Log out**.
 5. Read what will be removed, enter your password to confirm, and tap **Delete
    permanently**.
 
@@ -72,8 +74,8 @@ you, and none of it is shared with anyone.
 You do not have to delete your whole account to remove things:
 
 - **A post or discussion you wrote** — open it, then use the delete action.
-- **Profile details** — Profile → Settings → Edit profile lets you change or
-  clear your photo, bio, and other fields.
+- **Profile details** — the same side panel has **Edit profile**, where you can
+  change or clear your photo, bio, and the other fields.
 
 To request removal of a specific reply or comment that stayed behind after an
 account deletion, write to [hello@onlymaxon.com](mailto:hello@onlymaxon.com).

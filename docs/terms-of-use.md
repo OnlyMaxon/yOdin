@@ -105,8 +105,9 @@ section 3, report it, so it stops reaching everybody else too.
 
 ## 6. Leaving
 
-You can delete your account at any time in **Profile → Settings → Delete
-account**. What is deleted and what remains is set out on the
+You can delete your account at any time: open the **Profile** tab, tap the
+**menu button (☰)** in the top right corner, and choose **Delete account**. What
+is deleted and what remains is set out on the
 [account deletion page](/yOdin/delete-account/).
 
 The short version: your profile, your own posts and discussions and their media
