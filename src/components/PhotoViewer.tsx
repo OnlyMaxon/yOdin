@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-  View,
+  View,
+
   StyleSheet,
   Modal,
   TouchableOpacity,
@@ -33,7 +34,7 @@ export default function PhotoViewer({ visible, images, initialIndex = 0, onClose
   }, [visible, initialIndex]);
 
   return (
-    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose} statusBarTranslucent>
+    <Modal visible={visible} transparent animationType="fade" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
       <View style={styles.root}>
         <PagerView
           style={styles.pager}

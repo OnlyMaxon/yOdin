@@ -10,12 +10,16 @@ import {
   LayoutAnimation,
   UIManager,
   Animated,
-  Keyboard,
 } from 'react-native';
 import TextInput from '../components/AppTextInput';
 import Text from '../components/AppText';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
-import Constants from 'expo-constants';
+import Reanimated, {
+  useAnimatedKeyboard,
+  useAnimatedStyle,
+  useAnimatedReaction,
+  runOnJS,
+} from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 import { useAuthStore } from '../store/useAuthStore';
@@ -51,13 +55,6 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 
 const SWIPE_MAX = 90;
 const SWIPE_THRESHOLD = 52;
-
-// Expo Go resizes the window when the keyboard opens (composer lifts on its own),
-// but a standalone edge-to-edge Android build does not — there we must lift the
-// composer ourselves. iOS never resizes, so it always lifts manually. Lifting on
-// Android *inside* Expo Go would double-lift and leave a gap above the keyboard.
-const IS_EXPO_GO = Constants.executionEnvironment === 'storeClient';
-const LIFT_COMPOSER = Platform.OS === 'ios' || !IS_EXPO_GO;
 
 // Telegram-style swipe-to-reply: drag a message right past a threshold to reply.
 // A reply arrow fades in as you drag; the row springs back on release. Built on
@@ -144,9 +141,19 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   const [reportReply, setReportReply] = useState<Reply | null>(null);
   // Question attachment (photo/video) can be folded away to free up chat space.
   const [mediaCollapsed, setMediaCollapsed] = useState(false);
-  // Keyboard height, tracked manually so the composer lifts above the keyboard
-  // regardless of the native softInputMode (which we don't control under Expo Go).
-  const [kbHeight, setKbHeight] = useState(0);
+  // The real keyboard height, straight from the Android IME window insets.
+  // React Native's own Keyboard events reported 0 here and the window never
+  // resized, so neither could be used; WindowInsets is the one source that
+  // does not depend on softInputMode or on edge-to-edge being off.
+  const keyboard = useAnimatedKeyboard();
+  const liftStyle = useAnimatedStyle(() => ({ paddingBottom: keyboard.height.value }));
+  // Mirrored into state so the composer can drop its bottom safe-area inset
+  // while the keyboard is up (the nav bar is behind it at that point).
+  const [imeHeight, setImeHeight] = useState(0);
+  useAnimatedReaction(
+    () => keyboard.height.value,
+    (h, prev) => { if (h !== prev) runOnJS(setImeHeight)(h); },
+  );
   const replyBlocked = (profile?.commentBlockedUntil ?? 0) > Date.now();
   const listRef = useRef<FlatList>(null);
   const inputRef = useRef<React.ComponentRef<typeof TextInput>>(null);
@@ -154,16 +161,6 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   useEffect(() => {
     loadAll();
   }, []);
-
-  // Track the keyboard height so the composer can be lifted on iOS (Android
-  // resizes the window itself). No auto-scroll here — the list only jumps to the
-  // bottom after the user sends a message.
-  useEffect(() => {
-    const show = Keyboard.addListener('keyboardDidShow', (e) => setKbHeight(e.endCoordinates.height));
-    const hide = Keyboard.addListener('keyboardDidHide', () => setKbHeight(0));
-    return () => { show.remove(); hide.remove(); };
-  }, []);
-
 
   async function loadAll() {
     setLoading(true);
@@ -584,10 +581,8 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
   }, [discussion, isAnswered, styles, t, navigation, colors, mediaCollapsed]);
 
   return (
-    // Lift the composer above the keyboard by the keyboard's height — but only
-    // where the OS doesn't resize the window itself (iOS, and standalone
-    // edge-to-edge Android). See LIFT_COMPOSER.
-    <View style={[styles.container, LIFT_COMPOSER && { paddingBottom: kbHeight }]}>
+    // Lift the composer by exactly the keyboard's inset height.
+    <Reanimated.View style={[styles.container, liftStyle]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconCircle}>
           <Ionicons name="chevron-back" size={20} color={colors.textPrimary} />
@@ -678,12 +673,12 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         </View>
       ) : null}
       {isAnswered ? null : replyBlocked ? (
-        <View style={[styles.blockedBar, LIFT_COMPOSER && kbHeight > 0 && { paddingBottom: 12 }]}>
+        <View style={[styles.blockedBar, imeHeight > 0 && { paddingBottom: 12 }]}>
           <Ionicons name="lock-closed" size={16} color={colors.notification} />
           <Text style={styles.blockedText}>{t('moderation.blockedBanner')}</Text>
         </View>
       ) : (
-        <View style={[styles.inputBar, LIFT_COMPOSER && kbHeight > 0 && { paddingBottom: 12 }]}>
+        <View style={[styles.inputBar, imeHeight > 0 && { paddingBottom: 12 }]}>
           <TextInput
             ref={inputRef}
             style={styles.input}
@@ -712,7 +707,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
         onClose={() => setReportReply(null)}
         onSubmit={submitReplyReport}
       />
-    </View>
+    </Reanimated.View>
   );
 }
 

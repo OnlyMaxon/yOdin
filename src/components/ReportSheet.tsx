@@ -1,5 +1,7 @@
-import React from 'react';
-import { View, StyleSheet, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, StyleSheet, Modal, TouchableOpacity, ScrollView, Animated } from 'react-native';
+import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useSheetDrag } from '../hooks/useSheetDrag';
 import Text from './AppText';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -23,13 +25,28 @@ export default function ReportSheet({ visible, onClose, onSubmit }: Props) {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.bottom);
+  // The Modal animates the sheet in and out by itself; this value exists only
+  // so the drag can move it, and is reset each time the sheet reopens.
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const dragGesture = useSheetDrag(slideAnim, onClose);
+
+  useEffect(() => {
+    if (visible) slideAnim.setValue(0);
+  }, [visible, slideAnim]);
 
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
+      <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.overlay}>
         <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={onClose} />
-        <View style={styles.sheet}>
-          <View style={styles.handle} />
+        <Animated.View style={[styles.sheet, { transform: [{ translateY: slideAnim }] }]}>
+          {/* Grab strip: the drag lives here only, so it can never contend with
+              the reason list below it. */}
+          <GestureDetector gesture={dragGesture}>
+            <View style={styles.grabRow}>
+              <View style={styles.handle} />
+            </View>
+          </GestureDetector>
           <View style={styles.header}>
             <Text style={styles.title}>{t('report.title')}</Text>
             <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
@@ -51,8 +68,9 @@ export default function ReportSheet({ visible, onClose, onSubmit }: Props) {
               </TouchableOpacity>
             ))}
           </ScrollView>
-        </View>
+        </Animated.View>
       </View>
+      </GestureHandlerRootView>
     </Modal>
   );
 }
@@ -69,7 +87,8 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       paddingTop: 10,
       maxHeight: '80%',
     },
-    handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: c.border, alignSelf: 'center', marginBottom: 8 },
+    grabRow: { height: 44, alignItems: 'center', justifyContent: 'center' },
+    handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: c.border },
     header: {
       flexDirection: 'row',
       alignItems: 'center',

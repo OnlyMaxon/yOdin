@@ -641,6 +641,17 @@ export default function ProfileScreen({ navigation }: any) {
           </TouchableOpacity>
         </View>
 
+        {/* Everything below the brand header scrolls. The menu is taller than a
+            phone screen once the moderator group is present, and even without it
+            the last row sat half off the bottom edge -- Delete account, which is
+            exactly the row Play expects a user to be able to reach.
+            flexGrow keeps the spacer below working, so the logout group still
+            sits at the bottom whenever the content does fit. */}
+        <ScrollView
+          style={styles.menuScroll}
+          contentContainerStyle={styles.menuScrollBody}
+          showsVerticalScrollIndicator
+        >
         {/* User card — tap to open Edit Profile */}
         <TouchableOpacity style={styles.menuUserCard} onPress={openEditProfile} activeOpacity={0.82}>
           <Avatar
@@ -764,10 +775,11 @@ export default function ProfileScreen({ navigation }: any) {
             </Text>
           </TouchableOpacity>
         </View>
+        </ScrollView>
       </Animated.View>
 
       {/* ─── Edit Profile ─── */}
-      <Modal visible={editVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setEditVisible(false)}>
+      <Modal visible={editVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setEditVisible(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.editSheet}>
           {editPickerFor === null ? (
             <>
@@ -942,6 +954,8 @@ export default function ProfileScreen({ navigation }: any) {
         animationType="slide"
         presentationStyle="pageSheet"
         onRequestClose={() => { setLangModal(false); setLangSearch(''); }}
+        statusBarTranslucent
+        navigationBarTranslucent
       >
         <View style={styles.editSheet}>
           <View style={styles.editHeader}>
@@ -987,7 +1001,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Theme picker */}
-      <Modal visible={themeModal} transparent animationType="fade" onRequestClose={() => setThemeModal(false)}>
+      <Modal visible={themeModal} transparent animationType="fade" onRequestClose={() => setThemeModal(false)} statusBarTranslucent navigationBarTranslucent>
         <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setThemeModal(false)}>
           <View style={styles.langSheet}>
             <Text style={styles.langTitle}>{t('settings.theme')}</Text>
@@ -1009,7 +1023,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Privacy */}
-      <Modal visible={privacyModal} transparent animationType="slide" onRequestClose={() => setPrivacyModal(false)}>
+      <Modal visible={privacyModal} transparent animationType="slide" onRequestClose={() => setPrivacyModal(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.privacySheet}>
           <View style={styles.privacyHeader}>
             <Text style={styles.privacyTitle}>{t('settings.privacy')}</Text>
@@ -1024,7 +1038,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Blocked accounts */}
-      <Modal visible={blockedModal} transparent animationType="slide" onRequestClose={() => setBlockedModal(false)}>
+      <Modal visible={blockedModal} transparent animationType="slide" onRequestClose={() => setBlockedModal(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.privacySheet}>
           <View style={styles.privacyHeader}>
             <Text style={styles.privacyTitle}>{t('block.listTitle')}</Text>
@@ -1060,7 +1074,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Delete account */}
-      <Modal visible={deleteModal} transparent animationType="slide" onRequestClose={() => setDeleteModal(false)}>
+      <Modal visible={deleteModal} transparent animationType="slide" onRequestClose={() => setDeleteModal(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.privacySheet}>
           <View style={styles.privacyHeader}>
             <Text style={styles.privacyTitle}>{t('deleteAccount.title')}</Text>
@@ -1107,7 +1121,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Saved */}
-      <Modal visible={savedVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setSavedVisible(false)}>
+      <Modal visible={savedVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setSavedVisible(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.editSheet}>
           <View style={styles.editHeader}>
             <TouchableOpacity onPress={() => setSavedVisible(false)}>
@@ -1386,6 +1400,10 @@ function makeStyles(c: ColorPalette, topInset: number) {
       elevation: 10,
       flexDirection: 'column',
     },
+    menuScroll: { flex: 1 },
+    // flexGrow, not flex: the body is allowed to outgrow the screen and scroll,
+    // while a short menu still stretches so the spacer can push logout down.
+    menuScrollBody: { flexGrow: 1 },
     menuBrand: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -1580,7 +1598,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     privacySheet: {
       flex: 1,
       backgroundColor: c.background,
-      marginTop: 80,
+      marginTop: topInset + 80,
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
     },
@@ -1670,6 +1688,9 @@ function makeStyles(c: ColorPalette, topInset: number) {
     editSheet: {
       flex: 1,
       backgroundColor: c.background,
+      // The modal window now reaches the top of the screen, so the status bar
+      // area has to be padded back in by hand.
+      paddingTop: topInset,
     },
     editHeader: {
       flexDirection: 'row',

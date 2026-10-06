@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import {
-  View,
+  View,
+
   TouchableOpacity,
   StyleSheet,
   ActivityIndicator,
-  FlatList,
+  FlatList,
+
   Modal,
 } from 'react-native';
 import TextInput from '../../components/AppTextInput';
@@ -106,7 +108,7 @@ export default function OnboardingScreen() {
         }
       </TouchableOpacity>
 
-      <Modal visible={modalType !== null} animationType="slide" presentationStyle="pageSheet">
+      <Modal visible={modalType !== null} animationType="slide" presentationStyle="pageSheet" statusBarTranslucent navigationBarTranslucent>
         <View style={styles.modal}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>
