@@ -1,9 +1,3 @@
----
-layout: default
-title: Child Safety Standards — yOdin
-permalink: /child-safety-standards/
----
-
 # Child Safety Standards
 
 **Last updated:** 5 October 2026
