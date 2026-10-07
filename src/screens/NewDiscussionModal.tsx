@@ -9,6 +9,7 @@ import {
   Platform,
   ActivityIndicator,
   Keyboard,
+  ScrollView,
 } from 'react-native';
 import TextInput from '../components/AppTextInput';
 import Text from '../components/AppText';
@@ -26,6 +27,8 @@ import Avatar from '../components/Avatar';
 import MediaPicker, { AttachedVideo } from '../components/MediaPicker';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
+import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useSheetDrag } from '../hooks/useSheetDrag';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
@@ -50,6 +53,18 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const slideAnim = useRef(new Animated.Value(600)).current;
+  // The keyboard covers the lower half of the sheet, which is where the question
+  // field sits. Padding the scroll area by its height gives the form somewhere
+  // to scroll to instead of leaving the user typing blind.
+  const [kbH, setKbH] = useState(0);
+  // No scrollable content in this sheet, so the drag needs no scroll guard.
+  const dragGesture = useSheetDrag(slideAnim, onClose);
+
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', (e) => setKbH(e.endCoordinates?.height ?? 0));
+    const hide = Keyboard.addListener('keyboardDidHide', () => setKbH(0));
+    return () => { show.remove(); hide.remove(); };
+  }, []);
 
   useEffect(() => {
     if (visible) {
@@ -129,7 +144,8 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
   const flag = getFlagEmoji(profile?.countryCode ?? '');
 
   return (
-    <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="none" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
+      <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         style={styles.overlay}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -137,7 +153,13 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
         <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={onClose} />
 
         <Animated.View style={[styles.sheet, { transform: [{ translateY: slideAnim }] }]}>
-          <View style={styles.handle} />
+          {/* The drag lives on this strip alone, so it never contends with the
+              form or the media picker below it. */}
+          <GestureDetector gesture={dragGesture}>
+            <View style={styles.grabRow}>
+              <View style={styles.handle} />
+            </View>
+          </GestureDetector>
 
           <View style={styles.header}>
             <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 6, right: 10 }}>
@@ -158,6 +180,12 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
 
           <View style={styles.divider} />
 
+          <ScrollView
+            style={styles.scrollArea}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: kbH }}
+          >
           <View style={styles.body}>
             <View style={styles.authorCol}>
               <Avatar
@@ -204,8 +232,10 @@ export default function NewDiscussionModal({ visible, onClose }: Props) {
               <Text style={styles.error}>{error}</Text>
             </View>
           ) : null}
+          </ScrollView>
         </Animated.View>
       </KeyboardAvoidingView>
+      </GestureHandlerRootView>
     </Modal>
   );
 }
@@ -222,15 +252,16 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       paddingBottom: Math.max(bottomInset, 16) + 24,
       paddingTop: 12,
       minHeight: 320,
+      maxHeight: '90%',
     },
+    grabRow: { height: 28, alignItems: 'center', justifyContent: 'center', marginBottom: 4 },
     handle: {
       width: 40,
       height: 4,
       backgroundColor: c.border,
       borderRadius: 2,
-      alignSelf: 'center',
-      marginBottom: 16,
     },
+    scrollArea: { flexShrink: 1 },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',

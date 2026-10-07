@@ -81,6 +81,12 @@ export interface PostComment {
   authorCountryCode: string;
   text: string;
   createdAt: number;
+  // UIDs that liked the comment. Only the count is shown; the array is the
+  // same shape as a post's so the security rule can be reused verbatim.
+  likes?: string[];
+  // A GIPHY GIF attached to the comment. Only the URL is stored — the file
+  // stays on GIPHY's CDN, so nothing lands in our Storage bucket.
+  gifUrl?: string;
 }
 
 export interface Discussion {

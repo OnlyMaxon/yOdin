@@ -60,18 +60,25 @@ export default function MediaPicker({ images, onChangeImages, video, onChangeVid
 
   async function addVideo() {
     if (busy) return;
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    // Say why nothing happened: returning silently here made the video tile look
-    // like a dead button to anyone who had declined the permission.
-    if (status !== 'granted') {
-      Alert.alert(t('errors.galleryPermission'));
+    let result: ImagePicker.ImagePickerResult;
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      // Say why nothing happened: returning silently here made the video tile
+      // look like a dead button. Below API 33 this is also the branch that fires
+      // when the storage permission is missing from the manifest.
+      if (status !== 'granted') {
+        Alert.alert(t('errors.galleryPermission'));
+        return;
+      }
+      result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['videos'],
+        ...videoPickerOptions,
+      });
+    } catch (e) {
+      Alert.alert(t('errors.generic'), e instanceof Error ? e.message : undefined);
       return;
     }
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ['videos'],
-      ...videoPickerOptions,
-    });
-    if (result.canceled || result.assets.length === 0) return;
+    if (result.canceled || !result.assets?.length) return;
     setBusy(true);
     try {
       const v = await processVideoAsset(result.assets[0]);

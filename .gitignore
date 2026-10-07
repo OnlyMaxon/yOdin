@@ -60,3 +60,6 @@ functions/lib/
 # moderator provisioning (local only — never commit the service account key)
 set-moderator.js
 serviceAccountKey.json
+
+# Backup written by scripts/demo-engagement.js while seeding screenshot data
+demo-engagement-backup.json

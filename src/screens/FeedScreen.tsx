@@ -48,6 +48,12 @@ import { COUNTRIES } from '../data/countries';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
+// How much of a post's text a feed card shows before it is cut off with an
+// ellipsis. Short posts stay short -- only the long ones are capped, so the
+// feed reads evenly without leaving blank space under brief posts.
+const TITLE_LINES = 2;
+const DESCRIPTION_LINES = 3;
+
 export default function FeedScreen({ navigation }: any) {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -335,8 +341,14 @@ export default function FeedScreen({ navigation }: any) {
           </View>
         ) : null}
 
-        <Text style={styles.postTitle}>{item.title}</Text>
-        <Text style={styles.postDescription}>{item.description}</Text>
+        {/* Clamped so cards keep a comparable height down the feed: a title may
+            run to 100 characters and a description to 1000, which otherwise put
+            a fifteen-line card next to a one-line one. The full text is on the
+            post screen, which opening the card already reaches. */}
+        <Text style={styles.postTitle} numberOfLines={TITLE_LINES}>{item.title}</Text>
+        <Text style={styles.postDescription} numberOfLines={DESCRIPTION_LINES}>
+          {item.description}
+        </Text>
 
         {item.category === 'events' && item.eventDate ? (
           <EventDateBlock date={item.eventDate} location={item.location} />

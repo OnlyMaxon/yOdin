@@ -2,7 +2,7 @@
   "expo": {
     "name": "yOdin",
     "slug": "yodin",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "app.yodin",
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6C35DE"
@@ -28,8 +28,7 @@
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.READ_MEDIA_AUDIO",
-        "android.permission.SYSTEM_ALERT_WINDOW",
-        "android.permission.WRITE_EXTERNAL_STORAGE"
+        "android.permission.SYSTEM_ALERT_WINDOW"
       ]
     },
     "web": {
@@ -41,13 +40,14 @@
         "expo-media-library",
         {
           "photosPermission": "Allow yOdin to access your photos to attach them to discussions and posts.",
-          "isAccessMediaLocationEnabled": false,
-          "granularPermissions": ["photo", "video"]
+          "isAccessMediaLocationEnabled": false
         }
       ],
       "expo-localization",
       "expo-font",
       "@react-native-community/datetimepicker",
+      "./plugins/withTransparentNavigationBar",
+      "./plugins/withLegacyStoragePermission",
       "./plugins/withReleaseSigning"
     ]
   }

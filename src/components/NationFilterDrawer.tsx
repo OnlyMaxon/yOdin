@@ -72,7 +72,7 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
   const translateX = anim.interpolate({ inputRange: [0, 1], outputRange: [-DRAWER_W, 0] });
 
   return (
-    <Modal visible={render} transparent animationType="none" onRequestClose={onClose}>
+    <Modal visible={render} transparent animationType="none" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
       <View style={styles.root}>
         <Animated.View style={[styles.backdrop, { opacity: anim }]}>
           <TouchableOpacity style={{ flex: 1 }} activeOpacity={1} onPress={onClose} />

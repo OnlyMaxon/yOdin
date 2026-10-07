@@ -790,7 +790,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Animated.View>
 
       {/* ─── Edit Profile ─── */}
-      <Modal visible={editVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setEditVisible(false)}>
+      <Modal visible={editVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setEditVisible(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.editSheet}>
           {editPickerFor === null ? (
             <>
@@ -969,6 +969,8 @@ export default function ProfileScreen({ navigation }: any) {
         animationType="slide"
         presentationStyle="pageSheet"
         onRequestClose={() => { setLangModal(false); setLangSearch(''); }}
+        statusBarTranslucent
+        navigationBarTranslucent
       >
         <View style={styles.editSheet}>
           <View style={styles.editHeader}>
@@ -1014,7 +1016,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Theme picker */}
-      <Modal visible={themeModal} transparent animationType="fade" onRequestClose={() => setThemeModal(false)}>
+      <Modal visible={themeModal} transparent animationType="fade" onRequestClose={() => setThemeModal(false)} statusBarTranslucent navigationBarTranslucent>
         <TouchableOpacity style={styles.modalOverlay} activeOpacity={1} onPress={() => setThemeModal(false)}>
           <View style={styles.langSheet}>
             <Text style={styles.langTitle}>{t('settings.theme')}</Text>
@@ -1036,7 +1038,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Blocked accounts */}
-      <Modal visible={blockedModal} transparent animationType="slide" onRequestClose={() => setBlockedModal(false)}>
+      <Modal visible={blockedModal} transparent animationType="slide" onRequestClose={() => setBlockedModal(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.privacySheet}>
           <View style={styles.privacyHeader}>
             <Text style={styles.privacyTitle}>{t('block.listTitle')}</Text>
@@ -1072,7 +1074,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Delete account */}
-      <Modal visible={deleteModal} transparent animationType="slide" onRequestClose={() => setDeleteModal(false)}>
+      <Modal visible={deleteModal} transparent animationType="slide" onRequestClose={() => setDeleteModal(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.privacySheet}>
           <View style={styles.privacyHeader}>
             <Text style={styles.privacyTitle}>{t('deleteAccount.title')}</Text>
@@ -1119,7 +1121,7 @@ export default function ProfileScreen({ navigation }: any) {
       </Modal>
 
       {/* Saved */}
-      <Modal visible={savedVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setSavedVisible(false)}>
+      <Modal visible={savedVisible} animationType="slide" presentationStyle="pageSheet" onRequestClose={() => setSavedVisible(false)} statusBarTranslucent navigationBarTranslucent>
         <View style={styles.editSheet}>
           <View style={styles.editHeader}>
             <TouchableOpacity onPress={() => setSavedVisible(false)}>
@@ -1463,6 +1465,8 @@ function makeStyles(c: ColorPalette, topInset: number) {
       fontSize: Typography.fontSizeXS,
       color: c.textSecondary,
     },
+    // flexGrow, not flex: the body may outgrow the screen and scroll, while a
+    // short menu still stretches so the spacer can push logout to the bottom.
     menuScroll: { flexGrow: 1 },
     menuGroup: {
       marginHorizontal: 16,
@@ -1593,7 +1597,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     privacySheet: {
       flex: 1,
       backgroundColor: c.background,
-      marginTop: 80,
+      marginTop: topInset + 80,
       borderTopLeftRadius: 24,
       borderTopRightRadius: 24,
     },
@@ -1683,6 +1687,9 @@ function makeStyles(c: ColorPalette, topInset: number) {
     editSheet: {
       flex: 1,
       backgroundColor: c.background,
+      // The modal window now reaches the top of the screen, so the status bar
+      // area has to be padded back in by hand.
+      paddingTop: topInset,
     },
     editHeader: {
       flexDirection: 'row',

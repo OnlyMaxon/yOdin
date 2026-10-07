@@ -29,10 +29,13 @@ import { getErrorMessage } from '../services/errorHandler';
 import { PostCategory, POST_CATEGORIES } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
+import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useSheetDrag } from '../hooks/useSheetDrag';
 import { ColorPalette, CATEGORY_META } from '../theme/colors';
 import { Typography } from '../theme/typography';
 
 const MAX_PHOTOS = 10;
+
 
 interface Props {
   visible: boolean;
@@ -63,6 +66,21 @@ export default function NewPostModal({ visible, onClose }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const slideAnim = useRef(new Animated.Value(600)).current;
+  // The sheet is capped at 90% of the screen and the keyboard covers its lower
+  // half, so the description field ends up hidden. Padding the scroll area by
+  // the keyboard's height gives the form somewhere to scroll to, rather than
+  // leaving the user typing blind.
+  const [kbH, setKbH] = useState(0);
+
+  // No scroll guard: the drag is confined to the grabber strip, which is not
+  // part of the scrollable form, so the two can never contend for a touch.
+  const dragGesture = useSheetDrag(slideAnim, onClose);
+
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', (e) => setKbH(e.endCoordinates?.height ?? 0));
+    const hide = Keyboard.addListener('keyboardDidHide', () => setKbH(0));
+    return () => { show.remove(); hide.remove(); };
+  }, []);
 
   useEffect(() => {
     if (visible) {
@@ -192,7 +210,8 @@ export default function NewPostModal({ visible, onClose }: Props) {
   const canPost = title.trim().length > 0 && description.trim().length > 0 && category !== null && !loading;
 
   return (
-    <Modal visible={visible} transparent animationType="none" onRequestClose={onClose}>
+    <Modal visible={visible} transparent animationType="none" onRequestClose={onClose} statusBarTranslucent navigationBarTranslucent>
+      <GestureHandlerRootView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         style={styles.overlay}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
@@ -200,24 +219,33 @@ export default function NewPostModal({ visible, onClose }: Props) {
         <TouchableOpacity style={styles.backdrop} activeOpacity={1} onPress={onClose} />
 
         <Animated.View style={[styles.sheet, { transform: [{ translateY: slideAnim }] }]}>
-          <View style={styles.handle} />
+          <View>
+            {/* The drag lives on this strip alone. Covering the whole sheet meant
+                arbitrating the gesture against the form's scroll on every touch;
+                a handle at the top is simpler and is what a sheet should do. */}
+            <GestureDetector gesture={dragGesture}>
+              <View style={styles.grabRow}>
+                <View style={styles.handle} />
+              </View>
+            </GestureDetector>
 
-          {/* Header: Cancel · New Post · Publish (Figma) */}
-          <View style={styles.header}>
-            <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 6, right: 10 }}>
-              <Text style={styles.cancelText}>{t('newPost.cancel')}</Text>
-            </TouchableOpacity>
-            <Text style={styles.headerTitle}>{t('newPost.title')}</Text>
-            <TouchableOpacity
-              style={[styles.publishPill, !canPost && styles.publishPillDisabled]}
-              onPress={handlePost}
-              disabled={!canPost}
-            >
-              {loading
-                ? <ActivityIndicator color="#fff" size="small" />
-                : <Text style={styles.publishPillText}>{t('newPost.post')}</Text>
-              }
-            </TouchableOpacity>
+            {/* Header: Cancel · New Post · Publish (Figma) */}
+            <View style={styles.header}>
+              <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 6, right: 10 }}>
+                <Text style={styles.cancelText}>{t('newPost.cancel')}</Text>
+              </TouchableOpacity>
+              <Text style={styles.headerTitle}>{t('newPost.title')}</Text>
+              <TouchableOpacity
+                style={[styles.publishPill, !canPost && styles.publishPillDisabled]}
+                onPress={handlePost}
+                disabled={!canPost}
+              >
+                {loading
+                  ? <ActivityIndicator color="#fff" size="small" />
+                  : <Text style={styles.publishPillText}>{t('newPost.post')}</Text>
+                }
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.divider} />
@@ -233,6 +261,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
             style={styles.scrollArea}
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: kbH }}
           >
             <Text style={styles.sectionLabel}>{t('newPost.category')}</Text>
             <View style={styles.categoryRow}>
@@ -301,7 +330,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
                 ) : null}
 
                 {Platform.OS === 'ios' ? (
-                  <Modal visible={picker !== null} transparent animationType="fade" onRequestClose={() => setPicker(null)}>
+                  <Modal visible={picker !== null} transparent animationType="fade" onRequestClose={() => setPicker(null)} statusBarTranslucent navigationBarTranslucent>
                     <TouchableOpacity style={styles.iosPickerBackdrop} activeOpacity={1} onPress={() => setPicker(null)}>
                       <View style={styles.iosPickerCard}>
                         <DateTimePicker
@@ -383,6 +412,7 @@ export default function NewPostModal({ visible, onClose }: Props) {
           </ScrollView>
         </Animated.View>
       </KeyboardAvoidingView>
+      </GestureHandlerRootView>
     </Modal>
   );
 }
@@ -400,13 +430,12 @@ function makeStyles(c: ColorPalette, bottomInset: number) {
       paddingTop: 12,
       maxHeight: '90%',
     },
+    grabRow: { height: 28, alignItems: 'center', justifyContent: 'center', marginBottom: 2 },
     handle: {
       width: 40,
       height: 4,
       backgroundColor: c.border,
       borderRadius: 2,
-      alignSelf: 'center',
-      marginBottom: 14,
     },
     header: {
       flexDirection: 'row',

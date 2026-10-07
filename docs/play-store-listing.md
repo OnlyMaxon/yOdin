@@ -4,6 +4,12 @@ Copy-paste source for the Play Console listing. Character limits are enforced by
 Play: **title 30**, **short description 80**, **full description 4000**.
 Counts below are verified.
 
+Every factual claim here is checked against the code. When you change the app,
+re-check: the language count (`src/locales/`), the profile fields
+(`User` in `src/types/index.ts`), the feed filter (`FeedScreen`), and the
+in-app path to account deletion (`ProfileScreen`). A store listing that
+promises something the app does not do is a Play policy violation on its own.
+
 ---
 
 ## English (default listing)
@@ -20,60 +26,44 @@ yOdin
 Community for people abroad: news, events, places and honest answers.
 ```
 
-### Full description (1954/4000)
+### Full description (2349/4000)
 
 ```
 yOdin is a community app for people living away from home.
 
-Ask a question, get a real answer. Share what is happening around you. Find the
-people who speak your language and know your city.
+Ask a question, get a real answer. Share what is happening around you. Find the people who speak your language and have been through what you are going through.
 
 WHAT YOU CAN DO
 
 Discussions
-Ask anything — paperwork, housing, work, everyday life. Replies come from people
-who have been through the same thing. When an answer solves your problem, mark
-it as accepted and the discussion closes, so the next person finds the answer
-instead of the argument.
+Ask anything — paperwork, housing, work, everyday life. Replies come from people who have dealt with the same thing. When an answer solves your problem, mark it as accepted and the discussion closes, so the next person finds the answer instead of the argument.
 
-A feed that is actually about your city
-Posts are organised into News, Events, Worth Visiting and Lifestyle. Filter by
-nationality and country to see what matters to your community, not a global
-noise stream.
+A feed for your community
+Posts are organised into News, Events, Worth Visiting and Lifestyle. Filter the feed by nationality to see what matters to your community instead of a global noise stream.
 
 Events with RSVP
-See what is happening nearby, say whether you are coming, and know who else will
-be there.
+See what is happening nearby, say whether you are coming, and see who else will be there.
 
 Question of the Day
-One question for the whole community each day. A simple way to meet people
-without having to start a conversation from nothing.
+One question for the whole community each day. A simple way to meet people without having to start a conversation from nothing.
 
 Profiles worth reading
-Name, @handle, bio, nationality, the languages you speak and where you live.
-Follow the people whose answers you trust, and earn points when the community
-finds yours useful.
+Name, @handle, bio, nationality, country of residence and the languages you speak. Follow the people whose answers you trust, and earn points when the community finds yours useful.
 
 Photos and video
-Attach media to posts and discussions. Search across the forum to check whether
-your question has already been answered.
+Attach media to posts and discussions. Search the forum to check whether your question has already been answered.
 
 Your language
-The interface is available in more than 30 languages, including English,
-Russian, Azerbaijani, Turkish, Arabic, Persian, Hindi, Chinese, Spanish, French
-and German.
+The interface is available in 27 languages, including English, Russian, Azerbaijani, Turkish, Arabic, Persian, Hindi, Chinese, Spanish, French and German, with full right-to-left support.
 
-A community that is moderated
-Every post, discussion, comment and reply can be reported. Reports are reviewed
-by a moderator, and repeat offenders face restrictions that get longer each
-time. The rules are enforced, not decorative.
+A moderated community
+Every post, discussion, comment and reply can be reported. Reports are reviewed by a moderator, and repeat offenders face restrictions that get longer each time. You can also block any account: a blocked account cannot reply to you, comment on your posts or mention you, and the two of you stop seeing each other. Your block list is private.
 
 PRIVACY
 
-yOdin does not track your location, does not run analytics, and carries no
-advertising SDKs. Your nationality and country of residence are picked from a
-list — the app has no city field and never reads your device location. We do not
-sell your data.
+yOdin does not track your location, runs no analytics, and carries no advertising SDKs or advertising identifiers. Nationality and country of residence are picked from a list — the app never reads your device location, and there is no city or address field. GIFs in comments are served by GIPHY. We do not sell your data.
+
+You can delete your account and its data at any time: open Profile, tap the menu button at the top right, and choose Delete account.
 
 Free to use. Sign up with an email address and join in.
 ```
@@ -94,58 +84,44 @@ yOdin
 Сообщество для жизни за рубежом: новости, события, места и живые ответы.
 ```
 
-### Полное описание (1840/4000)
+### Полное описание (2312/4000)
 
 ```
 yOdin — приложение для тех, кто живёт вдали от дома.
 
-Задайте вопрос и получите настоящий ответ. Расскажите, что происходит рядом.
-Найдите людей, которые говорят на вашем языке и знают ваш город.
+Задайте вопрос и получите настоящий ответ. Расскажите, что происходит рядом. Найдите людей, которые говорят на вашем языке и прошли через то же, что и вы.
 
 ЧТО ЗДЕСЬ ЕСТЬ
 
 Обсуждения
-Спрашивайте о чём угодно — документы, жильё, работа, быт. Отвечают те, кто уже
-прошёл через это. Когда ответ решает вопрос, отметьте его принятым — обсуждение
-закроется, и следующий человек найдёт решение, а не спор.
+Спрашивайте о чём угодно — документы, жильё, работа, быт. Отвечают те, кто уже прошёл через это. Когда ответ решает вопрос, отметьте его принятым — обсуждение закроется, и следующий человек найдёт решение, а не спор.
 
-Лента о вашем городе
-Публикации разделены на «Новости», «Мероприятия», «Стоит посетить» и
-«Лайфстайл». Фильтруйте
-ленту по национальности и стране, чтобы видеть то, что важно вашему сообществу,
-а не общий шум.
+Лента вашего сообщества
+Публикации разделены на «Новости», «Мероприятия», «Стоит посетить» и «Лайфстайл». Фильтруйте ленту по национальности, чтобы видеть то, что важно вашему сообществу, а не общий шум.
 
 События с записью
-Смотрите, что происходит рядом, отмечайте, что придёте, и знайте, кто ещё будет.
+Смотрите, что происходит рядом, отмечайте, что придёте, и смотрите, кто ещё будет.
 
 Вопрос дня
-Один вопрос для всего сообщества каждый день. Простой способ познакомиться, не
-начиная разговор с нуля.
+Один вопрос для всего сообщества каждый день. Простой способ познакомиться, не начиная разговор с нуля.
 
 Профили, которые хочется читать
-Имя, @никнейм, описание, национальность, языки и страна. Подписывайтесь на тех,
-чьим ответам доверяете, и получайте баллы, когда сообщество считает ваши ответы
-полезными.
+Имя, @никнейм, описание, национальность, страна проживания и языки. Подписывайтесь на тех, чьим ответам доверяете, и получайте баллы, когда сообщество считает ваши ответы полезными.
 
 Фото и видео
-Прикрепляйте медиа к публикациям и обсуждениям. Ищите по форуму — возможно, на
-ваш вопрос уже ответили.
+Прикрепляйте медиа к публикациям и обсуждениям. Ищите по форуму — возможно, на ваш вопрос уже ответили.
 
 Ваш язык
-Интерфейс доступен более чем на 30 языках, включая русский, английский,
-азербайджанский, турецкий, арабский, персидский, хинди, китайский, испанский,
-французский и немецкий.
+Интерфейс доступен на 27 языках, включая русский, английский, азербайджанский, турецкий, арабский, персидский, хинди, китайский, испанский, французский и немецкий, с полной поддержкой письма справа налево.
 
 Сообщество с модерацией
-На любую публикацию, обсуждение, комментарий и ответ можно пожаловаться. Жалобы
-рассматривает модератор, а нарушители получают ограничения, которые с каждым
-разом становятся длиннее. Правила здесь работают.
+На любую публикацию, обсуждение, комментарий и ответ можно пожаловаться. Жалобы рассматривает модератор, а нарушители получают ограничения, которые с каждым разом становятся длиннее. Любой аккаунт можно заблокировать: заблокированный не сможет отвечать вам, комментировать ваши публикации и упоминать вас, и вы перестанете видеть друг друга. Список заблокированных виден только вам.
 
 КОНФИДЕНЦИАЛЬНОСТЬ
 
-yOdin не отслеживает геолокацию, не собирает аналитику и не содержит рекламных
-SDK. Национальность и страна проживания выбираются из списка — поля города нет,
-а к геолокации устройства приложение не обращается. Мы не продаём ваши данные.
+yOdin не отслеживает геолокацию, не собирает аналитику и не содержит рекламных SDK и рекламных идентификаторов. Национальность и страна проживания выбираются из списка — приложение не читает местоположение устройства, и в нём нет поля города или адреса. Гифки в комментариях отдаёт GIPHY. Мы не продаём ваши данные.
+
+Аккаунт и его данные можно удалить в любой момент: откройте «Профиль», нажмите кнопку меню справа вверху и выберите «Удалить аккаунт».
 
 Бесплатно. Зарегистрируйтесь по email и присоединяйтесь.
 ```
@@ -166,61 +142,64 @@ yOdin
 Xaricdə yaşayanlar üçün icma: xəbərlər, tədbirlər, yerlər və cavablar.
 ```
 
-### Tam təsvir (1763/4000)
+### Tam təsvir (2211/4000)
 
 ```
 yOdin evdən uzaqda yaşayanlar üçün icma tətbiqidir.
 
-Sual verin və əsl cavab alın. Ətrafınızda baş verənləri paylaşın. Sizin dilinizdə
-danışan və şəhərinizi tanıyan insanları tapın.
+Sual verin və əsl cavab alın. Ətrafınızda baş verənləri paylaşın. Sizin dilinizdə danışan və eyni yoldan keçmiş insanları tapın.
 
 BURADA NƏLƏR VAR
 
 Müzakirələr
-İstənilən mövzuda soruşun — sənədlər, mənzil, iş, gündəlik həyat. Cavabları eyni
-yoldan keçmiş insanlar verir. Cavab probleminizi həll edəndə onu qəbul edilmiş
-kimi işarələyin — müzakirə bağlanır və növbəti adam mübahisəni yox, həlli tapır.
+İstənilən mövzuda soruşun — sənədlər, mənzil, iş, gündəlik həyat. Cavabları eyni yoldan keçmiş insanlar verir. Cavab probleminizi həll edəndə onu qəbul edilmiş kimi işarələyin — müzakirə bağlanır və növbəti adam mübahisəni yox, həlli tapır.
 
-Şəhəriniz haqqında lent
-Paylaşımlar «Xəbərlər», «Tədbirlər», «Görməyə dəyər» və «Həyat tərzi»
-bölmələrinə ayrılıb.
-Lenti millət və ölkə üzrə süzün ki, ümumi səs-küyü deyil, icmanız üçün vacib
-olanı görəsiniz.
+İcmanız üçün lent
+Paylaşımlar «Xəbərlər», «Tədbirlər», «Görməyə dəyər» və «Həyat tərzi» bölmələrinə ayrılıb. Lenti millət üzrə süzün ki, ümumi səs-küyü deyil, icmanız üçün vacib olanı görəsiniz.
 
 Qeydiyyatla tədbirlər
-Yaxınlıqda nə baş verdiyini görün, gələcəyinizi bildirin və kimin iştirak
-edəcəyini öyrənin.
+Yaxınlıqda nə baş verdiyini görün, gələcəyinizi bildirin və kimin iştirak edəcəyini öyrənin.
 
 Günün sualı
-Hər gün bütün icma üçün bir sual. Söhbəti sıfırdan başlamadan tanış olmağın
-sadə yolu.
+Hər gün bütün icma üçün bir sual. Söhbəti sıfırdan başlamadan tanış olmağın sadə yolu.
 
 Oxumağa dəyər profillər
-Ad, @istifadəçi adı, haqqınızda, millət, bildiyiniz dillər və yaşadığınız yer.
-Cavablarına güvəndiyiniz insanları izləyin və icma sizinkiləri faydalı sayanda
-xal qazanın.
+Ad, @istifadəçi adı, haqqınızda, millət, yaşadığınız ölkə və bildiyiniz dillər. Cavablarına güvəndiyiniz insanları izləyin və icma sizinkiləri faydalı sayanda xal qazanın.
 
 Foto və video
-Paylaşımlara və müzakirələrə media əlavə edin. Forumda axtarış aparın — bəlkə
-sualınıza artıq cavab verilib.
+Paylaşımlara və müzakirələrə media əlavə edin. Forumda axtarış aparın — bəlkə sualınıza artıq cavab verilib.
 
 Sizin diliniz
-İnterfeys 30-dan çox dildə mövcuddur: azərbaycan, ingilis, rus, türk, ərəb,
-fars, hindi, çin, ispan, fransız və alman dilləri daxil olmaqla.
+İnterfeys 27 dildə mövcuddur: azərbaycan, ingilis, rus, türk, ərəb, fars, hindi, çin, ispan, fransız və alman dilləri daxil olmaqla, sağdan-sola yazı tam dəstəklənir.
 
 Moderasiya olunan icma
-Hər paylaşım, müzakirə, şərh və cavab barədə şikayət etmək olar. Şikayətlərə
-moderator baxır, qayda pozanlar isə hər dəfə daha uzun müddətli məhdudiyyət
-alır. Qaydalar burada işləyir.
+Hər paylaşım, müzakirə, şərh və cavab barədə şikayət etmək olar. Şikayətlərə moderator baxır, qayda pozanlar isə hər dəfə daha uzun müddətli məhdudiyyət alır. İstənilən hesabı bloklaya bilərsiniz: bloklanmış hesab sizə cavab yaza, paylaşımlarınıza şərh yaza və sizi qeyd edə bilməz, siz isə bir-birinizin paylaşımlarını görməyi dayandırırsınız. Blok siyahınız gizlidir.
 
 MƏXFİLİK
 
-yOdin məkanınızı izləmir, analitika toplamır və reklam SDK-ları daşımır.
-Millətiniz və yaşadığınız ölkə siyahıdan seçilir — tətbiqdə şəhər sahəsi yoxdur
-və cihazınızın məkanı heç vaxt oxunmur. Məlumatlarınızı satmırıq.
+yOdin məkanınızı izləmir, analitika toplamır, reklam SDK-ları və reklam identifikatorları daşımır. Millət və yaşadığınız ölkə siyahıdan seçilir — tətbiq cihazınızın məkanını heç vaxt oxumur, şəhər və ünvan sahəsi yoxdur. Şərhlərdəki GIF-ləri GIPHY təqdim edir. Məlumatlarınızı satmırıq.
+
+Hesabınızı və məlumatlarınızı istədiyiniz vaxt silə bilərsiniz: «Profil» bölməsini açın, yuxarı sağdaki menyu düyməsinə toxunun və «Hesabı sil» seçin.
 
 Pulsuzdur. E-poçtla qeydiyyatdan keçin və qoşulun.
 ```
+
+---
+
+## What was corrected, and why
+
+The first draft of this listing contained four claims the code does not support.
+They are recorded here so they are not reintroduced:
+
+| Claim in the old draft | Reality in the code |
+|---|---|
+| "Filter the feed by nationality **and country**" | `FeedScreen` has one filter, `selectedNations` — nationality only |
+| "national­ity, languages **and city**" on the profile | `User` has `nationality`, `countryCode` and `location`; `location` is a **country**, and there is no city field anywhere |
+| "The country and city on your profile are **text you type yourself**" | Both are picked from the fixed 45-entry list in `src/data/countries.ts` (`OnboardingScreen.selectCountry`) |
+| "available in **more than 30** languages" | `src/locales/` holds exactly **27** locales |
+
+Also added, because they now exist and a reviewer looks for them: blocking, and
+the in-app account deletion path.
 
 ---
 
@@ -275,17 +254,20 @@ calendar, app activity analytics, crash logs, advertising ID, device IDs.
 
 Other answers:
 - Data is encrypted in transit: **Yes**
-- Users can request data deletion: **Yes** (in-app, Profile → Settings → Delete account)
+- Users can request data deletion: **Yes** (in-app, and via the web page above)
 - Data collection is optional: **No** (account data is required to use the app)
+- Uses an advertising ID: **No** (no `AD_ID` permission, no ads or analytics SDK)
 
 ### Content rating questionnaire
 - The app contains **user-generated content**: **Yes**
 - Users can **interact/communicate** with each other: **Yes**
 - Users can **share photos/videos**: **Yes**
 - Moderation and reporting available: **Yes** — in-app reporting on every post,
-  discussion, comment and reply; moderator review; escalating restrictions
+  discussion, comment and reply; moderator review; escalating restrictions;
+  per-user blocking
 - Contains violence, sexual content, profanity, drugs, gambling: **No** (prohibited
   by the community rules and enforced through moderation)
+- Shares the user's precise current physical location with other users: **No**
 
 ### Target audience
 **18+ only** — no child-directed content, no ads. Declared this way deliberately:
@@ -301,15 +283,15 @@ Contains ads: **No**
 
 ---
 
-## Graphics still needed
+## Graphics
 
 | Asset | Spec | Status |
 |---|---|---|
-| App icon | 512×512 PNG, 32-bit | Derive from `assets/icon.png` |
+| App icon | 512×512 PNG, 32-bit | **Done** — `store-assets/play-icon-512.png` |
 | Feature graphic | 1024×500 PNG/JPG, no transparency | **Missing** |
 | Phone screenshots | 2–8, min 320px, 16:9 or 9:16 | **Missing** |
 | Tablet screenshots | Optional, but improves ranking | **Missing** |
 
 Screenshots worth capturing: the feed with the nationality filter open, a
-discussion with an accepted answer, the event screen with RSVP, Question of the
-Day, and a profile.
+discussion with an accepted answer, an event with RSVP, Question of the Day, and
+a profile.
