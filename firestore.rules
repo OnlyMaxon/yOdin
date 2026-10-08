@@ -77,11 +77,8 @@ service cloud.firestore {
           && !hasBlockedMe(get(/databases/$(database)/documents/posts/$(postId)).data.authorId)
           && request.resource.data.authorId == request.auth.uid
           && request.resource.data.text is string
-          && request.resource.data.text.size() <= 1000
-          // A comment needs *something* in it: text, a GIF, or both. Empty text
-          // only became legal once GIFs did.
-          && (request.resource.data.text.size() > 0 || hasGif())
-          && validGif();
+          && request.resource.data.text.size() > 0
+          && request.resource.data.text.size() <= 1000;
         // Likes: a user may only add or remove their own UID, and may touch
         // nothing else — the comment's text and author stay immutable.
         allow update: if request.auth != null
@@ -270,20 +267,6 @@ service cloud.firestore {
 
     function onlyUpdatingField(req, field) {
       return req.resource.data.diff(resource.data).affectedKeys().hasOnly([field]);
-    }
-
-    // A comment may attach one GIPHY GIF. Only GIPHY's CDN is allowed: without
-    // this an arbitrary URL could be written, and every reader's app would fetch
-    // it, handing their IP address to whoever planted it.
-    function hasGif() {
-      return request.resource.data.get('gifUrl', '') != '';
-    }
-    function validGif() {
-      let gif = request.resource.data.get('gifUrl', '');
-      return gif == ''
-        || (gif is string
-            && gif.size() <= 500
-            && gif.matches('https://media[0-9]*[.]giphy[.]com/.*'));
     }
 
     function ownUidArrayChange(before, after) {

@@ -37,9 +37,6 @@ import { isDeletedAuthor } from '../utils/author';
 import { useWithoutBlocked } from '../hooks/useWithoutBlocked';
 import { GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSheetDrag } from '../hooks/useSheetDrag';
-import GifPicker from '../components/GifPicker';
-import AppImage from '../components/AppImage';
-import { Gif, isGifUrl } from '../services/gifService';
 
 const SCREEN_H = Dimensions.get('window').height;
 
@@ -77,9 +74,6 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
   const [participantsVisible, setParticipantsVisible] = useState(false);
   const [joining, setJoining] = useState(false);
   const [reportComment, setReportComment] = useState<PostComment | null>(null);
-  // A GIF chosen for the comment being written, and the picker's visibility.
-  const [gif, setGif] = useState<Gif | null>(null);
-  const [gifPickerOpen, setGifPickerOpen] = useState(false);
   const commentBlocked = (profile?.commentBlockedUntil ?? 0) > Date.now();
 
   const listRef = useRef<FlatList>(null);
@@ -271,8 +265,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
     }
   }
 
-  // A comment is sendable with text, with a GIF, or with both.
-  const canSend = !!text.trim() || !!gif;
+  const canSend = !!text.trim();
 
   async function sendComment() {
     if (!canSend || !profile || !post) return;
@@ -286,7 +279,6 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
         authorNationality: profile.nationality,
         authorCountryCode: profile.countryCode,
         text: text.trim(),
-        ...(gif ? { gifUrl: gif.url } : {}),
       };
       const id = await addComment(post.id, data);
       notifyMentions({
@@ -298,7 +290,6 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
       setComments((prev) => [{ id, ...data, createdAt: Date.now() }, ...prev]);
       incrementCommentCount(post.id);
       setText('');
-      setGif(null);
       // Scrolling on a timer would be a guess: the list has to have rendered the
       // new row first. The flag is consumed by onContentSizeChange, which fires
       // exactly once that has happened.
@@ -362,9 +353,6 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
               : `${item.authorName}  ${getFlagEmoji(item.authorCountryCode)}`}
           </Text>
           {item.text ? <Text style={styles.commentText}>{item.text}</Text> : null}
-          {isGifUrl(item.gifUrl) ? (
-            <AppImage source={{ uri: item.gifUrl! }} style={styles.commentGif} contentFit="cover" />
-          ) : null}
           <Text style={styles.commentTime}>{formatTime(item.createdAt, t)}</Text>
         </View>
         <TouchableOpacity
@@ -552,22 +540,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
                 style={[styles.inputBar, { transform: [{ translateY: Animated.multiply(kbLift, -1) }] }]}
                 onLayout={(e) => setComposerH(e.nativeEvent.layout.height)}
               >
-                {gif ? (
-                  <View style={styles.gifChip}>
-                    <AppImage source={{ uri: gif.preview }} style={styles.gifChipImage} contentFit="cover" />
-                    <TouchableOpacity onPress={() => setGif(null)} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
-                      <Ionicons name="close-circle" size={20} color={colors.textSecondary} />
-                    </TouchableOpacity>
-                  </View>
-                ) : null}
                 <View style={styles.inputRow}>
-                <TouchableOpacity
-                  style={styles.gifBtn}
-                  onPress={() => setGifPickerOpen(true)}
-                  hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-                >
-                  <Text style={styles.gifBtnText}>GIF</Text>
-                </TouchableOpacity>
                 <TextInput
                   ref={inputRef}
                   style={styles.input}
@@ -598,12 +571,6 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
         participantIds={participants}
         onClose={() => setParticipantsVisible(false)}
         onOpenProfile={onOpenProfile ? (uid) => { setParticipantsVisible(false); onOpenProfile(uid); } : undefined}
-      />
-
-      <GifPicker
-        visible={gifPickerOpen}
-        onClose={() => setGifPickerOpen(false)}
-        onPick={(g) => { setGif(g); setGifPickerOpen(false); }}
       />
 
       <ReportSheet
@@ -702,7 +669,6 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       marginBottom: 4,
     },
     emptyComments: { fontSize: Typography.fontSizeMD, color: c.textSecondary, textAlign: 'center', paddingVertical: 24 },
-    commentGif: { width: 180, height: 180, borderRadius: 12, marginTop: 6, backgroundColor: c.muted },
     commentLike: { alignItems: 'center', paddingTop: 2, width: 34 },
     commentLikeCount: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginTop: 2 },
     commentRow: { flexDirection: 'row', gap: 10, paddingVertical: 10 },
@@ -711,7 +677,6 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
     commentText: { fontSize: Typography.fontSizeMD, color: c.textPrimary, lineHeight: 20, marginTop: 2 },
     commentTime: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginTop: 4 },
     inputBar: {
-      // A column: the chosen-GIF preview stacks above the input row.
       paddingHorizontal: 16,
       paddingTop: 12,
       paddingBottom: Math.max(bottomInset, 12) + 12,
@@ -720,21 +685,6 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       backgroundColor: c.surface,
     },
     inputRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 10 },
-    gifBtn: {
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      borderRadius: 10,
-      backgroundColor: c.muted,
-      borderWidth: 1,
-      borderColor: c.border,
-    },
-    gifBtnText: {
-      fontSize: Typography.fontSizeXS,
-      fontWeight: Typography.fontWeightBold,
-      color: c.secondaryText,
-    },
-    gifChip: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingBottom: 8 },
-    gifChipImage: { width: 56, height: 56, borderRadius: 8, backgroundColor: c.muted },
     input: {
       flex: 1,
       backgroundColor: c.background,

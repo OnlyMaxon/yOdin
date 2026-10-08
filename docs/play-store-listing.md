@@ -61,7 +61,7 @@ Every post, discussion, comment and reply can be reported. Reports are reviewed 
 
 PRIVACY
 
-yOdin does not track your location, runs no analytics, and carries no advertising SDKs or advertising identifiers. Nationality and country of residence are picked from a list — the app never reads your device location, and there is no city or address field. GIFs in comments are served by GIPHY. We do not sell your data.
+yOdin does not track your location, runs no analytics, and carries no advertising SDKs or advertising identifiers. Nationality and country of residence are picked from a list — the app never reads your device location, and there is no city or address field. We do not sell your data.
 
 You can delete your account and its data at any time: open Profile, tap the menu button at the top right, and choose Delete account.
 
@@ -119,7 +119,7 @@ yOdin — приложение для тех, кто живёт вдали от 
 
 КОНФИДЕНЦИАЛЬНОСТЬ
 
-yOdin не отслеживает геолокацию, не собирает аналитику и не содержит рекламных SDK и рекламных идентификаторов. Национальность и страна проживания выбираются из списка — приложение не читает местоположение устройства, и в нём нет поля города или адреса. Гифки в комментариях отдаёт GIPHY. Мы не продаём ваши данные.
+yOdin не отслеживает геолокацию, не собирает аналитику и не содержит рекламных SDK и рекламных идентификаторов. Национальность и страна проживания выбираются из списка — приложение не читает местоположение устройства, и в нём нет поля города или адреса. Мы не продаём ваши данные.
 
 Аккаунт и его данные можно удалить в любой момент: откройте «Профиль», нажмите кнопку меню справа вверху и выберите «Удалить аккаунт».
 
@@ -177,7 +177,7 @@ Hər paylaşım, müzakirə, şərh və cavab barədə şikayət etmək olar. Ş
 
 MƏXFİLİK
 
-yOdin məkanınızı izləmir, analitika toplamır, reklam SDK-ları və reklam identifikatorları daşımır. Millət və yaşadığınız ölkə siyahıdan seçilir — tətbiq cihazınızın məkanını heç vaxt oxumur, şəhər və ünvan sahəsi yoxdur. Şərhlərdəki GIF-ləri GIPHY təqdim edir. Məlumatlarınızı satmırıq.
+yOdin məkanınızı izləmir, analitika toplamır, reklam SDK-ları və reklam identifikatorları daşımır. Millət və yaşadığınız ölkə siyahıdan seçilir — tətbiq cihazınızın məkanını heç vaxt oxumur, şəhər və ünvan sahəsi yoxdur. Məlumatlarınızı satmırıq.
 
 Hesabınızı və məlumatlarınızı istədiyiniz vaxt silə bilərsiniz: «Profil» bölməsini açın, yuxarı sağdaki menyu düyməsinə toxunun və «Hesabı sil» seçin.
 

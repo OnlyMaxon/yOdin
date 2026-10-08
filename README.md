@@ -83,7 +83,6 @@ EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
 EXPO_PUBLIC_ALGOLIA_APP_ID=your_algolia_app_id
 EXPO_PUBLIC_ALGOLIA_SEARCH_KEY=your_algolia_search_key
-EXPO_PUBLIC_GIPHY_API_KEY=your_giphy_api_key
 ```
 
 ### 2.7 Deploy Firestore rules and indexes

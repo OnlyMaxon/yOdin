@@ -1,6 +1,6 @@
 # Privacy Policy for yOdin
 
-**Last updated:** 6 October 2026
+**Last updated:** 8 October 2026
 **Effective date:** 4 October 2026
 
 yOdin ("the App", "we", "us") is operated by **Jalil Orujli**, Chmielna 69,
@@ -65,9 +65,7 @@ We want to be explicit about this, because many social apps do collect it:
   profile are values you pick from a list yourself. The App never reads your
   device location, and asks for no location permission.
 - **No analytics or behavioural tracking.** There is no analytics SDK in the App.
-- **No advertising identifiers, no ad networks, no third-party trackers.** The
-  one third party the App ever contacts is GIPHY, and only when you search for
-  a GIF or view a comment that has one attached — see section 5.2.
+- **No advertising identifiers, no ad networks, no third-party trackers.**
 - **No push notification tokens.** Notifications are shown inside the App only.
 - **No contacts, calendar, microphone, or call data.**
 
@@ -135,24 +133,16 @@ and neither is the list of accounts you have blocked.
 |---|---|---|
 | **Google Firebase** (Authentication, Cloud Firestore, Cloud Storage, Cloud Functions) — Google Ireland Ltd. / Google LLC | Account data, content, media | Hosting the App's database, files, authentication and server logic |
 | **Algolia** | Public content of discussions and the author's display name | Search inside the App |
-| **GIPHY** (Giphy, Inc.) | The words you type into the GIF search, and your IP address, as part of the request | Searching for and loading GIFs when you attach one to a comment |
 
 These providers act as processors on our instructions and are bound by their own
 data-protection terms. We do not share your data with anyone else, except where
 section 4 requires it by law.
 
-GIPHY is different from the other two in one respect worth stating plainly: a
-GIF is loaded from GIPHY's own servers each time a comment containing one is
-displayed, so GIPHY sees the IP address of the person reading it as well as of
-the person who posted it. This only happens on comments that have a GIF
-attached; the rest of the App makes no requests to GIPHY. GIF search is set to
-GIPHY's strictest content rating.
-
 ### 5.3 International transfers
 
 The App's database, files and server logic are hosted in the **European Union**
 (Google Cloud's `eur3` multi-region and `europe-west1`), and we are established
-in Poland. Firebase, Algolia and GIPHY may nevertheless process data on servers
+in Poland. Firebase and Algolia may nevertheless process data on servers
 outside your country, including in the European Union and the United States;
 those transfers rely on the Standard Contractual Clauses approved by the
 European Commission.

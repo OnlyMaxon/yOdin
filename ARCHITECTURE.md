@@ -36,9 +36,6 @@ Four tabs:
   blocking.
 - **Algolia v5** (`algoliasearch`) — forum full-text search (Search-Only key on
   the client; Write key only in Cloud Functions via Secret Manager).
-- **GIPHY** (`api.giphy.com`) — GIF search in the comment composer. The key is
-  client-side (`EXPO_PUBLIC_GIPHY_API_KEY`) and the rating is capped at `g`.
-  A free key allows 100 calls/hour **for the whole app**, not per user.
 - **React Navigation v7** — Native Stack + Material Top Tabs (`tabBarPosition:
   "bottom"`).
 - **Zustand v5** — global client state.
@@ -138,10 +135,6 @@ App
 - `userService.ts` — follow/unfollow (self-update of `following[]`), follower
   count/list.
 - `algoliaService.ts` — forum search (lazy client; no-op without keys).
-- `gifService.ts` — GIPHY search for the comment composer. Returns an empty
-  list rather than throwing when the key is unset, so the app still runs
-  without one. Tenor was not an option: Google stopped issuing keys to new
-  clients in January 2026.
 - `errorHandler.ts` — maps Firebase auth codes → i18n keys.
 - `i18n.ts` — 27 languages, device-locale default, RTL handling.
 - `utils/author.ts` — `isDeletedAuthor()`. One predicate, not a check copied into
@@ -171,9 +164,7 @@ A post/discussion carries **either** photos **or** one short video.
 - **Reply** — author fields, `text`, `likes[]`/`dislikes[]`, `parentReplyId`
   (Reddit-style threading; rendered Telegram-style as a flat stream with quote
   jumps).
-- **PostComment** — author fields, `text`, optional `likes[]` and `gifUrl`.
-  A comment carries text, a GIF, or both. Only the GIF's URL is stored, so
-  the file stays on GIPHY's CDN and never enters our Storage bucket.
+- **PostComment** — author fields, `text`, optional `likes[]`.
 - **AppNotification** — `type: reply | accepted | participant | mention |
   removed | blocked`; carries the discussion or post it refers to. The list
   badges a per-type glyph on the sender's avatar.
@@ -364,11 +355,8 @@ served as raw text.
   and only add/remove the caller's own uid (`ownUidArrayChange`); saves only
   `savedBy`; RSVP only `participants` (and respects the cap); accepting an
   answer only the three accepted-* fields and only once.
-- Comments accept text, a GIF, or both, and `gifUrl` must match GIPHY's CDN.
-  That allowlist is not cosmetic: whatever URL is written here is fetched by
-  **every reader** of the thread, so an arbitrary host would harvest their IP
-  addresses. Comment likes reuse `ownUidArrayChange` and may touch nothing
-  but `likes`.
+- Comment likes reuse `ownUidArrayChange` and may touch nothing but `likes`;
+  the comment's text and author stay immutable.
 - `points`, `feedScore`, `engagement`, counters are **not** client-writable.
 - Notifications: recipient reads/updates(`read`)/deletes; any user creates only
   with `fromUserId == self` and a type in the allowed client set
