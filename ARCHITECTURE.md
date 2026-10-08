@@ -467,8 +467,9 @@ There is **no Android CI**: `.github/workflows/` only builds an unsigned iOS
 ```
 export JAVA_HOME="C:/Program Files/Android/Android Studio/jbr"   # JDK 21
 export ANDROID_HOME="D:/Android"
+rm -rf android                       # see the stale-manifest trap below
 npx expo prebuild -p android --no-install
-sh android/gradlew -p android bundleRelease --console=plain --no-daemon
+sh android/gradlew -p android bundleRelease --console=plain \n   -x lintVitalRelease -x lintVitalAnalyzeRelease -x lintVitalReportRelease
 ```
 
 The upload keystore lives **outside the repo** (`D:\keystores\`), and
@@ -491,6 +492,20 @@ Traps that cost real time here, all learned the hard way:
   wiping `android/`.
 - **Never pipe `gradlew` through `tail`**: the pipeline's exit code becomes
   tail's, so a failed build reports success and the log is truncated.
+- **Skip lint, or lose hours.** Since SDK 57's AGP, `lintVitalRelease` runs
+  per module and on this machine turned a 22-minute build into 2h17m without
+  finishing. It is static analysis of library code and has **no effect on the
+  produced bundle**, hence the `-x` flags above. It does not hang — the daemon
+  burns real CPU — so a log that is still being written is not progress;
+  count `^> Task` lines against the module count (16) instead.
+- **`expo prebuild` without `--clean` merges into the existing
+  `AndroidManifest.xml`.** Config plugins only ever *add* permissions, so one
+  dropped from a plugin's options survives from the previous generation and
+  ships anyway — the build succeeds and the change is simply absent. But
+  `--clean` fails with `EBUSY` while a Gradle daemon holds the lint cache,
+  deleting `android/` only halfway. Stop the java daemons first (they can
+  survive one kill — check and repeat), then `rm -rf android` and prebuild
+  plain. `android/` is gitignored and fully regenerable.
 - `android.versionCode` must be incremented for every upload; it is declared
   explicitly in `app.json` rather than left to default.
 - Unzipping the AAB and grepping `base/assets/index.android.bundle` is the
