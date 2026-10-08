@@ -78,7 +78,7 @@ export default function ReportSheet({ visible, onClose, onSubmit }: Props) {
 function makeStyles(c: ColorPalette, bottomInset: number) {
   return StyleSheet.create({
     overlay: { flex: 1, justifyContent: 'flex-end' },
-    backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.5)' },
+    backdrop: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.5)' },
     sheet: {
       backgroundColor: c.surface,
       borderTopLeftRadius: 24,

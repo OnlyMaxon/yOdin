@@ -6,12 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#6C35DE"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.yodin"
@@ -23,7 +17,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6C35DE"
       },
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO",
@@ -48,7 +41,16 @@
       "@react-native-community/datetimepicker",
       "./plugins/withTransparentNavigationBar",
       "./plugins/withLegacyStoragePermission",
-      "./plugins/withReleaseSigning"
+      "./plugins/withReleaseSigning",
+      "expo-image",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#6C35DE"
+        }
+      ]
     ]
   }
 }

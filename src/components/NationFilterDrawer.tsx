@@ -151,7 +151,7 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
 function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
   return StyleSheet.create({
     root: { flex: 1 },
-    backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.5)' },
+    backdrop: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.5)' },
     drawer: {
       position: 'absolute',
       left: 0,

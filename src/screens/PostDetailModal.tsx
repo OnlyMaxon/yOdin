@@ -618,7 +618,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
 function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
   return StyleSheet.create({
     overlay: { flex: 1 },
-    backdrop: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.55)' },
+    backdrop: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.55)' },
     sheet: {
       position: 'absolute',
       left: 0,
