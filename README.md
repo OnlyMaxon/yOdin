@@ -1,7 +1,7 @@
 # yOdin
 
 Social mobile app where people discuss topics across nationalities and locations.
-Built with **Expo SDK 54** · **Firebase** · **React Native** · **TypeScript**
+Built with **Expo SDK 57** · **Firebase** · **React Native** · **TypeScript**
 
 Maintained by two developers: **OnlyMaxon** (Max) and **NikitaShep** (Nikita).
 
@@ -81,6 +81,9 @@ EXPO_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
 EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
 EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 EXPO_PUBLIC_FIREBASE_APP_ID=your_app_id
+EXPO_PUBLIC_ALGOLIA_APP_ID=your_algolia_app_id
+EXPO_PUBLIC_ALGOLIA_SEARCH_KEY=your_algolia_search_key
+EXPO_PUBLIC_GIPHY_API_KEY=your_giphy_api_key
 ```
 
 ### 2.7 Deploy Firestore rules and indexes

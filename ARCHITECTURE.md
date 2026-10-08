@@ -5,7 +5,7 @@ together, why the boundaries are where they are, and which trade-offs are
 deliberate. Keep it in sync when structure changes.
 
 > Stack note: Expo has changed. Before writing native/SDK code, read the
-> versioned docs at https://docs.expo.dev/versions/v54.0.0/.
+> versioned docs at https://docs.expo.dev/versions/v57.0.0/.
 
 ---
 
@@ -27,7 +27,8 @@ Four tabs:
 
 ## 2. Tech stack
 
-- **Expo SDK ~54**, React Native 0.81, React 19, TypeScript, `newArchEnabled`.
+- **Expo SDK ~57**, React Native 0.86, React 19.2, TypeScript 6. There is no
+  `newArchEnabled` flag any more: SDK 57 ships the New Architecture only.
 - **Firebase JS SDK v12**: Auth (AsyncStorage persistence), Firestore, Storage,
   and Functions (callables, pinned to `europe-west1` — see §9).
 - **Firebase Cloud Functions v2** (Node 22, Admin SDK) — server-authoritative
@@ -35,6 +36,9 @@ Four tabs:
   blocking.
 - **Algolia v5** (`algoliasearch`) — forum full-text search (Search-Only key on
   the client; Write key only in Cloud Functions via Secret Manager).
+- **GIPHY** (`api.giphy.com`) — GIF search in the comment composer. The key is
+  client-side (`EXPO_PUBLIC_GIPHY_API_KEY`) and the rating is capped at `g`.
+  A free key allows 100 calls/hour **for the whole app**, not per user.
 - **React Navigation v7** — Native Stack + Material Top Tabs (`tabBarPosition:
   "bottom"`).
 - **Zustand v5** — global client state.
@@ -134,6 +138,10 @@ App
 - `userService.ts` — follow/unfollow (self-update of `following[]`), follower
   count/list.
 - `algoliaService.ts` — forum search (lazy client; no-op without keys).
+- `gifService.ts` — GIPHY search for the comment composer. Returns an empty
+  list rather than throwing when the key is unset, so the app still runs
+  without one. Tenor was not an option: Google stopped issuing keys to new
+  clients in January 2026.
 - `errorHandler.ts` — maps Firebase auth codes → i18n keys.
 - `i18n.ts` — 27 languages, device-locale default, RTL handling.
 - `utils/author.ts` — `isDeletedAuthor()`. One predicate, not a check copied into
@@ -163,6 +171,9 @@ A post/discussion carries **either** photos **or** one short video.
 - **Reply** — author fields, `text`, `likes[]`/`dislikes[]`, `parentReplyId`
   (Reddit-style threading; rendered Telegram-style as a flat stream with quote
   jumps).
+- **PostComment** — author fields, `text`, optional `likes[]` and `gifUrl`.
+  A comment carries text, a GIF, or both. Only the GIF's URL is stored, so
+  the file stays on GIPHY's CDN and never enters our Storage bucket.
 - **AppNotification** — `type: reply | accepted | participant | mention |
   removed | blocked`; carries the discussion or post it refers to. The list
   badges a per-type glyph on the sender's avatar.
@@ -353,6 +364,11 @@ served as raw text.
   and only add/remove the caller's own uid (`ownUidArrayChange`); saves only
   `savedBy`; RSVP only `participants` (and respects the cap); accepting an
   answer only the three accepted-* fields and only once.
+- Comments accept text, a GIF, or both, and `gifUrl` must match GIPHY's CDN.
+  That allowlist is not cosmetic: whatever URL is written here is fetched by
+  **every reader** of the thread, so an arbitrary host would harvest their IP
+  addresses. Comment likes reuse `ownUidArrayChange` and may touch nothing
+  but `likes`.
 - `points`, `feedScore`, `engagement`, counters are **not** client-writable.
 - Notifications: recipient reads/updates(`read`)/deletes; any user creates only
   with `fromUserId == self` and a type in the allowed client set
@@ -368,7 +384,7 @@ served as raw text.
 ### Storage rules (`storage.rules`)
 - `avatars/{uid}/…` — write requires `request.auth.uid == uid` + image + <5 MB.
 - `posts/{postId}/…` and `discussions/{discussionId}/…` — image <5 MB **or**
-  video <50 MB.
+  video <20 MB.
 
 ### Cloud Functions — 15, all in `europe-west1`
 `index.ts` holds the 11 content triggers: Algolia create/update/delete sync;

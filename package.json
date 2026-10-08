@@ -31,7 +31,6 @@
     "expo-video": "~57.0.5",
     "expo-video-thumbnails": "~57.0.2",
     "firebase": "^12.19.0",
-    "firebase-admin": "^14.5.0",
     "i18next": "^26.2.0",
     "react": "19.2.3",
     "react-i18next": "^17.0.8",
@@ -47,6 +46,7 @@
   "devDependencies": {
     "@types/react": "~19.2.4",
     "babel-preset-expo": "~57.0.0",
+    "firebase-admin": "^14.5.0",
     "firebase-tools": "^15.32.1",
     "typescript": "~6.0.3"
   },
