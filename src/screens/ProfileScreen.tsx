@@ -1325,7 +1325,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
       borderRadius: 40,
     },
     avatarOverlay: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       backgroundColor: 'rgba(0,0,0,0.45)',
       borderRadius: 40,
       alignItems: 'center',
@@ -1379,7 +1379,7 @@ function makeStyles(c: ColorPalette, topInset: number) {
     cardMetaMuted: { fontSize: Typography.fontSizeXS, color: c.textSecondary },
     cardTime: { fontSize: Typography.fontSizeXS, color: c.textSecondary, marginLeft: 12 },
     backdrop: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       backgroundColor: 'rgba(0,0,0,0.35)',
       zIndex: 10,
     },

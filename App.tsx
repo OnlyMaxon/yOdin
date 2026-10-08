@@ -40,27 +40,29 @@ function AppContent() {
   //     scrim from UiModeUtils.isDarkMode(), which is why the bar flashed white
   //     on every screen that opens one;
   //   - the system picks light system-bar icons.
-  // 'system' passes null, which restores MODE_NIGHT_FOLLOW_SYSTEM, so the
-  // "follow the phone" option keeps working.
+  // 'system' passes 'unspecified', which restores MODE_NIGHT_FOLLOW_SYSTEM, so
+  // the "follow the phone" option keeps working. (React Native 0.86 dropped
+  // null from ColorSchemeName in favour of this explicit value.)
   useEffect(() => {
-    Appearance.setColorScheme(preference === 'system' ? null : preference);
+    Appearance.setColorScheme(preference === 'system' ? 'unspecified' : preference);
   }, [preference]);
 
   // Both of these exist because the app's light/dark setting is a JS preference
   // while the native window follows the *system* one, so a dark app on a light
   // phone left white system chrome around the edges.
   //
-  // The root view covers anything the JS tree does not paint. The navigation bar
-  // is separate: below Android 15 it is an opaque bar owned by the system, whose
-  // colour comes from the theme -- white under a light system theme -- and no
-  // root background reaches it. On Android 15+ that call is ignored, but there
-  // edge-to-edge is enforced and the bar is transparent, so the root colour
-  // shows through instead. Between them every version is covered.
+  // The root view covers anything the JS tree does not paint, and that is now
+  // the whole story for the navigation bar too: Expo SDK 55 made edge-to-edge
+  // mandatory on Android, so the bar is always transparent and the root colour
+  // shows through on every version. The old `NavigationBar.setBackgroundColorAsync`
+  // that used to paint the opaque pre-Android-15 bar was removed along with it.
+  //
+  // Only the icons still need telling. `setStyle` names the *bar*, not the
+  // icons -- 'dark' means a dark bar carrying light content -- so it reads
+  // inverted next to the `setButtonStyleAsync` call it replaces.
   useEffect(() => {
     SystemUI.setBackgroundColorAsync(colors.background).catch(() => {});
-    NavigationBar.setBackgroundColorAsync(colors.background).catch(() => {});
-    // Icon colour is the inverse of the bar, or the buttons vanish into it.
-    NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark').catch(() => {});
+    NavigationBar.setStyle(isDark ? 'dark' : 'light');
   }, [colors.background, isDark]);
 
   const navTheme = useMemo(() => ({

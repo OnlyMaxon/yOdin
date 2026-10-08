@@ -1,9 +1,3 @@
----
-layout: default
-title: Terms of Use — yOdin
-permalink: /terms-of-use/
----
-
 # Terms of Use
 
 **Last updated:** 5 October 2026

@@ -302,13 +302,14 @@ visibility but leaves the follows broken.
 
 `docs/` holds the Markdown source of the **four** legal documents: the privacy
 policy, the account-deletion page Play links to, the terms of use, and the child
-safety standards. It also carries a GitHub Pages setup (`docs/_config.yml` + a
-self-contained layout, no theme gem, light and dark) which can render them.
+safety standards. It is source only — nothing in the repository renders or
+publishes it.
 
 **The published copies the app and the store listing point at live on the
 studio's own domain** —
 `onlymaxon.com/apps/yodin/{privacy,terms,delete-account,child-safety-standards}/`
-— rather than a contributor's personal GitHub Pages, where they used to sit. The
+— which is why the repository no longer carries the GitHub Pages setup that used
+to serve them from a contributor's personal account. The
 first three URLs live in one place, `src/config/links.ts`; the fourth is only
 referenced from the published terms and from the Play declaration, so the app
 does not link it. Note the path segments differ from the Markdown filenames
@@ -495,8 +496,8 @@ Traps that cost real time here, all learned the hard way:
 `store-assets/` holds the Play listing graphics (icon 512², feature graphic
 1024×500, four phone screenshots) with the raw device captures under
 `store-assets/source/`. `docs/play-store-listing.md` is the copy-paste source for
-the listing text and the Data safety / content-rating answers; it is excluded
-from the Pages build because it is an internal working document.
+the listing text and the Data safety / content-rating answers; it is an internal
+working document and is not published.
 
 ---
 

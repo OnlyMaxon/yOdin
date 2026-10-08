@@ -1,9 +1,41 @@
 import { ref, uploadBytes, getDownloadURL, listAll, deleteObject } from 'firebase/storage';
 import { storage } from './firebase';
 
+// Read a local file into a React Native Blob.
+//
+// This is deliberately XMLHttpRequest and not `fetch`. React Native's own fetch
+// is the whatwg-fetch polyfill sitting on top of XHR, so this is the exact
+// mechanism `fetch(uri).blob()` used — but from SDK 56 on, `expo/fetch` takes
+// over `globalThis.fetch` and its `blob()` throws on every call on a device
+// (expo/expo#47468). XMLHttpRequest stays React Native's own, so going one
+// layer down survives that change.
+//
+// The blob has to be a native, file-backed one. Firebase builds its multipart
+// body with `new Blob([header, data, footer])`, and RN's BlobManager accepts
+// string and Blob parts while rejecting ArrayBuffer and typed arrays outright
+// ("Creating blobs from 'ArrayBuffer' and 'ArrayBufferView' are not supported").
+// That rules out handing Firebase a Uint8Array: `uploadBytes` throws, and
+// `uploadBytesResumable` is worse — it only takes the resumable path above
+// 256 KB, so an optimized photo silently falls back to the same multipart code
+// and the exception lands inside a promise callback that never settles, hanging
+// the upload instead of failing it.
+//
+// Being file-backed also means a 20 MB video never lands in the JS heap.
+function blobFromUri(uri: string): Promise<Blob> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => resolve(xhr.response as Blob);
+    xhr.onerror = () => reject(new Error(`Failed to read ${uri}`));
+    xhr.responseType = 'blob';
+    xhr.open('GET', uri, true);
+    xhr.send(null);
+  });
+}
+
+// Every upload in the app funnels through here: avatars, post and discussion
+// photos, and video with its poster.
 async function uploadOne(path: string, uri: string, contentType = 'image/jpeg'): Promise<string> {
-  const response = await fetch(uri);
-  const blob = await response.blob();
+  const blob = await blobFromUri(uri);
   const storageRef = ref(storage, path);
   await uploadBytes(storageRef, blob, { contentType });
   return await getDownloadURL(storageRef);

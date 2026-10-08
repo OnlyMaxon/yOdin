@@ -1,9 +1,3 @@
----
-layout: default
-title: Delete your yOdin account
-permalink: /delete-account/
----
-
 # Delete your yOdin account
 
 **Last updated:** 4 October 2026

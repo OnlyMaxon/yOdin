@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   tile: { borderRadius: RADIUS, overflow: 'hidden' },
   img: { width: '100%', height: '100%' },
   moreOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(0,0,0,0.45)',
     alignItems: 'center',
     justifyContent: 'center',

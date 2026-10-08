@@ -10,7 +10,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Text from './AppText';
-import * as MediaLibrary from 'expo-media-library';
+// SDK 57 promoted the redesigned query API to the package root, so the old
+// cursor-paginated `getAssetsAsync` now lives behind /legacy. Staying on it
+// deliberately: the grid's paging and permission flow took a while to get
+// right, and rewriting it onto the new `Query` class is its own change with
+// its own regressions, not something to fold into an SDK bump.
+import * as MediaLibrary from 'expo-media-library/legacy';
 import * as ImagePicker from 'expo-image-picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
@@ -318,11 +323,11 @@ function makeStyles(c: ColorPalette, topInset: number, _bottomInset: number) {
     },
     cellImg: { width: CELL, height: CELL },
     selectedOverlay: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       backgroundColor: 'rgba(108,53,222,0.28)',
     },
     dimOverlay: {
-      ...StyleSheet.absoluteFillObject,
+      ...StyleSheet.absoluteFill,
       backgroundColor: 'rgba(255,255,255,0.5)',
     },
     badge: {
