@@ -146,10 +146,17 @@ App
 
 ### Media pipeline
 `PhotoPickerSheet` (expo-media-library grid + system camera) → `optimizeImage`
-(downscale longest side to 1280px, JPEG q0.6) → `uploadPostImages` /
+(downscale longest side to 1600px, JPEG q0.8) → `uploadPostImages` /
 `uploadDiscussionImages`. Video: system picker → `processVideoAsset` (≤30s,
 ≤20 MB, generates a small poster) → `uploadPostVideo` / `uploadDiscussionVideo`.
 A post/discussion carries **either** photos **or** one short video.
+
+Two choices in that chain are deliberate and look like mistakes otherwise. The
+grid imports `expo-media-library/legacy`, because SDK 57 moved the redesigned
+`Query` API to the package root and porting the cursor pagination onto it is a
+separate change. And every upload reads its file through `XMLHttpRequest`
+rather than `fetch`, because `expo/fetch` — the global `fetch` since SDK 56 —
+has a `blob()` that throws on device; `storageService` explains it in full.
 
 ---
 
