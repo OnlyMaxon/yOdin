@@ -25,10 +25,18 @@ on:
         description: 'Upload to TestFlight when the build succeeds'
         type: boolean
         default: true
+      runner:
+        description: 'Runner image (needs an Xcode with Swift 6.2 or newer)'
+        type: choice
+        default: 'macos-15'
+        options:
+          - 'macos-15'
+          - 'macos-26'
+          - 'macos-latest'
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: ${{ inputs.runner }}
     timeout-minutes: 90
     env:
       EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
@@ -48,14 +56,34 @@ jobs:
             exit 1
           fi
 
-      - name: Select the newest installed Xcode
+      # expo-modules-jsi is the one dependency that ships a SwiftPM manifest,
+      # and it declares swift-tools-version 6.2 — Xcode 26 or newer. An older
+      # toolchain cannot even read the manifest, and SwiftPM reports that as
+      # "Could not resolve package dependencies" with no mention of Swift.
+      - name: Select a toolchain new enough for the SwiftPM manifests
         run: |
+          echo "Installed Xcodes:"
           ls -d /Applications/Xcode*.app
           NEWEST=$(ls -d /Applications/Xcode*.app | sort -V | tail -1)
-          echo "Using $NEWEST"
+          echo "Selecting $NEWEST"
           sudo xcode-select -s "$NEWEST/Contents/Developer"
           xcodebuild -version
           swift --version
+
+          REQUIRED=6.2
+          FOUND=$(swift --version 2>&1 | sed -n 's/.*Swift version \([0-9][0-9]*\.[0-9][0-9]*\).*/\1/p' | head -1)
+          echo "Swift found: ${FOUND:-unknown}, required: $REQUIRED or newer"
+          if [ -z "$FOUND" ]; then
+            echo "Could not read the Swift version; continuing and letting the build decide."
+            exit 0
+          fi
+          if [ "$(printf '%s\n%s\n' "$REQUIRED" "$FOUND" | sort -V | head -1)" != "$REQUIRED" ]; then
+            echo ""
+            echo "This runner's newest Xcode ships Swift $FOUND, below the $REQUIRED that"
+            echo "expo-modules-jsi requires. Re-run this workflow and pick a newer runner"
+            echo "image in the 'runner' input."
+            exit 1
+          fi
 
       - name: Install JS dependencies
         run: npm ci --no-audit --no-fund
