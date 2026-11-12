@@ -15,6 +15,10 @@
     "production": {
       "environment": "production",
       "autoIncrement": true
+    },
+    "production-ci": {
+      "extends": "production",
+      "autoIncrement": false
     }
   },
   "submit": {

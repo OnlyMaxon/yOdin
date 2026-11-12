@@ -1,0 +1,123 @@
+name: iOS TestFlight build
+
+# A signed App Store build on a GitHub-hosted macOS runner, for when the EAS
+# free tier has no cloud iOS builds left (it resets monthly, and a rejected app
+# cannot wait for it). `eas build --local` runs the same build logic on this
+# runner instead of EAS infrastructure, so it does not consume the build quota;
+# credentials and environment variables still come from the EAS servers, which
+# is what EXPO_TOKEN is for.
+#
+# Needs one repository secret: EXPO_TOKEN — a robot access token from
+# expo.dev ▸ account settings ▸ access tokens, with access to onlymaxons-team.
+#
+# The build number is an input rather than eas.json's autoIncrement, because
+# autoIncrement bumps the runner's checkout and that bump is never committed:
+# every run would otherwise produce the same number, and App Store Connect
+# rejects a duplicate. Pass the next unused number explicitly.
+on:
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: 'iOS build number (must not already exist in TestFlight)'
+        required: true
+        default: '8'
+      submit:
+        description: 'Upload to TestFlight when the build succeeds'
+        type: boolean
+        default: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 90
+    env:
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Check the token is present
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "EXPO_TOKEN is not set. Add it under Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+      - name: Install JS dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Install EAS CLI
+        run: npm install -g eas-cli@latest
+
+      - name: Set the build number
+        run: |
+          node -e '
+            const fs = require("fs");
+            const n = process.env.BUILD_NUMBER;
+            if (!/^[0-9]+$/.test(n)) { throw new Error("build_number must be digits: " + n); }
+            const app = JSON.parse(fs.readFileSync("app.json", "utf8"));
+            app.expo.ios.buildNumber = n;
+            fs.writeFileSync("app.json", JSON.stringify(app, null, 2) + "\n");
+            console.log("version " + app.expo.version + " build " + n);
+          '
+        env:
+          BUILD_NUMBER: ${{ inputs.build_number }}
+
+      # --local keeps this off the EAS build quota. The production-ci profile is
+      # production with autoIncrement off, so the number set above is the one
+      # that ships.
+      - name: Build signed .ipa
+        run: |
+          eas build \
+            --platform ios \
+            --profile production-ci \
+            --local \
+            --non-interactive \
+            --output "$RUNNER_TEMP/yodin.ipa"
+
+      # A local build resolves EXPO_PUBLIC_* from the EAS environment rather
+      # than from .env, which is gitignored and never reaches a runner. If that
+      # resolution silently failed the app would install and then fail every
+      # request, so prove the values are in the bundle instead of trusting the
+      # exit code.
+      - name: Verify the bundle carries its configuration
+        run: |
+          cd "$RUNNER_TEMP"
+          rm -rf unpacked && mkdir unpacked
+          unzip -qo yodin.ipa -d unpacked
+          BUNDLE=$(find unpacked/Payload -name 'main.jsbundle' | head -1)
+          if [ -z "$BUNDLE" ]; then echo "no main.jsbundle in the .ipa"; exit 1; fi
+          echo "bundle: $BUNDLE ($(wc -c < "$BUNDLE") bytes)"
+          missing=0
+          for needle in firebaseapp.com algolia; do
+            if grep -qi "$needle" "$BUNDLE"; then
+              echo "  found: $needle"
+            else
+              echo "  MISSING: $needle"
+              missing=1
+            fi
+          done
+          if [ "$missing" = "1" ]; then
+            echo "The build is missing configuration it needs at runtime."
+            exit 1
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: yodin-ios-signed
+          path: ${{ runner.temp }}/yodin.ipa
+          if-no-files-found: error
+
+      - name: Upload to TestFlight
+        if: ${{ inputs.submit }}
+        run: |
+          eas submit \
+            --platform ios \
+            --profile production \
+            --path "$RUNNER_TEMP/yodin.ipa" \
+            --non-interactive
