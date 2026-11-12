@@ -48,6 +48,15 @@ jobs:
             exit 1
           fi
 
+      - name: Select the newest installed Xcode
+        run: |
+          ls -d /Applications/Xcode*.app
+          NEWEST=$(ls -d /Applications/Xcode*.app | sort -V | tail -1)
+          echo "Using $NEWEST"
+          sudo xcode-select -s "$NEWEST/Contents/Developer"
+          xcodebuild -version
+          swift --version
+
       - name: Install JS dependencies
         run: npm ci --no-audit --no-fund
 
@@ -72,6 +81,9 @@ jobs:
       # production with autoIncrement off, so the number set above is the one
       # that ships.
       - name: Build signed .ipa
+        env:
+          EAS_LOCAL_BUILD_SKIP_CLEANUP: '1'
+          EAS_LOCAL_BUILD_WORKINGDIR: ${{ runner.temp }}/eas-build
         run: |
           eas build \
             --platform ios \
@@ -79,6 +91,26 @@ jobs:
             --local \
             --non-interactive \
             --output "$RUNNER_TEMP/yodin.ipa"
+
+      # The failure that matters is inside the Xcode log, not in the step
+      # output, so collect it whichever way the build ended.
+      - name: Collect Xcode logs
+        if: always()
+        run: |
+          DEST="$RUNNER_TEMP/xcode-logs"
+          mkdir -p "$DEST"
+          find "$RUNNER_TEMP/eas-build" -name '*.log' -size -50M \
+            -exec cp {} "$DEST"/ \; 2>/dev/null || true
+          find "$RUNNER_TEMP/eas-build" -name 'Package.resolved' \
+            -exec cp {} "$DEST"/ \; 2>/dev/null || true
+          ls -la "$DEST" || echo "no logs collected"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: xcode-logs
+          path: ${{ runner.temp }}/xcode-logs
+          if-no-files-found: warn
 
       # A local build resolves EXPO_PUBLIC_* from the EAS environment rather
       # than from .env, which is gitignored and never reaches a runner. If that
