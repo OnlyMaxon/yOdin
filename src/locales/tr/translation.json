@@ -2,7 +2,7 @@
   "auth": {
     "or": "veya",
     "continueWithMicrosoft": "Microsoft ile devam et",
-    "providerTermsNotice": "Microsoft ile devam ederek kullanım koşullarını ve gizlilik politikasını kabul etmiş olursun.",
+    "providerTermsNotice": "Hesap oluşturarak veya giriş yaparak Kullanım Koşulları'nı ve Gizlilik Politikası'nı kabul edersiniz. yOdin, sakıncalı içeriğe ve kötü niyetli kullanıcılara karşı sıfır tolerans uygular.",
     "welcome": "yOdin'e Hoş Geldiniz",
     "subtitle": "Kültürler arası bağlantı",
     "login": "Giriş Yap",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "Kullanım koşulları",
-    "acceptLabel": "Kullanım koşullarını kabul ediyorum",
+    "acceptLabel": "Kullanım Koşulları'nı kabul ediyorum ve sakıncalı içeriğe ve kötü davranışa tolerans gösterilmediğini anlıyorum",
     "open": "Kullanım koşullarını aç",
     "required": "Devam etmek için kullanım koşullarını kabul edin."
   }

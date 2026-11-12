@@ -2,7 +2,7 @@
   "auth": {
     "or": "eller",
     "continueWithMicrosoft": "Fortsätt med Microsoft",
-    "providerTermsNotice": "Genom att fortsätta med Microsoft godkänner du användarvillkoren och integritetspolicyn.",
+    "providerTermsNotice": "Genom att skapa ett konto eller logga in godkänner du användarvillkoren och integritetspolicyn. yOdin har nolltolerans mot stötande innehåll och mot användare som beter sig kränkande.",
     "welcome": "Välkommen till yOdin",
     "subtitle": "Koppla samman kulturer",
     "login": "Logga in",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "Användarvillkor",
-    "acceptLabel": "Jag godkänner användarvillkoren",
+    "acceptLabel": "Jag godkänner användarvillkoren och förstår att stötande innehåll och kränkande beteende inte tolereras",
     "open": "Öppna användarvillkoren",
     "required": "Godkänn användarvillkoren för att fortsätta."
   }

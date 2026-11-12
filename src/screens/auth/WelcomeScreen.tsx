@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { Animated, Easing, View, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { Animated, Easing, View, TouchableOpacity, StyleSheet, Dimensions, Linking } from 'react-native';
 import Text from '../../components/AppText';
 import { useTranslation } from 'react-i18next';
 import { Typography } from '../../theme/typography';
 import { LightColors } from '../../theme/colors';
+import { TERMS_URL, PRIVACY_URL } from '../../config/links';
 import Logo from '../../components/Logo';
 
 const { width: SCREEN_W, height: SCREEN_H } = Dimensions.get('window');
@@ -61,6 +62,19 @@ export default function WelcomeScreen({ navigation }: any) {
         >
           <Text style={styles.secondaryBtnText}>{t('auth.login')}</Text>
         </TouchableOpacity>
+
+        {/* Guideline 1.2 wants the agreement before registering or logging in,
+            and these two buttons are the only ways further in — so the notice
+            belongs here as well as on the auth screen itself. */}
+        <Text style={styles.terms}>{t('auth.providerTermsNotice')}</Text>
+        <View style={styles.termsLinks}>
+          <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
+            <Text style={styles.termsLink}>{t('terms.open')}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_URL)}>
+            <Text style={styles.termsLink}>{t('settings.privacy')}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Studio credit. A brand name, so it stays literal rather than going
@@ -147,6 +161,24 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: Typography.fontSizeMD,
     fontWeight: Typography.fontWeightMedium,
+  },
+  terms: {
+    marginTop: 8,
+    textAlign: 'center',
+    color: 'rgba(255,255,255,0.62)',
+    fontSize: Typography.fontSizeXS,
+    lineHeight: 17,
+  },
+  termsLinks: {
+    flexDirection: 'row',
+    gap: 18,
+    justifyContent: 'center',
+  },
+  termsLink: {
+    color: '#fff',
+    fontSize: Typography.fontSizeXS,
+    fontWeight: Typography.fontWeightSemiBold,
+    textDecorationLine: 'underline',
   },
   brand: {
     textAlign: 'center',

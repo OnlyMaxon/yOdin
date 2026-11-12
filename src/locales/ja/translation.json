@@ -2,7 +2,7 @@
   "auth": {
     "or": "または",
     "continueWithMicrosoft": "Microsoft で続ける",
-    "providerTermsNotice": "Microsoft で続けると、利用規約とプライバシーポリシーに同意したことになります。",
+    "providerTermsNotice": "アカウントを作成する、またはログインすることで、利用規約とプライバシーポリシーに同意したことになります。yOdin は不適切なコンテンツおよび他者を攻撃する利用者を一切許容しません。",
     "welcome": "yOdinへようこそ",
     "subtitle": "文化を超えてつながろう",
     "login": "ログイン",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "利用規約",
-    "acceptLabel": "利用規約に同意します",
+    "acceptLabel": "利用規約に同意します。不適切なコンテンツや攻撃的な行為が一切許容されないことを理解しています",
     "open": "利用規約を開く",
     "required": "続けるには利用規約に同意してください。"
   }

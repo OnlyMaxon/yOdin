@@ -2,7 +2,7 @@
   "auth": {
     "or": "atau",
     "continueWithMicrosoft": "Teruskan dengan Microsoft",
-    "providerTermsNotice": "Dengan meneruskan menggunakan Microsoft, anda bersetuju dengan terma penggunaan dan polisi privasi.",
+    "providerTermsNotice": "Dengan membuat akaun atau masuk ke akaun, anda menerima terma penggunaan dan dasar privasi. yOdin tidak bertolak ansur dengan kandungan yang tidak wajar dan pengguna yang mengganggu.",
     "welcome": "Selamat datang ke yOdin",
     "subtitle": "Berhubung merentas budaya",
     "login": "Log Masuk",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "Terma penggunaan",
-    "acceptLabel": "Saya menerima terma penggunaan",
+    "acceptLabel": "Saya menerima terma penggunaan dan memahami bahawa kandungan tidak wajar dan tingkah laku mengganggu tidak dibenarkan",
     "open": "Buka terma penggunaan",
     "required": "Terima terma penggunaan untuk meneruskan."
   }

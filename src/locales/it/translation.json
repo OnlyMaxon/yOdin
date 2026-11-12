@@ -2,7 +2,7 @@
   "auth": {
     "or": "oppure",
     "continueWithMicrosoft": "Continua con Microsoft",
-    "providerTermsNotice": "Continuando con Microsoft accetti le condizioni d'uso e l'informativa sulla privacy.",
+    "providerTermsNotice": "Creando un account o accedendo, accetti i termini di utilizzo e l'informativa sulla privacy. yOdin ha tolleranza zero verso i contenuti inappropriati e gli utenti abusivi.",
     "welcome": "Benvenuto su yOdin",
     "subtitle": "Connettiti tra le culture",
     "login": "Accedi",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "Condizioni d'uso",
-    "acceptLabel": "Accetto le condizioni d'uso",
+    "acceptLabel": "Accetto i termini di utilizzo e capisco che i contenuti inappropriati e i comportamenti abusivi non sono tollerati",
     "open": "Apri le condizioni d'uso",
     "required": "Accetta le condizioni d'uso per continuare."
   }

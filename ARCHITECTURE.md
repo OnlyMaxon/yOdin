@@ -345,8 +345,9 @@ existing users to accept. The published page's "Last updated" date moves freely;
 the constant does not. (The 2026-10-05 edit, which spelled out the existing CSAE
 prohibition and linked the standards, deliberately left it at `2026-10-04`.)
 
-In the app: the terms are linked from the signup gate and from Profile ▸
-Settings, and the privacy policy from Profile ▸ Settings. Settings deliberately
+In the app: the terms are linked from the welcome screen, from the signup and
+sign-in gate, and from Profile ▸ Settings; the privacy policy from the same
+three places. Settings deliberately
 links the *published policy* rather than an in-app summary — the old summary had
 gone stale against the real document (it predated Algolia and the post-deletion
 email hash) and a stale summary that contradicts the policy is worse than none.
@@ -628,9 +629,19 @@ bugs. Listed so nobody rediscovers them the hard way.
   these to a private subcollection (`users/{uid}/private/moderation`).
 - Auth token lives in AsyncStorage, not SecureStore (deferred).
 - App Check / Google Sign-In are deferred (need a dev build).
-- **Terms of Use are consented to once, at registration.** Play requires
-  acceptance *before* a user can create content, so the gate sits on the signup
-  button rather than on the first post. The document is hosted, not bundled,
+- **Terms of Use are consented to once, at registration — but shown on every
+  way in.** Play requires acceptance *before* a user can create content, so the
+  gate sits on the signup button rather than on the first post. Apple rejected
+  1.1.0 build 7 under guideline 1.2 for the shape this used to have: the
+  checkbox rendered only in register mode, and the clickwrap line sat *below*
+  the provider buttons naming Microsoft only — so a reviewer signing in with an
+  existing account, or tapping Sign in with Apple, met no agreement at all. The
+  notice is now provider-neutral, carries the zero-tolerance sentence Apple
+  asks for in so many words, and renders above every control that leads
+  inwards: on `WelcomeScreen` under the two buttons, and in one bordered card
+  on `RegisterScreen` in **both** modes. The checkbox stays register-only,
+  because a returning user has already agreed and re-gating them on every login
+  would be consent theatre, not consent. The document is hosted, not bundled,
   which keeps it editable without an app update but means it needs network to
   read. The acceptance **is recorded** — `users/{uid}.acceptedTermsAt` +
   `acceptedTermsVersion` (from `TERMS_VERSION` in `config/links.ts`), so there is

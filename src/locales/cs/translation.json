@@ -2,7 +2,7 @@
   "auth": {
     "or": "nebo",
     "continueWithMicrosoft": "Pokračovat s Microsoftem",
-    "providerTermsNotice": "Pokračováním s Microsoftem souhlasíte s podmínkami použití a zásadami ochrany osobních údajů.",
+    "providerTermsNotice": "Vytvořením účtu nebo přihlášením přijímáte podmínky použití a zásady ochrany osobních údajů. yOdin má nulovou toleranci k nevhodnému obsahu a k uživatelům, kteří se chovají hrubě.",
     "welcome": "Vítejte v yOdin",
     "subtitle": "Spojte se napříč kulturami",
     "login": "Přihlásit se",
@@ -309,7 +309,7 @@
   },
   "terms": {
     "title": "Podmínky použití",
-    "acceptLabel": "Přijímám podmínky použití",
+    "acceptLabel": "Přijímám podmínky použití a rozumím, že nevhodný obsah a hrubé chování nejsou tolerovány",
     "open": "Otevřít podmínky použití",
     "required": "Pro pokračování přijmi podmínky použití."
   }

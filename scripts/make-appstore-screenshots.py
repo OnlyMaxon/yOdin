@@ -42,7 +42,7 @@ PANELS = [
      'Filter the feed by nationality, in 27 languages'),
     ('IMG_6100.PNG',
      ['Connect', 'across cultures'],
-     'Free. No ads, no tracking, no location.'),
+     'Ask a question, get answers from people who live there'),
 ]
 
 

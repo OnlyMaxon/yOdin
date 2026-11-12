@@ -2,7 +2,7 @@
   "auth": {
     "or": "hoặc",
     "continueWithMicrosoft": "Tiếp tục với Microsoft",
-    "providerTermsNotice": "Khi tiếp tục với Microsoft, bạn đồng ý với điều khoản sử dụng và chính sách bảo mật.",
+    "providerTermsNotice": "Khi tạo tài khoản hoặc đăng nhập, bạn chấp nhận điều khoản sử dụng và chính sách bảo mật. yOdin không khoan nhượng với nội dung không phù hợp và người dùng có hành vi lạm dụng.",
     "welcome": "Chào mừng đến với yOdin",
     "subtitle": "Kết nối qua các nền văn hóa",
     "login": "Đăng nhập",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "Điều khoản sử dụng",
-    "acceptLabel": "Tôi đồng ý với điều khoản sử dụng",
+    "acceptLabel": "Tôi chấp nhận điều khoản sử dụng và hiểu rằng nội dung không phù hợp và hành vi lạm dụng không được dung thứ",
     "open": "Mở điều khoản sử dụng",
     "required": "Vui lòng đồng ý với điều khoản sử dụng để tiếp tục."
   }

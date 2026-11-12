@@ -244,8 +244,13 @@ export default function RegisterScreen({ navigation, route }: any) {
           </TouchableOpacity>
         )}
 
-        {mode === 'register' && (
-          <View style={styles.termsBlock}>
+        {/* Guideline 1.2 wants the agreement in front of the user before they
+            register *or* log in, and it has to cover the provider buttons
+            further down as well. It used to be a checkbox shown only while
+            registering plus a line of fine print under the Microsoft button —
+            a reviewer signing in with an existing account met neither. */}
+        <View style={styles.termsBlock}>
+          {mode === 'register' && (
             <TouchableOpacity
               style={styles.termsRow}
               onPress={() => setAcceptedTerms(!acceptedTerms)}
@@ -257,20 +262,21 @@ export default function RegisterScreen({ navigation, route }: any) {
               </View>
               <Text style={styles.termsText}>{t('terms.acceptLabel')}</Text>
             </TouchableOpacity>
-            {/* The checkbox is consent to the terms. The privacy policy is
-                notice, not something to consent to — so it sits beside the
-                terms as a link the user can read before signing up, which is
-                what Play and the GDPR's transparency duty expect. */}
-            <View style={styles.termsLinks}>
-              <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
-                <Text style={styles.termsLink}>{t('terms.open')}</Text>
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_URL)}>
-                <Text style={styles.termsLink}>{t('settings.privacy')}</Text>
-              </TouchableOpacity>
-            </View>
+          )}
+          <Text style={styles.providerNotice}>{t('auth.providerTermsNotice')}</Text>
+          {/* The checkbox is consent to the terms. The privacy policy is
+              notice, not something to consent to — so it sits beside the
+              terms as a link the user can read before signing up, which is
+              what Play and the GDPR's transparency duty expect. */}
+          <View style={styles.termsLinks}>
+            <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
+              <Text style={styles.termsLink}>{t('terms.open')}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_URL)}>
+              <Text style={styles.termsLink}>{t('settings.privacy')}</Text>
+            </TouchableOpacity>
           </View>
-        )}
+        </View>
 
         {error ? <Text style={styles.error}>{error}</Text> : null}
 
@@ -328,20 +334,6 @@ export default function RegisterScreen({ navigation, route }: any) {
             )
           }
         </TouchableOpacity>
-
-        <Text style={styles.providerNotice}>{t('auth.providerTermsNotice')}</Text>
-        {/* In register mode the same two links already sit in the terms block
-            above, so they are only repeated here where that block is hidden. */}
-        {mode === 'login' && (
-          <View style={styles.providerLinks}>
-            <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
-              <Text style={styles.termsLink}>{t('terms.open')}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_URL)}>
-              <Text style={styles.termsLink}>{t('settings.privacy')}</Text>
-            </TouchableOpacity>
-          </View>
-        )}
 
         <TouchableOpacity
           style={styles.switchMode}
@@ -415,7 +407,17 @@ function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalet
       fontSize: Typography.fontSizeSM,
       marginBottom: 12,
     },
-    termsBlock: { marginBottom: 16, gap: 6 },
+    // One agreement card rather than scattered fine print: it is the thing a
+    // user — or a reviewer — has to see before any of the ways into the app.
+    termsBlock: {
+      marginBottom: 16,
+      gap: 8,
+      padding: 14,
+      borderRadius: 14,
+      backgroundColor: c.muted,
+      borderWidth: 1,
+      borderColor: c.border,
+    },
     termsRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
     checkbox: {
       width: 22,
@@ -429,7 +431,7 @@ function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalet
     checkboxOn: { backgroundColor: c.primary, borderColor: c.primary },
     termsText: { flex: 1, fontSize: Typography.fontSizeSM, color: c.textPrimary },
     // Indented to line up under the checkbox label, not the checkbox itself.
-    termsLinks: { flexDirection: 'row', gap: 18, marginLeft: 32 },
+    termsLinks: { flexDirection: 'row', gap: 18 },
     termsLink: {
       fontSize: Typography.fontSizeSM,
       color: c.primary,
@@ -494,20 +496,12 @@ function makeStyles(topInset: number, c: import('../../theme/colors').ColorPalet
       fontSize: Typography.fontSizeMD,
       fontWeight: Typography.fontWeightSemiBold,
     },
-    // Clickwrap notice: it has to be read before the tap, so it sits under the
-    // button only in reading order — visually it is the same block.
+    // Clickwrap notice. It sits inside the agreement card above every sign-in
+    // path, so it is read before the tap rather than after it.
     providerNotice: {
-      fontSize: Typography.fontSizeXS,
+      fontSize: Typography.fontSizeSM,
       color: c.textSecondary,
-      textAlign: 'center',
-      marginTop: 10,
-      lineHeight: 16,
-    },
-    providerLinks: {
-      flexDirection: 'row',
-      gap: 18,
-      justifyContent: 'center',
-      marginTop: 6,
+      lineHeight: 19,
     },
     switchMode: { alignItems: 'center', marginTop: 24 },
     switchText: {

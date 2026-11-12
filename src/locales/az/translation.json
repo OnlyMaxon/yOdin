@@ -2,7 +2,7 @@
   "auth": {
     "or": "və ya",
     "continueWithMicrosoft": "Microsoft ilə davam et",
-    "providerTermsNotice": "Microsoft ilə davam etməklə İstifadə Şərtləri və Məxfilik Siyasəti ilə razılaşırsınız.",
+    "providerTermsNotice": "Hesab yaradaraq və ya hesaba daxil olaraq istifadə şərtlərini və məxfilik siyasətini qəbul edirsiniz. yOdin qəbuledilməz məzmuna və təhqiramiz istifadəçilərə qarşı sıfır dözümlülük tətbiq edir.",
     "welcome": "yOdin-ə xoş gəldiniz",
     "subtitle": "Mədəniyyətlər arasında əlaqə",
     "login": "Daxil ol",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "İstifadə şərtləri",
-    "acceptLabel": "İstifadə şərtlərini qəbul edirəm",
+    "acceptLabel": "İstifadə şərtlərini qəbul edirəm və qəbuledilməz məzmunun və təhqiramiz davranışın yolverilməz olduğunu anlayıram",
     "open": "İstifadə şərtlərini aç",
     "required": "Davam etmək üçün istifadə şərtlərini qəbul edin."
   }

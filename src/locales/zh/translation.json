@@ -2,7 +2,7 @@
   "auth": {
     "or": "或",
     "continueWithMicrosoft": "使用 Microsoft 继续",
-    "providerTermsNotice": "继续使用 Microsoft 即表示你接受使用条款和隐私政策。",
+    "providerTermsNotice": "创建账号或登录即表示你接受使用条款和隐私政策。yOdin 对不当内容和骚扰他人的用户零容忍。",
     "welcome": "欢迎来到 yOdin",
     "subtitle": "跨文化连接",
     "login": "登录",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "使用条款",
-    "acceptLabel": "我接受使用条款",
+    "acceptLabel": "我接受使用条款，并理解不当内容和骚扰行为不被容忍",
     "open": "打开使用条款",
     "required": "请先接受使用条款后继续。"
   }

@@ -1,6 +1,6 @@
 # Terms of Use
 
-**Last updated:** 5 October 2026
+**Last updated:** 12 November 2026
 
 These terms are the agreement between you and **Jalil Orujli**, Chmielna 69,
 Warsaw, Poland — the operator of the yOdin mobile app (Android package
@@ -8,9 +8,16 @@ Warsaw, Poland — the operator of the yOdin mobile app (Android package
 Play by **EA DIGITAL GROUP, MMC**.
 Contact: **[hello@onlymaxon.com](mailto:hello@onlymaxon.com)**.
 
-By creating an account you accept these terms. If you do not accept them, do not
-use the App. How your data is handled is described separately in the
-[privacy policy](https://onlymaxon.com/apps/yodin/privacy/).
+By creating an account, or by signing in to one, you accept these terms. If you
+do not accept them, do not use the App. How your data is handled is described
+separately in the [privacy policy](https://onlymaxon.com/apps/yodin/privacy/).
+
+**yOdin has zero tolerance for objectionable content and for abusive users.**
+Posting anything that falls under a category in section 3, or harassing,
+threatening or abusing another person, is a breach of these terms. The content
+is removed and the account behind it is restricted or terminated. There is no
+warning quota to use up, and no kind of objectionable content is tolerated
+because it was popular, funny, or filed under News.
 
 ---
 
@@ -38,6 +45,7 @@ that it does not break the law or these rules.
 
 ## 3. What is not allowed
 
+Nothing in this section is tolerated — not once, and not in a milder form.
 These are the same ten categories you can report content under, in the App. Do
 not post, send or upload:
 

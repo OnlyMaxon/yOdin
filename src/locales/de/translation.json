@@ -2,7 +2,7 @@
   "auth": {
     "or": "oder",
     "continueWithMicrosoft": "Mit Microsoft fortfahren",
-    "providerTermsNotice": "Wenn du mit Microsoft fortfährst, akzeptierst du die Nutzungsbedingungen und die Datenschutzerklärung.",
+    "providerTermsNotice": "Mit dem Erstellen eines Kontos oder der Anmeldung akzeptieren Sie die Nutzungsbedingungen und die Datenschutzerklärung. yOdin duldet keine anstößigen Inhalte und keine missbräuchlichen Nutzer.",
     "welcome": "Willkommen bei yOdin",
     "subtitle": "Verbinde dich über Kulturen hinweg",
     "login": "Anmelden",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "Nutzungsbedingungen",
-    "acceptLabel": "Ich akzeptiere die Nutzungsbedingungen",
+    "acceptLabel": "Ich akzeptiere die Nutzungsbedingungen und verstehe, dass anstößige Inhalte und missbräuchliches Verhalten nicht geduldet werden",
     "open": "Nutzungsbedingungen öffnen",
     "required": "Bitte akzeptiere die Nutzungsbedingungen, um fortzufahren."
   }

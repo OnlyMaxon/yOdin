@@ -2,7 +2,7 @@
   "auth": {
     "or": "또는",
     "continueWithMicrosoft": "Microsoft로 계속하기",
-    "providerTermsNotice": "Microsoft로 계속하면 이용약관과 개인정보 처리방침에 동의하게 됩니다.",
+    "providerTermsNotice": "계정을 만들거나 로그인하면 이용약관과 개인정보 처리방침에 동의하는 것으로 간주됩니다. yOdin은 부적절한 콘텐츠와 다른 사용자를 괴롭히는 행위를 일절 허용하지 않습니다.",
     "welcome": "yOdin에 오신 것을 환영합니다",
     "subtitle": "문화를 넘어 연결하세요",
     "login": "로그인",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "이용약관",
-    "acceptLabel": "이용약관에 동의합니다",
+    "acceptLabel": "이용약관에 동의하며, 부적절한 콘텐츠와 괴롭힘 행위가 허용되지 않음을 이해합니다",
     "open": "이용약관 열기",
     "required": "계속하려면 이용약관에 동의해 주세요."
   }

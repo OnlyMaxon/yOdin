@@ -2,7 +2,7 @@
   "auth": {
     "or": "of",
     "continueWithMicrosoft": "Doorgaan met Microsoft",
-    "providerTermsNotice": "Als je doorgaat met Microsoft, accepteer je de gebruiksvoorwaarden en het privacybeleid.",
+    "providerTermsNotice": "Door een account aan te maken of in te loggen accepteer je de gebruiksvoorwaarden en het privacybeleid. yOdin tolereert geen aanstootgevende inhoud en geen misbruik door gebruikers.",
     "welcome": "Welkom bij yOdin",
     "subtitle": "Verbind je over culturen heen",
     "login": "Inloggen",
@@ -308,7 +308,7 @@
   },
   "terms": {
     "title": "Gebruiksvoorwaarden",
-    "acceptLabel": "Ik accepteer de gebruiksvoorwaarden",
+    "acceptLabel": "Ik accepteer de gebruiksvoorwaarden en begrijp dat aanstootgevende inhoud en misbruik niet worden getolereerd",
     "open": "Gebruiksvoorwaarden openen",
     "required": "Accepteer de gebruiksvoorwaarden om door te gaan."
   }
