@@ -64,7 +64,18 @@ jobs:
         run: |
           echo "Installed Xcodes:"
           ls -d /Applications/Xcode*.app
-          NEWEST=$(ls -d /Applications/Xcode*.app | sort -V | tail -1)
+
+          # A beta toolchain builds and uploads fine and is then refused at
+          # intake, so it is never an acceptable choice for a store build.
+          RELEASES=$(ls -d /Applications/Xcode*.app | grep -vi beta | sort -V || true)
+          if [ -z "$RELEASES" ]; then
+            echo ""
+            echo "Only beta Xcodes are installed on this runner. App Store Connect"
+            echo "refuses binaries built with beta software, so stopping here rather"
+            echo "than uploading one. Pick a different runner image."
+            exit 1
+          fi
+          NEWEST=$(echo "$RELEASES" | tail -1)
           echo "Selecting $NEWEST"
           sudo xcode-select -s "$NEWEST/Contents/Developer"
           xcodebuild -version
@@ -166,6 +177,16 @@ jobs:
             echo "The build is missing configuration it needs at runtime."
             exit 1
           fi
+
+      # DTXcode / DTSDKName come from the archive, not from what we asked for,
+      # so this is the one place a beta toolchain cannot hide.
+      - name: Report the toolchain baked into the archive
+        run: |
+          cd "$RUNNER_TEMP"
+          PLIST=$(find unpacked/Payload -maxdepth 2 -name Info.plist | head -1)
+          for key in DTXcode DTXcodeBuild DTSDKName DTPlatformVersion MinimumOSVersion; do
+            echo "$key = $(/usr/libexec/PlistBuddy -c "Print :$key" "$PLIST" 2>/dev/null || echo '(absent)')"
+          done
 
       - uses: actions/upload-artifact@v4
         with:
