@@ -24,6 +24,7 @@
   "submit": {
     "production": {
       "ios": {
+        "ascAppId": "6825844614",
         "appleTeamId": "BPJZ8DL23K",
         "companyName": "EA DIGITAL GROUP, MMC",
         "language": "en-US"
