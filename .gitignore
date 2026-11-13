@@ -66,3 +66,7 @@ demo-engagement-backup.json
 
 # Apple keys (.p8 ключи, Issuer/Key ID) — только локально, восстановлению не подлежат
 Keys/
+
+# Python bytecode from scripts/ (asc.py, asc_fill.py) — regenerated on every run
+__pycache__/
+*.pyc

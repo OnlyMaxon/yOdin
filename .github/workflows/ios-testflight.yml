@@ -20,7 +20,7 @@ on:
       build_number:
         description: 'iOS build number (must not already exist in TestFlight)'
         required: true
-        default: '8'
+        default: '9'
       submit:
         description: 'Upload to TestFlight when the build succeeds'
         type: boolean

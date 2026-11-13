@@ -9,7 +9,7 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": false,
-      "buildNumber": "7",
+      "buildNumber": "9",
       "bundleIdentifier": "app.yodin",
       "usesAppleSignIn": true,
       "infoPlist": {
