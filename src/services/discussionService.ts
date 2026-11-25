@@ -21,6 +21,7 @@ import {
 import { db } from './firebase';
 import { deleteStorageFolder } from './storageService';
 import { Discussion, Reply } from '../types';
+import { MAX_NATION_FILTER } from '../constants/nationFilter';
 
 const PAGE_SIZE = 15;
 
@@ -45,15 +46,18 @@ export async function createDiscussion(
 
 // The forum is global by default: questions from every region and nationality
 // are shown. Pass `nationalities` to restrict the forum to one or more
-// nationalities (Firestore `in` supports up to 30 values).
+// nationalities. Values beyond MAX_NATION_FILTER are clamped, not dropped —
+// see the same clause in postService.fetchPosts.
 export async function fetchDiscussions(
   nationalities?: string[],
   answerFilter?: 'all' | 'answered' | 'unanswered',
   cursor?: DocumentSnapshot,
 ): Promise<{ discussions: Discussion[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [];
-  if (nationalities && nationalities.length > 0 && nationalities.length <= 30)
-    constraints.push(where('authorNationality', 'in', nationalities));
+  if (nationalities && nationalities.length > 0)
+    constraints.push(
+      where('authorNationality', 'in', nationalities.slice(0, MAX_NATION_FILTER)),
+    );
   if (answerFilter === 'answered')
     constraints.push(where('isAnswered', '==', true));
   else if (answerFilter === 'unanswered')

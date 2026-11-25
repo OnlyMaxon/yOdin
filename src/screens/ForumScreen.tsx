@@ -45,6 +45,7 @@ import VideoPreview from '../components/VideoPreview';
 import QuestionOfDayCard from '../components/QuestionOfDayCard';
 import EmptyState from '../components/EmptyState';
 import { COUNTRIES } from '../data/countries';
+import { MAX_NATION_FILTER } from '../constants/nationFilter';
 
 // Enable the expand/collapse animation for the attachments panel on old-arch Android.
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -124,9 +125,13 @@ export default function ForumScreen({ navigation }: any) {
   }
 
   function toggleNation(name: string) {
-    setSelectedNations((prev) =>
-      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name],
-    );
+    setSelectedNations((prev) => {
+      if (prev.includes(name)) return prev.filter((n) => n !== name);
+      // See the identical guard in FeedScreen: the Firestore `in` clause can
+      // only carry MAX_NATION_FILTER values.
+      if (prev.length >= MAX_NATION_FILTER) return prev;
+      return [...prev, name];
+    });
   }
 
   const isSearching = search.trim().length > 0;

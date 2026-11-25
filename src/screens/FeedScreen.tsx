@@ -45,6 +45,7 @@ import EmptyState from '../components/EmptyState';
 import { weightedSort } from '../utils/weightedSort';
 import { useWithoutBlocked } from '../hooks/useWithoutBlocked';
 import { COUNTRIES } from '../data/countries';
+import { MAX_NATION_FILTER } from '../constants/nationFilter';
 
 const FILTERS: FeedFilter[] = ['all', ...POST_CATEGORIES];
 
@@ -104,9 +105,14 @@ export default function FeedScreen({ navigation }: any) {
   }
 
   function toggleNation(name: string) {
-    setSelectedNations((prev) =>
-      prev.includes(name) ? prev.filter((n) => n !== name) : [...prev, name],
-    );
+    setSelectedNations((prev) => {
+      if (prev.includes(name)) return prev.filter((n) => n !== name);
+      // Deselecting always works; selecting stops at the cap the Firestore
+      // query can actually honour. The drawer greys out the rows it will not
+      // accept, so this is the guard rather than the explanation.
+      if (prev.length >= MAX_NATION_FILTER) return prev;
+      return [...prev, name];
+    });
   }
 
   function openDetail(postId: string, withComments: boolean) {

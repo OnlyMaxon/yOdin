@@ -18,6 +18,7 @@ import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import { COUNTRIES } from '../data/countries';
+import { MAX_NATION_FILTER } from '../constants/nationFilter';
 
 const SCREEN_W = Dimensions.get('window').width;
 const DRAWER_W = Math.min(Math.round(SCREEN_W * 0.82), 340);
@@ -58,6 +59,10 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
   }, [visible]);
 
   if (!render) return null;
+
+  // The Firestore `in` clause behind this filter holds a fixed number of
+  // values, so past that point further countries cannot be added.
+  const atCap = selected.length >= MAX_NATION_FILTER;
 
   // Own nationality first, then the rest alphabetically — filtered by search.
   const q = search.trim().toLowerCase();
@@ -122,10 +127,15 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
             }
             renderItem={({ item }) => {
               const active = selected.includes(item.name);
+              // At the cap, the rows that cannot be added say so by going dim
+              // and inert. Deselecting stays available, so the list is never a
+              // dead end.
+              const blocked = !active && atCap;
               return (
                 <TouchableOpacity
-                  style={[styles.item, active && styles.itemActive]}
+                  style={[styles.item, active && styles.itemActive, blocked && styles.itemBlocked]}
                   onPress={() => onToggle(item.name)}
+                  disabled={blocked}
                   activeOpacity={0.7}
                 >
                   <Text style={styles.flag}>{item.flag}</Text>
@@ -211,6 +221,7 @@ function makeStyles(c: ColorPalette, topInset: number, bottomInset: number) {
       paddingVertical: 13,
     },
     itemActive: { backgroundColor: c.primaryLight },
+    itemBlocked: { opacity: 0.35 },
     flag: { fontSize: 22 },
     name: { flex: 1, fontSize: Typography.fontSizeMD, color: c.textPrimary },
     nameActive: { color: c.secondaryText, fontWeight: Typography.fontWeightSemiBold },

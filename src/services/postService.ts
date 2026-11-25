@@ -22,6 +22,7 @@ import {
 import { db } from './firebase';
 import { deleteStorageFolder } from './storageService';
 import { Post, PostCategory, PostComment } from '../types';
+import { MAX_NATION_FILTER } from '../constants/nationFilter';
 
 const PAGE_SIZE = 15;
 
@@ -127,8 +128,13 @@ export async function fetchComments(postId: string): Promise<PostComment[]> {
 }
 
 // The feed is global by default: posts from every region and nationality are
-// shown. Pass `nationalities` to restrict the feed to one or more nationalities
-// (Firestore `in` supports up to 30 values).
+// shown. Pass `nationalities` to restrict the feed to one or more nationalities.
+//
+// Firestore's `in` takes at most MAX_NATION_FILTER values. Anything beyond that
+// is clamped rather than dropped: the drawer caps the selection at the same
+// number, so this branch should be unreachable, and if it is ever reached a
+// filter that is slightly too narrow is far less confusing than one that
+// silently stops filtering.
 export async function fetchPosts(
   category?: PostCategory,
   nationalities?: string[],
@@ -136,8 +142,10 @@ export async function fetchPosts(
 ): Promise<{ posts: Post[]; lastDoc: DocumentSnapshot | null }> {
   const constraints: QueryConstraint[] = [];
   if (category) constraints.push(where('category', '==', category));
-  if (nationalities && nationalities.length > 0 && nationalities.length <= 30)
-    constraints.push(where('authorNationality', 'in', nationalities));
+  if (nationalities && nationalities.length > 0)
+    constraints.push(
+      where('authorNationality', 'in', nationalities.slice(0, MAX_NATION_FILTER)),
+    );
   constraints.push(orderBy('feedScore', 'desc'), limit(PAGE_SIZE));
   if (cursor) constraints.push(startAfter(cursor));
 
