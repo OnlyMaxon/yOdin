@@ -2,14 +2,14 @@
   "expo": {
     "name": "yOdin",
     "slug": "yodin",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "orientation": "portrait",
     "scheme": "app.yodin",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": false,
-      "buildNumber": "9",
+      "buildNumber": "10",
       "bundleIdentifier": "app.yodin",
       "usesAppleSignIn": true,
       "infoPlist": {
@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "app.yodin",
-      "versionCode": 7,
+      "versionCode": 9,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6C35DE"
