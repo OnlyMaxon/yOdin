@@ -29,10 +29,15 @@ service firebase.storage {
         allow delete: if request.auth != null
           && (request.auth.uid == owner || request.auth.token.moderator == true);
       }
-      // Legacy path (pre owner-scoping) — read only, plus best-effort cleanup.
+      // Legacy path (pre owner-scoping). The first path segment here is a post
+      // id, not a uid, so ownership cannot be derived from the path at all —
+      // which is why this used to allow any signed-in user to delete, i.e. to
+      // wipe anybody's media. Moderators only now. The client's own cleanup is
+      // best-effort (deleteFolder in src/services/storageService.ts) and just
+      // skips whatever it may not touch.
       match /{fileName} {
         allow read: if true;
-        allow delete: if request.auth != null;
+        allow delete: if request.auth != null && request.auth.token.moderator == true;
       }
     }
 
@@ -49,9 +54,15 @@ service firebase.storage {
         allow delete: if request.auth != null
           && (request.auth.uid == owner || request.auth.token.moderator == true);
       }
+      // Legacy path (pre owner-scoping). The first path segment here is a discussion
+      // id, not a uid, so ownership cannot be derived from the path at all —
+      // which is why this used to allow any signed-in user to delete, i.e. to
+      // wipe anybody's media. Moderators only now. The client's own cleanup is
+      // best-effort (deleteFolder in src/services/storageService.ts) and just
+      // skips whatever it may not touch.
       match /{fileName} {
         allow read: if true;
-        allow delete: if request.auth != null;
+        allow delete: if request.auth != null && request.auth.token.moderator == true;
       }
     }
   }

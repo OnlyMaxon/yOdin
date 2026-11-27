@@ -237,6 +237,13 @@ Two layers:
   so a ban can't be farmed by mass-reporting.
 - **Ban enforcement** — the Firestore `notBlocked()` rule rejects comment/reply
   creates while `now < commentBlockedUntil`. The client also hides the composer.
+  Until 2026-11-27 this was **defeatable by the banned user**: the owner-update
+  rule denied only `points`/`uid`/`createdAt`, so one `updateDoc` setting
+  `commentBlockedUntil` to 0 — or zeroing `moderationStrikes`/`banCount` — lifted
+  the ban and reset the whole escalation ladder. Reproduced end to end against
+  the real rules in the emulator (comment DENIED → self-clear ALLOWED → comment
+  ALLOWED), then closed by adding all three to the deny list. The ladder only
+  means anything if the rung cannot be unscrewed from below.
 
 ---
 
@@ -616,17 +623,75 @@ bugs. Listed so nobody rediscovers them the hard way.
   `discussions/{uid}/{discussionId}/…`; `storage.rules` allows create/update only
   when `request.auth.uid ==` the `{uid}` path segment, and delete only for the
   author or a moderator. The legacy two-segment path (`posts/{postId}/…`) is kept
-  **read-only** so pre-existing images keep loading (their media isn't cleaned on
-  delete — best-effort, negligible). Closes vandalism (overwriting another
+  readable so pre-existing images keep loading (their media isn't cleaned on
+  delete — best-effort, negligible). It was described as "read-only" while its
+  `allow delete` still said `request.auth != null`, i.e. **any signed-in user
+  could delete anybody's legacy media**; ownership cannot be derived there at all
+  because the first segment is a post id, not a uid. Narrowed to moderators
+  2026-11-27. Safe because owner-scoping predates the public release, so only
+  pre-launch test files sit under that path. Closes vandalism (overwriting another
   author's files) and cross-user planting. **Deploy coupling:** new code writes
   the 3-segment path that the *old* rules reject, so `firebase deploy --only
   storage` must land with/before the code or uploads silently fail. Residual: a
   user can still fill *their own* uid folder — full anti-abuse needs **Firebase
   App Check** (native config; tracked in the team's Trello, not a code task here).
-- **Moderation fields are world-readable.** `users` docs are readable by any
-  authenticated user and include `commentBlockedUntil` / `moderationStrikes` /
-  `banCount`. Firestore has no field-level read rules; to hide ban state, move
-  these to a private subcollection (`users/{uid}/private/moderation`).
+- **Moderation fields are world-readable** (but no longer client-writable —
+  see §8). `users` docs are readable by any authenticated user and include
+  `commentBlockedUntil` / `moderationStrikes` / `banCount`. Firestore has no
+  field-level read rules; to hide ban state, move these to a private
+  subcollection (`users/{uid}/private/moderation`). Visibility is the residual;
+  tampering is fixed.
+- **Author identity on content is server-corrected** (implemented 2026-11-27).
+  `authorName`, `authorPhoto`, `authorNationality` and `authorCountryCode` are
+  copied into every post/discussion/comment/reply by the client, and the rules
+  can only check `authorId == uid` — so a hand-rolled write could publish as
+  "yOdin Official" with any avatar, or file content under a nationality the
+  author does not have, which also pollutes the country filter. `fromUserName`
+  on notifications was the same, and the more convincing phishing surface of
+  the two since a forged notice sits in the same list as real ones.
+  **Deliberately not fixed in rules:** the profile lives in a plain zustand
+  store with no snapshot listener (`src/store/useAuthStore.ts`), so a strict
+  equality check would reject *honest* content whenever a client's cached
+  profile is stale — permission-denied, which `errorHandler` flattens to
+  "something went wrong", for a post that was perfectly legitimate. Instead
+  `functions/src/authorIdentity.ts` resolves the author's real identity and the
+  four create triggers overwrite only the fields that disagree
+  (`onNotificationCreated` is new, and does the same for `fromUserName` /
+  `fromUserPhoto`). Honest content produces an empty diff and is never
+  rewritten; `identityOf()` returns null for the `deleted` author and the
+  `system` notification sender, so anonymised content and moderation notices
+  are left exactly as written. In `onDiscussionCreated` the correction runs
+  **before** the Algolia write, because that call throws on a bad secret or an
+  outage and would otherwise skip the correction — and because the author
+  fields are never re-synced to the index afterwards, a forged name would have
+  stayed in search forever. Verified against the compiled triggers in the
+  emulator (19 checks). Residual: the correction lands about a second after
+  creation, so a forgery is briefly visible, and the author's own optimistic
+  copy shows what they typed until the list reloads.
+- **The `username` field and the handle registry are decoupled.**
+  `usernames/{handle}` is create-only so handles stay unique, but
+  `users/{uid}.username` is an ordinary owner-writable field and the profile
+  header renders *that* — so a user can display a handle they do not own.
+  Closing it in rules is impossible: `changeUsername` writes the registry entry
+  and the profile field in one `writeBatch`, and rules see the pre-batch state,
+  so an ownership check would always fail. Needs two sequential writes in the
+  client, i.e. an app update.
+- **Handle squatting is uncapped.** One account can claim unlimited handles; the
+  format is now enforced server-side (`^[a-z0-9_]{3,20}$`, mirroring
+  `USERNAME_RE`), but rules cannot count documents, so a per-user cap needs a
+  function. The registry is also readable with no auth at all — deliberately:
+  `RegisterScreen` checks availability before the user exists.
+- **The public Algolia key is wider than search.** Its own ACL reads
+  `['search', 'listIndexes', 'settings', 'browse']`, unscoped to any index and
+  with no rate limit, and it ships in the bundle — so anyone who unpacks the app
+  can dump the whole `discussions` index and bill queries to the account. It
+  cannot write. Tighten in the Algolia dashboard: `search` only, scoped to
+  `discussions`, with a per-IP limit.
+- **Reputation can be farmed legitimately**: ask a question, answer it yourself,
+  accept your own answer, `+1`. Three writes per point. Rules allow each step
+  individually; stopping it means refusing self-acceptance in
+  `acceptedReplyUpdate()`, which would also break the honest case of an author
+  posting the answer they eventually found.
 - Auth token lives in AsyncStorage, not SecureStore (deferred).
 - App Check / Google Sign-In are deferred (need a dev build).
 - **Terms of Use are consented to once, at registration — but shown on every
@@ -645,10 +710,12 @@ bugs. Listed so nobody rediscovers them the hard way.
   which keeps it editable without an app update but means it needs network to
   read. The acceptance **is recorded** — `users/{uid}.acceptedTermsAt` +
   `acceptedTermsVersion` (from `TERMS_VERSION` in `config/links.ts`), so there is
-  an answer to "who agreed to what" rather than only a disabled button. Two
-  residuals: the fields are client-written like every other profile field, so
-  they are an audit record rather than tamper-proof evidence; and if the terms
-  change materially there is still no flow to re-ask existing users — bump
+  an answer to "who agreed to what" rather than only a disabled button. Since
+  2026-11-27 the two fields are also **immutable after creation** — the rules
+  reject any client update that touches them — so they are evidence rather than
+  an audit note. The remaining residual: if the terms change materially there is
+  still no flow to re-ask existing users, and because the fields are now
+  immutable a re-consent prompt has to be recorded server-side — bump
   `TERMS_VERSION`, then announcing it in the app (as §8 of the terms promises) is
   a manual job. The privacy policy is **notice, not consent**, so it is linked
   beside the checkbox rather than gated behind it.

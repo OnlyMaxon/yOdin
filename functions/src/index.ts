@@ -9,6 +9,7 @@ import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { algoliasearch } from 'algoliasearch';
 import { setGlobalOptions } from 'firebase-functions';
 import { DELETED_ID } from './accountDeletion';
+import { identityOf, corrections, str } from './authorIdentity';
 
 // Firestore lives in eur3 — keep the functions on the same continent so triggers
 // don't make a round trip to the US.
@@ -45,6 +46,30 @@ export const onDiscussionCreated = onDocumentCreated(
   async (event) => {
     const data = event.data?.data();
     if (!data) return;
+    // Resolved before indexing, not after: Algolia is written once here and
+    // onDiscussionUpdated never re-syncs the author fields, so a forged name
+    // would otherwise sit in the search index forever even after the document
+    // itself had been corrected.
+    const truth = await identityOf(data.authorId);
+    const author = truth ?? {
+      authorName: str(data.authorName),
+      authorPhoto: str(data.authorPhoto),
+      authorNationality: str(data.authorNationality),
+      authorCountryCode: str(data.authorCountryCode),
+    };
+
+    // Before Algolia, deliberately. Indexing can fail — a bad secret, an
+    // outage, a rate limit — and this handler throws when it does, so anything
+    // after that call simply does not run. The author correction is the half
+    // that must not be skippable by an outage; a missing feed score only costs
+    // the question some reach.
+    await db.doc(`discussions/${event.params.docId}`)
+      .update({
+        feedScore: hotScore(0, createdMs(data)),
+        ...(truth ? corrections(data, truth) : {}),
+      })
+      .catch(() => {});
+
     await getClient().saveObject({
       indexName: INDEX,
       body: {
@@ -52,10 +77,10 @@ export const onDiscussionCreated = onDocumentCreated(
         _tags: [data.location ?? ''],
         question: data.question ?? '',
         authorId: data.authorId ?? '',
-        authorName: data.authorName ?? '',
-        authorPhoto: data.authorPhoto ?? '',
-        authorNationality: data.authorNationality ?? '',
-        authorCountryCode: data.authorCountryCode ?? '',
+        authorName: author.authorName,
+        authorPhoto: author.authorPhoto,
+        authorNationality: author.authorNationality,
+        authorCountryCode: author.authorCountryCode,
         location: data.location ?? '',
         replyCount: 0,
         // Seed the answered facet so the forum "answered/unanswered" search
@@ -64,10 +89,6 @@ export const onDiscussionCreated = onDocumentCreated(
         createdAt: data.createdAt?.toMillis?.() ?? Date.now(),
       },
     });
-    // Seed the recency-based feed score so brand-new questions surface.
-    await db.doc(`discussions/${event.params.docId}`)
-      .update({ feedScore: hotScore(0, createdMs(data)) })
-      .catch(() => {});
   },
 );
 
@@ -75,8 +96,12 @@ export const onDiscussionCreated = onDocumentCreated(
 export const onPostCreated = onDocumentCreated('posts/{docId}', async (event) => {
   const data = event.data?.data();
   if (!data) return;
+  const truth = await identityOf(data.authorId);
   await db.doc(`posts/${event.params.docId}`)
-    .update({ feedScore: hotScore(0, createdMs(data)) })
+    .update({
+      feedScore: hotScore(0, createdMs(data)),
+      ...(truth ? corrections(data, truth) : {}),
+    })
     .catch(() => {});
 });
 
@@ -180,6 +205,7 @@ export const onCommentCreated = onDocumentCreated(
     await db.doc(`posts/${event.params.postId}`)
       .update({ commentCount: FieldValue.increment(1) })
       .catch(() => {});
+    await correctAuthor(event);
   },
 );
 
@@ -199,6 +225,7 @@ export const onReplyCreated = onDocumentCreated(
     await db.doc(`discussions/${event.params.discussionId}`)
       .update({ replyCount: FieldValue.increment(1), engagement: FieldValue.increment(1) })
       .catch(() => {});
+    await correctAuthor(event);
   },
 );
 
@@ -213,6 +240,45 @@ export const onReplyDeleted = onDocumentDeleted(
         engagement: FieldValue.increment(-(1 + votes)),
       })
       .catch(() => {});
+  },
+);
+
+// Comments and replies are corrected on their own document rather than folded
+// into an existing write, because the counter update above targets the parent.
+// Safe against loops: there is no onCommentUpdated, and onReplyUpdated only
+// acts when the vote count changes, which this never does.
+async function correctAuthor(event: {
+  data?: { data: () => FirebaseFirestore.DocumentData; ref: FirebaseFirestore.DocumentReference };
+}): Promise<void> {
+  const snap = event.data;
+  if (!snap) return;
+  const data = snap.data();
+  const truth = await identityOf(data.authorId);
+  if (!truth) return;
+  const fix = corrections(data, truth);
+  if (Object.keys(fix).length === 0) return;
+  await snap.ref.update(fix).catch(() => {});
+}
+
+// `fromUserName` / `fromUserPhoto` are written by the client, so a notification
+// can arrive looking like it came from "yOdin Support" — and it lands in the
+// same list as the real ones, which makes it the most convincing phishing
+// surface in the app. Corrected from the sender's own profile. Moderation
+// notices are sent by the Admin SDK with `fromUserId: 'system'`, which has no
+// profile, so identityOf() returns null and those are left untouched.
+export const onNotificationCreated = onDocumentCreated(
+  'notifications/{docId}',
+  async (event) => {
+    const snap = event.data;
+    if (!snap) return;
+    const data = snap.data();
+    const truth = await identityOf(data.fromUserId);
+    if (!truth) return;
+    const fix: Record<string, string> = {};
+    if (str(data.fromUserName) !== truth.authorName) fix.fromUserName = truth.authorName;
+    if (str(data.fromUserPhoto) !== truth.authorPhoto) fix.fromUserPhoto = truth.authorPhoto;
+    if (Object.keys(fix).length === 0) return;
+    await snap.ref.update(fix).catch(() => {});
   },
 );
 

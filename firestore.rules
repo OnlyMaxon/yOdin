@@ -9,12 +9,26 @@ service cloud.firestore {
       // New profiles must start with zero points — they're earned, not self-set.
       allow create: if request.auth != null
         && request.auth.uid == userId
-        && request.resource.data.points == 0;
+        && request.resource.data.points == 0
+        && profileWithinLimits();
       allow delete: if request.auth != null && request.auth.uid == userId;
-      // Owner may update any field except points/uid/createdAt (immutable or system-managed)
+      // Owner may update their own profile, minus the fields the system owns.
+      // Moderation state used to be owner-writable: a banned user could set
+      // commentBlockedUntil to 0 and comment again, and zero their own strike
+      // count, so the whole escalation ladder was self-resettable. Only
+      // onReportUpdated writes those three, through the Admin SDK, which
+      // bypasses these rules.
+      // acceptedTerms* are written once at signup and never touched again, so
+      // they are now actual evidence of what was agreed (GDPR Art. 7(1)).
+      // A future re-consent prompt has to be recorded server-side.
       allow update: if request.auth != null
         && request.auth.uid == userId
-        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['points', 'uid', 'createdAt']);
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny([
+          'points', 'uid', 'createdAt',
+          'commentBlockedUntil', 'moderationStrikes', 'banCount',
+          'acceptedTermsAt', 'acceptedTermsVersion',
+        ])
+        && profileWithinLimits();
       // Points are awarded exclusively by the onDiscussionUpdated Cloud Function
       // (Admin SDK), which bypasses these rules. There is deliberately NO client
       // path to mutate points — the old "+1 by anyone" rule was farmable.
@@ -184,7 +198,11 @@ service cloud.firestore {
       allow read: if true;
       allow create: if request.auth != null
         && request.resource.data.uid == request.auth.uid
-        && request.resource.data.keys().hasOnly(['uid']);
+        && request.resource.data.keys().hasOnly(['uid'])
+        // Mirrors USERNAME_RE in src/utils/mentions.ts exactly. Without it the
+        // doc id was free-form: any length, any character, none of it matchable
+        // by @mentions.
+        && username.matches('^[a-z0-9_]{3,20}$');
       allow delete: if request.auth != null
         && resource.data.uid == request.auth.uid;
     }
@@ -201,6 +219,26 @@ service cloud.firestore {
     // readable by the user they belong to.
     match /appleTokens/{uid} {
       allow read, write: if false;
+    }
+
+    // Profile fields have no length limit in the UI, so this is the only thing
+    // between a 400 KB firstName and the database. The limits sit far above
+    // anything the app can produce — they exist to stop abuse, not to validate
+    // input. Every field the User type declares is listed; absent ones default
+    // so an older profile without them still passes.
+    function profileWithinLimits() {
+      let d = request.resource.data;
+      return d.get('firstName', '').size() <= 200
+        && d.get('lastName', '').size() <= 200
+        && d.get('username', '').size() <= 40
+        && d.get('bio', '').size() <= 1000
+        && d.get('nationality', '').size() <= 100
+        && d.get('countryCode', '').size() <= 8
+        && d.get('location', '').size() <= 200
+        && d.get('photoURL', '').size() <= 2000
+        && d.get('email', '').size() <= 320
+        && d.get('languages', []).size() <= 50
+        && d.get('following', []).size() <= 10000;
     }
 
     // True when `uid` has blocked the signed-in user. Blocking is not just a

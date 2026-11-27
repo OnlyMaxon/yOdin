@@ -20,13 +20,16 @@ export interface User {
   // Record of the Terms of Use acceptance taken at signup: when it happened and
   // which published version was in force. GDPR Art. 7(1) asks the controller to
   // be able to demonstrate consent, and a bare "the button was disabled" is not
-  // a record. Written once, at creation. (The owner can technically overwrite
-  // their own profile fields, so this is an audit record, not tamper-proof
-  // evidence — the same trade-off as every other client-written field.)
+  // a record. Written once, at creation, and immutable afterwards: firestore.rules
+  // refuses any client update touching these two, so they are evidence rather
+  // than an audit note. A re-consent flow has to write them server-side.
   acceptedTermsAt?: number;
   acceptedTermsVersion?: string;
   following?: string[];
-  // Moderation (maintained server-side, read-only on the client):
+  // Moderation — written only by onReportUpdated through the Admin SDK, and
+  // rejected by firestore.rules if a client tries to change them. Read-only on
+  // the client in fact, not just by convention: until 2026-11-27 the owner could
+  // clear their own ban here.
   // epoch-ms until which the user may not comment/reply; how many removals have
   // accrued since the last ban; how many bans they've served (drives escalation).
   commentBlockedUntil?: number;
