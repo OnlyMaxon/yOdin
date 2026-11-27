@@ -187,6 +187,35 @@ content doc so a feed card renders with zero extra reads. The cost is that
 anything touching an author has to rewrite every copy — see the deletion sweep
 in §9.
 
+That cost went unpaid for ordinary profile edits until 2026-11-27, and it showed:
+changing an avatar updated new content while every post, question, comment,
+reply and notification already published kept the old picture, and the forum
+search index kept it too. `functions/src/identitySweep.ts`
+(`onUserProfileUpdated`) now runs the same five queries the deletion sweep uses
+— posts and discussions by `authorId`, comments and replies by collection group,
+notifications by `fromUserId` — and rewrites the copies with the author's new
+identity. Three things make it safe to leave on:
+
+- it fires only when one of `IDENTITY_FIELDS` actually changed, so a follow, a
+  language switch or a points award does not start a sweep;
+- it then compares the *derived* values, so re-uploading the same avatar or
+  retyping the same name costs nothing either;
+- `corrections()` returns only fields that disagree, so a document that already
+  matches is not rewritten at all.
+
+`location` is deliberately **not** swept: a post's location is where it was
+posted, not where its author lives now. The accepted-answer name copied onto a
+question is swept, found from the replies side because the question stores no
+author id for its accepted answer. Algolia follows because
+`onDiscussionUpdated` now syncs the author fields too — nothing had ever
+resynced them, so a question indexed at creation kept that avatar forever.
+
+Loop safety: the sweep listens on `users/{uid}` and never writes back to
+`users`. The content writes it makes do fire the update triggers, and they all
+bail — `onPostUpdated` only acts on a like/comment-count change, `onReplyUpdated`
+only on a vote change, there is no comment-update trigger — except
+`onDiscussionUpdated`, which is the intended path to the search index.
+
 ### Collections outside the four content types
 
 - `usernames/{handle}` → `{ uid }` — uniqueness guard and @mention index.
@@ -246,6 +275,35 @@ Two layers:
   means anything if the rung cannot be unscrewed from below.
 
 ---
+
+### Deleting your own question
+
+`deleteDiscussion` collects every reply under the question and deletes them
+together with the question in one atomic `writeBatch`. The reply rule allowed
+only the reply's own author or a moderator to delete it, so that batch failed
+the moment anyone else had answered — an author could not delete their own
+question at all, and the app surfaced it as the generic "something went wrong".
+Reported from a device on 2026-11-27 and reproduced against both the current and
+the pre-existing rules, so it had been there since the rules were written.
+
+The reply rule now also accepts the author of the parent question. That is not a
+new power: deleting a question is defined to remove everything beneath it, so
+the author could already destroy every answer — and no screen deletes an
+individual reply, so nothing new is reachable from the UI. The clause sits last
+in the disjunction, which keeps the `get()` off the common paths.
+
+One ceiling remains. Rules allow 20 document access calls per batched write, so
+a question with enough answers could exhaust the budget; the emulator deleted 25
+without complaint, which suggests repeated reads of the same question are
+deduplicated, but that is not a documented guarantee. `onDiscussionDeleted` now
+recursively deletes the replies subcollection through the Admin SDK, which has
+neither that limit nor the 500-write batch limit, so nothing is left orphaned.
+The clean fix is for the client to delete only the question document and let the
+trigger do the rest — a one-line change, waiting on the next release.
+
+Note the asymmetry: `deletePost` deletes only the post document, so a post's
+comments are orphaned rather than removed. No user-visible failure, but the
+garbage accumulates; cleaning it needs an `onPostDeleted` trigger.
 
 ## 9. Account deletion & blocking
 

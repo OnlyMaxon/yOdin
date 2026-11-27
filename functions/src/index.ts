@@ -109,6 +109,18 @@ export const onPostCreated = onDocumentCreated('posts/{docId}', async (event) =>
 export const onDiscussionDeleted = onDocumentDeleted(
   { document: 'discussions/{docId}', secrets: [ALGOLIA_APP_ID, ALGOLIA_WRITE_KEY] },
   async (event) => {
+    // Whatever replies the client could not take with it. Deleting a question
+    // is defined to remove everything beneath it, but the client does that in a
+    // single writeBatch — capped at 500 writes, and at 20 rule reads now that
+    // the reply rule has to look up the question's author — so a heavily
+    // answered question would leave its answers orphaned under a question that
+    // no longer exists. The Admin SDK has neither limit.
+    //
+    // First, before the Algolia call: that call throws on a bad secret or an
+    // outage, and anything after it would simply not run.
+    await db
+      .recursiveDelete(db.collection(`discussions/${event.params.docId}/replies`))
+      .catch(() => {});
     await getClient().deleteObject({ indexName: INDEX, objectID: event.params.docId });
   },
 );
@@ -160,6 +172,21 @@ export const onDiscussionUpdated = onDocumentUpdated(
     // acceptedReplyId, so the name has to sync on its own as well.
     if (before.acceptedReplyAuthorName !== after.acceptedReplyAuthorName) {
       updates.acceptedReplyAuthorName = after.acceptedReplyAuthorName ?? '';
+    }
+
+    // The index carries its own copy of the author's name, avatar and flag, and
+    // until now nothing ever resynced them: a question indexed at creation kept
+    // that avatar forever. identitySweep.ts rewrites them on the document when
+    // someone edits their profile, and this is the leg that carries the change
+    // into search. It also covers the create-time correction in
+    // onDiscussionCreated when a forged identity is overwritten.
+    for (const field of [
+      'authorName',
+      'authorPhoto',
+      'authorNationality',
+      'authorCountryCode',
+    ]) {
+      if (before[field] !== after[field]) updates[field] = after[field] ?? '';
     }
 
     if (Object.keys(updates).length === 0) return;
@@ -373,6 +400,7 @@ export const onReplyUpdated = onDocumentUpdated(
 );
 
 export { deleteAccount, onUserProfileCreated } from './accountDeletion';
+export { onUserProfileUpdated } from './identitySweep';
 export { onBlockCreated, onBlockDeleted } from './blocking';
 export { microsoftSignIn } from './microsoftAuth';
 export { appleEnsureProfile } from './appleAuth';

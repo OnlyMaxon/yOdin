@@ -143,8 +143,30 @@ service cloud.firestore {
           && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'dislikes'])
           && ownUidArrayChange(resource.data.get('likes', []), request.resource.data.get('likes', []))
           && ownUidArrayChange(resource.data.get('dislikes', []), request.resource.data.get('dislikes', []));
+        // The reply's own author, a moderator, or the author of the question
+        // this reply sits under.
+        //
+        // That last one is not a new power: deleting a question is defined to
+        // remove everything beneath it (see the deletion sweep in §9), and the
+        // client does it in one atomic writeBatch of every reply plus the
+        // question. Without this clause that batch failed the moment anyone
+        // else had answered — so an author could not delete their own question
+        // at all, and the app showed only "something went wrong". No UI deletes
+        // an individual reply, so in practice this grants nothing beyond making
+        // the documented behaviour work.
+        //
+        // Ordered so the get() is reached only for that third case. Rules allow
+        // 20 document access calls per batched write, i.e. a question with more
+        // than ~20 answers still cannot be deleted this way; the real fix is
+        // for the client to delete only the question and let
+        // onDiscussionDeleted recurse, which has no such ceiling.
         allow delete: if request.auth != null
-          && (resource.data.authorId == request.auth.uid || isModerator());
+          && (
+            resource.data.authorId == request.auth.uid
+            || isModerator()
+            || get(/databases/$(database)/documents/discussions/$(discussionId))
+                 .data.authorId == request.auth.uid
+          );
       }
     }
 

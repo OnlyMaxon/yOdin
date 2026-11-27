@@ -38,23 +38,44 @@ export function str(value: unknown): string {
   return typeof value === 'string' ? value : '';
 }
 
+// The single definition of what the author fields on a document should contain.
+// Both the create-time stamp and the profile sweep derive from this one
+// function: two copies of the formula would drift, and a drift here means
+// honest content being rewritten on every write forever.
+export function identityFrom(profile: FirebaseFirestore.DocumentData): Identity {
+  return {
+    // Byte-for-byte how every client builds it (`${firstName} ${lastName}`, see
+    // NewPostModal / NewDiscussionModal / PostDetailModal /
+    // DiscussionDetailScreen), so honest content produces no diff at all and
+    // therefore costs no second write.
+    authorName: `${str(profile.firstName)} ${str(profile.lastName)}`,
+    authorPhoto: str(profile.photoURL),
+    authorNationality: str(profile.nationality),
+    authorCountryCode: str(profile.countryCode),
+  };
+}
+
+// The profile fields `identityFrom` reads. The sweep watches exactly these, so
+// adding a field above without adding it here would leave old content stale.
+// `location` is deliberately absent: a post's location is where it was posted,
+// not where its author lives now.
+export const IDENTITY_FIELDS = [
+  'firstName',
+  'lastName',
+  'photoURL',
+  'nationality',
+  'countryCode',
+] as const;
+
 // `null` means there is nothing to correct against, and the document must be
 // left exactly as written: content anonymised by account deletion, the
 // 'system' sender on moderation notices, or an author whose profile is gone.
 export async function identityOf(authorId: unknown): Promise<Identity | null> {
   if (typeof authorId !== 'string' || !authorId || authorId === DELETED_ID) return null;
   const snap = await db().doc(`users/${authorId}`).get();
-  if (!snap.exists) return null;
-  return {
-    // Byte-for-byte how every client builds it (`${firstName} ${lastName}`, see
-    // NewPostModal / NewDiscussionModal / PostDetailModal /
-    // DiscussionDetailScreen), so honest content produces no diff at all and
-    // therefore costs no second write.
-    authorName: `${str(snap.get('firstName'))} ${str(snap.get('lastName'))}`,
-    authorPhoto: str(snap.get('photoURL')),
-    authorNationality: str(snap.get('nationality')),
-    authorCountryCode: str(snap.get('countryCode')),
-  };
+  const profile = snap.data();
+  if (!profile) return null;
+  return identityFrom(profile);
 }
 
 // Only the fields that actually disagree. An empty result means the write was
