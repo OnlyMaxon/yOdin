@@ -88,6 +88,7 @@
     "accepted": "a accepté votre réponse",
     "clearRead": "Effacer lues",
     "joinedEvent": "participe à ton événement",
+    "postedEvent": "a publié un nouvel événement",
     "mentioned": "vous a mentionné",
     "contentRemoved": "Ton contenu a été supprimé par un modérateur pour non-respect des règles.",
     "blocked": "Tu ne peux pas commenter ni répondre pendant {{count}} jours en raison de violations répétées."

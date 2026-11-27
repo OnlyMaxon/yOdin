@@ -88,6 +88,7 @@
     "accepted": "yanıtını kabul etti",
     "clearRead": "Okunanları sil",
     "joinedEvent": "etkinliğine katılıyor",
+    "postedEvent": "yeni bir etkinlik paylaştı",
     "mentioned": "senden bahsetti",
     "contentRemoved": "İçeriğin, kuralları ihlal ettiği için bir moderatör tarafından kaldırıldı.",
     "blocked": "Tekrarlanan ihlaller nedeniyle {{count}} gün boyunca yorum yapamaz veya yanıtlayamazsın."

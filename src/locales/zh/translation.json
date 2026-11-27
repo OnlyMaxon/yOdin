@@ -88,6 +88,7 @@
     "accepted": "采纳了你的回答",
     "clearRead": "清除已读",
     "joinedEvent": "将参加你的活动",
+    "postedEvent": "发布了新活动",
     "mentioned": "提到了你",
     "contentRemoved": "你的内容因违反规则已被管理员移除。",
     "blocked": "由于多次违规，你在 {{count}} 天内无法评论或回复。"

@@ -26,14 +26,29 @@ import EmptyState from '../components/EmptyState';
 import { isDeletedAuthor } from '../utils/author';
 import { useWithoutBlocked } from '../hooks/useWithoutBlocked';
 
-type Filter = 'all' | 'unread' | 'reply' | 'mention' | 'participant';
+type Filter = 'all' | 'unread' | 'reply' | 'mention' | 'events';
 const FILTERS: { id: Filter; key: string }[] = [
   { id: 'all', key: 'filterAll' },
   { id: 'unread', key: 'filterUnread' },
   { id: 'reply', key: 'filterReplies' },
   { id: 'mention', key: 'filterMentions' },
-  { id: 'participant', key: 'filterEvents' },
+  { id: 'events', key: 'filterEvents' },
 ];
+
+// The Events tab covers both kinds: somebody signing up for an event of yours,
+// and somebody you follow posting one. It used to be the 'participant' type
+// alone, which made the tab's label a half-truth once the second kind existed.
+const EVENT_TYPES: AppNotification['type'][] = ['participant', 'event'];
+
+// One line per type, instead of a ternary chain that grew a branch every time
+// a notification kind was added.
+const TYPE_TEXT: Partial<Record<AppNotification['type'], string>> = {
+  participant: 'notifications.joinedEvent',
+  event: 'notifications.postedEvent',
+  mention: 'notifications.mentioned',
+  accepted: 'notifications.accepted',
+  reply: 'notifications.replied',
+};
 
 export default function NotificationsScreen({ navigation }: any) {
   const { t } = useTranslation();
@@ -99,6 +114,9 @@ export default function NotificationsScreen({ navigation }: any) {
       case 'reply': return { icon: 'chatbubble', color: colors.primary };
       case 'accepted': return { icon: 'checkmark', color: colors.success };
       case 'participant': return { icon: 'calendar', color: colors.accent };
+      // Someone you follow posted an event — a megaphone rather than the
+      // calendar, so it doesn't read as "somebody joined yours".
+      case 'event': return { icon: 'megaphone', color: colors.accent };
       case 'mention': return { icon: 'at', color: colors.pink };
       default: return null;
     }
@@ -106,7 +124,13 @@ export default function NotificationsScreen({ navigation }: any) {
 
   const unreadCount = notifications.filter((n) => !n.read).length;
   const filtered = notifications.filter((n) =>
-    filter === 'all' ? true : filter === 'unread' ? !n.read : n.type === filter,
+    filter === 'all'
+      ? true
+      : filter === 'unread'
+        ? !n.read
+        : filter === 'events'
+          ? EVENT_TYPES.includes(n.type)
+          : n.type === filter,
   );
   // Someone you blocked should not reach you through a notification either.
   const visible = useWithoutBlocked(filtered, (n) => n.fromUserId);
@@ -156,15 +180,7 @@ export default function NotificationsScreen({ navigation }: any) {
             <Text style={styles.bold}>
               {isDeletedAuthor(item.fromUserId) ? t('common.deletedAccount') : item.fromUserName}
             </Text>
-            {' '}{t(
-              item.type === 'participant'
-                ? 'notifications.joinedEvent'
-                : item.type === 'mention'
-                  ? 'notifications.mentioned'
-                  : item.type === 'accepted'
-                    ? 'notifications.accepted'
-                    : 'notifications.replied',
-            )}
+            {' '}{t(TYPE_TEXT[item.type] ?? 'notifications.replied')}
           </Text>
           <Text style={styles.detail} numberOfLines={1}>
             "{item.postId ? item.postTitle : item.discussionQuestion}"

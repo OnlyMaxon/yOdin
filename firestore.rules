@@ -185,9 +185,11 @@ service cloud.firestore {
         && request.resource.data.toUserId is string
         && request.resource.data.fromUserName is string
         && request.resource.data.fromUserName.size() <= 100
-        // Clients may only create these types. Moderation notices (removed /
-        // blocked) are written server-side by the Admin SDK, which bypasses
-        // these rules — so a client can't forge a fake "you were banned" notice.
+        // Clients may only create these types. The rest are written
+        // server-side by the Admin SDK, which bypasses these rules: moderation
+        // notices (removed / blocked), so nobody can forge a "you were banned"
+        // notice, and 'event' fan-out to followers, which no client should be
+        // able to address to someone else's inbox.
         && request.resource.data.type in ['reply', 'accepted', 'participant', 'mention']
         && (
           // Forum notification (reply / accepted answer).

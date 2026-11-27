@@ -89,6 +89,7 @@
     "accepted": "ți-a acceptat răspunsul",
     "clearRead": "Șterge citite",
     "joinedEvent": "participă la evenimentul tău",
+    "postedEvent": "a publicat un eveniment nou",
     "mentioned": "te-a menționat",
     "contentRemoved": "Conținutul tău a fost eliminat de un moderator pentru încălcarea regulilor.",
     "blocked": "Nu poți comenta sau răspunde timp de {{count}} zile din cauza încălcărilor repetate."

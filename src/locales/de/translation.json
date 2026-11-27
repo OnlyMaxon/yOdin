@@ -88,6 +88,7 @@
     "accepted": "hat deine Antwort akzeptiert",
     "clearRead": "Gelesen löschen",
     "joinedEvent": "nimmt an deinem Event teil",
+    "postedEvent": "hat ein neues Event gepostet",
     "mentioned": "hat dich erwähnt",
     "contentRemoved": "Dein Inhalt wurde von einem Moderator wegen Regelverstoßes entfernt.",
     "blocked": "Du kannst wegen wiederholter Verstöße {{count}} Tage lang nicht kommentieren oder antworten."

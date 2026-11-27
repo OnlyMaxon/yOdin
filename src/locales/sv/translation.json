@@ -88,6 +88,7 @@
     "accepted": "accepterade ditt svar",
     "clearRead": "Rensa lästa",
     "joinedEvent": "kommer på ditt evenemang",
+    "postedEvent": "publicerade ett nytt evenemang",
     "mentioned": "nämnde dig",
     "contentRemoved": "Ditt innehåll togs bort av en moderator för regelbrott.",
     "blocked": "Du kan inte kommentera eller svara på {{count}} dagar på grund av upprepade överträdelser."
