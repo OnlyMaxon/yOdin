@@ -248,9 +248,21 @@ Collected **and** linked to the user's identity:
 | Videos | Yes | No | App functionality (user content) |
 | Other user-generated content | Yes | No | App functionality |
 | Other info (nationality, country of residence, bio, languages) | Yes | No | App functionality |
+| Device or other IDs | Yes | No | App functionality (push notifications) |
 
 Answer **No** to: precise/approximate location, financial info, health, contacts,
-calendar, app activity analytics, crash logs, advertising ID, device IDs.
+calendar, app activity analytics, crash logs, advertising ID.
+
+**Device or other IDs changed from No to Yes** when push notifications shipped.
+The FCM registration token is a device identifier: it is stored under the
+user's own document (`users/{uid}/pushTokens`) and is therefore collected and
+linked to the account, not processed ephemerally. It is not an advertising ID
+and is never shared, so that row stays **No**.
+
+Timing matters both ways. Declaring it before push is in a released build
+describes collection that is not happening; shipping push without declaring it
+is a policy violation. Change this answer in the same release that carries
+push, not before and not after.
 
 Other answers:
 - Data is encrypted in transit: **Yes**

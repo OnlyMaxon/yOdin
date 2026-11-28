@@ -1,6 +1,6 @@
 # Privacy Policy for yOdin
 
-**Last updated:** 8 October 2026
+**Last updated:** 27 November 2026
 **Effective date:** 4 October 2026
 
 yOdin ("the App", "we", "us") is operated by **Jalil Orujli**, Chmielna 69,
@@ -56,6 +56,15 @@ and never by the people on it.
   record the number of removals and bans on your account. This drives the
   escalating restriction system described in section 6.
 - **Timestamps** — when your account and each piece of content were created.
+- **Push notification token** — only if you allow notifications. This is an
+  identifier your device's operating system issues to the App so a notification
+  can be delivered to it. It identifies the installation, not you personally,
+  and it is stored against your account so we know where to send your
+  notifications. Deny the permission, or log out, and it is not kept.
+- **Interface language** — the language you picked in the App, stored so a
+  notification sent while the App is closed can be written in it. The text of a
+  notification has to be composed before it is sent, which the device cannot do
+  when it is not running.
 
 ### 2.3 What we do NOT collect
 
@@ -66,7 +75,6 @@ We want to be explicit about this, because many social apps do collect it:
   device location, and asks for no location permission.
 - **No analytics or behavioural tracking.** There is no analytics SDK in the App.
 - **No advertising identifiers, no ad networks, no third-party trackers.**
-- **No push notification tokens.** Notifications are shown inside the App only.
 - **No contacts, calendar, microphone, or call data.**
 
 ---
@@ -77,9 +85,10 @@ We want to be explicit about this, because many social apps do collect it:
 |---|---|---|
 | Photos / media library | Only when you attach media to a post or discussion, or set a profile photo | The files you pick are uploaded as your content. We do not scan or index your library |
 | Camera | Only when you choose to take a photo instead of picking an existing one | The photo you take is uploaded as your content. The App does not record video or audio, and does not access the camera in the background |
+| Notifications | Once, after you sign in | Lets the App show replies, mentions and event announcements while it is closed. Refuse and everything still works — the same notices wait for you inside the App |
 
-You can revoke either permission in Android settings at any time; the App
-remains usable without them, minus the ability to attach media.
+You can revoke any of these in your device settings at any time; the App remains
+usable without them, minus the ability to attach media or to be notified.
 
 ---
 
@@ -133,6 +142,13 @@ and neither is the list of accounts you have blocked.
 |---|---|---|
 | **Google Firebase** (Authentication, Cloud Firestore, Cloud Storage, Cloud Functions) — Google Ireland Ltd. / Google LLC | Account data, content, media | Hosting the App's database, files, authentication and server logic |
 | **Algolia** | Public content of discussions and the author's display name | Search inside the App |
+| **Google Firebase Cloud Messaging** — Google Ireland Ltd. / Google LLC | Push token and the text of the notification, on Android | Delivering notifications while the App is closed |
+| **Apple Push Notification service** — Apple Distribution International Ltd. | Push token and the text of the notification, on iOS | Delivering notifications while the App is closed |
+
+A notification's text — who it is from and what it refers to — passes through
+whichever of those two services your device uses. That is how every push
+notification on a phone works: the operating system's own service is the only
+route to a device that is not running the App.
 
 These providers act as processors on our instructions and are bound by their own
 data-protection terms. We do not share your data with anyone else, except where
@@ -189,6 +205,7 @@ that you blocked them.
 | Block lists | Until you remove the block, or delete your account |
 | Moderation records (strikes, bans) | For the life of the account |
 | A one-way keyed hash of the email address of an account that had moderation strikes or bans | 12 months after deletion, to prevent immediate re-registration. It cannot be reversed into an email address, and accounts with a clean record leave no such record |
+| Push notification token | Until you log out, revoke the permission, or the operating system reports the token as no longer valid, at which point it is deleted automatically |
 | Reports | 12 months after resolution |
 | Backups | Up to 30 days after deletion from the live database |
 
