@@ -15,6 +15,7 @@ import { useTheme } from '../hooks/useTheme';
 import { fetchFollowers, fetchFollowing } from '../services/userService';
 import { User } from '../types';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName } from '../utils/countryName';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import EmptyState from '../components/EmptyState';
@@ -25,6 +26,7 @@ type Tab = 'followers' | 'following';
 export default function FollowListScreen({ route, navigation }: any) {
   const { userId, initialTab } = route.params as { userId: string; initialTab: Tab };
   const { t } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top);
@@ -61,7 +63,7 @@ export default function FollowListScreen({ route, navigation }: any) {
         <View style={styles.info}>
           <Text style={styles.name} numberOfLines={1}>{item.firstName} {item.lastName}</Text>
           <Text style={styles.meta} numberOfLines={1}>
-            {getFlagEmoji(item.countryCode)}  {item.nationality}
+            {getFlagEmoji(item.countryCode)}  {cName(item.countryCode, item.nationality)}
           </Text>
         </View>
         <FollowButton targetUid={item.uid} />

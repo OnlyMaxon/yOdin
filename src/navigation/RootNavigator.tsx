@@ -7,6 +7,7 @@ import { auth } from '../services/firebase';
 import { getUserProfile } from '../services/authService';
 import { useAuthStore } from '../store/useAuthStore';
 import { useBlockStore } from '../store/useBlockStore';
+import { registerForPush, configurePushHandler } from '../services/pushService';
 import { isModerator } from '../config/moderation';
 import i18n from '../services/i18n';
 import { LightColors } from '../theme/colors';
@@ -18,6 +19,8 @@ import EmailVerificationScreen from '../screens/auth/EmailVerificationScreen';
 const Stack = createNativeStackNavigator();
 
 type AppState = 'loading' | 'auth' | 'emailVerification' | 'onboarding' | 'main';
+
+configurePushHandler();
 
 export default function RootNavigator() {
   const [appState, setAppState] = useState<AppState>('loading');
@@ -89,6 +92,14 @@ export default function RootNavigator() {
       setAppState('main');
     }
   }, [profile, appState]);
+
+  // Register the device for push once there is a signed-in profile and the app
+  // is past onboarding — asking for the permission on the login screen, before
+  // anyone has seen what the app is, is how people learn to tap Deny.
+  useEffect(() => {
+    if (appState !== 'main' || !profile?.uid) return;
+    registerForPush(profile.uid);
+  }, [appState, profile?.uid]);
 
   // When the user confirms verification on the screen (flag flips to false),
   // re-evaluate routing — routeForUser re-checks emailVerified before letting in.

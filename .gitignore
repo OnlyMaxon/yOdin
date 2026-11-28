@@ -70,3 +70,9 @@ Keys/
 # Python bytecode from scripts/ (asc.py, asc_fill.py) — regenerated on every run
 __pycache__/
 *.pyc
+
+# Firebase Android config, needed at build time for FCM (push notifications).
+# Kept out of git for the same reason .env is: it carries the project's client
+# config. Regenerate with
+#   npx firebase apps:sdkconfig ANDROID 1:411063608880:android:54f61679ba5bbfea28eff5 --out google-services.json
+google-services.json

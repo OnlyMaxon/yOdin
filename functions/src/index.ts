@@ -10,6 +10,8 @@ import { algoliasearch } from 'algoliasearch';
 import { setGlobalOptions } from 'firebase-functions';
 import { DELETED_ID } from './accountDeletion';
 import { identityOf, corrections, str, Identity } from './authorIdentity';
+import { sendNotificationPush } from './push';
+import { APNS_SECRETS } from './apns';
 
 // Firestore lives in eur3 — keep the functions on the same continent so triggers
 // don't make a round trip to the US.
@@ -354,18 +356,25 @@ async function correctAuthor(event: {
 // notices are sent by the Admin SDK with `fromUserId: 'system'`, which has no
 // profile, so identityOf() returns null and those are left untouched.
 export const onNotificationCreated = onDocumentCreated(
-  'notifications/{docId}',
+  { document: 'notifications/{docId}', secrets: APNS_SECRETS },
   async (event) => {
     const snap = event.data;
     if (!snap) return;
     const data = snap.data();
     const truth = await identityOf(data.fromUserId);
-    if (!truth) return;
-    const fix: Record<string, string> = {};
-    if (str(data.fromUserName) !== truth.authorName) fix.fromUserName = truth.authorName;
-    if (str(data.fromUserPhoto) !== truth.authorPhoto) fix.fromUserPhoto = truth.authorPhoto;
-    if (Object.keys(fix).length === 0) return;
-    await snap.ref.update(fix).catch(() => {});
+    if (truth) {
+      const fix: Record<string, string> = {};
+      if (str(data.fromUserName) !== truth.authorName) fix.fromUserName = truth.authorName;
+      if (str(data.fromUserPhoto) !== truth.authorPhoto) fix.fromUserPhoto = truth.authorPhoto;
+      if (Object.keys(fix).length > 0) await snap.ref.update(fix).catch(() => {});
+    }
+
+    // Push last, and with the corrected name: this is the same spoofing
+    // surface as above, only on the lock screen, where it is read with less
+    // suspicion than a row in a list. A moderation notice has no sender
+    // profile, so truth is null and the empty name makes the push speak as
+    // the app.
+    await sendNotificationPush(data, truth?.authorName ?? '');
   },
 );
 

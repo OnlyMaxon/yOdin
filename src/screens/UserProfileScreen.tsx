@@ -20,6 +20,7 @@ import { fetchUserDiscussions } from '../services/discussionService';
 import { User, Post, Discussion } from '../types';
 import { getRank } from '../utils/rank';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName } from '../utils/countryName';
 import { formatTime } from '../utils/formatTime';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -33,6 +34,7 @@ import PostDetailModal from './PostDetailModal';
 export default function UserProfileScreen({ route, navigation }: any) {
   const { userId } = route.params;
   const { t } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = useMemo(() => makeStyles(colors, insets.top), [colors, insets.top]);
@@ -223,7 +225,7 @@ export default function UserProfileScreen({ route, navigation }: any) {
 
             <Text style={styles.name}>{user.firstName} {user.lastName}</Text>
             {user.username ? <Text style={styles.handle}>@{user.username}</Text> : null}
-            <Text style={styles.nationality}>{flag}  {user.nationality}</Text>
+            <Text style={styles.nationality}>{flag}  {cName(user.countryCode, user.nationality)}</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
               <Ionicons name="location-sharp" size={13} color={colors.textSecondary} style={{ marginRight: 4 }} />
               <Text style={styles.location}>{user.location}</Text>
