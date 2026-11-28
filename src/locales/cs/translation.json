@@ -89,6 +89,7 @@
     "accepted": "přijal(a) vaši odpověď",
     "clearRead": "Vymazat přečtené",
     "joinedEvent": "se chystá na tvou akci",
+    "postedEvent": "přidal(a) novou událost",
     "mentioned": "vás zmínil(a)",
     "contentRemoved": "Tvůj obsah byl odstraněn moderátorem za porušení pravidel.",
     "blocked": "Nemůžeš komentovat ani odpovídat po dobu {{count}} dní kvůli opakovaným porušením."

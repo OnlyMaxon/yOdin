@@ -21,6 +21,7 @@ import { usePostStore } from '../store/usePostStore';
 import { votePost, addComment, fetchComments, likeComment, joinEvent, leaveEvent } from '../services/postService';
 import { Post, PostComment, ReportReason } from '../types';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName } from '../utils/countryName';
 import { formatTime } from '../utils/formatTime';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
@@ -53,6 +54,7 @@ interface Props {
 
 export default function PostDetailModal({ visible, postId, startWithComments, onClose, fallbackPost, onOpenProfile }: Props) {
   const { t } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top, insets.bottom);
@@ -398,7 +400,7 @@ export default function PostDetailModal({ visible, postId, startWithComments, on
           <View style={{ flex: 1 }}>
             <Text style={styles.authorName}>{post.authorName}</Text>
             <Text style={styles.authorMeta}>
-              {getFlagEmoji(post.authorCountryCode)}  {post.authorNationality}
+              {getFlagEmoji(post.authorCountryCode)}  {cName(post.authorCountryCode, post.authorNationality)}
             </Text>
           </View>
         </TouchableOpacity>

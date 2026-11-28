@@ -33,6 +33,7 @@ import { optimizeImage } from '../utils/imageOptimize';
 import PhotoPickerSheet, { PickedAsset } from '../components/PhotoPickerSheet';
 import PostDetailModal from './PostDetailModal';
 import { setAppLanguage } from '../services/i18n';
+import { syncUserLanguage } from '../services/pushService';
 import type { AppLang } from '../services/i18n';
 import { useThemeStore, ThemePreference } from '../store/useThemeStore';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -44,6 +45,7 @@ import { Discussion, Post, User } from '../types';
 import { COUNTRIES, Country } from '../data/countries';
 import { getRank } from '../utils/rank';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName } from '../utils/countryName';
 import { usePostStore } from '../store/usePostStore';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
@@ -86,6 +88,7 @@ const LANGUAGES = [
 
 export default function ProfileScreen({ navigation }: any) {
   const { t, i18n } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = useMemo(() => makeStyles(colors, insets.top), [colors, insets.top]);
@@ -126,9 +129,22 @@ export default function ProfileScreen({ navigation }: any) {
   const [editBio, setEditBio] = useState('');
   const [editNationality, setEditNationality] = useState<Country | null>(null);
   const [editLocation, setEditLocation] = useState<Country | null>(null);
+
   const [editPickerFor, setEditPickerFor] = useState<'nationality' | 'location' | null>(null);
   const [editSearch, setEditSearch] = useState('');
   const [editSaving, setEditSaving] = useState(false);
+
+  // Shown translated, saved in English: `name` stays the value written to the
+  // profile and matched by every filter, `label` is only what the row shows.
+  // Search takes either spelling, and the order follows the label so the list
+  // reads alphabetically in the language on screen.
+  const editCountryList = useMemo(() => {
+    const q = editSearch.toLowerCase();
+    return COUNTRIES
+      .map((c) => ({ ...c, label: cName(c.code, c.name) }))
+      .filter((c) => c.label.toLowerCase().includes(q) || c.name.toLowerCase().includes(q))
+      .sort((a, b) => a.label.localeCompare(b.label, i18n.language));
+  }, [editSearch, cName, i18n.language]);
   const menuAnim = useState(new Animated.Value(-MENU_W))[0];
   const editUsernameStatus = useUsernameCheck(editUsername, profile?.username);
 
@@ -555,7 +571,7 @@ export default function ProfileScreen({ navigation }: any) {
 
           <Text style={styles.name}>{profile?.firstName} {profile?.lastName}</Text>
           {profile?.username ? <Text style={styles.handle}>@{profile.username}</Text> : null}
-          <Text style={styles.nationality}>{flag}  {profile?.nationality}</Text>
+          <Text style={styles.nationality}>{flag}  {cName(profile?.countryCode, profile?.nationality)}</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 2 }}>
             <Ionicons name="location-sharp" size={13} color={colors.textSecondary} style={{ marginRight: 4 }} />
             <Text style={styles.location}>{profile?.location}</Text>
@@ -676,7 +692,7 @@ export default function ProfileScreen({ navigation }: any) {
             <Text style={styles.menuUserName} numberOfLines={1}>
               {profile?.firstName} {profile?.lastName}
             </Text>
-            <Text style={styles.menuUserNation} numberOfLines={1}>{flag} {profile?.nationality}</Text>
+            <Text style={styles.menuUserNation} numberOfLines={1}>{flag} {cName(profile?.countryCode, profile?.nationality)}</Text>
             <View style={styles.menuUserRankRow}>
               <Ionicons name="ribbon" size={11} color={colors.primary} />
               <Text style={styles.menuUserRankText}> {t(`rank.${rankKey}`)}</Text>
@@ -906,7 +922,7 @@ export default function ProfileScreen({ navigation }: any) {
                 <Text style={styles.editLabel}>{t('editProfile.nationality')}</Text>
                 <TouchableOpacity style={styles.pickerBtn} onPress={() => { setEditSearch(''); setEditPickerFor('nationality'); }}>
                   {editNationality
-                    ? <Text style={styles.pickerValue}>{editNationality.flag}  {editNationality.name}</Text>
+                    ? <Text style={styles.pickerValue}>{editNationality.flag}  {cName(editNationality.code, editNationality.name)}</Text>
                     : <Text style={styles.pickerPlaceholder}>{t('auth.selectNationality')}</Text>
                   }
                   <Ionicons name="chevron-forward" size={18} color={colors.textSecondary} />
@@ -915,7 +931,7 @@ export default function ProfileScreen({ navigation }: any) {
                 <Text style={styles.editLabel}>{t('editProfile.location')}</Text>
                 <TouchableOpacity style={styles.pickerBtn} onPress={() => { setEditSearch(''); setEditPickerFor('location'); }}>
                   {editLocation
-                    ? <Text style={styles.pickerValue}>{editLocation.flag}  {editLocation.name}</Text>
+                    ? <Text style={styles.pickerValue}>{editLocation.flag}  {cName(editLocation.code, editLocation.name)}</Text>
                     : <Text style={styles.pickerPlaceholder}>{t('auth.selectLocation')}</Text>
                   }
                   <Ionicons name="chevron-forward" size={18} color={colors.textSecondary} />
@@ -943,7 +959,7 @@ export default function ProfileScreen({ navigation }: any) {
                 autoFocus
               />
               <FlatList
-                data={COUNTRIES.filter((c) => c.name.toLowerCase().includes(editSearch.toLowerCase()))}
+                data={editCountryList}
                 keyExtractor={(item) => item.code}
                 renderItem={({ item }) => (
                   <TouchableOpacity
@@ -955,7 +971,7 @@ export default function ProfileScreen({ navigation }: any) {
                     }}
                   >
                     <Text style={styles.countryFlag}>{item.flag}</Text>
-                    <Text style={styles.countryName}>{item.name}</Text>
+                    <Text style={styles.countryName}>{item.label}</Text>
                     {((editPickerFor === 'nationality' && editNationality?.code === item.code) ||
                       (editPickerFor === 'location' && editLocation?.name === item.name)) && (
                       <Ionicons name="checkmark" size={20} color={colors.primary} style={{ marginLeft: 'auto' }} />
@@ -1003,6 +1019,9 @@ export default function ProfileScreen({ navigation }: any) {
                 style={styles.countryItem}
                 onPress={async () => {
                 const restartRequired = await setAppLanguage(item.code as AppLang);
+                // The server writes push text, so it needs to know which
+                // language to write it in.
+                if (profile?.uid) syncUserLanguage(profile.uid, item.code);
                 setLangModal(false);
                 setLangSearch('');
                 if (restartRequired) {

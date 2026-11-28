@@ -18,6 +18,7 @@ import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
 import { Typography } from '../theme/typography';
 import { COUNTRIES } from '../data/countries';
+import { useCountryName } from '../utils/countryName';
 import { MAX_NATION_FILTER } from '../constants/nationFilter';
 
 const SCREEN_W = Dimensions.get('window').width;
@@ -37,7 +38,8 @@ interface Props {
 }
 
 export default function NationFilterDrawer({ visible, onClose, selected, onToggle, onClear, myNationality }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top, insets.bottom);
@@ -65,13 +67,20 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
   const atCap = selected.length >= MAX_NATION_FILTER;
 
   // Own nationality first, then the rest alphabetically — filtered by search.
+  //
+  // `label` is what the row shows, `c.name` stays the value: it is the key the
+  // selection, the Firestore filter and the Algolia facet all run on. Search
+  // matches either one, so typing "Германия" or "Germany" both find it, and
+  // the sort runs on the label so the list is alphabetical in the language on
+  // screen rather than in English order with Cyrillic names.
   const q = search.trim().toLowerCase();
   const list = COUNTRIES
-    .filter((c) => c.name.toLowerCase().includes(q))
+    .map((c) => ({ ...c, label: cName(c.code, c.name) }))
+    .filter((c) => c.label.toLowerCase().includes(q) || c.name.toLowerCase().includes(q))
     .sort((a, b) => {
       if (a.name === myNationality) return -1;
       if (b.name === myNationality) return 1;
-      return a.name.localeCompare(b.name);
+      return a.label.localeCompare(b.label, i18n.language);
     });
 
   const translateX = anim.interpolate({ inputRange: [0, 1], outputRange: [-DRAWER_W, 0] });
@@ -140,7 +149,7 @@ export default function NationFilterDrawer({ visible, onClose, selected, onToggl
                 >
                   <Text style={styles.flag}>{item.flag}</Text>
                   <Text style={[styles.name, active && styles.nameActive]} numberOfLines={1}>
-                    {item.name}
+                    {item.label}
                   </Text>
                   <Ionicons
                     name={active ? 'checkbox' : 'square-outline'}

@@ -25,6 +25,7 @@ import { createReport } from '../services/reportService';
 import ReportSheet from '../components/ReportSheet';
 import { Alert } from 'react-native';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName, useStoredCountryName } from '../utils/countryName';
 import { formatTime } from '../utils/formatTime';
 import { Discussion, ReportReason } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -54,6 +55,8 @@ if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental
 
 export default function ForumScreen({ navigation }: any) {
   const { t } = useTranslation();
+  const cName = useCountryName();
+  const storedName = useStoredCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = useMemo(() => makeStyles(colors, insets.top), [colors, insets.top]);
@@ -327,7 +330,7 @@ export default function ForumScreen({ navigation }: any) {
             <View style={styles.authorInfo}>
               <Text style={styles.authorName}>{item.authorName}</Text>
               <Text style={styles.authorMeta}>
-                {getFlagEmoji(item.authorCountryCode)}  {item.authorNationality}
+                {getFlagEmoji(item.authorCountryCode)}  {cName(item.authorCountryCode, item.authorNationality)}
               </Text>
             </View>
           </TouchableOpacity>
@@ -479,7 +482,7 @@ export default function ForumScreen({ navigation }: any) {
             {selectedNations.map((nation) => (
               <Chip
                 key={nation}
-                label={`${COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} ${nation}  ✕`}
+                label={`${COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} ${storedName(nation)}  ✕`}
                 active
                 onPress={() => toggleNation(nation)}
               />

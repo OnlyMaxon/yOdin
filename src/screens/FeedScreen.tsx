@@ -22,6 +22,7 @@ import { createReport } from '../services/reportService';
 import ReportSheet from '../components/ReportSheet';
 import { fetchTopQuestion } from '../services/discussionService';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName, useStoredCountryName } from '../utils/countryName';
 import { formatTime } from '../utils/formatTime';
 import { Post, PostCategory, POST_CATEGORIES, Discussion, ReportReason } from '../types';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -57,6 +58,8 @@ const DESCRIPTION_LINES = 3;
 
 export default function FeedScreen({ navigation }: any) {
   const { t } = useTranslation();
+  const cName = useCountryName();
+  const storedName = useStoredCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = useMemo(() => makeStyles(colors, insets.top), [colors, insets.top]);
@@ -321,7 +324,7 @@ export default function FeedScreen({ navigation }: any) {
                 {item.authorName}
               </Text>
               <Text style={styles.authorMeta}>
-                {getFlagEmoji(item.authorCountryCode)}{'  '}{item.authorNationality}
+                {getFlagEmoji(item.authorCountryCode)}{'  '}{cName(item.authorCountryCode, item.authorNationality)}
               </Text>
             </View>
           </View>
@@ -494,7 +497,7 @@ export default function FeedScreen({ navigation }: any) {
                 onPress={() => toggleNation(nation)}
               >
                 <Text style={[styles.chipText, styles.chipTextActive]}>
-                  {COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} {nation}  ✕
+                  {COUNTRIES.find((c) => c.name === nation)?.flag ?? '🏳️'} {storedName(nation)}  ✕
                 </Text>
               </TouchableOpacity>
             ))}

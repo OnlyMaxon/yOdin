@@ -133,7 +133,9 @@ export interface Reply {
 
 export interface AppNotification {
   id: string;
-  type: 'reply' | 'accepted' | 'participant' | 'removed' | 'blocked' | 'mention';
+  // 'participant' is someone signing up for *your* event; 'event' is someone
+  // you follow posting one. Both carry postId/postTitle.
+  type: 'reply' | 'accepted' | 'participant' | 'removed' | 'blocked' | 'mention' | 'event';
   toUserId: string;
   fromUserId: string;
   fromUserName: string;

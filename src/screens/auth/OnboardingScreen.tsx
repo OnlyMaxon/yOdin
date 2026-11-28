@@ -17,13 +17,15 @@ import { updateUserProfile, getUserProfile } from '../../services/authService';
 import { getErrorMessage } from '../../services/errorHandler';
 import { useAuthStore } from '../../store/useAuthStore';
 import { COUNTRIES, Country } from '../../data/countries';
+import { useCountryName } from '../../utils/countryName';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../../hooks/useTheme';
 import { ColorPalette } from '../../theme/colors';
 import { Typography } from '../../theme/typography';
 
 export default function OnboardingScreen() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.top);
@@ -35,9 +37,15 @@ export default function OnboardingScreen() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const filtered = COUNTRIES.filter((c) =>
-    c.name.toLowerCase().includes(search.toLowerCase()),
-  );
+  // `label` is for the eye only — `c.name` remains the value saved to the
+  // profile and matched by every filter. Search accepts either spelling, and
+  // the list is ordered by the label so it reads alphabetically in whatever
+  // language is on screen.
+  const q = search.toLowerCase();
+  const filtered = COUNTRIES
+    .map((c) => ({ ...c, label: cName(c.code, c.name) }))
+    .filter((c) => c.label.toLowerCase().includes(q) || c.name.toLowerCase().includes(q))
+    .sort((a, b) => a.label.localeCompare(b.label, i18n.language));
 
   function openModal(type: 'nationality' | 'location') {
     setSearch('');
@@ -82,7 +90,7 @@ export default function OnboardingScreen() {
       <Text style={styles.label}>{t('auth.nationality')}</Text>
       <TouchableOpacity style={styles.pickerBtn} onPress={() => openModal('nationality')}>
         {nationality
-          ? <Text style={styles.pickerValue}>{nationality.flag}  {nationality.name}</Text>
+          ? <Text style={styles.pickerValue}>{nationality.flag}  {cName(nationality.code, nationality.name)}</Text>
           : <Text style={styles.pickerPlaceholder}>{t('auth.selectNationality')}</Text>
         }
       </TouchableOpacity>
@@ -90,7 +98,7 @@ export default function OnboardingScreen() {
       <Text style={styles.label}>{t('auth.location')}</Text>
       <TouchableOpacity style={styles.pickerBtn} onPress={() => openModal('location')}>
         {location
-          ? <Text style={styles.pickerValue}>{location.flag}  {location.name}</Text>
+          ? <Text style={styles.pickerValue}>{location.flag}  {cName(location.code, location.name)}</Text>
           : <Text style={styles.pickerPlaceholder}>{t('auth.selectLocation')}</Text>
         }
       </TouchableOpacity>
@@ -132,7 +140,7 @@ export default function OnboardingScreen() {
             renderItem={({ item }) => (
               <TouchableOpacity style={styles.countryItem} onPress={() => selectCountry(item)}>
                 <Text style={styles.countryFlag}>{item.flag}</Text>
-                <Text style={styles.countryName}>{item.name}</Text>
+                <Text style={styles.countryName}>{item.label}</Text>
               </TouchableOpacity>
             )}
           />

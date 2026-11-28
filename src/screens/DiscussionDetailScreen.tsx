@@ -37,6 +37,7 @@ import { createNotification, notifyMentions } from '../services/notificationServ
 import { createReport } from '../services/reportService';
 import { Reply, Discussion, ReportReason } from '../types';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName } from '../utils/countryName';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '../hooks/useTheme';
 import { ColorPalette } from '../theme/colors';
@@ -123,6 +124,7 @@ const swipeStyles = StyleSheet.create({
 export default function DiscussionDetailScreen({ route, navigation }: any) {
   const { discussionId, question: questionParam } = route.params;
   const { t } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = useMemo(() => makeStyles(colors, insets.top, insets.bottom), [colors, insets.top, insets.bottom]);
@@ -537,7 +539,7 @@ export default function DiscussionDetailScreen({ route, navigation }: any) {
           <View style={{ flex: 1 }}>
             <Text style={styles.qAuthorName}>{discussion.authorName}</Text>
             <Text style={styles.qAuthorMeta}>
-              {getFlagEmoji(discussion.authorCountryCode)}  {discussion.authorNationality}
+              {getFlagEmoji(discussion.authorCountryCode)}  {cName(discussion.authorCountryCode, discussion.authorNationality)}
             </Text>
           </View>
           {isAnswered && (

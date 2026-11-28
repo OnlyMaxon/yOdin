@@ -9,7 +9,9 @@ import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { algoliasearch } from 'algoliasearch';
 import { setGlobalOptions } from 'firebase-functions';
 import { DELETED_ID } from './accountDeletion';
-import { identityOf, corrections, str } from './authorIdentity';
+import { identityOf, corrections, str, Identity } from './authorIdentity';
+import { sendNotificationPush } from './push';
+import { APNS_SECRETS } from './apns';
 
 // Firestore lives in eur3 — keep the functions on the same continent so triggers
 // don't make a round trip to the US.
@@ -92,6 +94,62 @@ export const onDiscussionCreated = onDocumentCreated(
   },
 );
 
+// Tell everyone following the author that they posted an event.
+//
+// This has to live server-side. The fan-out writes one notification per
+// follower, and a client may only write a notification it addresses itself —
+// it cannot enumerate someone's followers, nor should it be able to write into
+// other people's inboxes. The Admin SDK bypasses the rules that enforce that.
+//
+// No block filtering: blocking severs the follow in both directions (see
+// blocking.ts), so a blocked pair never shows up in this query to begin with.
+//
+// Firestore caps a batch at 500 writes, so the fan-out is chunked. A failed
+// chunk is swallowed rather than retried — a missing notification is not worth
+// re-running the whole trigger and re-notifying everyone it already reached.
+const NOTIFY_CHUNK = 400;
+
+async function notifyFollowersOfEvent(
+  postId: string,
+  data: FirebaseFirestore.DocumentData,
+  truth: Identity | null,
+): Promise<void> {
+  const authorId = str(data.authorId);
+  if (!authorId || authorId === DELETED_ID) return;
+
+  // `select()` with no fields fetches document ids only — the profiles
+  // themselves are never read, which keeps a popular author's fan-out cheap.
+  const followers = await db
+    .collection('users')
+    .where('following', 'array-contains', authorId)
+    .select()
+    .get()
+    .catch(() => null);
+  if (!followers || followers.empty) return;
+
+  const base = {
+    type: 'event',
+    fromUserId: authorId,
+    // Prefer the profile's current name over the copy denormalised onto the
+    // post, for the same reason onPostCreated corrects the post itself.
+    fromUserName: truth?.authorName ?? str(data.authorName),
+    fromUserPhoto: truth?.authorPhoto ?? str(data.authorPhoto),
+    postId,
+    postTitle: str(data.title),
+    createdAt: FieldValue.serverTimestamp(),
+    read: false,
+  };
+
+  for (let i = 0; i < followers.docs.length; i += NOTIFY_CHUNK) {
+    const batch = db.batch();
+    for (const follower of followers.docs.slice(i, i + NOTIFY_CHUNK)) {
+      if (follower.id === authorId) continue;
+      batch.set(db.collection('notifications').doc(), { ...base, toUserId: follower.id });
+    }
+    await batch.commit().catch(() => {});
+  }
+}
+
 // New post → seed its recency-based feed score (no onCreate Algolia for posts).
 export const onPostCreated = onDocumentCreated('posts/{docId}', async (event) => {
   const data = event.data?.data();
@@ -103,6 +161,10 @@ export const onPostCreated = onDocumentCreated('posts/{docId}', async (event) =>
       ...(truth ? corrections(data, truth) : {}),
     })
     .catch(() => {});
+
+  if (data.category === 'events') {
+    await notifyFollowersOfEvent(event.params.docId, data, truth);
+  }
 });
 
 // Discussion deleted → remove from Algolia
@@ -294,18 +356,25 @@ async function correctAuthor(event: {
 // notices are sent by the Admin SDK with `fromUserId: 'system'`, which has no
 // profile, so identityOf() returns null and those are left untouched.
 export const onNotificationCreated = onDocumentCreated(
-  'notifications/{docId}',
+  { document: 'notifications/{docId}', secrets: APNS_SECRETS },
   async (event) => {
     const snap = event.data;
     if (!snap) return;
     const data = snap.data();
     const truth = await identityOf(data.fromUserId);
-    if (!truth) return;
-    const fix: Record<string, string> = {};
-    if (str(data.fromUserName) !== truth.authorName) fix.fromUserName = truth.authorName;
-    if (str(data.fromUserPhoto) !== truth.authorPhoto) fix.fromUserPhoto = truth.authorPhoto;
-    if (Object.keys(fix).length === 0) return;
-    await snap.ref.update(fix).catch(() => {});
+    if (truth) {
+      const fix: Record<string, string> = {};
+      if (str(data.fromUserName) !== truth.authorName) fix.fromUserName = truth.authorName;
+      if (str(data.fromUserPhoto) !== truth.authorPhoto) fix.fromUserPhoto = truth.authorPhoto;
+      if (Object.keys(fix).length > 0) await snap.ref.update(fix).catch(() => {});
+    }
+
+    // Push last, and with the corrected name: this is the same spoofing
+    // surface as above, only on the lock screen, where it is read with less
+    // suspicion than a row in a list. A moderation notice has no sender
+    // profile, so truth is null and the empty name makes the push speak as
+    // the app.
+    await sendNotificationPush(data, truth?.authorName ?? '');
   },
 );
 

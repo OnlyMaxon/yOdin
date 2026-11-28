@@ -90,6 +90,7 @@
     "accepted": "zaakceptował(a) twoją odpowiedź",
     "clearRead": "Usuń przeczytane",
     "joinedEvent": "wybiera się na Twoje wydarzenie",
+    "postedEvent": "dodał(a) nowe wydarzenie",
     "mentioned": "wspomniał(a) o Tobie",
     "contentRemoved": "Twoja treść została usunięta przez moderatora za naruszenie zasad.",
     "blocked": "Nie możesz komentować ani odpowiadać przez {{count}} dni z powodu powtarzających się naruszeń."

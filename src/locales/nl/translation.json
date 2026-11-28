@@ -88,6 +88,7 @@
     "accepted": "heeft je antwoord geaccepteerd",
     "clearRead": "Gelezen wissen",
     "joinedEvent": "gaat naar je evenement",
+    "postedEvent": "heeft een nieuw evenement geplaatst",
     "mentioned": "heeft je genoemd",
     "contentRemoved": "Je inhoud is door een moderator verwijderd wegens overtreding van de regels.",
     "blocked": "Je kunt {{count}} dagen niet reageren wegens herhaalde overtredingen."

@@ -88,6 +88,7 @@
     "accepted": "님이 회원님의 답변을 채택했습니다",
     "clearRead": "읽은 것 삭제",
     "joinedEvent": "님이 회원님의 이벤트에 참가합니다",
+    "postedEvent": "님이 새 이벤트를 올렸습니다",
     "mentioned": "님이 회원님을 언급했습니다",
     "contentRemoved": "규칙 위반으로 회원님의 콘텐츠가 관리자에 의해 삭제되었습니다.",
     "blocked": "반복된 위반으로 {{count}}일 동안 댓글이나 답글을 달 수 없습니다."

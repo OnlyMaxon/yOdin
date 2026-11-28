@@ -18,6 +18,7 @@ import Avatar from './Avatar';
 import EmptyState from './EmptyState';
 import { fetchUsersByIds } from '../services/userService';
 import { getFlagEmoji } from '../utils/flagEmoji';
+import { useCountryName } from '../utils/countryName';
 import { User } from '../types';
 
 interface Props {
@@ -32,6 +33,7 @@ interface Props {
 // tappable through to their profile.
 export default function EventParticipantsModal({ visible, participantIds, onClose, onOpenProfile }: Props) {
   const { t } = useTranslation();
+  const cName = useCountryName();
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
   const styles = makeStyles(colors, insets.bottom);
@@ -63,7 +65,7 @@ export default function EventParticipantsModal({ visible, participantIds, onClos
         <View style={styles.info}>
           <Text style={styles.name} numberOfLines={1}>{item.firstName} {item.lastName}</Text>
           <Text style={styles.meta} numberOfLines={1}>
-            {getFlagEmoji(item.countryCode)}  {item.nationality}
+            {getFlagEmoji(item.countryCode)}  {cName(item.countryCode, item.nationality)}
           </Text>
         </View>
         {onOpenProfile ? <Ionicons name="chevron-forward" size={18} color={colors.textSecondary} /> : null}

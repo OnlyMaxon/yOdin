@@ -88,6 +88,7 @@
     "accepted": "đã chấp nhận câu trả lời của bạn",
     "clearRead": "Xóa đã đọc",
     "joinedEvent": "sẽ tham gia sự kiện của bạn",
+    "postedEvent": "đã đăng một sự kiện mới",
     "mentioned": "đã nhắc đến bạn",
     "contentRemoved": "Nội dung của bạn đã bị người kiểm duyệt xóa vì vi phạm quy tắc.",
     "blocked": "Bạn không thể bình luận hay trả lời trong {{count}} ngày do vi phạm nhiều lần."

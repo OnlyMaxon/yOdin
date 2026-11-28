@@ -11,6 +11,7 @@ import {
 import { httpsCallable } from 'firebase/functions';
 import { doc, setDoc, getDoc, writeBatch } from 'firebase/firestore';
 import { auth, db, functions } from './firebase';
+import { unregisterPush } from './pushService';
 import { User } from '../types';
 import { normalizeUsername, isValidUsername } from '../utils/mentions';
 import { TERMS_VERSION } from '../config/links';
@@ -71,6 +72,10 @@ export async function loginUser(email: string, password: string): Promise<void> 
 }
 
 export async function logoutUser(): Promise<void> {
+  // Drop this device's push token first — after signOut the rules no longer
+  // allow writing under the user, so the next person to sign in here would
+  // keep receiving the previous one's notifications.
+  await unregisterPush(auth.currentUser?.uid ?? '');
   await signOut(auth);
 }
 
